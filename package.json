@@ -1,0 +1,100 @@
+{
+  "name": "theme",
+  "version": "1.0.2",
+  "description": "A scaffolding of Lerna.",
+  "author": "@lugia#hanjingbo",
+  "license": "ISC",
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start": "node ./scripts/build.js --watch",
+    "build": "node ./scripts/build.js",
+    "new": "node ./scripts/new.js",
+    "changelog": "lerna-changelog",
+    "lerna": "lerna",
+    "test": "yarn build && lugia-jest",
+    "test:watch": "yarn build && lugia-jest -w",
+    "coverage": "yarn build && lugia-jest --coverage",
+    "prettier": "prettier --trailing-comma all --single-quote --write",
+    "postinstall": "yarn bootstrap",
+    "stylelint": "stylelint",
+    "lint": "eslint --ext .js packages scripts",
+    "lint:fix": "eslint --fix --ext .js packages scripts",
+    "publish": "node ./scripts/publish.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "*.{js,jsx}": [
+        "eslint --fix",
+        "yarn run prettier",
+        "eslint",
+        "git add"
+      ],
+      "*.{ts,tsx}": [
+        "yarn run prettier --parser typescript",
+        "git add"
+      ],
+      "*.{css,sass,scss,less,sss}": [
+        "stylelint",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "*.min.{js,css}"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "@lugia/mega": "^1.3.44",
+    "@lugia/mega-jest": "^1.2.27",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "chokidar": "^2.1.6",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0",
+    "husky": "^2.3.0",
+    "lerna": "^3.14.1",
+    "lerna-changelog": "^0.8.2",
+    "lint-staged": "^8.1.7",
+    "prettier": "^1.17.1",
+    "rimraf": "^2.6.3",
+    "shelljs": "^0.8.3",
+    "slash": "^3.0.0",
+    "stylelint": "^10.0.1",
+    "stylelint-config-standard": "^18.3.0",
+    "terser": "^3.17.0",
+    "through2": "^3.0.1",
+    "vinyl-fs": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=10",
+    "npm": ">=5.2.0"
+  },
+  "files": [
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc",
+    ".prettierignore",
+    ".prettierrc",
+    ".stylelintrc",
+    ".yarnrc",
+    "gitignore",
+    "jest.config.js",
+    "lerna.json",
+    "packages",
+    "scripts",
+    "yarn.lock"
+  ]
+}

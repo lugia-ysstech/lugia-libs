@@ -1,0 +1,13 @@
+{
+  "changelog": {
+    "labels": {
+      "enhancement": ":rocket: Enhancement",
+      "bug": ":bug: Bug Fix"
+    },
+    "repo": "lugia/scaffoldings",
+    "cacheDir": ".changelog"
+  },
+  "packages": ["packages/*"],
+  "npmClient": "yarn",
+  "version": "independent"
+}
