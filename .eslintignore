@@ -1,5 +1,6 @@
 node_modules/
-lib/
+packages/**/lib/
+packages/**/node_modules/
 dist/
 template/
 fixtures/

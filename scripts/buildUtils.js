@@ -22,6 +22,8 @@ const nodeBabelConfig = {
         },
       },
     ],
+    require.resolve('@babel/preset-flow'),
+    require.resolve('@babel/preset-react'),
   ],
   plugins: [
     [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
