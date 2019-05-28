@@ -1,5 +1,5 @@
 {
-  "name": "theme-css-provider",
+  "name": "@lugia/theme-css-provider",
   "version": "1.0.1",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
