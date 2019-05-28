@@ -1,24 +1,75 @@
-/**
- * Created Date: Friday, September 28th 2018, 3:43:11 pm
- * Author: hanjingbo@ysstech.com | jingboup@gmail.com
- * -----
- * Last Modified: Thursday, May 23rd 2019, 6:38:45 pm
- * Modified By: hanjingbo <hanjingbo@ysstech.com | jingboup@gmail.com>
- * -----
- * Copyright (c) 2018-present, #Lugia#.
- * ------------------------------------
- * JavaScript will save your soul!
- */
+// @flow
 
-import { existsSync } from 'fs';
-import hello, { homeOrTmp } from '../src';
+import * as React from 'react';
+import {
+  getAttributeValue,
+  getSelectNameThemeMeta,
+  packObject,
+  style2css,
+} from '../src/index';
 
-describe('homeOrTmp', () => {
-  test('homeOrTmp exists', () => {
-    expect(existsSync(homeOrTmp)).toBe(true);
+describe('CSSProvider', () => {
+  it('getAttributeValue', () => {
+    expect(getAttributeValue(null, [])).toBeUndefined();
+    expect(getAttributeValue({}, [])).toBeUndefined();
+    expect(getAttributeValue({ a: { b: 1 } }, ['a'])).toEqual({ b: 1 });
+    expect(getAttributeValue({ a: { b: 1 } }, ['a', 'b'])).toEqual(1);
   });
 
-  test('export default', () => {
-    expect(hello).toMatchSnapshot();
+  it('packObject', () => {
+    expect(packObject(['a', 'b', 'c'], 1)).toEqual({
+      a: {
+        b: {
+          c: 1,
+        },
+      },
+    });
+
+    const objA = { a: { b: { c: 1 } } };
+    const objB = { a: { b: { d: 100 } } };
+  });
+
+  it('style2css', () => {
+    expect(style2css()).toEqual('');
+    expect(style2css({})).toEqual('');
+    expect(
+      style2css({
+        background: 'hello',
+        red: undefined,
+        fontSize: 1,
+        color: 'rgb(121,11,11,5)',
+      }),
+    ).toEqual('background:hello;font-size:1;color:rgb(121,11,11,5);');
+  });
+
+  it('style2css backgroundColor', () => {
+    expect(
+      style2css({
+        backgroundColor: 'red',
+        borderSize: '1px',
+      }),
+    ).toEqual('background-color:red;border-size:1px;');
+  });
+
+  it('getThemeByConfig', () => {});
+
+  it('getSelectNameThemeMeta selectNames =[]', () => {
+    expect(
+      getSelectNameThemeMeta(
+        {
+          a: 1,
+          b: 2,
+        },
+        [],
+      ),
+    ).toEqual({});
+  });
+  it('getSelectNameThemeMeta selectNames 不填', () => {
+    expect(
+      getSelectNameThemeMeta({
+        a: 1,
+        b: 2,
+      }),
+    ).toEqual({ a: 1, b: 2 });
   });
 });

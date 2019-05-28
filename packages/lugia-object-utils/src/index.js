@@ -4,6 +4,7 @@
  *
  * @flow
  */
+import merge from 'deepmerge';
 
 export function getAttributeFromObject(
   object: Object,
@@ -44,3 +45,14 @@ export const getIndexfromKey = (
   });
   return index;
 };
+
+export function deepMerge(...objects: Object[]): Object {
+  if (!objects || objects.length === 0) {
+    return {};
+  }
+
+  return objects.reduce((pre: Object, next: Object) => {
+    next = next || {};
+    return merge(pre, next);
+  }, {});
+}

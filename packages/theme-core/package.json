@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "deepmerge": "^3.2.0"
+    "@lugia/object-utils": "^1.0.0"
   },
   "files": [
     "src",

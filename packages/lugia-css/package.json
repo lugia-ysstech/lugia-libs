@@ -1,6 +1,6 @@
 {
-  "name": "theme-css-provider",
-  "version": "1.0.0",
+  "name": "@lugia/css",
+  "version": "1.0.3",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -14,18 +14,10 @@
   "bugs": {
     "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings/issues"
   },
-  "author": "#lugia#",
+  "author": "#lugia# @hanjingbo",
   "license": "MIT",
-  "peerDependencies": {
-    "react": ">16.0.0",
-    "react-dom": ">16.0.0",
-    "styled-components": ">4.0.0"
-  },
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
-    "@lugia/object-utils": "^1.0.0",
-    "decamelize": "^3.2.0",
-    "@lugia/css": "^1.0.0"
+    "@babel/runtime": "^7.4.5"
   },
   "files": [
     "src",

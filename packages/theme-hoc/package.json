@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@lugia/theme-core": "^1.0.0",
-    "@lugia/lugia-object-utils": "^1.0.0",
+    "@lugia/object-utils": "^1.0.0",
     "@babel/runtime": "^7.4.5"
   },
   "devDependencies": {

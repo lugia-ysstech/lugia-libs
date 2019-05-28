@@ -4,7 +4,7 @@
  *
  * @flow
  */
-import merge from 'deepmerge';
+import { deepMerge } from '@lugia/object-utils';
 
 export function getKeys(obj: Object) {
   return obj ? Object.keys(obj) : [];
@@ -12,17 +12,6 @@ export function getKeys(obj: Object) {
 
 export function getObject(obj: Object, key: string) {
   return obj && key ? obj[key] : {};
-}
-
-export function deepMerge(...objects: Object[]): Object {
-  if (!objects || objects.length === 0) {
-    return {};
-  }
-
-  return objects.reduce((pre: Object, next: Object) => {
-    next = next || {};
-    return merge(pre, next);
-  }, {});
 }
 
 // eslint-disable-next-line max-len
