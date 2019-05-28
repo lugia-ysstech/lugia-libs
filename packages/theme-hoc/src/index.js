@@ -5,7 +5,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { getConfig } from '@lugia/theme-core';
-import { getAttributeFromObject } from '@lugia/lugia-object-utils';
+import { getAttributeFromObject } from '@lugia/object-utils';
 
 type ProviderComponent = React.ComponentType<any>;
 const ThemeProvider = (
