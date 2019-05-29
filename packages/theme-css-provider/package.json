@@ -28,8 +28,7 @@
     "decamelize": "^3.2.0"
   },
   "files": [
-    "src",
-    "test",
+    "lib",
     "yarn.lock"
   ],
   "engines": {
