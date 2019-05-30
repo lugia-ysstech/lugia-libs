@@ -48,7 +48,7 @@ const ThemeBlock = ThemeHoc(Block, 'My_Block', { hover: true, actived: true });
 export default class extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
-    this.state = { count: 20 };
+    this.state = { count: 20, total: 50 };
   }
 
   render() {
@@ -70,6 +70,13 @@ export default class extends React.Component<any, any> {
       >
         Clock
       </Clock>,
+      <Clock
+        themeProps={this.props.mergeThemePropsConfig({
+          count: this.state.total,
+        })}
+      >
+        BClock
+      </Clock>,
       <ThemeBlock
         {...this.props.getChildTheme('ThemeBlock')}
         themeState={themeState}
@@ -81,6 +88,9 @@ export default class extends React.Component<any, any> {
   }
 
   onClick = () => {
-    this.setState({ count: this.state.count + 20 });
+    this.setState({
+      count: this.state.count + 20,
+      total: this.state.total + 100,
+    });
   };
 }
