@@ -1,5 +1,5 @@
 {
-  "name": "lugia-theme-example",
+  "name": "@lugia/lugia-theme-example",
   "version": "1.0.1-alpha.1",
   "dependencies": {
     "@lugia/theme-config": "^1.0.3-alpha.3",
