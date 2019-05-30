@@ -6,11 +6,11 @@
  */
 import { deepMerge } from '@lugia/object-utils';
 
-export function getKeys(obj: Object) {
+export function getKeys(obj: Object): string[] {
   return obj ? Object.keys(obj) : [];
 }
 
-export function getObject(obj: Object, key: string) {
+export function getObject(obj: Object, key: string): Object {
   return obj && key ? obj[key] : {};
 }
 
