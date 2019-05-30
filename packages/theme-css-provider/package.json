@@ -29,6 +29,7 @@
   },
   "files": [
     "lib",
+    "interface",
     "yarn.lock"
   ],
   "engines": {

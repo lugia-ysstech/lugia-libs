@@ -22,7 +22,7 @@
   },
   "files": [
     "lib",
-    "test",
+    "interface",
     "yarn.lock"
   ],
   "engines": {

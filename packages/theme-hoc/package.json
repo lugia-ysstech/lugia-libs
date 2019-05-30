@@ -30,9 +30,8 @@
     "@lugia/theme-config": "^1.0.3-alpha.1"
   },
   "files": [
-    "src",
+    "lib",
     "interface",
-    "test",
     "yarn.lock"
   ],
   "engines": {

@@ -26,6 +26,7 @@
     "prop-types": "^15.7.2"
   },
   "files": [
+    "interface",
     "lib",
     "yarn.lock"
   ],
