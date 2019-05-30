@@ -10,7 +10,7 @@
   "commands": {
     "publish": {
       "ignore": [
-        "lugia-theme-example"
+        "@lugia/lugia-theme-example"
       ]
     }
   },
