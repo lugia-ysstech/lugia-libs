@@ -1,4 +1,9 @@
-// @flow
+/**
+ *
+ * create by ligx
+ *
+ * @flow
+ */
 import {
   accAdd,
   checkNumber,
