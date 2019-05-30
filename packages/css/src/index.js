@@ -7,7 +7,7 @@
 import * as units from './units';
 import getColor from './utilsColor';
 
-export default {
+export { units };
+export const color = {
   getColor,
-  units,
 };

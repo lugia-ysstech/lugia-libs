@@ -4,8 +4,9 @@
  *
  * @flow
  */
-import { getColor } from '../src';
+import { color } from '../src/index';
 
+const { getColor } = color;
 describe('utilsColor', () => {
   beforeEach(() => {});
 

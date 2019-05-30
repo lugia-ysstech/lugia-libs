@@ -133,7 +133,7 @@ function colorHex(rgb): string {
   }
   return rgb;
 }
-export default function changeColor(
+export default function getColor(
   sHex?: string = '#684fff',
   reduceS?: number = 0,
   reduceB?: number = 0,
