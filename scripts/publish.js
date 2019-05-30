@@ -3,7 +3,7 @@
 const shell = require('shelljs');
 const { join } = require('path');
 const { fork } = require('child_process');
-const { packagesDirName, scope } = require('./config.json');
+const { packagesDirName, scope, igronPkgs } = require('./config.json');
 
 const registry = 'http://192.168.102.79:5001/';
 
@@ -53,12 +53,14 @@ cp.on('close', code => {
 
   publishToNpm();
 });
-
 function publishToNpm() {
   console.log(`repos to publish: ${updatedRepos.join(', ')}`);
-  updatedRepos.forEach(repo => {
-    shell.cd(join(cwd, packagesDirName, repo.replace(`${scope}/`, '')));
-    console.log(`[${repo}] npm publish`);
-    shell.exec('npm publish');
-  });
+  updatedRepos
+    .map(repo => repo.replace(`${scope}/`, ''))
+    .filter(repo => !igronPkgs.includes(repo))
+    .forEach(repo => {
+      shell.cd(join(cwd, packagesDirName, repo));
+      console.log(`[${repo}] npm publish`);
+      shell.exec('npm publish');
+    });
 }

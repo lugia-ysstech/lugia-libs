@@ -8,7 +8,7 @@ const { readdirSync, readFileSync, writeFileSync, existsSync } = require('fs');
 const { join } = require('path');
 const chokidar = require('chokidar');
 const slash = require('slash');
-const { packagesDirName } = require('./config.json');
+const { packagesDirName, igronPkgs } = require('./config.json');
 
 const cwd = process.cwd();
 
@@ -98,8 +98,6 @@ function transform(opts = {}) {
   const config = isBrowser ? browserBabelConfig : nodeBabelConfig;
   return babel.transform(content, config).code;
 }
-
-const igronPkgs = ['lugia-theme-example'];
 
 function buildPkg(pkg, minify = false) {
   const pkgPath = join(cwd, packagesDirName, pkg);
