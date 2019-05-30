@@ -36,8 +36,9 @@ declare module '@lugia/theme-css-provider' {
 
   declare export type CSSConfig = {
     tag?: TagType,
+    className: string, // 必填属性用来注入一个主题的class类名为CSS样式覆盖留下口子
     extend?: Object,
-    css: any, // 这个是要去 css 模板的写法
+    css?: any, // 这个是要去 css 模板的写法
     normal?: CSSMeta, // 默认为 {}
     clicked?: CSSMeta, // 默认为 {}
     hover?: CSSMeta, // 默认为 {}
@@ -46,6 +47,7 @@ declare module '@lugia/theme-css-provider' {
 
   declare export function keyframes(): any; // styled keyframes;
   declare export function css(): any; // styled keyframes;
-  declare export var styled: any; // styled;
-  declare export default (cssConfig: CSSConfig) => {};
+  declare export function StaticComponent(cssConfig: CSSConfig): Function;
+
+  declare export default (cssConfig: CSSConfig) => Function;
 }

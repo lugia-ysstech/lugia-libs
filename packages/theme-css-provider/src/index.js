@@ -9,8 +9,8 @@ import type {
   HeightType,
   MarginType,
   PaddingType,
-  WidthType,
   ThemeMeta,
+  WidthType,
 } from '@lugia/theme-core';
 import type {
   CSSConfig,
@@ -294,12 +294,12 @@ function packStyle(
 
 let enabledClassNameBool = false;
 
-export function enabledClassName() {
-  enabledClassNameBool = true;
+function getClassName(className: string): string {
+  return enabledClassNameBool ? className : '';
 }
 
-export function getClassName(className: string): string {
-  return enabledClassNameBool ? className : '';
+export function enabledClassName() {
+  enabledClassNameBool = true;
 }
 
 function getCSS(getStyle: Function) {
@@ -548,4 +548,13 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   }
   return getTargetComponent(styledElement.attrs(attrsHook));
 }
-export { css, styled, keyframes };
+
+export function StaticComponent(cssConfig: CSSConfig): Function {
+  const styledElement = getStyledComponent(cssConfig);
+  const { css } = cssConfig;
+  return styledElement`
+    ${css}
+  `;
+}
+
+export { css, keyframes };
