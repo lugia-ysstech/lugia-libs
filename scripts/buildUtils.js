@@ -99,10 +99,16 @@ function transform(opts = {}) {
   return babel.transform(content, config).code;
 }
 
+const igronPkgs = ['lugia-theme-example'];
+
 function buildPkg(pkg, minify = false) {
   const pkgPath = join(cwd, packagesDirName, pkg);
   if (!existsSync(pkgPath)) {
     chalk.yellow(`[${pkg}] was not found`);
+    return;
+  }
+  if (~igronPkgs.indexOf(pkg)) {
+    chalk.green(`[${pkg}] is igrone.`);
     return;
   }
   rimraf.sync(join(pkgPath, 'lib'));

@@ -7,6 +7,13 @@
     "repo": "lugia/scaffoldings",
     "cacheDir": ".changelog"
   },
+  "commands": {
+    "publish": {
+      "ignore": [
+        "lugia-theme-sample"
+      ]
+    }
+  },
   "packages": ["packages/*"],
   "npmClient": "yarn",
   "version": "independent"
