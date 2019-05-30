@@ -6,11 +6,10 @@
  */
 
 import React from 'react';
-import { deepMerge } from '@lugia/object-utils';
+import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import decamelize from 'decamelize';
 import styled, { css } from 'styled-components';
 import { units } from '@lugia/css';
-import { getAttributeFromObject } from '@lugia/object-utils';
 
 const { px2emcss } = units;
 type WidthType = number | string;
@@ -611,12 +610,17 @@ function createGetStyleByDefaultThemeMeta(cssConfig: CSSConfig) {
   };
 }
 
-export default function CSSProvider(cssConfig: CSSConfig) {
-  const { tag = 'span', css, extend } = cssConfig;
+function getStyledComponent(cssConfig: CSSConfig): Object {
+  const { tag = 'span', extend } = cssConfig;
   const styledElement = extend ? styled(extend) : styled[tag];
   if (!styledElement) {
     throw new Error(`Not support tag: ${tag}`);
   }
+  return styledElement;
+}
+
+export default function CSSComponent(cssConfig: CSSConfig) {
+  const styledElement = getStyledComponent(cssConfig);
   const getTheCSS = createGetUserDefineCSS(cssConfig);
   const getTheStyle = createGetUserDefineStyle(cssConfig);
   const getStyleByThemeMeta = createGetStyleFromPropsAndCSSConfig(cssConfig);
@@ -630,13 +634,18 @@ export default function CSSProvider(cssConfig: CSSConfig) {
   const attrsHook = (props: CSSProps) => {
     return { style: deepMerge(getStyleByThemeMeta(props), getTheStyle(props)) };
   };
-  if (extend) {
-    const CSSComponent = styledElement`
+  const { css, extend } = cssConfig;
+
+  function getTargetComponent(targetStyleComponent: Function): Function {
+    return targetStyleComponent`
     ${css}
     ${getCSS(getDefaultStyle)}
     ${getTheCSS}
   `;
+  }
 
+  if (extend) {
+    const CSSComponent = getTargetComponent(styledElement);
     return class extends React.Component<any, any> {
       render() {
         const { props } = this;
@@ -645,10 +654,13 @@ export default function CSSProvider(cssConfig: CSSConfig) {
       }
     };
   }
+  return getTargetComponent(styledElement.attrs(attrsHook));
+}
 
-  return styledElement.attrs(attrsHook)`
+export function StaticCSSComponent(cssConfig: CSSConfig) {
+  const styledElement = getStyledComponent(cssConfig);
+  const { css } = cssConfig;
+  return styledElement`
     ${css}
-    ${getCSS(getDefaultStyle)}
-    ${getTheCSS}
   `;
 }

@@ -8,7 +8,7 @@ import {
   style2css,
 } from '../src/index';
 
-describe('CSSProvider', () => {
+describe('CSSComponent', () => {
   it('getAttributeValue', () => {
     expect(getAttributeValue(null, [])).toBeUndefined();
     expect(getAttributeValue({}, [])).toBeUndefined();
