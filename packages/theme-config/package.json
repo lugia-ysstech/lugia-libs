@@ -22,7 +22,8 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/theme-core": "^1.0.3-alpha.0"
+    "@lugia/theme-core": "^1.0.3-alpha.0",
+    "prop-types": "^15.7.2"
   },
   "files": [
     "lib",

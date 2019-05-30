@@ -6,7 +6,7 @@ import Theme from '../src';
 import renderer from 'react-test-renderer';
 import PropTypes from 'prop-types';
 
-describe('Theme', () => {
+describe('ThemeConfig', () => {
   it('Theme', () => {
     class TestComponent extends React.Component<any> {
       render() {

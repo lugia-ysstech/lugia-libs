@@ -4,32 +4,27 @@
  *
  * @flow
  */
-import type { ThemeType } from '@lugia/lugia-web';
+import type { ThemeConfigProps } from '@lugia/theme-config';
+import { getConfig } from '@lugia/theme-core';
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { getConfig } from '@lugia/theme-core';
 
-type PropsType = {
-  children: React.Node,
-  config: { [key: string]: ThemeType },
-  className?: string,
-};
 type StateType = {};
 
-class Theme extends React.Component<PropsType, StateType> {
+class Theme extends React.Component<ThemeConfigProps, StateType> {
   static defaultProps = {
     config: {},
   };
   static displayName = 'lugia_theme_wrap';
   svThemeConfigTree: Object;
 
-  constructor(props: PropsType, context: Object) {
+  constructor(props: ThemeConfigProps, context: Object) {
     super(props);
     this.updateTreeConfig(props, context);
   }
 
-  componentWillReceiveProps(nextProps: PropsType, context: Object) {
+  componentWillReceiveProps(nextProps: ThemeConfigProps, context: Object) {
     const nowContext = this.context;
     if (
       nextProps.config !== this.props.config ||
@@ -40,7 +35,7 @@ class Theme extends React.Component<PropsType, StateType> {
     }
   }
 
-  updateTreeConfig(props: PropsType, context: Object) {
+  updateTreeConfig(props: ThemeConfigProps, context: Object) {
     const { config, svThemeConfigTree } = context;
     this.svThemeConfigTree = getConfig(svThemeConfigTree, config, props.config);
   }
