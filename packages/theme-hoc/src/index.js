@@ -7,7 +7,7 @@ import type { ProviderComponent, ThemeHocOption } from '@lugia/theme-hoc';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { getConfig } from '@lugia/theme-core';
-import { getAttributeFromObject } from '@lugia/object-utils';
+import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 
 const ThemeProvider = (
   Target: ProviderComponent,
@@ -55,6 +55,10 @@ const ThemeProvider = (
         this.setState({
           svThemVersion: svThemVersion + 1,
         });
+      }
+      if ('themeState' in props) {
+        const { themeState = {} } = props;
+        this.setState({ themeState });
       }
     }
 
@@ -110,12 +114,18 @@ const ThemeProvider = (
       return target;
     };
 
+    mergeChildThemeProps = (childWidgetName: string): Object => {
+      const themeMeta = this.getChildThemeMeta(childWidgetName);
+      return deepMerge(
+        { themeState: this.state.themeState },
+        {
+          themeConfig: themeMeta,
+        },
+      );
+    };
+
     getChildTheme = (childWidgetName: string): Object => {
-      if (!childWidgetName) {
-        return {};
-      }
-      const { children = {} } = this.getTheme();
-      const { [childWidgetName]: targetTheme } = children;
+      const targetTheme = this.getChildThemeMeta(childWidgetName);
       if (!targetTheme) {
         return {};
       }
@@ -126,6 +136,18 @@ const ThemeProvider = (
           [viewClass]: targetTheme,
         },
       };
+    };
+
+    getChildThemeMeta = (childWidgetName: string): Object => {
+      if (!childWidgetName) {
+        return {};
+      }
+      const { children = {} } = this.getTheme();
+      const { [childWidgetName]: targetTheme } = children;
+      if (!targetTheme) {
+        return {};
+      }
+      return targetTheme;
     };
 
     getTheme = () => {
@@ -169,6 +191,7 @@ const ThemeProvider = (
             {...this.props}
             themeProps={themeProps}
             getChildTheme={this.getChildTheme}
+            mergeChildThemeProps={this.mergeChildThemeProps}
             getTheme={this.getTheme}
             getWidgetThemeName={() => widgetName}
             getThemeByDisplayName={this.getThemeByDisplayName}
