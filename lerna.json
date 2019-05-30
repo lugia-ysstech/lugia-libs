@@ -7,7 +7,7 @@
     "repo": "lugia/scaffoldings",
     "cacheDir": ".changelog"
   },
-  "commands": {
+  "command": {
     "publish": {
       "ignoreChanges": [
         "@lugia/lugia-theme-example"
