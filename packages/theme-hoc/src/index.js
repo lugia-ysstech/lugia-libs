@@ -7,24 +7,42 @@ import PropTypes from 'prop-types';
 import { getConfig } from '@lugia/theme-core';
 import { getAttributeFromObject } from '@lugia/object-utils';
 
+type ThemeHocOption = {
+  enabledState: {
+    hover: boolean,
+    actived: boolean,
+  },
+};
 type ProviderComponent = React.ComponentType<any>;
 const ThemeProvider = (
   Target: ProviderComponent,
   widgetName: string,
+  opt?: ThemeHocOption = { hover: false, actived: false },
 ): Function => {
+  const { hover = false, actived = false } = opt;
+
+  function needProcessThemeState() {
+    return hover == true || actived == true;
+  }
+
   class ThemeWrapWidget extends React.Component<any, any> {
     svtarget: Object;
 
     constructor(props: any) {
       super(props);
-      this.state = {
+      let initState = {
         svThemVersion: 0,
-        themeState: {
-          clicked: false,
-          disabled: false,
-          hover: false,
-        },
       };
+      if (needProcessThemeState()) {
+        const themeState = (initState.themeState = {});
+        if (hover) {
+          themeState.hover = true;
+        }
+        if (actived) {
+          themeState.actived = true;
+        }
+      }
+      this.state = initState;
     }
 
     componentWillReceiveProps(props: any, context: any) {
@@ -42,14 +60,25 @@ const ThemeProvider = (
       }
     }
 
-    onClick = () => {
+    onMouseDown = () => {
       const { themeState } = this.state;
-      const { clicked } = themeState;
-      if (clicked === true) {
+      const { actived } = themeState;
+      if (actived === false) {
         return;
       }
       this.setState({
-        themeState: { ...themeState, clicked: true },
+        themeState: { ...themeState, actived: true },
+      });
+    };
+
+    onMouseUp = () => {
+      const { themeState } = this.state;
+      const { actived } = themeState;
+      if (actived === true) {
+        return;
+      }
+      this.setState({
+        themeState: { ...themeState, actived: false },
       });
     };
 
@@ -109,12 +138,18 @@ const ThemeProvider = (
         themeState: { ...themeState, disabled },
         themeConfig: getTheme(),
       };
+
+      const themeStateEventConfig = {};
+      if (actived) {
+        themeStateEventConfig.onMouseDown = this.onMouseDown;
+        themeStateEventConfig.onMouseUp = this.onMouseUp;
+      }
+      if (hover) {
+        themeStateEventConfig.onMouseEnter = this.onMouseEnter;
+        themeStateEventConfig.onMouseLeave = this.onMouseLeave;
+      }
       return (
-        <span
-          onMouseEnter={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}
-          onClick={this.onClick}
-        >
+        <span {...themeStateEventConfig}>
           <Target
             {...this.props}
             themeProps={themeProps}
