@@ -34,10 +34,10 @@ const ThemeProvider = (
         const themeState = {};
         initState.themeState = {};
         if (hover) {
-          themeState.hover = true;
+          themeState.hover = false;
         }
         if (actived) {
-          themeState.actived = true;
+          themeState.actived = false;
         }
       }
       this.state = initState;
@@ -124,6 +124,12 @@ const ThemeProvider = (
       );
     };
 
+    mergeThemePropsConfig = (propsConfig: Object): Object => {
+      return deepMerge(this.getThemeProps(), {
+        propsConfig,
+      });
+    };
+
     getChildTheme = (childWidgetName: string): Object => {
       const targetTheme = this.getChildThemeMeta(childWidgetName);
       if (!targetTheme) {
@@ -167,14 +173,19 @@ const ThemeProvider = (
         {},
       );
     };
-
-    render() {
+    getThemeProps = () => {
       const { disabled } = this.props;
-      const { themeState, svThemVersion } = this.state;
-      const themeProps = {
+      const { themeState } = this.state;
+
+      return {
         themeState: { ...themeState, disabled },
         themeConfig: this.getTheme(),
       };
+    };
+
+    render() {
+      const { svThemVersion } = this.state;
+      const themeProps = this.getThemeProps();
 
       const themeStateEventConfig = {};
       if (actived) {
@@ -192,6 +203,7 @@ const ThemeProvider = (
             themeProps={themeProps}
             getChildTheme={this.getChildTheme}
             mergeChildThemeProps={this.mergeChildThemeProps}
+            mergeThemePropsConfig={this.mergeThemePropsConfig}
             getTheme={this.getTheme}
             getWidgetThemeName={() => widgetName}
             getThemeByDisplayName={this.getThemeByDisplayName}

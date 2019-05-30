@@ -20,6 +20,10 @@ const Button = CSSComponent({
 export default class extends React.Component<any, any> {
   render() {
     const { children } = this.props;
-    return <Button themeProps={this.props.themeProps}>{children}</Button>;
+    return (
+      <Button themeProps={this.props.themeProps} onClick={this.props.onClick}>
+        {children}
+      </Button>
+    );
   }
 }
