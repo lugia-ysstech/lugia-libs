@@ -5,7 +5,6 @@ import {
   getAttributeValue,
   getSelectNameThemeMeta,
   packObject,
-  style2css,
 } from '../src/index';
 
 describe('CSSComponent', () => {
@@ -27,28 +26,6 @@ describe('CSSComponent', () => {
 
     const objA = { a: { b: { c: 1 } } };
     const objB = { a: { b: { d: 100 } } };
-  });
-
-  it('style2css', () => {
-    expect(style2css()).toEqual('');
-    expect(style2css({})).toEqual('');
-    expect(
-      style2css({
-        background: 'hello',
-        red: undefined,
-        fontSize: 1,
-        color: 'rgb(121,11,11,5)',
-      }),
-    ).toEqual('background:hello;font-size:1;color:rgb(121,11,11,5);');
-  });
-
-  it('style2css backgroundColor', () => {
-    expect(
-      style2css({
-        backgroundColor: 'red',
-        borderSize: '1px',
-      }),
-    ).toEqual('background-color:red;border-size:1px;');
   });
 
   it('getThemeByConfig', () => {});

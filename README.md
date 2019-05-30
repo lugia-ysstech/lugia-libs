@@ -1,73 +1,19 @@
-# @lugia/scaffolding-lerna
+# 说明
+本项目包括主题相关的公共模块
 
-> A scaffolding of Lerna.
-
-## Development, Contribute
-
-> 安装 [yarn](https://yarnpkg.com)
-
-```bash
-# 安装依赖并运行 yarn bootstrap
-$ yarn
-```
-
-> 使用 [lerna](https://github.com/lerna/lerna) 管理 packages
-
-```bash
-# 引导安装所有 packages 的依赖
-$ yarn bootstrap
-```
-
-### 新建 package
-
-```bash
-$ yarn new <package-name>
-
-# 例子
-$ yarn new loader
-```
-
-### 开发
-
-使用 babel 转义并监听所有的改动文件
-
-```bash
-$ yarn start
-```
-
-### 测试
-
-```bash
-$ yarn test
-```
-
-### 生产构建
-
-使用 babel 转义到 ./lib 目录
-
-```bash
-$ yarn build
-```
-
-### 运行单个 package 的测试
-
-```bash
-$ yarn run lerna exec --scope <package-name> -- yarn run test
-
-# 例子
-$ yarn run lerna exec --scope mega-webpack -- yarn run test
-```
-
-### 发布 package 到 npm 或 私服
-
-```bash
-$ yarn run publish
-
-# 忽略
-$ yarn run publish -- --ignore <package-name>
-
-# 例子
-$ yarn run publish -- --ignore mega-webpack
-```
-
-## 看 packages/\*/README.md
+项目地址：http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-theme.git 
+ 
+##@lugia/math
+ 数学相关处理功能  
+## @lugia/object-utils 
+  对象处理模块
+## @lugia/css
+  样式处理模块 
+## theme-config
+ 主题配置模块（<Theme></Theme>）
+# theme-core
+ theme支撑公共模块
+# theme-css-provider
+ CSSComponent支撑模块，用来将ThemeConfig转换为CSS
+# theme-hoc
+ 赋予一个React组件有theme(主题配置的能力) 

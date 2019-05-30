@@ -4,119 +4,24 @@
  *
  * @flow
  */
-
+import type {
+  BorderRadiusType,
+  HeightType,
+  MarginType,
+  PaddingType,
+  WidthType,
+  ThemeMeta,
+} from '@lugia/theme-core';
+import type {
+  CSSConfig,
+  CSSProps,
+  StateType,
+  ThemeState,
+} from '@lugia/theme-css-provider';
 import React from 'react';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
-import decamelize from 'decamelize';
-import styled, { css } from 'styled-components';
-import { units } from '@lugia/css';
-
-const { px2emcss } = units;
-type WidthType = number | string;
-type HeightType = number | string;
-type MarginType = {
-  top?: number,
-  right?: number,
-  bottom?: number,
-  left?: number,
-};
-type PaddingType = {
-  top?: number,
-  right?: number,
-  bottom?: number,
-  left?: number,
-};
-
-type BorderInnerType = {
-  borderColor?: string,
-  borderWidth?: string,
-  borderStyle?: string,
-};
-type BorderType = {
-  top?: BorderInnerType,
-  right?: BorderInnerType,
-  bottom?: BorderInnerType,
-  left?: BorderInnerType,
-};
-type ColorType = string;
-type OpacityType = number;
-type BackgroundType = {
-  backgroundColor?: ColorType,
-  backgroundImage?: string,
-};
-
-type BoxShadowType = string;
-type FontType = { fontStyle: string, fontWeight: number, fontSize: number };
-type FontSizeType = string;
-type BorderRadiusType = string | number;
-type VisibilityType = 'visible' | 'hidden' | 'collapse';
-type CursorType =
-  | 'Default'
-  | 'Pointer'
-  | 'text'
-  | 'wait'
-  | 'help'
-  | 'Auto'
-  | 'not-allowed';
-
-const DefaultFontSize = 1.2;
-const em = px2emcss(DefaultFontSize);
-
-type ThemeMeta = {
-  background?: BackgroundType,
-  border?: BorderType,
-  width?: WidthType,
-  height?: HeightType,
-  font?: FontType,
-  color?: ColorType,
-  opacity?: OpacityType,
-  margin?: MarginType,
-  padding?: PaddingType,
-  boxShadow?: BoxShadowType,
-  backgroundColor?: ColorType,
-  fontSize?: FontSizeType,
-  borderRadius?: BorderRadiusType,
-  visibility?: VisibilityType,
-  cursor?: CursorType,
-};
-
-type ThemeConfig = {
-  normal: ThemeMeta,
-  disabled: ThemeMeta,
-  clicked: ThemeMeta,
-  hover: ThemeMeta,
-  children: { [childName: string]: ThemeConfig },
-};
-
-// 目前state类型
-type TagType = 'span' | 'a' | 'input' | 'li' | 'button' | 'div' | 'i';
-type StateType = 'normal' | 'clicked' | 'hover' | 'disabled';
-type ThemeState = { clicked: boolean, disabled: boolean, hover: boolean };
-
-type ThemeProps = {
-  themeState: ThemeState,
-  themeConfig: ThemeConfig,
-  propsConfig: Object,
-};
-type CSSProps = {
-  themeProps: ThemeProps,
-};
-type CSSMeta = {
-  selectNames?: Array<string[]>, // 默认不设置是取全部属性
-  cssNames?: string[], // CSS生成的时候默认是使用内联样式 如果需要使用匿名类的属性列在此属性中指定
-  getStyle?: (theme: ThemeMeta, themeProps: ThemeProps) => Object,
-  getCSS?: (theme: ThemeMeta, themeProps: ThemeProps) => string,
-  defaultTheme?: ThemeMeta, // 自己写的样式
-};
-type CSSConfig = {
-  tag?: TagType,
-  extend?: Object,
-  css: any, // 这个是要去 css 模板的写法
-  normal?: CSSMeta,
-  clicked?: CSSMeta,
-  hover?: CSSMeta,
-  disabled?: CSSMeta,
-};
+import styled, { css, keyframes } from 'styled-components';
+import { style2css, units } from '@lugia/css';
 
 type MarginOpt = {
   fontSize: number,
@@ -127,6 +32,9 @@ type MarginOpt = {
     bottom: number,
   },
 };
+const { px2emcss } = units;
+const DefaultFontSize = 1.2;
+const em = px2emcss(DefaultFontSize);
 
 export function getAttributeValue(obj: Object, path: string[]): any {
   if (!obj) {
@@ -321,22 +229,6 @@ function setStyleValue(style: Object, name: string, value: any, cb: Function) {
   }
 }
 
-export function style2css(style: Object): string {
-  if (!style) {
-    return '';
-  }
-  const keys = Object.keys(style);
-  if (keys.length === 0) {
-    return '';
-  }
-  return keys
-    .map((key: string) => {
-      const val = style[key];
-      return val ? `${decamelize(key, '-')}:${val};` : '';
-    })
-    .join('');
-}
-
 export function getThemeMeta(
   cssConfig: CSSConfig,
   stateType: StateType,
@@ -364,7 +256,7 @@ export function getThemeMeta(
 
 export function getSelectNameThemeMeta(
   theme: ?ThemeMeta,
-  selectNames: Array<string[]>,
+  selectNames?: Array<string[]>,
 ): ThemeMeta {
   if (!theme) {
     return {};
@@ -376,10 +268,10 @@ export function getSelectNameThemeMeta(
     return {};
   }
   let result = {};
-  selectNames.forEach((names: string[], i: number) => {
+  selectNames.forEach((names: string[], i: number, target: Array<string[]>) => {
     if (typeof names === 'string') {
       names = [names];
-      selectNames[i] = names;
+      target[i] = names;
     }
     const value = getAttributeValue(theme, names);
     if (value !== undefined && value !== null) {
@@ -656,11 +548,4 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   }
   return getTargetComponent(styledElement.attrs(attrsHook));
 }
-
-export function StaticCSSComponent(cssConfig: CSSConfig) {
-  const styledElement = getStyledComponent(cssConfig);
-  const { css } = cssConfig;
-  return styledElement`
-    ${css}
-  `;
-}
+export { css, styled, keyframes };

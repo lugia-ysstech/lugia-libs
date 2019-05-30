@@ -7,3 +7,4 @@ fixtures/
 website/
 examples/
 coverage/
+*.flow.js

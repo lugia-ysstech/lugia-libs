@@ -5,15 +5,17 @@ declare module '@lugia/css' {
     px2emcss(emFontSize: number): (px: number) => string,
   };
 
-  declare class ExportType {
+  declare type Color = {
     getColor(
       sHex?: string, // 默认值 '#684fff',
       reduceS?: number, // 默认值  0,
       reduceB?: number, // 默认值  0,
       reduceA?: number, //默认值 100,
-    ): Object;
-    units: Units;
-  }
+    ): Object,
+  };
 
-  declare export default typeof ExportType;
+  declare export var color: Color;
+  declare export var units: Units;
+
+  declare export function style2css(style: Object): number;
 }

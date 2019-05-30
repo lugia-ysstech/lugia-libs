@@ -2,18 +2,13 @@
  * 组件样式处理增强
  * @flow
  */
+import type { ProviderComponent, ThemeHocOption } from '@lugia/theme-hoc';
+
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { getConfig } from '@lugia/theme-core';
 import { getAttributeFromObject } from '@lugia/object-utils';
 
-type ThemeHocOption = {
-  enabledState: {
-    hover: boolean,
-    actived: boolean,
-  },
-};
-type ProviderComponent = React.ComponentType<any>;
 const ThemeProvider = (
   Target: ProviderComponent,
   widgetName: string,
@@ -30,11 +25,12 @@ const ThemeProvider = (
 
     constructor(props: any) {
       super(props);
-      let initState = {
+      let initState: Object = {
         svThemVersion: 0,
       };
       if (needProcessThemeState()) {
-        const themeState = (initState.themeState = {});
+        const themeState = {};
+        initState.themeState = {};
         if (hover) {
           themeState.hover = true;
         }
