@@ -584,4 +584,12 @@ describe('ThemeProvider', () => {
       ...levelB,
     });
   });
+
+  it('theme props', () => {
+    // todo: willtest
+  });
+
+  it('themeState', () => {
+    // todo: willtest
+  });
 });

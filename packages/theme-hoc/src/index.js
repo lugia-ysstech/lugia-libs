@@ -20,6 +20,8 @@ const ThemeProvider = (
     return hover == true || actived == true;
   }
 
+  const displayName = `lugia_t_hoc_${widgetName}`;
+
   class ThemeWrapWidget extends React.Component<any, any> {
     svtarget: Object;
 
@@ -108,31 +110,48 @@ const ThemeProvider = (
       return target;
     };
 
+    getChildTheme = (childWidgetName: string): Object => {
+      if (!childWidgetName) {
+        return {};
+      }
+      const { children = {} } = this.getTheme();
+      const { [childWidgetName]: targetTheme } = children;
+      if (!targetTheme) {
+        return {};
+      }
+      const viewClass = `${displayName}_${childWidgetName}`;
+      return {
+        viewClass,
+        theme: {
+          [viewClass]: targetTheme,
+        },
+      };
+    };
+
+    getTheme = () => {
+      const { config = {}, svThemeConfigTree = {} } = this.context;
+      const { viewClass, theme } = this.props;
+      const result = getConfig(svThemeConfigTree, config, theme);
+      const viewClassResult = result[viewClass];
+      const widgetNameResult = result[widgetName];
+      const currConfig = { ...widgetNameResult, ...viewClassResult };
+      return Object.assign({}, { ...currConfig }, { svThemeConfigTree });
+    };
+
+    getThemeByDisplayName = (displayName: string) => {
+      return getAttributeFromObject(
+        getAttributeFromObject(this.getTheme(), 'svThemeConfigTree', {}),
+        displayName,
+        {},
+      );
+    };
+
     render() {
-      const getTheme = () => {
-        const { config = {}, svThemeConfigTree = {} } = this.context;
-        const { viewClass } = this.props;
-
-        const result = getConfig({}, svThemeConfigTree, config);
-        const viewClassResult = result[viewClass];
-        const widgetNameResult = result[widgetName];
-        const currConfig = { ...widgetNameResult, ...viewClassResult };
-        return Object.assign({}, { ...currConfig }, { svThemeConfigTree });
-      };
-
-      const getThemeByDisplayName = (displayName: string) => {
-        return getAttributeFromObject(
-          getAttributeFromObject(getTheme(), 'svThemeConfigTree', {}),
-          displayName,
-          {},
-        );
-      };
-
       const { disabled } = this.props;
       const { themeState, svThemVersion } = this.state;
       const themeProps = {
         themeState: { ...themeState, disabled },
-        themeConfig: getTheme(),
+        themeConfig: this.getTheme(),
       };
 
       const themeStateEventConfig = {};
@@ -149,9 +168,10 @@ const ThemeProvider = (
           <Target
             {...this.props}
             themeProps={themeProps}
-            getTheme={getTheme}
+            getChildTheme={this.getChildTheme}
+            getTheme={this.getTheme}
             getWidgetThemeName={() => widgetName}
-            getThemeByDisplayName={getThemeByDisplayName}
+            getThemeByDisplayName={this.getThemeByDisplayName}
             svThemVersion={svThemVersion}
             ref={(cmp: Object) => {
               this.svtarget = cmp;
@@ -166,7 +186,7 @@ const ThemeProvider = (
     config: PropTypes.object,
     svThemeConfigTree: PropTypes.object,
   };
-  ThemeWrapWidget.displayName = `lugia_t_hoc_${widgetName}`;
+  ThemeWrapWidget.displayName = displayName;
   return ThemeWrapWidget;
 };
 export default ThemeProvider;
