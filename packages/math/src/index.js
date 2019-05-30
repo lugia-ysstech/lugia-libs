@@ -5,10 +5,7 @@
  * @flow
  */
 
-type LimitRange = {
-  max: number,
-  min: number,
-};
+import type { LimitRange } from '@lugia/math';
 
 export function limitByConfig(val: number, opt: LimitRange): number {
   const { max, min } = opt;
@@ -21,9 +18,9 @@ export function fixed(val: number, fixCnt: number): number {
   return Number(res.toFixed(fixCnt));
 }
 
-export const isInLimit = (val: number, range: [number, number]): boolean => {
+export function isInLimit(val: number, range: number[]): boolean {
   return limit(val, range) === val;
-};
+}
 
 export function limit(val: number, range: number[]) {
   const { min, max } = getMinAndMax(range);
