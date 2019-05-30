@@ -292,14 +292,16 @@ function packStyle(
   };
 }
 
-let enabledClassNameBool = false;
+function getClassName(cssConfigClassName: string, props: Object): string {
+  const { className } = props;
+  cssConfigClassName = window.__lugia__enabledClassNameBool__
+    ? cssConfigClassName
+    : '';
 
-function getClassName(className: string): string {
-  return enabledClassNameBool ? className : '';
-}
-
-export function enabledClassName() {
-  enabledClassNameBool = true;
+  if (className) {
+    return `${className} ${cssConfigClassName}`;
+  }
+  return cssConfigClassName;
 }
 
 function getCSS(getStyle: Function) {
@@ -526,7 +528,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   const attrsHook = (props: CSSProps) => {
     return { style: deepMerge(getStyleByThemeMeta(props), getTheStyle(props)) };
   };
-  const { css, extend } = cssConfig;
+  const { css, extend, className } = cssConfig;
 
   function getTargetComponent(targetStyleComponent: Function): Function {
     return targetStyleComponent`
@@ -542,19 +544,37 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       render() {
         const { props } = this;
         const style = attrsHook(props);
-        return <CSSComponent {...props} {...style} />;
+        return (
+          <CSSComponent
+            {...props}
+            {...style}
+            className={getClassName(className, props)}
+          />
+        );
       }
     };
   }
-  return getTargetComponent(styledElement.attrs(attrsHook));
+  return packClassName(
+    getTargetComponent(styledElement.attrs(attrsHook)),
+    className,
+  );
+}
+
+function packClassName(Target: Function, className: string) {
+  return (props: any) => (
+    <Target {...props} className={getClassName(className, props)} />
+  );
 }
 
 export function StaticComponent(cssConfig: CSSConfig): Function {
   const styledElement = getStyledComponent(cssConfig);
-  const { css } = cssConfig;
-  return styledElement`
+  const { css, className } = cssConfig;
+  return packClassName(
+    styledElement`
     ${css}
-  `;
+  `,
+    className,
+  );
 }
 
 export { css, keyframes };
