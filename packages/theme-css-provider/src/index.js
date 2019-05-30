@@ -317,13 +317,13 @@ function getCSS(getStyle: Function) {
 function getStateTypes(themeState: ThemeState = {}): StateType[] {
   const res = ['normal'];
 
-  const { hover = false, disabled = false, clicked = false } = themeState;
+  const { hover = false, disabled = false, actived = false } = themeState;
 
   if (hover) {
     res.push('hover');
   }
-  if (clicked) {
-    res.push('clicked');
+  if (actived) {
+    res.push('actived');
   }
   if (disabled) {
     res.push('disabled');
@@ -416,8 +416,8 @@ const always = (val: any) => () => val;
 const alwaysEmptyString = always('');
 
 export function createGetUserDefineCSS(cssConfig: CSSConfig) {
-  const { normal = {}, hover = {}, clicked = {}, disabled = {} } = cssConfig;
-  if (!normal.getCSS && !hover.getCSS && !clicked.getCSS && !disabled.getCSS) {
+  const { normal = {}, hover = {}, actived = {}, disabled = {} } = cssConfig;
+  if (!normal.getCSS && !hover.getCSS && !actived.getCSS && !disabled.getCSS) {
     return '';
   }
   return (props: CSSProps): string => {
@@ -469,9 +469,9 @@ export function createGetUserDefineStyle(cssConfig: CSSConfig) {
 }
 
 function createGetStyleByDefaultThemeMeta(cssConfig: CSSConfig) {
-  const { normal = {}, clicked = {}, disabled = {} } = cssConfig;
+  const { normal = {}, actived = {}, disabled = {} } = cssConfig;
 
-  if (!normal.defaultTheme && !clicked.defaultTheme && !disabled.defaultTheme) {
+  if (!normal.defaultTheme && !actived.defaultTheme && !disabled.defaultTheme) {
     return undefined;
   }
   return (props: CSSProps): string => {

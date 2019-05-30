@@ -10,9 +10,9 @@ declare module '@lugia/theme-css-provider' {
     | 'button'
     | 'div'
     | 'i';
-  declare export type StateType = 'normal' | 'clicked' | 'hover' | 'disabled';
+  declare export type StateType = 'normal' | 'actived' | 'hover' | 'disabled';
   declare export type ThemeState = {
-    clicked: boolean,
+    actived: boolean,
     disabled: boolean,
     hover: boolean,
   };
@@ -40,7 +40,7 @@ declare module '@lugia/theme-css-provider' {
     extend?: Object,
     css?: any, // 这个是要去 css 模板的写法
     normal?: CSSMeta, // 默认为 {}
-    clicked?: CSSMeta, // 默认为 {}
+    actived?: CSSMeta, // 默认为 {}
     hover?: CSSMeta, // 默认为 {}
     disabled?: CSSMeta, // 默认为 {}
   };

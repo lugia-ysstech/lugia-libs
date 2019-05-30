@@ -80,7 +80,7 @@ declare module '@lugia/theme-core' {
   declare export type ThemeConfig = {
     normal: ThemeMeta,
     disabled: ThemeMeta,
-    clicked: ThemeMeta,
+    actived: ThemeMeta,
     hover: ThemeMeta,
     children: { [childName: string]: ThemeConfig },
   };
