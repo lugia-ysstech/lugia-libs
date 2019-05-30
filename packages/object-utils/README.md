@@ -1,3 +1,2 @@
-# @lugia/scaffolding-lerna-package
-
-> An example of lerna package.
+# 说明
+对象处理模块

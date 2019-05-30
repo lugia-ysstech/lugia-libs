@@ -18,11 +18,11 @@ export function getAttributeFromObject(
   return attributeValue;
 }
 
-export const getKeyfromIndex = (
+export function getKeyfromIndex(
   data: Array<Object>,
   index: number,
   expKey: string,
-): string => {
+): string {
   let newKey = '';
   data.map((v, i) => {
     if (i === index) {
@@ -31,12 +31,13 @@ export const getKeyfromIndex = (
     }
   });
   return newKey;
-};
-export const getIndexfromKey = (
+}
+
+export function getIndexfromKey(
   data: Array<Object>,
   keyName: string,
   keyValue: string,
-): number => {
+): number {
   let index = -99;
   data.find((v, i) => {
     if (v[keyName] === keyValue) {
@@ -44,7 +45,7 @@ export const getIndexfromKey = (
     }
   });
   return index;
-};
+}
 
 export function deepMerge(...objects: Object[]): Object {
   if (!objects || objects.length === 0) {
