@@ -167,11 +167,15 @@ function build() {
   const { argv } = process;
   const isWatch = argv.includes('-w') || argv.includes('--watch');
   const minify = argv.includes('-m') || argv.includes('--minify');
-  dirs.forEach(pkg => {
-    if (pkg.charAt(0) === '.') return;
-    buildPkg(pkg, minify);
-    if (isWatch) watch(pkg);
-  });
+  dirs
+    .filter(pkg => {
+      return igronPkgs.indexOf(pkg) === -1;
+    })
+    .forEach(pkg => {
+      if (pkg.charAt(0) === '.') return;
+      buildPkg(pkg, minify);
+      if (isWatch) watch(pkg);
+    });
 }
 
 module.exports = { buildPkg, build, watch };
