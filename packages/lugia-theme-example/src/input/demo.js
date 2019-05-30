@@ -6,21 +6,23 @@
  */
 import React from 'react';
 import Input from './';
-import Theme from '@lugia/theme-config';
 
 export default class Demo extends React.Component<any, any> {
   render() {
     const config = {
       My_Input: {
         normal: {
-          width: 500,
+          width: 800,
+        },
+        children: {
+          ResetButton: {
+            normal: {
+              width: 555,
+            },
+          },
         },
       },
     };
-    return (
-      <Theme config={config}>
-        <Input />
-      </Theme>
-    );
+    return <Input theme={config} />;
   }
 }
