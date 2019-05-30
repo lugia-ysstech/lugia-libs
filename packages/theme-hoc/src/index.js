@@ -129,6 +129,11 @@ const ThemeProvider = (
         propsConfig,
       });
     };
+    mergeThemeConfig = (themeConfig: Object): Object => {
+      return deepMerge(this.getThemeProps(), {
+        themeConfig,
+      });
+    };
 
     getChildTheme = (childWidgetName: string): Object => {
       const targetTheme = this.getChildThemeMeta(childWidgetName);
@@ -204,6 +209,7 @@ const ThemeProvider = (
             getChildTheme={this.getChildTheme}
             mergeChildThemeProps={this.mergeChildThemeProps}
             mergeThemePropsConfig={this.mergeThemePropsConfig}
+            mergeThemeConfig={this.mergeThemeConfig}
             getTheme={this.getTheme}
             getWidgetThemeName={() => widgetName}
             getThemeByDisplayName={this.getThemeByDisplayName}
