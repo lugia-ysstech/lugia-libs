@@ -354,7 +354,7 @@ export function getThemeMeta(
     if (!config) {
       return theme;
     }
-    const { defaultTheme = {}, selectNames = [] } = config;
+    const { defaultTheme = {}, selectNames } = config;
     const selectNameThemeMeta = getSelectNameThemeMeta(theme, selectNames);
     if (stateType === 'hover') {
       return deepMerge(defaultTheme, selectNameThemeMeta);
