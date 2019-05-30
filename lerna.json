@@ -10,13 +10,10 @@
   "command": {
     "publish": {
       "ignoreChanges": [
+        "lugia-theme-example*"
       ]
     }
   },
-  "ignoreChanges": [
-    "lugia-theme-example*"
-
-  ],
   "packages": ["packages/*"],
   "npmClient": "yarn",
   "version": "independent"
