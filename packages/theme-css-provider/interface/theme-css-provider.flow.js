@@ -17,7 +17,7 @@ declare module '@lugia/theme-css-provider' {
     hover: boolean,
   };
 
-  declare type ThemeProps = {
+  declare export type ThemeProps = {
     themeState: ThemeState,
     themeConfig: ThemeConfig,
     propsConfig: Object,
