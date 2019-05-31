@@ -114,29 +114,30 @@ const ThemeProvider = (
       return target;
     };
 
-    mergeChildThemeProps = (childWidgetName: string): Object => {
-      const themeMeta = this.getChildThemeMeta(childWidgetName);
+    mergeThemeStateAndChildThemeProps = (childWidgetName: string): Object => {
+      const themeConfig = this.getChildThemeConfig(childWidgetName);
       return deepMerge(
         { themeState: this.state.themeState },
         {
-          themeConfig: themeMeta,
+          themeConfig,
         },
       );
     };
 
-    mergeThemePropsConfig = (propsConfig: Object): Object => {
+    mergeThemePropsAndPropsConfig = (propsConfig: Object): Object => {
       return deepMerge(this.getThemeProps(), {
         propsConfig,
       });
     };
-    mergeThemeConfig = (themeConfig: Object): Object => {
+
+    mergeThemePropsAndThemeConfig = (themeConfig: Object): Object => {
       return deepMerge(this.getThemeProps(), {
         themeConfig,
       });
     };
 
-    getChildTheme = (childWidgetName: string): Object => {
-      const targetTheme = this.getChildThemeMeta(childWidgetName);
+    getChildThemeHocProps = (childWidgetName: string): Object => {
+      const targetTheme = this.getChildThemeConfig(childWidgetName);
       if (!targetTheme) {
         return {};
       }
@@ -149,7 +150,7 @@ const ThemeProvider = (
       };
     };
 
-    getChildThemeMeta = (childWidgetName: string): Object => {
+    getChildThemeConfig = (childWidgetName: string): Object => {
       if (!childWidgetName) {
         return {};
       }
@@ -206,10 +207,13 @@ const ThemeProvider = (
           <Target
             {...this.props}
             themeProps={themeProps}
-            getChildTheme={this.getChildTheme}
-            mergeChildThemeProps={this.mergeChildThemeProps}
-            mergeThemePropsConfig={this.mergeThemePropsConfig}
-            mergeThemeConfig={this.mergeThemeConfig}
+            getChildThemeHocProps={this.getChildThemeHocProps}
+            getChildThemeConfig={this.getChildThemeConfig}
+            mergeThemeStateAndChildThemeProps={
+              this.mergeThemeStateAndChildThemeProps
+            }
+            mergeThemePropsAndPropsConfig={this.mergeThemePropsAndPropsConfig}
+            mergeThemePropsAndThemeConfig={this.mergeThemePropsAndThemeConfig}
             getTheme={this.getTheme}
             getWidgetThemeName={() => widgetName}
             getThemeByDisplayName={this.getThemeByDisplayName}
