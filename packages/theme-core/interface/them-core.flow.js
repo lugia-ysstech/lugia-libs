@@ -1,3 +1,5 @@
+import { BorderRadiusType } from '@lugia/theme-core';
+
 declare module '@lugia/theme-core' {
   declare export function getKeys(obj: Object): string[];
 
@@ -26,15 +28,25 @@ declare module '@lugia/theme-core' {
 
   declare export type BorderInnerType = {
     borderColor?: string,
-    borderWidth?: string,
+    borderWidth?: number,
     borderStyle?: string,
   };
+
+  declare export type BorderRadiusType = {
+    borderTopLeftRadius?: number,
+    borderTopRightRadius?: number,
+    borderBottomLeftRadius?: number,
+    borderBottomRightRadius?: number,
+  };
+
   declare export type BorderType = {
     top?: BorderInnerType,
     right?: BorderInnerType,
     bottom?: BorderInnerType,
     left?: BorderInnerType,
+    borderRadius?: BorderRadiusType,
   };
+
   declare export type ColorType = string;
   declare export type OpacityType = number;
   declare export type BackgroundType = {
@@ -49,7 +61,6 @@ declare module '@lugia/theme-core' {
     fontSize: number,
   };
   declare export type FontSizeType = string;
-  declare export type BorderRadiusType = string | number;
   declare export type VisibilityType = 'visible' | 'hidden' | 'collapse';
   declare export type CursorType =
     | 'Default'
@@ -73,7 +84,6 @@ declare module '@lugia/theme-core' {
     boxShadow?: BoxShadowType,
     backgroundColor?: ColorType,
     fontSize?: FontSizeType,
-    borderRadius?: BorderRadiusType,
     visibility?: VisibilityType,
     cursor?: CursorType,
   };
