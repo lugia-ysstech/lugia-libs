@@ -5,6 +5,7 @@
  * @flow
  */
 import type {
+  BorderInnerType,
   BorderRadiusType,
   HeightType,
   MarginType,
@@ -131,7 +132,6 @@ function getObjectStyleFromTheme(obj: Object) {
 
 function getBorderStyleFromTheme(border) {
   if (!border) return {};
-
   const borderTop = getAttributeFromObject(border, 'top', {});
   const borderBottom = getAttributeFromObject(border, 'bottom', {});
   const borderLeft = getAttributeFromObject(border, 'left', {});
@@ -141,12 +141,7 @@ function getBorderStyleFromTheme(border) {
 
   function setBorderStyle(target: Object, name: string) {
     const borderTopWidth = getAttributeFromObject(target, 'borderWidth');
-    setStyleValue(
-      style,
-      `${name}Width`,
-      borderTopWidth,
-      always(borderTopWidth),
-    );
+    setStyleValue(style, `${name}Width`, borderTopWidth, getSizeFromTheme);
 
     const borderTopStyle = getAttributeFromObject(target, 'borderStyle');
     setStyleValue(
@@ -192,7 +187,6 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     margin,
     padding,
     boxShadow,
-    borderRadius,
     visibility,
     cursor,
   } = theme;
@@ -212,8 +206,7 @@ function themeMeta2Style(theme: ThemeMeta): Object {
   );
   setStyleValue(style, 'margin', margin, (target: Object) =>
     getSpaceFromTheme('margin', target),
-  ); //  fontSize传入
-  setStyleValue(style, 'borderRadius', borderRadius, getSizeFromTheme);
+  );
   Object.assign(
     style,
     getObjectStyleFromTheme(font),
@@ -554,10 +547,24 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       }
     };
   }
-  return packClassName(
-    getTargetComponent(styledElement.attrs(attrsHook)),
-    className,
-  );
+
+  const Target = packClassName(getTargetComponent(styledElement), className);
+
+  return class extends React.Component<any, any> {
+    render() {
+      const { props } = this;
+      const { style = {} } = props;
+      const fatherStyle = attrsHook(props);
+      const targetStyle = deepMerge(fatherStyle, { style });
+      return (
+        <Target
+          {...props}
+          {...targetStyle}
+          className={getClassName(className, props)}
+        />
+      );
+    }
+  };
 }
 
 function packClassName(Target: Function, className: string) {
@@ -575,6 +582,13 @@ export function StaticComponent(cssConfig: CSSConfig): Function {
   `,
     className,
   );
+}
+
+export function getBorder(border: BorderInnerType, radius: number) {
+  const { borderColor, borderWidth, borderStyle } = border;
+  const config = {};
+
+  return {};
 }
 
 export { css, keyframes };
