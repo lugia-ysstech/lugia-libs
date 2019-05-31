@@ -124,7 +124,7 @@ function buildPkg(pkg, minify = false) {
           path: f.path,
         });
         if (minify) {
-          tcode = Terser.minify(tcode).code;
+          tcode = Terser.minify(tcode, { sourceMap: true }).code;
         }
         f.contents = Buffer.from(tcode);
         cb(null, f);
