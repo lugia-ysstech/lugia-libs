@@ -31,7 +31,7 @@ const Clock = CSSComponent({
       },
     },
   },
-  hover: {
+  actived: {
     getStyle(themeMeta, themeProps) {
       const {
         propsConfig: { count = 0 },
@@ -39,6 +39,25 @@ const Clock = CSSComponent({
       return {
         width: `${count}px`,
       };
+    },
+  },
+});
+
+const BClock = CSSComponent({
+  extend: Clock,
+  className: 'main_bloClockck',
+  hover: {
+    defaultTheme: {
+      background: {
+        backgroundColor: 'blue',
+      },
+      border: {
+        top: {
+          borderStyle: 'soild',
+          borderColor: 'pink',
+          borderSize: 5,
+        },
+      },
     },
   },
 });
@@ -70,13 +89,13 @@ export default class extends React.Component<any, any> {
       >
         Clock
       </Clock>,
-      <Clock
+      <BClock
         themeProps={this.props.mergeThemePropsConfig({
           count: this.state.total,
         })}
       >
         BClock
-      </Clock>,
+      </BClock>,
       <ThemeBlock
         {...this.props.getChildTheme('ThemeBlock')}
         themeState={themeState}
