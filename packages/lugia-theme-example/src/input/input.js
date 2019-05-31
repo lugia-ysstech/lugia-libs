@@ -49,14 +49,12 @@ const BClock = CSSComponent({
   hover: {
     defaultTheme: {
       background: {
-        backgroundColor: 'blue',
+        backgroundColor: 'green',
       },
       border: {
-        top: {
-          borderStyle: 'soild',
-          borderColor: 'pink',
-          borderSize: 5,
-        },
+        borderStyle: 'solid',
+        borderColor: 'pink',
+        borderWidth: 55,
       },
     },
   },
@@ -73,31 +71,35 @@ export default class extends React.Component<any, any> {
   render() {
     const { themeProps } = this.props;
     const childWidgetName = 'ResetButton';
-    const { viewClass, theme } = this.props.getChildTheme(childWidgetName);
+    const { viewClass, theme } = this.props.getChildThemeHocProps(
+      childWidgetName,
+    );
     const { themeState } = themeProps;
     return [
       <Button viewClass={viewClass} theme={theme} onClick={this.onClick}>
         reset
       </Button>,
-      <Block themeProps={this.props.mergeChildThemeProps('CSSBlock')}>
+      <Block
+        themeProps={this.props.mergeThemeStateAndChildThemeProps('CSSBlock')}
+      >
         CSSComponent
       </Block>,
       <Clock
-        themeProps={this.props.mergeThemePropsConfig({
+        themeProps={this.props.mergeThemePropsAndPropsConfig({
           count: this.state.count,
         })}
       >
         Clock
       </Clock>,
       <BClock
-        themeProps={this.props.mergeThemePropsConfig({
+        themeProps={this.props.mergeThemePropsAndPropsConfig({
           count: this.state.total,
         })}
       >
         BClock
       </BClock>,
       <ThemeBlock
-        {...this.props.getChildTheme('ThemeBlock')}
+        {...this.props.getChildThemeHocProps('ThemeBlock')}
         themeState={themeState}
       >
         ThemeComponent
