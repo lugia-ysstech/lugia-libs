@@ -65,7 +65,7 @@ const ThemeProvider = (
     onMouseDown = () => {
       const { themeState } = this.state;
       const { actived } = themeState;
-      if (actived === false) {
+      if (actived === true) {
         return;
       }
       this.setState({
@@ -76,7 +76,7 @@ const ThemeProvider = (
     onMouseUp = () => {
       const { themeState } = this.state;
       const { actived } = themeState;
-      if (actived === true) {
+      if (actived === false) {
         return;
       }
       this.setState({
