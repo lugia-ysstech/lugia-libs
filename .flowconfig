@@ -13,7 +13,7 @@ flow-typed/
 packages/math/interface
 packages/theme-config/interface
 packages/theme-core/interface
-packages/theme-css-provider/interface
+packages/theme-css-hoc/interface
 packages/theme-hoc/interface
 node_modules/@lugia/jverify/interface
 node_modules/@lugia/type-utils/interface

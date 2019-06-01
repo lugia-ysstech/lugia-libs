@@ -1,6 +1,6 @@
 import type { ThemeConfig, ThemeMeta } from '@lugia/theme-core';
 
-declare module '@lugia/theme-css-provider' {
+declare module '@lugia/theme-css-hoc' {
   // 目前state类型
   declare export type TagType =
     | 'span'

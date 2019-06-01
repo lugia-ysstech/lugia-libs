@@ -3,7 +3,7 @@
   "version": "1.0.5",
   "dependencies": {
     "@lugia/theme-config": "^1.0.3",
-    "@lugia/theme-css-provider": "^1.0.3",
+    "@lugia/theme-css-hoc": "^1.0.3",
     "@lugia/theme-hoc": "^1.0.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"

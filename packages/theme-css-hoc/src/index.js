@@ -18,7 +18,7 @@ import type {
   CSSProps,
   StateType,
   ThemeState,
-} from '@lugia/theme-css-provider';
+} from '@lugia/theme-css-hoc';
 import React from 'react';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';

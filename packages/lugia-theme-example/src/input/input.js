@@ -5,7 +5,7 @@
  * @flow
  */
 import React from 'react';
-import CSSComponent from '@lugia/theme-css-provider';
+import CSSComponent from '@lugia/theme-css-hoc';
 import ThemeHoc from '@lugia/theme-hoc';
 
 import Button from '../button';
