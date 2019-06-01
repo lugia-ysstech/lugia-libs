@@ -28,7 +28,6 @@ declare module '@lugia/theme-css-provider' {
   };
   declare export type CSSMeta = {
     selectNames?: Array<string[]>, // 默认取全部属性
-    cssNames?: string[], // CSS生成的时候默认是使用内联样式 如果需要使用匿名类的属性列在此属性中指定
     getStyle?: (theme: ThemeMeta, themeProps: ThemeProps) => Object,
     getCSS?: (theme: ThemeMeta, themeProps: ThemeProps) => string,
     defaultTheme?: ThemeMeta, // 自己写的样式
