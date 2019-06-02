@@ -44,9 +44,10 @@ declare module '@lugia/theme-css-hoc' {
     disabled?: CSSMeta, // 默认为 {}
   };
 
-  declare export function keyframes(param: any): any; // styled keyframes;
-  declare export function css(param: any): any; // styled keyframes;
   declare export function StaticComponent(cssConfig: CSSConfig): Function;
 
   declare export default (cssConfig: CSSConfig) => Function;
+
+  declare export var css: any; // styled keyframes;
+  declare export var keyframes: any; // styled keyframes;
 }
