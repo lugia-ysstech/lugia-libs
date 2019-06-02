@@ -586,8 +586,6 @@ export function StaticComponent(cssConfig: CSSConfig): Function {
 
 export function getBorder(border: BorderInnerType, radius: number) {
   const { borderColor, borderWidth, borderStyle } = border;
-  const config = {};
-
   return {};
 }
 
