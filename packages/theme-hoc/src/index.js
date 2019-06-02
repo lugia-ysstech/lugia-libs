@@ -63,7 +63,7 @@ const ThemeProvider = (
     }
 
     onMouseDown = () => {
-      const { themeState } = this.state;
+      const themeState = this.getThemeState();
       const { actived } = themeState;
       if (actived === true) {
         return;
@@ -74,7 +74,7 @@ const ThemeProvider = (
     };
 
     onMouseUp = () => {
-      const { themeState } = this.state;
+      const themeState = this.getThemeState();
       const { actived } = themeState;
       if (actived === false) {
         return;
@@ -85,7 +85,7 @@ const ThemeProvider = (
     };
 
     onMouseEnter = () => {
-      const { themeState } = this.state;
+      const themeState = this.getThemeState();
       const { hover } = themeState;
       if (hover === true) {
         return;
@@ -96,7 +96,7 @@ const ThemeProvider = (
     };
 
     onMouseLeave = () => {
-      const { themeState } = this.state;
+      const themeState = this.getThemeState();
       const { hover } = themeState;
       if (hover === false) {
         return;
@@ -117,7 +117,7 @@ const ThemeProvider = (
     mergeThemeStateAndChildThemeProps = (childWidgetName: string): Object => {
       const themeConfig = this.getChildThemeConfig(childWidgetName);
       return deepMerge(
-        { themeState: this.state.themeState },
+        { themeState: this.getThemeState() },
         {
           themeConfig,
         },
@@ -180,14 +180,19 @@ const ThemeProvider = (
       );
     };
     getThemeProps = () => {
-      const { disabled } = this.props;
-      const { themeState } = this.state;
-
+      let themeState = this.getThemeState();
+      console.info('themeState', themeState);
       return {
-        themeState: { ...themeState, disabled },
+        themeState,
         themeConfig: this.getTheme(),
       };
     };
+
+    getThemeState() {
+      const { disabled } = this.props;
+      const { themeState } = this.state;
+      return { ...themeState, disabled };
+    }
 
     render() {
       const { svThemVersion } = this.state;
