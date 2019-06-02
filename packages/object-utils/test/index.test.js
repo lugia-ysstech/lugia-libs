@@ -1,9 +1,11 @@
 // @flow
 import {
   deepMerge,
+  deepMergeAnB,
   getAttributeFromObject,
-  getKeyfromIndex,
   getIndexfromKey,
+  getKeyfromIndex,
+  moveToTargetIfKeyIsInSource,
 } from '../src/index';
 
 const Object = {
@@ -91,5 +93,47 @@ describe('Object', () => {
       text: 'world',
       age: 15,
     });
+  });
+
+  it('moveToTargetIfKeyIsInSource', () => {
+    const target = {};
+    const source = { world: 'chinese', age: 15, name: 'ligx' };
+    moveToTargetIfKeyIsInSource('hello', source, target);
+    expect(source).toEqual({ world: 'chinese', age: 15, name: 'ligx' });
+    expect(target).toEqual({});
+
+    moveToTargetIfKeyIsInSource('world', source, target);
+    expect(source).toEqual({ age: 15, name: 'ligx' });
+    expect(target).toEqual({ world: 'chinese' });
+  });
+
+  it('deepMerge deepMergeAnB', () => {
+    expect(
+      JSON.stringify(
+        deepMergeAnB(
+          { background: 'red' },
+          { backgroundColor: 'black' },
+          { beforeNames: ['backgroundColor'] },
+        ),
+      ),
+    ).toEqual('{"backgroundColor":"black","background":"red"}');
+
+    const result = {
+      c: '1',
+      b: '2',
+      a: '3',
+    };
+
+    expect(
+      JSON.stringify(
+        deepMergeAnB(
+          { a: 2, c: '1' },
+
+          { a: '3', b: '2' },
+
+          { beforeNames: ['c', 'b', 'a'] },
+        ),
+      ),
+    ).toEqual(JSON.stringify(result));
   });
 });

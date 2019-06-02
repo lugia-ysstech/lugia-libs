@@ -5,6 +5,7 @@
  * @flow
  */
 import merge from 'deepmerge';
+import type { DeepMergeOption } from '@lugia/object-utils';
 
 export function getAttributeFromObject(
   object: Object,
@@ -56,4 +57,47 @@ export function deepMerge(...objects: Object[]): Object {
     next = next || {};
     return merge(pre, next);
   }, {});
+}
+
+export function moveToTargetIfKeyIsInSource(
+  key: string,
+  source: Object,
+  target: Object,
+) {
+  if (key in source) {
+    target[key] = source[key];
+    delete source[key];
+  }
+}
+
+export function deepMergeAnB(
+  objectA: Object,
+  objectB: Object,
+  opt: DeepMergeOption,
+): Object {
+  const { beforeNames } = opt;
+
+  if (!objectA && !objectB) {
+    return {};
+  }
+
+  objectA = deepMerge({}, objectA) || {};
+  objectB = deepMerge({}, objectB) || {};
+
+  const beforeResultA = {};
+  const beforeResultB = {};
+
+  beforeNames &&
+    beforeNames.forEach((key: string) => {
+      moveToTargetIfKeyIsInSource(key, objectA, beforeResultA);
+      moveToTargetIfKeyIsInSource(key, objectB, beforeResultB);
+    });
+
+  const beforeResult = deepMerge(beforeResultA, beforeResultB);
+  const target = {};
+  beforeNames &&
+    beforeNames.forEach((key: string) => {
+      moveToTargetIfKeyIsInSource(key, beforeResult, target);
+    });
+  return deepMerge(target, objectA, objectB);
 }
