@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-css-hoc",
-  "version": "1.0.4-y.0",
+  "version": "1.0.4-y.1",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "@lugia/css": "^1.0.3-alpha.2",
-    "@lugia/object-utils": "^1.0.3-alpha.2",
+    "@lugia/object-utils": "^1.0.3-alpha.3",
     "decamelize": "^3.2.0"
   },
   "files": [
