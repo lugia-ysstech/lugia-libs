@@ -400,7 +400,7 @@ function getCSSFromPropsAndCSSConfigByHook(
       createGetStyle,
       initVal: '',
       getValue(beforeValue: any, nextValue: any) {
-        return `${beforeValue}${nextValue}`;
+        return css`${beforeValue}${nextValue}`;
       },
     },
     source,

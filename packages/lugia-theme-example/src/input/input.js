@@ -5,9 +5,18 @@
  * @flow
  */
 import React from 'react';
-import CSSComponent from '@lugia/theme-css-hoc';
+import CSSComponent, { css, keyframes } from '@lugia/theme-css-hoc';
 import ThemeHoc from '@lugia/theme-hoc';
 
+const showUp = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 const Input = CSSComponent({
   tag: 'input',
   className: 'main_input',
@@ -16,6 +25,13 @@ const Input = CSSComponent({
 const Block = CSSComponent({
   tag: 'div',
   className: 'main_block',
+  hover: {
+    getCSS() {
+      return css`
+        animation: ${showUp} 0.3s linear forwards;
+      `;
+    },
+  },
   disabled: {
     getStyle() {
       return { backgroundColor: 'black' }; // return {  background: 'black' };  内部目前不支持这种写法
