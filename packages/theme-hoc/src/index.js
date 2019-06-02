@@ -180,8 +180,7 @@ const ThemeProvider = (
       );
     };
     getThemeProps = () => {
-      let themeState = this.getThemeState();
-      console.info('themeState', themeState);
+      const themeState = this.getThemeState();
       return {
         themeState,
         themeConfig: this.getTheme(),
