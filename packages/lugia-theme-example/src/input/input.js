@@ -8,8 +8,6 @@ import React from 'react';
 import CSSComponent from '@lugia/theme-css-hoc';
 import ThemeHoc from '@lugia/theme-hoc';
 
-import Button from '../button';
-
 const Input = CSSComponent({
   tag: 'input',
   className: 'main_input',
@@ -18,6 +16,11 @@ const Input = CSSComponent({
 const Block = CSSComponent({
   tag: 'div',
   className: 'main_block',
+  disabled: {
+    getStyle() {
+      return { backgroundColor: 'black' }; // return {  background: 'black' };  内部目前不支持这种写法
+    },
+  },
 });
 
 const Clock = CSSComponent({
@@ -68,6 +71,8 @@ export default class extends React.Component<any, any> {
     this.state = { count: 20, total: 50 };
   }
 
+  block: Object;
+
   render() {
     const { themeProps } = this.props;
     const childWidgetName = 'ResetButton';
@@ -76,10 +81,10 @@ export default class extends React.Component<any, any> {
     );
     const { themeState } = themeProps;
     return [
-      <Button viewClass={viewClass} theme={theme} onClick={this.onClick}>
-        reset
-      </Button>,
       <Block
+        ref={cmp => {
+          this.block = cmp;
+        }}
         themeProps={this.props.mergeThemeStateAndChildThemeProps('CSSBlock')}
       >
         CSSComponent
@@ -109,6 +114,7 @@ export default class extends React.Component<any, any> {
   }
 
   onClick = () => {
+    console.info('block ref', this.block);
     this.setState({
       count: this.state.count + 20,
       total: this.state.total + 100,
