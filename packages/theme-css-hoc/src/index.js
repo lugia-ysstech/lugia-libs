@@ -99,7 +99,6 @@ export const getSpaceFromTheme = (
 ) => {
   const theSpace = '';
   const {
-    fontSize = DefaultFontSize,
     default: {
       left = DefaultSpace,
       right = DefaultSpace,
@@ -107,7 +106,6 @@ export const getSpaceFromTheme = (
       bottom = DefaultSpace,
     },
   } = opt;
-  const em = px2emcss(fontSize);
   if (typeof space === 'number') {
     return `:${em(space)} `;
   }
