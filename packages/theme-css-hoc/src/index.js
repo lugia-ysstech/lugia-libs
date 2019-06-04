@@ -25,7 +25,6 @@ import styled, { css, keyframes } from 'styled-components';
 import { style2css, units } from '@lugia/css';
 
 type MarginOpt = {
-  fontSize: number,
   default: {
     left: number,
     right: number,
@@ -90,7 +89,6 @@ export const getSpaceFromTheme = (
   spaceType: 'margin' | 'padding',
   space: MarginType | PaddingType,
   opt?: MarginOpt = {
-    fontSize: DefaultFontSize,
     default: {
       left: DefaultSpace,
       right: DefaultSpace,
@@ -181,7 +179,7 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     width,
     height,
     font,
-    fontSize = DefaultFontSize,
+    fontSize,
     color,
     opacity,
     margin,
