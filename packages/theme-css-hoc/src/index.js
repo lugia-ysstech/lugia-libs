@@ -23,6 +23,7 @@ import React from 'react';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
 import { style2css, units } from '@lugia/css';
+import { getEmMultipleForRem } from '@lugia/css/src/units';
 
 type MarginOpt = {
   default: {
@@ -33,8 +34,6 @@ type MarginOpt = {
   },
 };
 const { px2emcss } = units;
-const DefaultFontSize = 1.2;
-const em = px2emcss(DefaultFontSize);
 
 export function getAttributeValue(obj: Object, path: string[]): any {
   if (!obj) {
@@ -53,6 +52,8 @@ export function getAttributeValue(obj: Object, path: string[]): any {
   }
   return target;
 }
+
+type Px2emFunction = (pxNumber: number) => string;
 
 export function packObject(path: string[], value: any): Object {
   if (!path || path.length === 0) {
@@ -74,20 +75,23 @@ export function packObject(path: string[], value: any): Object {
   return result;
 }
 
-function getSizeFromTheme(size: WidthType | HeightType | BorderRadiusType) {
-  const theSize =
-    typeof size === 'string' && size.indexOf('%') > -1
-      ? size
-      : typeof size === 'number'
-      ? em(size)
-      : '';
-  return theSize;
+function createGetSizeFromTheme(em: Px2emFunction) {
+  return function(size: WidthType | HeightType | BorderRadiusType) {
+    const theSize =
+      typeof size === 'string' && size.indexOf('%') > -1
+        ? size
+        : typeof size === 'number'
+        ? em(size)
+        : '';
+    return theSize;
+  };
 }
 
 const DefaultSpace = 0;
 export const getSpaceFromTheme = (
   spaceType: 'margin' | 'padding',
   space: MarginType | PaddingType,
+  em: Px2emFunction,
   opt?: MarginOpt = {
     default: {
       left: DefaultSpace,
@@ -126,7 +130,7 @@ function getObjectStyleFromTheme(obj: Object) {
   return obj;
 }
 
-function getBorderStyleFromTheme(border) {
+function getBorderStyleFromTheme(border: Object, em: Px2emFunction) {
   if (!border) return {};
   const borderTop = getAttributeFromObject(border, 'top', {});
   const borderBottom = getAttributeFromObject(border, 'bottom', {});
@@ -137,7 +141,12 @@ function getBorderStyleFromTheme(border) {
 
   function setBorderStyle(target: Object, name: string) {
     const borderTopWidth = getAttributeFromObject(target, 'borderWidth');
-    setStyleValue(style, `${name}Width`, borderTopWidth, getSizeFromTheme);
+    setStyleValue(
+      style,
+      `${name}Width`,
+      borderTopWidth,
+      createGetSizeFromTheme(em),
+    );
 
     const borderTopStyle = getAttributeFromObject(target, 'borderStyle');
     setStyleValue(
@@ -187,7 +196,8 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     cursor,
   } = theme;
   const style = {};
-
+  const em = px2emcss(getEmMultipleForRem(fontSize));
+  const getSizeFromTheme = createGetSizeFromTheme(em);
   setStyleValue(style, 'fontSize', fontSize, getStringStyleFromTheme);
   setStyleValue(style, 'width', width, getSizeFromTheme);
   setStyleValue(style, 'height', height, getSizeFromTheme);
@@ -198,16 +208,16 @@ function themeMeta2Style(theme: ThemeMeta): Object {
   setStyleValue(style, 'visibility', visibility, getStringStyleFromTheme);
   setStyleValue(style, 'cursor', cursor, getStringStyleFromTheme);
   setStyleValue(style, 'padding', padding, (target: Object) =>
-    getSpaceFromTheme('padding', target),
+    getSpaceFromTheme('padding', target, em),
   );
   setStyleValue(style, 'margin', margin, (target: Object) =>
-    getSpaceFromTheme('margin', target),
+    getSpaceFromTheme('margin', target, em),
   );
   Object.assign(
     style,
     getObjectStyleFromTheme(font),
     getObjectStyleFromTheme(background),
-    getBorderStyleFromTheme(border),
+    getBorderStyleFromTheme(border, em),
   );
   return style;
 }
