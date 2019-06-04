@@ -6,7 +6,14 @@
  */
 import type { Point, SizePos, SizeType, StylePos } from '@lugia/css';
 
-const footerFontSize = 10;
+let footerFontSize = 10;
+
+if (typeof document !== 'undefined') {
+  const body: Object = document.body;
+  if (body) {
+    footerFontSize = px2Number(getComputedStyle(body)['font-size']);
+  }
+}
 
 export function px2rem(px: number) {
   return px / footerFontSize;
