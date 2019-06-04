@@ -11,8 +11,15 @@ let footerFontSize = 10;
 if (typeof document !== 'undefined') {
   const body: Object = document.body;
   if (body) {
-    footerFontSize = px2Number(getComputedStyle(body)['font-size']) || 10;
+    footerFontSize = getFontSize(body, 10);
   }
+}
+
+export function getFontSize(domNode: Object, defaultFontSize: number): number {
+  if (!domNode) {
+    return defaultFontSize;
+  }
+  return px2Number(getComputedStyle(domNode)['font-size']) || defaultFontSize;
 }
 
 export function px2rem(px: number) {
