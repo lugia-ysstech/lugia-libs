@@ -11,7 +11,7 @@ let footerFontSize = 10;
 if (typeof document !== 'undefined') {
   const body: Object = document.body;
   if (body) {
-    footerFontSize = px2Number(getComputedStyle(body)['font-size']);
+    footerFontSize = px2Number(getComputedStyle(body)['font-size']) || 10;
   }
 }
 
@@ -19,26 +19,63 @@ export function px2rem(px: number) {
   return px / footerFontSize;
 }
 
-export function rem2em(rem: number, emFontSize: number) {
-  return rem / emFontSize;
+export function rem2em(rem: number, emMultipleForRem: number) {
+  return rem / emMultipleForRem;
 }
 
-export function px2emcss(emFontSize: number) {
-  return (px: number) => `${px2rem(px) / emFontSize}em`;
+export function getEmMultipleForRem(fontSize: any): number {
+  const defaulResult = 1;
+  if (!fontSize) {
+    return defaulResult;
+  }
+  if (typeof fontSize === 'string' && fontSize.indexOf('rem') !== -1) {
+    const rem = rem2Number(fontSize);
+    if (rem) {
+      return rem;
+    }
+  }
+  const fontNumber = px2Number(fontSize);
+  if (!isNaN(fontNumber)) {
+    return fontNumber / footerFontSize;
+  }
+  return defaulResult;
+}
+
+export function px2emcss(emMultipleForRem: number) {
+  return (px: number) => `${px2rem(px) / emMultipleForRem}em`;
 }
 
 export function px2Number(str: string): number {
-  if (!str) {
-    return 0;
-  }
-  if (str.indexOf('px') === -1) {
-    return 0;
-  }
-  return Number(str.replace(/px/g, ''));
+  return unitString2Number(str, 'px');
+}
+
+export function rem2Number(str: string): number {
+  return unitString2Number(str, 'rem');
 }
 
 export function number2px(num: number): string {
-  return `${num}px`;
+  return number2UnitString(num, 'px');
+}
+
+export function number2rem(num: number): string {
+  return number2UnitString(num, 'rem');
+}
+
+function unitString2Number(str: string, unit: string): number {
+  if (!str) {
+    return 0;
+  }
+  if (typeof str !== 'string') {
+    return Number(str);
+  }
+  if (str.indexOf(unit) === -1) {
+    return Number(str);
+  }
+  return Number(str.replace(new RegExp(unit, 'g'), ''));
+}
+
+function number2UnitString(num: number, unit: string): string {
+  return `${num}${unit}`;
 }
 
 export function getSizeByStyle(style: SizePos): SizeType {

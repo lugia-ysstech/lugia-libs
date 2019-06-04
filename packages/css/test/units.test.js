@@ -5,6 +5,7 @@
  * @flow
  */
 import { style2css, units } from '../src';
+import { getEmMultipleForRem, number2rem, rem2Number } from '../src/units';
 
 const {
   px2rem,
@@ -58,7 +59,19 @@ describe('units', () => {
 
   it('px2Number', () => {
     expect(px2Number('2px')).toEqual(2);
+    expect(px2Number('2000')).toEqual(2000);
+    expect(px2Number('a')).toEqual(NaN);
     expect(px2Number('21px')).toEqual(21);
+  });
+
+  it('rem2Number', () => {
+    expect(rem2Number('252rem')).toEqual(252);
+    expect(rem2Number('21rem')).toEqual(21);
+  });
+
+  it('number2rem', () => {
+    expect(number2rem(2)).toEqual('2rem');
+    expect(number2rem(21)).toEqual('21rem');
   });
 
   it('number2px', () => {
@@ -84,6 +97,22 @@ describe('units', () => {
 
   it('getPointByStyle', () => {
     expect(getPointByStyle({ left: '5px', top: '11px' })).toEqual([5, 11]);
+  });
+
+  it('getEmMultipleForRem', () => {
+    expect(getEmMultipleForRem(undefined)).toEqual(1);
+    expect(getEmMultipleForRem(null)).toEqual(1);
+    expect(getEmMultipleForRem(3)).toEqual(0.3);
+    expect(getEmMultipleForRem(25)).toEqual(2.5);
+
+    expect(getEmMultipleForRem('100')).toEqual(10);
+    expect(getEmMultipleForRem('15')).toEqual(1.5);
+
+    expect(getEmMultipleForRem('10px')).toEqual(1);
+    expect(getEmMultipleForRem('20px')).toEqual(2);
+
+    expect(getEmMultipleForRem('1rem')).toEqual(1);
+    expect(getEmMultipleForRem('2rem')).toEqual(2);
   });
 
   it('point2Style', () => {
