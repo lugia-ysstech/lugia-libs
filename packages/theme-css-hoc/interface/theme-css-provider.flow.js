@@ -9,6 +9,7 @@ declare module '@lugia/theme-css-hoc' {
     | 'li'
     | 'button'
     | 'div'
+    | 'ul'
     | 'i';
   declare export type StateType = 'normal' | 'actived' | 'hover' | 'disabled';
   declare export type ThemeState = {
