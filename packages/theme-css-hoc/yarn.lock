@@ -17,6 +17,22 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@lugia/css@^1.0.8":
+  version "1.0.8"
+  resolved "http://192.168.102.79:5001/@lugia/css/download/@lugia/css-1.0.8.tgz#33c95e2529c7889eeff69dc0f78fe8337c2ac6f9"
+  integrity sha1-M8leJSnHiJ7v9p3A94/oM3wqxvk=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    decamelize "^3.2.0"
+
+"@lugia/object-utils@^1.0.7":
+  version "1.0.7"
+  resolved "http://192.168.102.79:5001/@lugia/object-utils/download/@lugia/object-utils-1.0.7.tgz#9ec0ac84570c4a11cd2aba52792f39e7a69fc9e1"
+  integrity sha1-nsCshFcMShHNKrpSeS8556afyeE=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    deepmerge "^3.2.0"
+
 core-js@^2.6.5:
   version "2.6.9"
   resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
@@ -28,6 +44,11 @@ decamelize@^3.2.0:
   integrity sha1-hLjo9PjFefk4414sxwJJB+AJCFE=
   dependencies:
     xregexp "^4.2.4"
+
+deepmerge@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-3.2.0.tgz#58ef463a57c08d376547f8869fdc5bcee957f44e"
+  integrity sha1-WO9GOlfAjTdlR/iGn9xbzulX9E4=
 
 regenerator-runtime@^0.13.2:
   version "0.13.2"
