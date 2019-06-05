@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-css-hoc",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -17,10 +17,10 @@
   "author": "#lugia#",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">16.0.0",
     "@lugia/css": ">1.0.8",
-    "react-dom": ">16.0.0",
     "@lugia/object-utils": ">1.0.0",
+    "react": ">16.0.0",
+    "react-dom": ">16.0.0",
     "styled-components": ">4.0.0"
   },
   "dependencies": {
