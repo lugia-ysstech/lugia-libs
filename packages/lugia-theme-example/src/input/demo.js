@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import Input from './';
+import { getBorder } from '@lugia/theme-css-hoc/src';
 
 export default class Demo extends React.Component<any, any> {
   render() {
@@ -26,6 +27,12 @@ export default class Demo extends React.Component<any, any> {
           },
           CSSBlock: {
             normal: {
+              border: getBorder(
+                { color: 'red', width: 5, style: 'solid' },
+                { radius: '50%' },
+              ),
+              width: 25,
+              fontSize: '1rem',
               background: { backgroundColor: 'yellow' },
             },
             hover: {
@@ -43,6 +50,10 @@ export default class Demo extends React.Component<any, any> {
         },
       },
     };
-    return <Input theme={config} />;
+    return (
+      <div style={{ fontSize: '2rem' }}>
+        <Input theme={config} />
+      </div>
+    );
   }
 }

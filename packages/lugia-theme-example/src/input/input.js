@@ -25,6 +25,11 @@ const Input = CSSComponent({
 const Block = CSSComponent({
   tag: 'div',
   className: 'main_block',
+  normal: {
+    defaultTheme: {
+      width: 250,
+    },
+  },
   hover: {
     getCSS() {
       return css`

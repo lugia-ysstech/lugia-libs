@@ -5,20 +5,25 @@
  * @flow
  */
 import type {
-  BorderInnerType,
   BorderRadiusType,
+  BorderType,
   HeightType,
   MarginType,
   PaddingType,
   ThemeMeta,
   WidthType,
 } from '@lugia/theme-core';
+
 import type {
+  BorderConfig,
+  BorderRadiusDirection,
   CSSConfig,
   CSSProps,
+  GetBorderOption,
   StateType,
   ThemeState,
 } from '@lugia/theme-css-hoc';
+
 import React from 'react';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
@@ -137,7 +142,7 @@ function getBorderStyleFromTheme(border: Object) {
 
   function setBorderStyle(target: Object, name: string) {
     const borderTopWidth = getAttributeFromObject(target, 'borderWidth');
-    setStyleValue(
+    setObjectValueIfValueExist(
       style,
       `${name}Width`,
       borderTopWidth,
@@ -145,7 +150,7 @@ function getBorderStyleFromTheme(border: Object) {
     );
 
     const borderTopStyle = getAttributeFromObject(target, 'borderStyle');
-    setStyleValue(
+    setObjectValueIfValueExist(
       style,
       `${name}Style`,
       borderTopStyle,
@@ -153,14 +158,52 @@ function getBorderStyleFromTheme(border: Object) {
     );
 
     const borderColor = getAttributeFromObject(target, 'borderColor');
-    setStyleValue(style, `${name}Color`, borderColor, always(borderColor));
+    setObjectValueIfValueExist(
+      style,
+      `${name}Color`,
+      borderColor,
+      always(borderColor),
+    );
   }
 
   setBorderStyle(borderTop, 'borderTop');
   setBorderStyle(borderBottom, 'borderBottom');
   setBorderStyle(borderLeft, 'borderLeft');
   setBorderStyle(borderRight, 'borderRight');
+  setBorderRadius(style, border);
   return style;
+}
+
+function setBorderRadius(style: Object, border: Object) {
+  if (!border) {
+    return;
+  }
+  const { borderRadius } = border;
+  if (!borderRadius) {
+    return;
+  }
+  const {
+    borderTopLeftRadius,
+    borderTopRightRadius,
+    borderBottomLeftRadius,
+    borderBottomRightRadius,
+  } = borderRadius;
+  setObjectValueIfValueExist(style, 'borderTopLeftRadius', borderTopLeftRadius);
+  setObjectValueIfValueExist(
+    style,
+    'borderTopRightRadius',
+    borderTopRightRadius,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'borderBottomRightRadius',
+    borderBottomRightRadius,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'borderBottomLeftRadius',
+    borderBottomLeftRadius,
+  );
 }
 
 function getStringStyleFromTheme(stringStyle: string) {
@@ -193,19 +236,39 @@ function themeMeta2Style(theme: ThemeMeta): Object {
   } = theme;
   const style = {};
   const getSizeFromTheme = createGetSizeFromTheme();
-  setStyleValue(style, 'fontSize', fontSize, getStringStyleFromTheme);
-  setStyleValue(style, 'width', width, getSizeFromTheme);
-  setStyleValue(style, 'height', height, getSizeFromTheme);
+  setObjectValueIfValueExist(
+    style,
+    'fontSize',
+    fontSize,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(style, 'width', width, getSizeFromTheme);
+  setObjectValueIfValueExist(style, 'height', height, getSizeFromTheme);
 
-  setStyleValue(style, 'color', color, getStringStyleFromTheme);
-  setStyleValue(style, 'opacity', opacity, getNumberStyleFromTheme);
-  setStyleValue(style, 'boxShadow', boxShadow, getStringStyleFromTheme);
-  setStyleValue(style, 'visibility', visibility, getStringStyleFromTheme);
-  setStyleValue(style, 'cursor', cursor, getStringStyleFromTheme);
-  setStyleValue(style, 'padding', padding, (target: Object) =>
+  setObjectValueIfValueExist(style, 'color', color, getStringStyleFromTheme);
+  setObjectValueIfValueExist(
+    style,
+    'opacity',
+    opacity,
+    getNumberStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'boxShadow',
+    boxShadow,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'visibility',
+    visibility,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(style, 'cursor', cursor, getStringStyleFromTheme);
+  setObjectValueIfValueExist(style, 'padding', padding, (target: Object) =>
     getSpaceFromTheme('padding', target),
   );
-  setStyleValue(style, 'margin', margin, (target: Object) =>
+  setObjectValueIfValueExist(style, 'margin', margin, (target: Object) =>
     getSpaceFromTheme('margin', target),
   );
   Object.assign(
@@ -217,9 +280,14 @@ function themeMeta2Style(theme: ThemeMeta): Object {
   return style;
 }
 
-function setStyleValue(style: Object, name: string, value: any, cb: Function) {
+export function setObjectValueIfValueExist(
+  style: Object,
+  name: string,
+  value: any,
+  cb?: Function,
+) {
   if (value) {
-    style[name] = cb(value);
+    style[name] = cb ? cb(value) : value;
   }
 }
 
@@ -585,9 +653,75 @@ export function StaticComponent(cssConfig: CSSConfig): Function {
   );
 }
 
-export function getBorder(border: BorderInnerType, radius: number) {
-  const { borderColor, borderWidth, borderStyle } = border;
-  return {};
+const allBorderDirections = ['l', 't', 'r', 'b'];
+
+const borderDirectionMap = {
+  l: 'left',
+  r: 'right',
+  t: 'top',
+  b: 'bottom',
+};
+
+export function getBorder(
+  border: BorderConfig,
+  opt?: GetBorderOption = { directions: allBorderDirections },
+): BorderType {
+  const { directions = allBorderDirections } = opt;
+
+  if (!directions || directions.length === 0) {
+    return {};
+  }
+
+  const result = {};
+  const { radius } = opt;
+  if (radius) {
+    const { radiusDirections } = opt;
+    result.borderRadius = getBorderRadius(radius, radiusDirections);
+  }
+  return directions.reduce((result: Object, direction: string) => {
+    direction = borderDirectionMap[direction];
+    if (result[direction]) {
+      return result;
+    }
+    const { color, style, width } = border;
+    const borderConfig = {};
+    if ('color' in border) {
+      borderConfig.borderColor = color;
+    }
+    if ('style' in border) {
+      borderConfig.borderStyle = style;
+    }
+    if ('width' in border) {
+      borderConfig.borderWidth = width;
+    }
+
+    result[direction] = borderConfig;
+
+    return result;
+  }, result);
+}
+
+const allBorderRadiusDirections = ['tl', 'tr', 'bl', 'br'];
+
+const borderRadiusDirectionMap: { [key: BorderRadiusDirection]: string } = {
+  tl: 'borderTopLeftRadius',
+  tr: 'borderTopRightRadius',
+  bl: 'borderBottomLeftRadius',
+  br: 'borderBottomRightRadius',
+};
+
+export function getBorderRadius(
+  radius: string | number,
+  directions?: BorderRadiusDirection[] = allBorderRadiusDirections,
+): BorderRadiusType {
+  return directions.reduce(
+    (result: Object, direction: BorderRadiusDirection) => {
+      const targetKey = borderRadiusDirectionMap[direction];
+      result[targetKey] = radius;
+      return result;
+    },
+    {},
+  );
 }
 
 export { css, keyframes };

@@ -3,6 +3,8 @@
 import * as React from 'react';
 import {
   getAttributeValue,
+  getBorder,
+  getBorderRadius,
   getSelectNameThemeMeta,
   packObject,
 } from '../src/index';
@@ -48,5 +50,109 @@ describe('CSSComponent', () => {
         b: 2,
       }),
     ).toEqual({ a: 1, b: 2 });
+  });
+
+  it('getBorder only color', () => {
+    expect(getBorder({ color: 'red' })).toEqual({
+      top: {
+        borderColor: 'red',
+      },
+      left: {
+        borderColor: 'red',
+      },
+      bottom: {
+        borderColor: 'red',
+      },
+      right: {
+        borderColor: 'red',
+      },
+    });
+  });
+
+  it('getBorder all', () => {
+    const config = {
+      borderColor: 'red',
+      borderWidth: 5,
+      borderStyle: 'solid',
+    };
+    expect(getBorder({ color: 'red', style: 'solid', width: 5 })).toEqual({
+      top: config,
+      left: config,
+      bottom: config,
+      right: config,
+    });
+  });
+
+  it('getBorderRadius all', () => {
+    expect(getBorderRadius('', [])).toEqual({});
+    expect(getBorderRadius(10)).toEqual({
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
+    });
+
+    expect(getBorderRadius('20%', ['tr', 'br'])).toEqual({
+      borderTopRightRadius: '20%',
+      borderBottomRightRadius: '20%',
+    });
+  });
+
+  it('get Border top left ', () => {
+    const config = {
+      borderColor: 'red',
+      borderWidth: 5,
+      borderStyle: 'solid',
+    };
+    expect(
+      getBorder(
+        { color: 'red', style: 'solid', width: 5 },
+        { directions: ['l', 't'] },
+      ),
+    ).toEqual({
+      top: config,
+      left: config,
+    });
+
+    expect(
+      getBorder({ color: 'red', style: 'solid', width: 5 }, { directions: [] }),
+    ).toEqual({});
+
+    expect(
+      getBorder(
+        {
+          color: 'red',
+          style: 'solid',
+          width: 5,
+        },
+        { directions: ['l', 't', 'l', 't'] },
+      ),
+    ).toEqual({
+      top: config,
+      left: config,
+    });
+  });
+
+  it('get Border top left radius ', () => {
+    const config = {
+      borderColor: 'red',
+      borderWidth: 5,
+      borderStyle: 'solid',
+    };
+    expect(
+      getBorder(
+        { color: 'red', style: 'solid', width: 5 },
+        { directions: ['l', 't'], radius: 10 },
+      ),
+    ).toEqual({
+      top: config,
+      left: config,
+      borderRadius: {
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+      },
+    });
   });
 });
