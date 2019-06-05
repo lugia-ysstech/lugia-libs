@@ -22,8 +22,12 @@ export function getFontSize(domNode: Object, defaultFontSize: number): number {
   return px2Number(getComputedStyle(domNode)['font-size']) || defaultFontSize;
 }
 
-export function px2rem(px: number) {
+export function px2rem(px: number): number {
   return px / footerFontSize;
+}
+
+export function px2remcss(px: number): string {
+  return `${px2rem(px)}rem`;
 }
 
 export function rem2em(rem: number, emMultipleForRem: number) {

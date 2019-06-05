@@ -11,6 +11,7 @@ packages/.*/src
 [libs]
 flow-typed/
 packages/math/interface
+packages/css/interface
 packages/theme-config/interface
 packages/theme-core/interface
 packages/theme-css-hoc/interface

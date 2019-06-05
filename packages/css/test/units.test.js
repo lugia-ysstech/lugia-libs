@@ -5,7 +5,12 @@
  * @flow
  */
 import { style2css, units } from '../src';
-import { getEmMultipleForRem, number2rem, rem2Number } from '../src/units';
+import {
+  getEmMultipleForRem,
+  number2rem,
+  px2remcss,
+  rem2Number,
+} from '../src/units';
 
 const {
   px2rem,
@@ -25,6 +30,10 @@ describe('units', () => {
   it('px2rem', () => {
     expect(px2rem(5)).toBe(0.5);
     expect(px2rem(1)).toBe(0.1);
+  });
+  it('px2remcss', () => {
+    expect(px2remcss(5)).toBe('0.5rem');
+    expect(px2remcss(1)).toBe('0.1rem');
   });
   it('rem2em', () => {
     expect(rem2em(5, 1)).toBe(5);

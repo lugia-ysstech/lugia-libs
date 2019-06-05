@@ -22,8 +22,8 @@ import type {
 import React from 'react';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
-import { style2css, units } from '@lugia/css';
-import { getEmMultipleForRem } from '@lugia/css/src/units';
+import { style2css } from '@lugia/css';
+import { px2remcss } from '@lugia/css/src/units';
 
 type MarginOpt = {
   default: {
@@ -33,7 +33,6 @@ type MarginOpt = {
     bottom: number,
   },
 };
-const { px2emcss } = units;
 
 export function getAttributeValue(obj: Object, path: string[]): any {
   if (!obj) {
@@ -52,8 +51,6 @@ export function getAttributeValue(obj: Object, path: string[]): any {
   }
   return target;
 }
-
-type Px2emFunction = (pxNumber: number) => string;
 
 export function packObject(path: string[], value: any): Object {
   if (!path || path.length === 0) {
@@ -75,13 +72,13 @@ export function packObject(path: string[], value: any): Object {
   return result;
 }
 
-function createGetSizeFromTheme(em: Px2emFunction) {
+function createGetSizeFromTheme() {
   return function(size: WidthType | HeightType | BorderRadiusType) {
     const theSize =
       typeof size === 'string' && size.indexOf('%') > -1
         ? size
         : typeof size === 'number'
-        ? em(size)
+        ? px2remcss(size)
         : '';
     return theSize;
   };
@@ -91,7 +88,6 @@ const DefaultSpace = 0;
 export const getSpaceFromTheme = (
   spaceType: 'margin' | 'padding',
   space: MarginType | PaddingType,
-  em: Px2emFunction,
   opt?: MarginOpt = {
     default: {
       left: DefaultSpace,
@@ -111,16 +107,16 @@ export const getSpaceFromTheme = (
     },
   } = opt;
   if (typeof space === 'number') {
-    return `:${em(space)} `;
+    return `:${px2remcss(space)} `;
   }
   if (space !== undefined) {
     const spaceTop = getAttributeFromObject(space, 'top', top);
     const spaceBottom = getAttributeFromObject(space, 'bottom', bottom);
     const spaceLeft = getAttributeFromObject(space, 'left', left);
     const spaceRight = getAttributeFromObject(space, 'right', right);
-    return `${em(spaceTop)} ${em(spaceRight)} ${em(spaceBottom)} ${em(
-      spaceLeft,
-    )}`;
+    return `${px2remcss(spaceTop)} ${px2remcss(spaceRight)} ${px2remcss(
+      spaceBottom,
+    )} ${px2remcss(spaceLeft)}`;
   }
   return theSpace;
 };
@@ -130,7 +126,7 @@ function getObjectStyleFromTheme(obj: Object) {
   return obj;
 }
 
-function getBorderStyleFromTheme(border: Object, em: Px2emFunction) {
+function getBorderStyleFromTheme(border: Object) {
   if (!border) return {};
   const borderTop = getAttributeFromObject(border, 'top', {});
   const borderBottom = getAttributeFromObject(border, 'bottom', {});
@@ -145,7 +141,7 @@ function getBorderStyleFromTheme(border: Object, em: Px2emFunction) {
       style,
       `${name}Width`,
       borderTopWidth,
-      createGetSizeFromTheme(em),
+      createGetSizeFromTheme(),
     );
 
     const borderTopStyle = getAttributeFromObject(target, 'borderStyle');
@@ -196,8 +192,7 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     cursor,
   } = theme;
   const style = {};
-  const em = px2emcss(getEmMultipleForRem(fontSize));
-  const getSizeFromTheme = createGetSizeFromTheme(em);
+  const getSizeFromTheme = createGetSizeFromTheme();
   setStyleValue(style, 'fontSize', fontSize, getStringStyleFromTheme);
   setStyleValue(style, 'width', width, getSizeFromTheme);
   setStyleValue(style, 'height', height, getSizeFromTheme);
@@ -208,16 +203,16 @@ function themeMeta2Style(theme: ThemeMeta): Object {
   setStyleValue(style, 'visibility', visibility, getStringStyleFromTheme);
   setStyleValue(style, 'cursor', cursor, getStringStyleFromTheme);
   setStyleValue(style, 'padding', padding, (target: Object) =>
-    getSpaceFromTheme('padding', target, em),
+    getSpaceFromTheme('padding', target),
   );
   setStyleValue(style, 'margin', margin, (target: Object) =>
-    getSpaceFromTheme('margin', target, em),
+    getSpaceFromTheme('margin', target),
   );
   Object.assign(
     style,
     getObjectStyleFromTheme(font),
     getObjectStyleFromTheme(background),
-    getBorderStyleFromTheme(border, em),
+    getBorderStyleFromTheme(border),
   );
   return style;
 }

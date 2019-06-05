@@ -15,6 +15,7 @@ declare module '@lugia/css' {
 
   declare type Units = {
     px2rem(px: number): number,
+    px2remcss(px: number): string,
     rem2em(rem: number, emFontSize: number): number,
     px2emcss(emFontSize: number): (px: number) => string,
     px2Number(str: string): number,
