@@ -13,6 +13,8 @@ declare module '@lugia/theme-css-hoc' {
     | 'input'
     | 'li'
     | 'button'
+    | 'img'
+    | 'sup'
     | 'div'
     | 'ul'
     | 'i';
