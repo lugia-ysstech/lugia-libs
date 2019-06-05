@@ -57,13 +57,6 @@ declare module '@lugia/theme-css-hoc' {
     style?: string,
   };
 
-  declare export type BorderRadiusConfig = {
-    topLeft?: number,
-    topRight?: number,
-    bottomLeft?: number,
-    bottomRight?: number,
-  };
-
   declare export type BorderDirection = 'l' | 'r' | 'b' | 't';
   declare export type BorderRadiusDirection = 'tl' | 'tr' | 'bl' | 'br';
   declare export type GetBorderOption = {
