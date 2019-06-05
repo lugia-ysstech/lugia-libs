@@ -29,10 +29,14 @@ export default class Demo extends React.Component<any, any> {
             normal: {
               border: getBorder(
                 { color: 'red', width: 5, style: 'solid' },
-                { radius: '50%' },
+                { radius: '13%' },
               ),
               width: 25,
-              fontSize: '1rem',
+              position: {
+                top: 25,
+                right: 25,
+              },
+              fontSize: 30,
               background: { backgroundColor: 'yellow' },
             },
             hover: {

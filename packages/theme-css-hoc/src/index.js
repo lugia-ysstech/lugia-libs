@@ -27,8 +27,9 @@ import type {
 import React from 'react';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
-import { style2css } from '@lugia/css';
-import { px2remcss } from '@lugia/css/src/units';
+import { style2css, units } from '@lugia/css';
+
+const { px2remcss } = units;
 
 type MarginOpt = {
   default: {
@@ -77,16 +78,9 @@ export function packObject(path: string[], value: any): Object {
   return result;
 }
 
-function createGetSizeFromTheme() {
-  return function(size: WidthType | HeightType | BorderRadiusType) {
-    const theSize =
-      typeof size === 'string' && size.indexOf('%') > -1
-        ? size
-        : typeof size === 'number'
-        ? px2remcss(size)
-        : '';
-    return theSize;
-  };
+function getSizeFromTheme(size: WidthType | HeightType | BorderRadiusType) {
+  const theSize = typeof size === 'number' ? px2remcss(size) : size;
+  return theSize;
 }
 
 const DefaultSpace = 0;
@@ -146,7 +140,7 @@ function getBorderStyleFromTheme(border: Object) {
       style,
       `${name}Width`,
       borderTopWidth,
-      createGetSizeFromTheme(),
+      getSizeFromTheme,
     );
 
     const borderTopStyle = getAttributeFromObject(target, 'borderStyle');
@@ -188,22 +182,15 @@ function setBorderRadius(style: Object, border: Object) {
     borderBottomLeftRadius,
     borderBottomRightRadius,
   } = borderRadius;
-  setObjectValueIfValueExist(style, 'borderTopLeftRadius', borderTopLeftRadius);
-  setObjectValueIfValueExist(
-    style,
-    'borderTopRightRadius',
-    borderTopRightRadius,
-  );
-  setObjectValueIfValueExist(
-    style,
-    'borderBottomRightRadius',
-    borderBottomRightRadius,
-  );
-  setObjectValueIfValueExist(
-    style,
-    'borderBottomLeftRadius',
-    borderBottomLeftRadius,
-  );
+
+  function setBorderRaidusIfExist(key: string, target: Object) {
+    setObjectValueIfValueExist(style, key, target, getSizeFromTheme);
+  }
+
+  setBorderRaidusIfExist('borderTopLeftRadius', borderTopLeftRadius);
+  setBorderRaidusIfExist('borderTopRightRadius', borderTopRightRadius);
+  setBorderRaidusIfExist('borderBottomRightRadius', borderBottomRightRadius);
+  setBorderRaidusIfExist('borderBottomLeftRadius', borderBottomLeftRadius);
 }
 
 function getStringStyleFromTheme(stringStyle: string) {
@@ -235,13 +222,8 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     cursor,
   } = theme;
   const style = {};
-  const getSizeFromTheme = createGetSizeFromTheme();
-  setObjectValueIfValueExist(
-    style,
-    'fontSize',
-    fontSize,
-    getStringStyleFromTheme,
-  );
+  setObjectValueIfValueExist(style, 'fontSize', fontSize, getSizeFromTheme);
+
   setObjectValueIfValueExist(style, 'width', width, getSizeFromTheme);
   setObjectValueIfValueExist(style, 'height', height, getSizeFromTheme);
 
@@ -271,12 +253,32 @@ function themeMeta2Style(theme: ThemeMeta): Object {
   setObjectValueIfValueExist(style, 'margin', margin, (target: Object) =>
     getSpaceFromTheme('margin', target),
   );
+  const { position } = theme;
   Object.assign(
     style,
     getObjectStyleFromTheme(font),
     getObjectStyleFromTheme(background),
     getBorderStyleFromTheme(border),
+    getPosition(position),
   );
+  return style;
+}
+
+function getPosition(position: Object): Object {
+  if (!position) {
+    return {};
+  }
+  const style = {};
+  const { left, top, right, bottom } = position;
+
+  setObjectValueIfValueExist(style, 'left', left, getSizeFromTheme);
+  setObjectValueIfValueExist(style, 'top', top, getSizeFromTheme);
+  setObjectValueIfValueExist(style, 'right', right, getSizeFromTheme);
+  setObjectValueIfValueExist(style, 'bottom', bottom, getSizeFromTheme);
+  if (Object.keys(style).length > 0) {
+    const { type = 'absolute' } = position;
+    style.position = type;
+  }
   return style;
 }
 
