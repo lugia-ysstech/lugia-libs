@@ -60,7 +60,7 @@ declare module '@lugia/theme-core' {
     fontWeight: number,
     fontSize: number,
   };
-  declare export type FontSizeType = string;
+  declare export type FontSizeType = string | number;
   declare export type VisibilityType = 'visible' | 'hidden' | 'collapse';
   declare export type CursorType =
     | 'Default'
@@ -71,6 +71,14 @@ declare module '@lugia/theme-core' {
     | 'Auto'
     | 'not-allowed';
 
+  declare export type PositionType = 'absolute' | 'relative';
+  declare export type Position = {
+    left?: number,
+    top?: number,
+    right?: number,
+    type: PositionType,
+    bottom?: number,
+  };
   declare export type ThemeMeta = {
     background?: BackgroundType,
     border?: BorderType,
@@ -80,6 +88,7 @@ declare module '@lugia/theme-core' {
     color?: ColorType,
     opacity?: OpacityType,
     margin?: MarginType,
+    position?: Position,
     padding?: PaddingType,
     boxShadow?: BoxShadowType,
     backgroundColor?: ColorType,
