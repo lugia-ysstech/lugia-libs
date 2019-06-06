@@ -604,37 +604,31 @@ export default function CSSComponent(cssConfig: CSSConfig) {
 
   if (extend) {
     const CSSComponent = getTargetComponent(styledElement);
-    return class extends React.Component<any, any> {
-      render() {
-        const { props } = this;
-        const style = attrsHook(props);
-        return (
-          <CSSComponent
-            {...props}
-            {...style}
-            className={getClassName(className, props)}
-          />
-        );
-      }
-    };
-  }
-
-  const Target = packClassName(getTargetComponent(styledElement), className);
-
-  return class extends React.Component<any, any> {
-    render() {
-      const { props } = this;
-      const { style = {} } = props;
-      const fatherStyle = attrsHook(props);
-      const targetStyle = deepMerge(fatherStyle, { style });
+    return (props: Object) => {
+      const style = attrsHook(props);
       return (
-        <Target
+        <CSSComponent
           {...props}
-          {...targetStyle}
+          {...style}
           className={getClassName(className, props)}
         />
       );
-    }
+    };
+  }
+
+  const Target = getTargetComponent(styledElement);
+
+  return (props: Object) => {
+    const { style = {} } = props;
+    const fatherStyle = attrsHook(props);
+    const targetStyle = deepMerge(fatherStyle, { style });
+    return (
+      <Target
+        {...props}
+        {...targetStyle}
+        className={getClassName(className, props)}
+      />
+    );
   };
 }
 
