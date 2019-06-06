@@ -11,7 +11,7 @@ let footerFontSize = 10;
 if (typeof document !== 'undefined') {
   const body: Object = document.body;
   if (body) {
-    footerFontSize = getFontSize(body, 10);
+    footerFontSize = getFontSize(body.parentElement, 10);
   }
 }
 
