@@ -7,6 +7,7 @@
 import React from 'react';
 import CSSComponent, { css, keyframes } from '@lugia/theme-css-hoc';
 import ThemeHoc from '@lugia/theme-hoc';
+import { getBorder } from '@lugia/theme-css-hoc/src';
 
 const showUp = keyframes`
   from {
@@ -22,69 +23,75 @@ const Input = CSSComponent({
   className: 'main_input',
 });
 
-const Block = CSSComponent({
+const Father = CSSComponent({
   tag: 'div',
-  className: 'main_block',
+  className: 'father',
   normal: {
     defaultTheme: {
-      width: 250,
-    },
-  },
-  hover: {
-    getCSS() {
-      return css`
-        animation: ${showUp} 0.3s linear forwards;
-      `;
+      width: 555,
     },
   },
   disabled: {
-    getStyle() {
-      return { backgroundColor: 'black' }; // return {  background: 'black' };  内部目前不支持这种写法
+    defaultTheme: {
+      border: getBorder({ color: 'blue', style: 'solid', width: 5 }),
+    },
+    getCSS() {
+      return 'background: red;';
+    },
+  },
+  actived: {
+    defaultTheme: {
+      background: {
+        backgroundColor: 'blue',
+      },
     },
   },
 });
 
-const Clock = CSSComponent({
-  tag: 'div',
-  className: 'main_block',
+const Children = CSSComponent({
+  extend: Father,
+  className: 'children',
   normal: {
     defaultTheme: {
-      width: 20,
       background: {
         backgroundColor: 'pink',
       },
     },
   },
-  actived: {
-    getStyle(themeMeta, themeProps) {
-      const {
-        propsConfig: { count = 0 },
-      } = themeProps;
-      return {
-        width: `${count}px`,
-      };
+  hover: {
+    getCSS() {
+      return 'background: purple;';
+    },
+    defaultTheme: {
+      border: getBorder({ color: 'yellow', style: 'solid', width: 1 }),
     },
   },
 });
 
-const BClock = CSSComponent({
-  extend: Clock,
-  className: 'main_bloClockck',
-  hover: {
+const GrantSon = CSSComponent({
+  extend: Children,
+  className: 'GrantSon',
+  normal: {
     defaultTheme: {
       background: {
-        backgroundColor: 'green',
+        backgroundColor: 'pink',
       },
-      border: {
-        borderStyle: 'solid',
-        borderColor: 'pink',
-        borderWidth: 55,
-      },
+    },
+  },
+  hover: {
+    getCSS() {
+      return 'background: purple;';
+    },
+    defaultTheme: {
+      border: getBorder({ color: 'red', width: 15 }),
     },
   },
 });
 
-const ThemeBlock = ThemeHoc(Block, 'My_Block', { hover: true, actived: true });
+const ThemeBlock = ThemeHoc(GrantSon, 'My_Block', {
+  hover: true,
+  actived: true,
+});
 
 export default class extends React.Component<any, any> {
   constructor(props: any) {
@@ -102,7 +109,7 @@ export default class extends React.Component<any, any> {
     );
     const { themeState } = themeProps;
     return [
-      <Block
+      <Father
         onClick={this.onClick}
         innerRef={cmp => {
           this.block = cmp;
@@ -110,21 +117,21 @@ export default class extends React.Component<any, any> {
         themeProps={this.props.mergeThemeStateAndChildThemeProps('CSSBlock')}
       >
         CSSComponent
-      </Block>,
-      <Clock
+      </Father>,
+      <Children
         themeProps={this.props.mergeThemePropsAndPropsConfig({
           count: this.state.count,
         })}
       >
         Clock
-      </Clock>,
-      <BClock
+      </Children>,
+      <GrantSon
         themeProps={this.props.mergeThemePropsAndPropsConfig({
           count: this.state.total,
         })}
       >
         BClock
-      </BClock>,
+      </GrantSon>,
       <ThemeBlock
         {...this.props.getChildThemeHocProps('ThemeBlock')}
         themeState={themeState}
