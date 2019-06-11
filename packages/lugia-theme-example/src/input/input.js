@@ -103,7 +103,8 @@ export default class extends React.Component<any, any> {
     const { themeState } = themeProps;
     return [
       <Block
-        ref={cmp => {
+        onClick={this.onClick}
+        innerRef={cmp => {
           this.block = cmp;
         }}
         themeProps={this.props.mergeThemeStateAndChildThemeProps('CSSBlock')}

@@ -610,6 +610,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         <CSSComponent
           {...props}
           {...style}
+          ref={props.innerRef}
           className={getClassName(className, props)}
         />
       );
@@ -626,6 +627,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       <Target
         {...props}
         {...targetStyle}
+        ref={props.innerRef}
         className={getClassName(className, props)}
       />
     );
