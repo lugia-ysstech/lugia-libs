@@ -311,7 +311,7 @@ export function getThemeMeta(
     }
     const { defaultTheme = {}, selectNames } = config;
     const selectNameThemeMeta = getSelectNameThemeMeta(theme, selectNames);
-    if (stateType === 'hover') {
+    if (stateType === 'hover' || stateType === 'disabled') {
       return deepMerge(defaultTheme, selectNameThemeMeta);
     }
     return selectNameThemeMeta;
@@ -547,7 +547,7 @@ function createGetStyleByDefaultThemeMeta(cssConfig: CSSConfig) {
       {
         createGetStyle(cssConfig: CSSConfig, stateType: StateType): Function {
           const alwaysEmptyObject = always({});
-          if (!cssConfig || stateType === 'hover') {
+          if (!cssConfig || stateType === 'hover' || stateType === 'disabled') {
             return alwaysEmptyObject;
           }
           const cssMeta = cssConfig[stateType];
