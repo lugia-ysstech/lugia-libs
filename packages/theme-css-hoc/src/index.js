@@ -398,15 +398,26 @@ function getStateTypes(themeState: ThemeState = {}): StateType[] {
 }
 
 function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
+  const stateType2Gettor: {
+    [key: StateType]: (themeMeta: ThemeMeta) => Object,
+  } = {
+    normal: packStyle(cssConfig, 'normal'),
+    actived: packStyle(cssConfig, 'actived'),
+    hover: packStyle(cssConfig, 'hover'),
+    disabled: packStyle(cssConfig, 'disabled'),
+  };
   return function(props: CSSProps) {
-    return getStyleFromPropsAndCSSConfigByHook(
-      cssConfig,
-      props,
-      (cssConfig: CSSConfig, stateType: StateType): Function => {
-        return packStyle(cssConfig, stateType);
-      },
-      'developer',
-    );
+    const { themeProps } = props;
+
+    const { themeState, themeConfig } = themeProps;
+
+    const stateTypes = getStateTypes(themeState);
+    return stateTypes.reduce((result: Object, stateType: StateType) => {
+      const gettor = stateType2Gettor[stateType];
+      const { [stateType]: themeMeta = {} } = themeConfig;
+      result[stateType] = gettor(themeMeta);
+      return result;
+    }, {});
   };
 }
 
@@ -577,22 +588,35 @@ function getStyledComponent(cssConfig: CSSConfig): Object {
   return styledElement;
 }
 
+const CSSComponent2CSSConfig = new WeakMap();
+
 export default function CSSComponent(cssConfig: CSSConfig) {
   const styledElement = getStyledComponent(cssConfig);
-  const getTheCSS = createGetUserDefineCSS(cssConfig);
-  const getTheStyle = createGetUserDefineStyle(cssConfig);
-  const getStyleByThemeMeta = createGetStyleFromPropsAndCSSConfig(cssConfig);
+
+  let theCSSConfig = cssConfig;
+  const { extend } = cssConfig;
+
+  if (extend) {
+    const extendCSSConfig = CSSComponent2CSSConfig.get(extend);
+    if (extendCSSConfig) {
+      theCSSConfig = deepMerge(extendCSSConfig, theCSSConfig);
+    }
+  }
+  const getTheCSS = createGetUserDefineCSS(theCSSConfig);
+  const getTheStyle = createGetUserDefineStyle(theCSSConfig);
   const getStyleByDefaultThemeMeta = createGetStyleByDefaultThemeMeta(
-    cssConfig,
+    theCSSConfig,
   );
   const getDefaultStyle = getStyleByDefaultThemeMeta
     ? getStyleByDefaultThemeMeta
     : undefined;
 
-  const attrsHook = (props: CSSProps) => {
-    return { style: deepMerge(getStyleByThemeMeta(props), getTheStyle(props)) };
+  const getStyleByThemeMeta = createGetStyleFromPropsAndCSSConfig(cssConfig);
+  const attrsHook = (props: CSSProps): Object => {
+    return { theStyle: getTheStyle(props), ...getStyleByThemeMeta(props) };
   };
-  const { css, extend, className } = cssConfig;
+
+  const { css, className } = cssConfig;
 
   function getTargetComponent(targetStyleComponent: Function): Function {
     return targetStyleComponent`
@@ -604,34 +628,78 @@ export default function CSSComponent(cssConfig: CSSConfig) {
 
   if (extend) {
     const CSSComponent = getTargetComponent(styledElement);
-    return (props: Object) => {
-      const style = attrsHook(props);
+    const result = (props: Object) => {
+      const {
+        normal: cNormal,
+        hover: cHover,
+        actived: cActived,
+        disabled: cDisabled,
+        theStyle: cTheStyle,
+      } = props;
+      const {
+        normal = {},
+        hover = {},
+        actived = {},
+        disabled = {},
+        theStyle = {},
+      } = attrsHook(props);
       return (
         <CSSComponent
           {...props}
-          {...style}
+          normal={deepMerge(normal, cNormal)}
+          hover={deepMerge(hover, cHover)}
+          actived={deepMerge(actived, cActived)}
+          disabled={deepMerge(disabled, cDisabled)}
+          theStyle={deepMerge(theStyle, cTheStyle)}
           ref={props.innerRef}
           className={getClassName(className, props)}
         />
       );
     };
+    CSSComponent2CSSConfig.set(result, cssConfig);
+    return result;
   }
 
   const Target = getTargetComponent(styledElement);
 
-  return (props: Object) => {
-    const { style = {} } = props;
-    const fatherStyle = attrsHook(props);
-    const targetStyle = deepMerge(fatherStyle, { style });
+  const result = (props: Object) => {
+    const {
+      normal = {},
+      hover = {},
+      actived = {},
+      disabled = {},
+      theStyle = {},
+    } = attrsHook(props);
+    const {
+      normal: cNormal,
+      hover: cHover,
+      actived: cActived,
+      disabled: cDisabled,
+      theStyle: cTheStyle,
+    } = props;
+    const targetStyle = deepMerge(
+      normal,
+      cNormal,
+      hover,
+      cHover,
+      actived,
+      cActived,
+      disabled,
+      cDisabled,
+      theStyle,
+      cTheStyle,
+    );
     return (
       <Target
         {...props}
-        {...targetStyle}
+        style={targetStyle}
         ref={props.innerRef}
         className={getClassName(className, props)}
       />
     );
   };
+  CSSComponent2CSSConfig.set(result, cssConfig);
+  return result;
 }
 
 function packClassName(Target: Function, className: string) {
