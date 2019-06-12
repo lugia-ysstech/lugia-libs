@@ -630,11 +630,13 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     const CSSComponent = getTargetComponent(styledElement);
     const result = (props: Object) => {
       const {
-        normal: cNormal,
-        hover: cHover,
-        actived: cActived,
-        disabled: cDisabled,
-        theStyle: cTheStyle,
+        _lugia_theme_style_: {
+          normal: cNormal,
+          hover: cHover,
+          actived: cActived,
+          disabled: cDisabled,
+          theStyle: cTheStyle,
+        } = {},
       } = props;
       const {
         normal = {},
@@ -643,14 +645,17 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         disabled = {},
         theStyle = {},
       } = attrsHook(props);
+
       return (
         <CSSComponent
           {...props}
-          normal={deepMerge(normal, cNormal)}
-          hover={deepMerge(hover, cHover)}
-          actived={deepMerge(actived, cActived)}
-          disabled={deepMerge(disabled, cDisabled)}
-          theStyle={deepMerge(theStyle, cTheStyle)}
+          _lugia_theme_style_={{
+            normal: deepMerge(normal, cNormal),
+            hover: deepMerge(hover, cHover),
+            actived: deepMerge(actived, cActived),
+            disabled: deepMerge(disabled, cDisabled),
+            theStyle: deepMerge(theStyle, cTheStyle),
+          }}
           ref={props.innerRef}
           className={getClassName(className, props)}
         />
@@ -671,11 +676,13 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       theStyle = {},
     } = attrsHook(props);
     const {
-      normal: cNormal,
-      hover: cHover,
-      actived: cActived,
-      disabled: cDisabled,
-      theStyle: cTheStyle,
+      _lugia_theme_style_: {
+        normal: cNormal,
+        hover: cHover,
+        actived: cActived,
+        disabled: cDisabled,
+        theStyle: cTheStyle,
+      } = {},
     } = props;
     const targetStyle = deepMerge(
       normal,
