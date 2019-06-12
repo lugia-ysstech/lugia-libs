@@ -18,9 +18,9 @@ declare module '@lugia/theme-css-hoc' {
     | 'div'
     | 'ul'
     | 'i';
-  declare export type StateType = 'normal' | 'actived' | 'hover' | 'disabled';
+  declare export type StateType = 'normal' | 'active' | 'hover' | 'disabled';
   declare export type ThemeState = {
-    actived: boolean,
+    active: boolean,
     disabled: boolean,
     hover: boolean,
   };
@@ -47,7 +47,7 @@ declare module '@lugia/theme-css-hoc' {
     extend?: Object,
     css?: any, // 这个是要去 css 模板的写法
     normal?: CSSMeta, // 默认为 {}
-    actived?: CSSMeta, // 默认为 {}
+    active?: CSSMeta, // 默认为 {}
     hover?: CSSMeta, // 默认为 {}
     disabled?: CSSMeta, // 默认为 {}
   };

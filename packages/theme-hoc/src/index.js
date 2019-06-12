@@ -12,12 +12,12 @@ import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 const ThemeProvider = (
   Target: ProviderComponent,
   widgetName: string,
-  opt?: ThemeHocOption = { hover: false, actived: false },
+  opt?: ThemeHocOption = { hover: false, active: false },
 ): Function => {
-  const { hover = false, actived = false } = opt;
+  const { hover = false, active = false } = opt;
 
   function needProcessThemeState() {
-    return hover == true || actived == true;
+    return hover == true || active == true;
   }
 
   const displayName = `lugia_t_hoc_${widgetName}`;
@@ -36,8 +36,8 @@ const ThemeProvider = (
         if (hover) {
           themeState.hover = false;
         }
-        if (actived) {
-          themeState.actived = false;
+        if (active) {
+          themeState.active = false;
         }
       }
       this.state = initState;
@@ -64,23 +64,23 @@ const ThemeProvider = (
 
     onMouseDown = () => {
       const themeState = this.getThemeState();
-      const { actived } = themeState;
-      if (actived === true) {
+      const { active } = themeState;
+      if (active === true) {
         return;
       }
       this.setState({
-        themeState: { ...themeState, actived: true },
+        themeState: { ...themeState, active: true },
       });
     };
 
     onMouseUp = () => {
       const themeState = this.getThemeState();
-      const { actived } = themeState;
-      if (actived === false) {
+      const { active } = themeState;
+      if (active === false) {
         return;
       }
       this.setState({
-        themeState: { ...themeState, actived: false },
+        themeState: { ...themeState, active: false },
       });
     };
 
@@ -200,7 +200,7 @@ const ThemeProvider = (
       const { svThemVersion } = this.state;
 
       const themeStateEventConfig = {};
-      if (actived) {
+      if (active) {
         themeStateEventConfig.onMouseDown = this.onMouseDown;
         themeStateEventConfig.onMouseUp = this.onMouseUp;
       }

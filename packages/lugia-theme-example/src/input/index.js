@@ -8,4 +8,4 @@ import React from 'react';
 import ThemeHoc from '@lugia/theme-hoc';
 import Input from './input';
 
-export default ThemeHoc(Input, 'My_Input', { hover: true, actived: true });
+export default ThemeHoc(Input, 'My_Input', { hover: true, active: true });

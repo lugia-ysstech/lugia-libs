@@ -7,7 +7,7 @@ import ThemeHoc from '@lugia/theme-hoc';
 type ThemeHocOption = {
   enabledState: {
     hover: boolean, 
-    actived: boolean,
+    active: boolean,
   },
 };
 
@@ -17,7 +17,7 @@ type ProviderComponent = React.ComponentType<any>;
 ThemeHoc  (
   Target: ProviderComponent,
   widgetName: string,
-  opt?: ThemeHocOption = { hover: false, actived: false },
+  opt?: ThemeHocOption = { hover: false, active: false },
 ): Function;
 
 ````

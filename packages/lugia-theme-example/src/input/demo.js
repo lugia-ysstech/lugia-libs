@@ -51,9 +51,11 @@ export default class Demo extends React.Component<any, any> {
         ThemeBlock: {
           normal: {
             background: { backgroundColor: 'blue' },
+            border: getBorder({ color: 'red', style: 'solid', width: 1 }),
           },
           hover: {
             background: { backgroundColor: 'green' },
+            border: 'none',
           },
         },
       },

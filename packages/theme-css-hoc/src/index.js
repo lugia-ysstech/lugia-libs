@@ -383,13 +383,13 @@ function getCSS(getStyle: Function) {
 function getStateTypes(themeState: ThemeState = {}): StateType[] {
   const res = ['normal'];
 
-  const { hover = false, disabled = false, actived = false } = themeState;
+  const { hover = false, disabled = false, active = false } = themeState;
 
   if (hover) {
     res.push('hover');
   }
-  if (actived) {
-    res.push('actived');
+  if (active) {
+    res.push('active');
   }
   if (disabled) {
     res.push('disabled');
@@ -402,7 +402,7 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
     [key: StateType]: (themeMeta: ThemeMeta) => Object,
   } = {
     normal: packStyle(cssConfig, 'normal'),
-    actived: packStyle(cssConfig, 'actived'),
+    active: packStyle(cssConfig, 'active'),
     hover: packStyle(cssConfig, 'hover'),
     disabled: packStyle(cssConfig, 'disabled'),
   };
@@ -499,8 +499,8 @@ const always = (val: any) => () => val;
 const alwaysEmptyString = always('');
 
 export function createGetUserDefineCSS(cssConfig: CSSConfig) {
-  const { normal = {}, hover = {}, actived = {}, disabled = {} } = cssConfig;
-  if (!normal.getCSS && !hover.getCSS && !actived.getCSS && !disabled.getCSS) {
+  const { normal = {}, hover = {}, active = {}, disabled = {} } = cssConfig;
+  if (!normal.getCSS && !hover.getCSS && !active.getCSS && !disabled.getCSS) {
     return '';
   }
   return (props: CSSProps): string => {
@@ -552,9 +552,9 @@ export function createGetUserDefineStyle(cssConfig: CSSConfig) {
 }
 
 function createGetStyleByDefaultThemeMeta(cssConfig: CSSConfig) {
-  const { normal = {}, actived = {}, disabled = {} } = cssConfig;
+  const { normal = {}, active = {}, disabled = {} } = cssConfig;
 
-  if (!normal.defaultTheme && !actived.defaultTheme && !disabled.defaultTheme) {
+  if (!normal.defaultTheme && !active.defaultTheme && !disabled.defaultTheme) {
     return undefined;
   }
   return (props: CSSProps): string => {
@@ -639,7 +639,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         _lugia_theme_style_: {
           normal: cNormal,
           hover: cHover,
-          actived: cActived,
+          active: cActived,
           disabled: cDisabled,
           theStyle: cTheStyle,
         } = {},
@@ -647,7 +647,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       const {
         normal = {},
         hover = {},
-        actived = {},
+        active = {},
         disabled = {},
         theStyle = {},
       } = attrsHook(props);
@@ -658,7 +658,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
           _lugia_theme_style_={{
             normal: deepMerge(normal, cNormal),
             hover: deepMerge(hover, cHover),
-            actived: deepMerge(actived, cActived),
+            active: deepMerge(active, cActived),
             disabled: deepMerge(disabled, cDisabled),
             theStyle: deepMerge(theStyle, cTheStyle),
           }}
@@ -677,7 +677,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     const {
       normal = {},
       hover = {},
-      actived = {},
+      active = {},
       disabled = {},
       theStyle = {},
     } = attrsHook(props);
@@ -685,7 +685,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       _lugia_theme_style_: {
         normal: cNormal,
         hover: cHover,
-        actived: cActived,
+        active: cActived,
         disabled: cDisabled,
         theStyle: cTheStyle,
       } = {},
@@ -695,7 +695,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       cNormal,
       hover,
       cHover,
-      actived,
+      active,
       cActived,
       disabled,
       cDisabled,

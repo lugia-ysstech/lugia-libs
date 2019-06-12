@@ -107,7 +107,7 @@ declare module '@lugia/theme-core' {
   declare export type ThemePart = {
     normal: ThemeMeta,
     disabled: ThemeMeta,
-    actived: ThemeMeta,
+    active: ThemeMeta,
     hover: ThemeMeta,
   };
 

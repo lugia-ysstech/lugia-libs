@@ -39,7 +39,7 @@ const Father = CSSComponent({
       return 'background: red;';
     },
   },
-  actived: {
+  active: {
     defaultTheme: {
       background: {
         backgroundColor: 'blue',
@@ -90,7 +90,7 @@ const GrantSon = CSSComponent({
 
 const ThemeBlock = ThemeHoc(GrantSon, 'My_Block', {
   hover: true,
-  actived: true,
+  active: true,
 });
 
 export default class extends React.Component<any, any> {
