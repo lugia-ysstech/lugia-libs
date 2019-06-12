@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-core",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
