@@ -5,7 +5,7 @@
  * @flow
  */
 import React from 'react';
-import CSSComponent, { css, keyframes } from '@lugia/theme-css-hoc';
+import CSSComponent, { keyframes } from '@lugia/theme-css-hoc';
 import ThemeHoc from '@lugia/theme-hoc';
 import { getBorder } from '@lugia/theme-css-hoc/src';
 
@@ -102,43 +102,46 @@ export default class extends React.Component<any, any> {
   block: Object;
 
   render() {
-    const { themeProps } = this.props;
+    const {
+      themeProps: { themeState },
+    } = this.props;
     const childWidgetName = 'ResetButton';
-    const { viewClass, theme } = this.props.getChildThemeHocProps(
+    const { viewClass, theme } = this.props.getPartOfThemeHocProps(
       childWidgetName,
     );
-    const { themeState } = themeProps;
     return [
       <Father
         onClick={this.onClick}
         innerRef={cmp => {
           this.block = cmp;
         }}
-        themeProps={this.props.mergeThemeStateAndChildThemeProps('CSSBlock')}
+        themeProps={this.props.getPartOfThemeProps('CSSBlock')}
       >
         CSSComponent
       </Father>,
       <Children
-        themeProps={this.props.mergeThemePropsAndPropsConfig({
-          count: this.state.count,
+        themeProps={this.props.getPartOfThemeProps('Children', {
+          props: {
+            count: this.state.count,
+          },
         })}
       >
         Clock
       </Children>,
       <GrantSon
-        themeProps={this.props.mergeThemePropsAndPropsConfig({
-          count: this.state.total,
+        themeProps={this.props.getPartOfThemeProps('GrantSon', {
+          props: { count: this.state.total },
         })}
       >
         BClock
       </GrantSon>,
       <ThemeBlock
-        {...this.props.getChildThemeHocProps('ThemeBlock')}
+        {...this.props.getPartOfThemeHocProps('ThemeBlock')}
         themeState={themeState}
       >
         ThemeComponent
       </ThemeBlock>,
-      <Input themeProps={themeProps} />,
+      <Input themeProps={this.props.getPartOfThemeProps('My_Input')} />,
     ];
   }
 

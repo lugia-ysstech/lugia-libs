@@ -1,5 +1,3 @@
-import { BorderRadiusType } from '@lugia/theme-core';
-
 declare module '@lugia/theme-core' {
   declare export function getKeys(obj: Object): string[];
 
@@ -79,7 +77,7 @@ declare module '@lugia/theme-core' {
     type: PositionType,
     bottom?: number,
   };
-  declare export type ThemeMeta = {
+  declare export type SimpleThemeMeta = {
     background?: BackgroundType,
     border?: BorderType,
     width?: WidthType,
@@ -96,11 +94,24 @@ declare module '@lugia/theme-core' {
     visibility?: VisibilityType,
     cursor?: CursorType,
   };
-  declare export type ThemeConfig = {
+
+  declare export type ThemeMeta =
+    | SimpleThemeMeta
+    | {
+        first?: SimpleThemeMeta,
+        last?: SimpleThemeMeta,
+        odd?: SimpleThemeMeta,
+        even?: SimpleThemeMeta,
+      };
+
+  declare export type ThemePart = {
     normal: ThemeMeta,
     disabled: ThemeMeta,
     actived: ThemeMeta,
     hover: ThemeMeta,
-    children: { [childName: string]: ThemeConfig },
+  };
+
+  declare export type ThemeConfig = {
+    [partName: string]: ThemePart,
   };
 }

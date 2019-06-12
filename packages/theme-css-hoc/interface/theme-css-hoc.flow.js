@@ -27,7 +27,6 @@ declare module '@lugia/theme-css-hoc' {
 
   declare export type ThemeProps = {
     themeState: ThemeState,
-    getFontSize?: Function,
     themeConfig: ThemeConfig,
     propsConfig: Object,
   };

@@ -409,6 +409,9 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
   return function(props: CSSProps) {
     const { themeProps } = props;
 
+    if (!themeProps) {
+      console.info('dsafsadfsa');
+    }
     const { themeState, themeConfig } = themeProps;
 
     const stateTypes = getStateTypes(themeState);
@@ -455,8 +458,11 @@ function getInfoFromPropsAndCSSConfigByHook(
 ) {
   const { createGetStyle, initVal, getValue } = opt;
   const { themeProps } = props;
-  const { themeState } = themeProps;
 
+  if (!themeProps) {
+    console.info('dsafsadfsa');
+  }
+  const { themeState } = themeProps;
   const stateTypes = getStateTypes(themeState);
 
   const { themeConfig = {} } = themeProps;
