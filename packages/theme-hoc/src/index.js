@@ -9,6 +9,11 @@ import PropTypes from 'prop-types';
 import { getConfig, selectThemePart } from '@lugia/theme-core';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 
+import styled from 'styled-components';
+
+const ThemeContainer = styled.span`
+  display: inline-block;
+`;
 const ThemeProvider = (
   Target: ProviderComponent,
   widgetName: string,
@@ -224,7 +229,7 @@ const ThemeProvider = (
       }
 
       return (
-        <span {...themeStateEventConfig}>
+        <ThemeContainer {...themeStateEventConfig}>
           <Target
             {...this.props}
             themeProps={this.getThemeProps()}
@@ -240,7 +245,7 @@ const ThemeProvider = (
               this.svtarget = cmp;
             }}
           />
-        </span>
+        </ThemeContainer>
       );
     }
   }
