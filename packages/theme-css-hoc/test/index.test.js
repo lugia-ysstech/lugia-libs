@@ -55,25 +55,25 @@ describe('CSSComponent', () => {
   it('getBorder only color', () => {
     expect(getBorder({ color: 'red' })).toEqual({
       top: {
-        borderColor: 'red',
+        color: 'red',
       },
       left: {
-        borderColor: 'red',
+        color: 'red',
       },
       bottom: {
-        borderColor: 'red',
+        color: 'red',
       },
       right: {
-        borderColor: 'red',
+        color: 'red',
       },
     });
   });
 
   it('getBorder all', () => {
     const config = {
-      borderColor: 'red',
-      borderWidth: 5,
-      borderStyle: 'solid',
+      color: 'red',
+      width: 5,
+      style: 'solid',
     };
     expect(getBorder({ color: 'red', style: 'solid', width: 5 })).toEqual({
       top: config,
@@ -86,23 +86,23 @@ describe('CSSComponent', () => {
   it('getBorderRadius all', () => {
     expect(getBorderRadius('', [])).toEqual({});
     expect(getBorderRadius(10)).toEqual({
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
+      topLeft: 10,
+      topRight: 10,
+      bottomLeft: 10,
+      bottomRight: 10,
     });
 
     expect(getBorderRadius('20%', ['tr', 'br'])).toEqual({
-      borderTopRightRadius: '20%',
-      borderBottomRightRadius: '20%',
+      topRight: '20%',
+      bottomRight: '20%',
     });
   });
 
   it('get Border top left ', () => {
     const config = {
-      borderColor: 'red',
-      borderWidth: 5,
-      borderStyle: 'solid',
+      color: 'red',
+      width: 5,
+      style: 'solid',
     };
     expect(
       getBorder(
@@ -135,9 +135,9 @@ describe('CSSComponent', () => {
 
   it('get Border top left radius ', () => {
     const config = {
-      borderColor: 'red',
-      borderWidth: 5,
-      borderStyle: 'solid',
+      color: 'red',
+      width: 5,
+      style: 'solid',
     };
     expect(
       getBorder(
@@ -147,11 +147,11 @@ describe('CSSComponent', () => {
     ).toEqual({
       top: config,
       left: config,
-      borderRadius: {
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
+      radius: {
+        topLeft: 10,
+        topRight: 10,
+        bottomLeft: 10,
+        bottomRight: 10,
       },
     });
   });
