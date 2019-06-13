@@ -1,4 +1,10 @@
 declare module '@lugia/theme-core' {
+  declare export function selectThemePart(
+    themePart: Object,
+    index: number,
+    total: number,
+  ): Object;
+
   declare export function getKeys(obj: Object): string[];
 
   declare export function getObject(obj: Object, key: string): Object;

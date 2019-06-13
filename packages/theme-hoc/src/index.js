@@ -6,7 +6,7 @@ import type { ProviderComponent, ThemeHocOption } from '@lugia/theme-hoc';
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { getConfig } from '@lugia/theme-core';
+import { getConfig, selectThemePart } from '@lugia/theme-core';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 
 const ThemeProvider = (
@@ -115,11 +115,14 @@ const ThemeProvider = (
     };
 
     getPartOfThemeHocProps = (childWidgetName: string): Object => {
+      const viewClass = `${displayName}_${childWidgetName}`;
       const targetTheme = this.getPartOfThemeConfig(childWidgetName);
+      return this.createThemeHocProps(viewClass, targetTheme);
+    };
+    createThemeHocProps = (viewClass: string, targetTheme: Object): Object => {
       if (!targetTheme) {
         return {};
       }
-      const viewClass = `${displayName}_${childWidgetName}`;
       return {
         viewClass,
         theme: {
@@ -142,7 +145,12 @@ const ThemeProvider = (
 
     getPartOfThemeProps = (
       childWidgetName: string,
-      opt?: { themeConfig: ?Object, props: ?Object, state?: Object },
+      opt?: {
+        themeConfig: ?Object,
+        props: ?Object,
+        state?: Object,
+        selector?: { index: number, count: number },
+      },
     ): Object => {
       if (!childWidgetName) {
         return {};
@@ -160,6 +168,11 @@ const ThemeProvider = (
         }
         if (state) {
           themeState = deepMerge(themeState, state);
+        }
+        const { selector } = opt;
+        if (selector) {
+          const { index, count } = selector;
+          themeConfig = selectThemePart(themeConfig, index, count);
         }
       }
       return { themeConfig, propsConfig, themeState };
@@ -182,6 +195,7 @@ const ThemeProvider = (
         {},
       );
     };
+
     getThemeState() {
       const { disabled } = this.props;
       const { themeState } = this.state;
@@ -217,6 +231,7 @@ const ThemeProvider = (
             getPartOfThemeHocProps={this.getPartOfThemeHocProps}
             getPartOfThemeConfig={this.getPartOfThemeConfig}
             getPartOfThemeProps={this.getPartOfThemeProps}
+            createThemeHocProps={this.createThemeHocProps}
             getTheme={this.getTheme}
             getWidgetThemeName={() => widgetName}
             getThemeByDisplayName={this.getThemeByDisplayName}

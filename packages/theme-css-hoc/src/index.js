@@ -781,8 +781,6 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       cTheStyle,
     );
 
-    console.info('targetStyle targetStyle 1', targetStyle);
-    console.info('targetStyle targetStyle 2', 'background' in targetStyle);
     return (
       <Target
         {...props}
