@@ -67,7 +67,7 @@ const ThemeProvider = (
       }
     }
 
-    onMouseDown = () => {
+    onMouseDown = (...rest) => {
       const themeState = this.getThemeState();
       const { active } = themeState;
       if (active === true) {
@@ -76,9 +76,11 @@ const ThemeProvider = (
       this.setState({
         themeState: { ...themeState, active: true },
       });
+      const { onMouseDown } = this.props;
+      onMouseDown && onMouseDown(...rest);
     };
 
-    onMouseUp = () => {
+    onMouseUp = (...rest) => {
       const themeState = this.getThemeState();
       const { active } = themeState;
       if (active === false) {
@@ -87,9 +89,11 @@ const ThemeProvider = (
       this.setState({
         themeState: { ...themeState, active: false },
       });
+      const { onMouseUp } = this.props;
+      onMouseUp && onMouseUp(...rest);
     };
 
-    onMouseEnter = () => {
+    onMouseEnter = (...rest) => {
       const themeState = this.getThemeState();
       const { hover } = themeState;
       if (hover === true) {
@@ -98,9 +102,11 @@ const ThemeProvider = (
       this.setState({
         themeState: { ...themeState, hover: true },
       });
+      const { onMouseEnter } = this.props;
+      onMouseEnter && onMouseEnter(...rest);
     };
 
-    onMouseLeave = () => {
+    onMouseLeave = (...rest) => {
       const themeState = this.getThemeState();
       const { hover } = themeState;
       if (hover === false) {
@@ -109,6 +115,8 @@ const ThemeProvider = (
       this.setState({
         themeState: { ...themeState, hover: false },
       });
+      const { onMouseLeave } = this.props;
+      onMouseLeave && onMouseLeave(...rest);
     };
 
     getThemeTarget = () => {
@@ -229,23 +237,22 @@ const ThemeProvider = (
       }
 
       return (
-        <ThemeContainer {...themeStateEventConfig}>
-          <Target
-            {...this.props}
-            themeProps={this.getThemeProps()}
-            getPartOfThemeHocProps={this.getPartOfThemeHocProps}
-            getPartOfThemeConfig={this.getPartOfThemeConfig}
-            getPartOfThemeProps={this.getPartOfThemeProps}
-            createThemeHocProps={this.createThemeHocProps}
-            getTheme={this.getTheme}
-            getWidgetThemeName={() => widgetName}
-            getThemeByDisplayName={this.getThemeByDisplayName}
-            svThemVersion={svThemVersion}
-            ref={(cmp: Object) => {
-              this.svtarget = cmp;
-            }}
-          />
-        </ThemeContainer>
+        <Target
+          {...this.props}
+          themeProps={this.getThemeProps()}
+          getPartOfThemeHocProps={this.getPartOfThemeHocProps}
+          getPartOfThemeConfig={this.getPartOfThemeConfig}
+          getPartOfThemeProps={this.getPartOfThemeProps}
+          createThemeHocProps={this.createThemeHocProps}
+          getTheme={this.getTheme}
+          getWidgetThemeName={() => widgetName}
+          getThemeByDisplayName={this.getThemeByDisplayName}
+          svThemVersion={svThemVersion}
+          ref={(cmp: Object) => {
+            this.svtarget = cmp;
+          }}
+          {...themeStateEventConfig}
+        />
       );
     }
   }
