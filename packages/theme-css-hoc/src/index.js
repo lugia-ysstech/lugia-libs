@@ -127,6 +127,16 @@ function getObjectStyleFromTheme(obj: Object) {
 
 function getBorderStyleFromTheme(border: Object) {
   if (!border) return {};
+
+  if (border === 'none') {
+    return {
+      borderTopWidth: 0,
+      borderBottomWidth: 0,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+    };
+  }
+
   const borderTop = getAttributeFromObject(border, 'top', {});
   const borderBottom = getAttributeFromObject(border, 'bottom', {});
   const borderLeft = getAttributeFromObject(border, 'left', {});
@@ -135,15 +145,15 @@ function getBorderStyleFromTheme(border: Object) {
   const style = {};
 
   function setBorderStyle(target: Object, name: string) {
-    const borderTopWidth = getAttributeFromObject(target, 'borderWidth');
+    const borderTopWidth = getAttributeFromObject(target, 'width');
     setObjectValueIfValueExist(
       style,
       `${name}Width`,
-      borderTopWidth,
+      target === 'none' ? 0 : borderTopWidth,
       getSizeFromTheme,
     );
 
-    const borderTopStyle = getAttributeFromObject(target, 'borderStyle');
+    const borderTopStyle = getAttributeFromObject(target, 'style');
     setObjectValueIfValueExist(
       style,
       `${name}Style`,
@@ -151,7 +161,7 @@ function getBorderStyleFromTheme(border: Object) {
       always(borderTopStyle),
     );
 
-    const borderColor = getAttributeFromObject(target, 'borderColor');
+    const borderColor = getAttributeFromObject(target, 'color');
     setObjectValueIfValueExist(
       style,
       `${name}Color`,
@@ -172,25 +182,20 @@ function setBorderRadius(style: Object, border: Object) {
   if (!border) {
     return;
   }
-  const { borderRadius } = border;
-  if (!borderRadius) {
+  const { radius } = border;
+  if (!radius) {
     return;
   }
-  const {
-    borderTopLeftRadius,
-    borderTopRightRadius,
-    borderBottomLeftRadius,
-    borderBottomRightRadius,
-  } = borderRadius;
+  const { topLeft, topRight, bottomLeft, bottomRight } = radius;
 
   function setBorderRaidusIfExist(key: string, target: Object) {
     setObjectValueIfValueExist(style, key, target, getSizeFromTheme);
   }
 
-  setBorderRaidusIfExist('borderTopLeftRadius', borderTopLeftRadius);
-  setBorderRaidusIfExist('borderTopRightRadius', borderTopRightRadius);
-  setBorderRaidusIfExist('borderBottomRightRadius', borderBottomRightRadius);
-  setBorderRaidusIfExist('borderBottomLeftRadius', borderBottomLeftRadius);
+  setBorderRaidusIfExist('borderTopLeftRadius', topLeft);
+  setBorderRaidusIfExist('borderTopRightRadius', topRight);
+  setBorderRaidusIfExist('borderBottomRightRadius', bottomRight);
+  setBorderRaidusIfExist('borderBottomLeftRadius', bottomLeft);
 }
 
 function getStringStyleFromTheme(stringStyle: string) {
@@ -207,7 +212,6 @@ function getNumberStyleFromTheme(numberStyle: number) {
 
 function themeMeta2Style(theme: ThemeMeta): Object {
   const {
-    background,
     border,
     width,
     height,
@@ -221,6 +225,8 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     visibility,
     cursor,
   } = theme;
+  let { background } = theme;
+
   const style = {};
   setObjectValueIfValueExist(style, 'fontSize', fontSize, getSizeFromTheme);
 
@@ -257,9 +263,87 @@ function themeMeta2Style(theme: ThemeMeta): Object {
   Object.assign(
     style,
     getObjectStyleFromTheme(font),
-    getObjectStyleFromTheme(background),
+    getBackGround(background),
     getBorderStyleFromTheme(border),
     getPosition(position),
+  );
+  return style;
+}
+
+function getBackGround(background: any) {
+  const style = {};
+  if (!background) {
+    return style;
+  }
+
+  if (background === 'none') {
+    return { backgroundColor: 'rgb(0,0,0,0)', backgroundImage: 'none' };
+  }
+
+  const {
+    color,
+    image,
+    origin,
+    positionX,
+    positionY,
+    repeatX,
+    repeatY,
+    size,
+    clip,
+  } = background;
+  setObjectValueIfValueExist(
+    style,
+    'backgroundColor',
+    color,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'backgroundImage',
+    image,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'backgroundOrigin',
+    origin,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'backgroundPositionX',
+    positionX,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'backgroundPositionY',
+    positionY,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'backgroundRepeatX',
+    repeatX,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'backgroundRepeatY',
+    repeatY,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'backgroundSize',
+    size,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'backgroundClip',
+    clip,
+    getStringStyleFromTheme,
   );
   return style;
 }
@@ -288,7 +372,7 @@ export function setObjectValueIfValueExist(
   value: any,
   cb?: Function,
 ) {
-  if (value) {
+  if (value || value === 0) {
     style[name] = cb ? cb(value) : value;
   }
 }
@@ -409,9 +493,6 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
   return function(props: CSSProps) {
     const { themeProps } = props;
 
-    if (!themeProps) {
-      console.info('dsafsadfsa');
-    }
     const { themeState, themeConfig } = themeProps;
 
     const stateTypes = getStateTypes(themeState);
@@ -459,9 +540,6 @@ function getInfoFromPropsAndCSSConfigByHook(
   const { createGetStyle, initVal, getValue } = opt;
   const { themeProps } = props;
 
-  if (!themeProps) {
-    console.info('dsafsadfsa');
-  }
   const { themeState } = themeProps;
   const stateTypes = getStateTypes(themeState);
 
@@ -702,6 +780,9 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       theStyle,
       cTheStyle,
     );
+
+    console.info('targetStyle targetStyle 1', targetStyle);
+    console.info('targetStyle targetStyle 2', 'background' in targetStyle);
     return (
       <Target
         {...props}
@@ -755,7 +836,7 @@ export function getBorder(
   const { radius } = opt;
   if (radius) {
     const { radiusDirections } = opt;
-    result.borderRadius = getBorderRadius(radius, radiusDirections);
+    result.radius = getBorderRadius(radius, radiusDirections);
   }
   return directions.reduce((result: Object, direction: string) => {
     direction = borderDirectionMap[direction];
@@ -765,13 +846,13 @@ export function getBorder(
     const { color, style, width } = border;
     const borderConfig = {};
     if ('color' in border) {
-      borderConfig.borderColor = color;
+      borderConfig.color = color;
     }
     if ('style' in border) {
-      borderConfig.borderStyle = style;
+      borderConfig.style = style;
     }
     if ('width' in border) {
-      borderConfig.borderWidth = width;
+      borderConfig.width = width;
     }
 
     result[direction] = borderConfig;
@@ -783,10 +864,10 @@ export function getBorder(
 const allBorderRadiusDirections = ['tl', 'tr', 'bl', 'br'];
 
 const borderRadiusDirectionMap: { [key: BorderRadiusDirection]: string } = {
-  tl: 'borderTopLeftRadius',
-  tr: 'borderTopRightRadius',
-  bl: 'borderBottomLeftRadius',
-  br: 'borderBottomRightRadius',
+  tl: 'topLeft',
+  tr: 'topRight',
+  bl: 'bottomLeft',
+  br: 'bottomRight',
 };
 
 export function getBorderRadius(

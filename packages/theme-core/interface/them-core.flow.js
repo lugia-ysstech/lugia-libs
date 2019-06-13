@@ -25,16 +25,16 @@ declare module '@lugia/theme-core' {
   };
 
   declare export type BorderInnerType = {
-    borderColor?: string,
-    borderWidth?: number,
-    borderStyle?: string,
+    color?: string,
+    width?: number,
+    style?: string,
   };
 
   declare export type BorderRadiusType = {
-    borderTopLeftRadius?: number,
-    borderTopRightRadius?: number,
-    borderBottomLeftRadius?: number,
-    borderBottomRightRadius?: number,
+    topLeft?: number,
+    topRight?: number,
+    bottomLeft?: number,
+    bottomRight?: number,
   };
 
   declare export type BorderType = {
@@ -42,14 +42,21 @@ declare module '@lugia/theme-core' {
     right?: BorderInnerType,
     bottom?: BorderInnerType,
     left?: BorderInnerType,
-    borderRadius?: BorderRadiusType,
+    radius?: BorderRadiusType,
   };
 
   declare export type ColorType = string;
   declare export type OpacityType = number;
   declare export type BackgroundType = {
-    backgroundColor?: ColorType,
-    backgroundImage?: string,
+    color?: ColorType,
+    image?: string,
+    origin?: string,
+    positionX?: string,
+    positionY?: string,
+    repeatX?: string,
+    repeatY?: string,
+    size?: string,
+    clip?: string,
   };
 
   declare export type BoxShadowType = string;
@@ -95,14 +102,12 @@ declare module '@lugia/theme-core' {
     cursor?: CursorType,
   };
 
-  declare export type ThemeMeta =
-    | SimpleThemeMeta
-    | {
-        first?: SimpleThemeMeta,
-        last?: SimpleThemeMeta,
-        odd?: SimpleThemeMeta,
-        even?: SimpleThemeMeta,
-      };
+  declare export type ThemeMeta = SimpleThemeMeta & {
+    first?: SimpleThemeMeta,
+    last?: SimpleThemeMeta,
+    odd?: SimpleThemeMeta,
+    even?: SimpleThemeMeta,
+  };
 
   declare export type ThemePart = {
     normal: ThemeMeta,
