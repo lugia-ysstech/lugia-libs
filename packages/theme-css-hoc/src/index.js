@@ -22,6 +22,7 @@ import type {
   GetBorderOption,
   StateType,
   ThemeState,
+  CSSMeta,
 } from '@lugia/theme-css-hoc';
 
 import React from 'react';
@@ -496,12 +497,18 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
     const { themeState, themeConfig } = themeProps;
 
     const stateTypes = getStateTypes(themeState);
-    return stateTypes.reduce((result: Object, stateType: StateType) => {
-      const gettor = stateType2Gettor[stateType];
-      const { [stateType]: themeMeta = {} } = themeConfig;
-      result[stateType] = gettor(themeMeta);
-      return result;
-    }, {});
+    return stateTypes.reduce(
+      (result: Object, stateType: StateType) => {
+        const gettor = stateType2Gettor[stateType];
+        const { [stateType]: themeMeta = {} } = themeConfig;
+        result[stateType] = gettor(themeMeta);
+        result.themeMeta[stateType] = gettor(themeMeta);
+        return result;
+      },
+      {
+        themeMeta: {},
+      },
+    );
   };
 }
 
@@ -674,27 +681,63 @@ function getStyledComponent(cssConfig: CSSConfig): Object {
 
 const CSSComponent2CSSConfig = new WeakMap();
 
-export default function CSSComponent(cssConfig: CSSConfig) {
-  const styledElement = getStyledComponent(cssConfig);
+export function filterRepeatSelectNames(
+  selNames: Array<Array<string>>,
+): Array<Array<string>> {
+  if (!selNames) {
+    return selNames;
+  }
+  const exist = {};
+  return selNames.filter(path => {
+    const key = typeof path === 'string' ? path : path.join('.');
+    const isExist = !exist[key];
+    exist[key] = true;
+    return isExist;
+  });
+}
 
-  let theCSSConfig = cssConfig;
-  const { extend } = cssConfig;
+export function filterRepeatCSSMetaSelctNames(outCSSMeta: CSSMeta) {
+  if (!outCSSMeta) {
+    return;
+  }
+  const { selectNames } = outCSSMeta;
+  if (selectNames && selectNames.length > 0) {
+    outCSSMeta.selectNames = filterRepeatSelectNames(selectNames);
+  }
+}
+export function filterRepeatCSSConfigSelectNames(outCSSConfig: CSSConfig) {
+  if (!outCSSConfig) {
+    return;
+  }
+  const { normal, hover, disabled, active } = outCSSConfig;
+  normal && filterRepeatCSSMetaSelctNames(normal);
+  hover && filterRepeatCSSMetaSelctNames(hover);
+  disabled && filterRepeatCSSMetaSelctNames(disabled);
+  active && filterRepeatCSSMetaSelctNames(active);
+}
+
+export default function CSSComponent(cssConfig: CSSConfig) {
+  let { extend } = cssConfig;
 
   if (extend) {
     const extendCSSConfig = CSSComponent2CSSConfig.get(extend);
     if (extendCSSConfig) {
-      theCSSConfig = deepMerge(extendCSSConfig, theCSSConfig);
+      cssConfig = deepMerge(extendCSSConfig, cssConfig);
+      filterRepeatCSSConfigSelectNames(cssConfig);
+      const newExtendConfig = { ...cssConfig };
+      delete newExtendConfig.extend;
+      cssConfig.extend = CSSComponent(newExtendConfig);
     }
   }
-  const getTheCSS = createGetUserDefineCSS(theCSSConfig);
-  const getTheStyle = createGetUserDefineStyle(theCSSConfig);
+  const styledElement = getStyledComponent(cssConfig);
+  const getTheCSS = createGetUserDefineCSS(cssConfig);
+  const getTheStyle = createGetUserDefineStyle(cssConfig);
   const getStyleByDefaultThemeMeta = createGetStyleByDefaultThemeMeta(
-    theCSSConfig,
+    cssConfig,
   );
   const getDefaultStyle = getStyleByDefaultThemeMeta
     ? getStyleByDefaultThemeMeta
     : undefined;
-
   const getStyleByThemeMeta = createGetStyleFromPropsAndCSSConfig(cssConfig);
   const attrsHook = (props: CSSProps): Object => {
     return { theStyle: getTheStyle(props), ...getStyleByThemeMeta(props) };
@@ -703,11 +746,13 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   const { css, className } = cssConfig;
 
   function getTargetComponent(targetStyleComponent: Function): Function {
-    return targetStyleComponent`
+    const result = targetStyleComponent`
     ${css}
     ${getCSS(getDefaultStyle)}
     ${getTheCSS}
   `;
+    result.displayName = 'lugia_c_t';
+    return result;
   }
 
   if (extend) {
@@ -720,6 +765,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
           active: cActived,
           disabled: cDisabled,
           theStyle: cTheStyle,
+          themeMeta: cThemeMeta,
         } = {},
       } = props;
       const {
@@ -728,6 +774,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         active = {},
         disabled = {},
         theStyle = {},
+        themeMeta = {},
       } = attrsHook(props);
 
       return (
@@ -739,6 +786,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
             active: deepMerge(active, cActived),
             disabled: deepMerge(disabled, cDisabled),
             theStyle: deepMerge(theStyle, cTheStyle),
+            themeMeta: deepMerge(themeMeta, cThemeMeta),
           }}
           ref={props.innerRef}
           className={getClassName(className, props)}
@@ -746,6 +794,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       );
     };
     CSSComponent2CSSConfig.set(result, cssConfig);
+    result.displayName = 'CSSComponent';
     return result;
   }
 
@@ -758,6 +807,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       active = {},
       disabled = {},
       theStyle = {},
+      themeMeta = {},
     } = attrsHook(props);
     const {
       _lugia_theme_style_: {
@@ -766,6 +816,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         active: cActived,
         disabled: cDisabled,
         theStyle: cTheStyle,
+        themeMeta: cThemeMeta,
       } = {},
     } = props;
     const targetStyle = deepMerge(
@@ -780,10 +831,10 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       theStyle,
       cTheStyle,
     );
-
     return (
       <Target
         {...props}
+        __themeMeta={deepMerge(themeMeta, cThemeMeta)}
         style={targetStyle}
         ref={props.innerRef}
         className={getClassName(className, props)}
@@ -791,6 +842,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     );
   };
   CSSComponent2CSSConfig.set(result, cssConfig);
+  result.displayName = 'CSSComponent';
   return result;
 }
 
