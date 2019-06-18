@@ -6,9 +6,31 @@
  * by wangcuixia
  * @flow
  * */
+const { colors } = require('./colorTable.json');
 const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+const regWord = /^[a-zA-Z]*$/;
+
+function colorIsWorrd(sHex) {
+  const newHex = sHex.replace(sHex.charAt(0), sHex.charAt(0).toUpperCase());
+  const item = colors.find(({ englishName }) => newHex === englishName);
+  return {
+    hex: item ? item.Hex : undefined,
+    state: !!item,
+  };
+}
+
 function colorRgb(sHex: string): Array<number> {
-  let sColor = sHex.toLowerCase();
+  console.log(sHex);
+  let hexColor = sHex;
+  const isWord = regWord.test(sHex);
+  if (sHex && isWord) {
+    const { hex, state } = colorIsWorrd(sHex);
+    if (!state) {
+      return [255, 255, 255];
+    }
+    hexColor = hex;
+  }
+  let sColor = hexColor.toLowerCase();
   // 如果是16进制颜色
   if (sColor && reg.test(sColor)) {
     if (sColor.length === 4) {
