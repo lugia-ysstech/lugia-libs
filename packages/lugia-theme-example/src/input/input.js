@@ -47,11 +47,11 @@ const Father = CSSComponent({
     },
   },
 });
-
 const Children = CSSComponent({
   extend: Father,
   className: 'children',
   normal: {
+    selectNames: [['background']],
     defaultTheme: {
       background: {
         backgroundColor: 'pink',
@@ -117,7 +117,7 @@ export default class extends React.Component<any, any> {
         }}
         themeProps={this.props.getPartOfThemeProps('CSSBlock')}
       >
-        CSSComponent
+        Father
       </Father>,
       <Children
         themeProps={this.props.getPartOfThemeProps('Children', {
@@ -126,20 +126,20 @@ export default class extends React.Component<any, any> {
           },
         })}
       >
-        Clock
+        Children
       </Children>,
       <GrantSon
         themeProps={this.props.getPartOfThemeProps('GrantSon', {
           props: { count: this.state.total },
         })}
       >
-        BClock
+        GrantSon
       </GrantSon>,
       <ThemeBlock
         {...this.props.getPartOfThemeHocProps('ThemeBlock')}
         themeState={themeState}
       >
-        ThemeComponent
+        ThemeBlock
       </ThemeBlock>,
       <Input themeProps={this.props.getPartOfThemeProps('My_Input')} />,
     ];

@@ -12,6 +12,18 @@ export default class Demo extends React.Component<any, any> {
   render() {
     const config = {
       My_Input: {
+        Children: {
+          normal: {
+            background: { color: 'yellow' },
+            border: {
+              top: {
+                color: 'red',
+                width: 10,
+                style: 'solid',
+              },
+            },
+          },
+        },
         My_Input: {
           normal: {
             width: 1000,
