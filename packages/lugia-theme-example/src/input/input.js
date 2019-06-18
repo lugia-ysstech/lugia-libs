@@ -63,7 +63,7 @@ const Children = CSSComponent({
       return 'background: purple;';
     },
     defaultTheme: {
-      border: getBorder({ color: 'yellow', style: 'solid', width: 1 }),
+      border: getBorder({ color: 'red', style: 'solid', width: 1 }),
     },
   },
 });
