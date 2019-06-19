@@ -49,7 +49,8 @@ export function inject(window: Object) {
         });
     }
   });
-  console.info('load');
   installGlobalHook(window);
   installBridge(store);
 }
+
+inject(window);
