@@ -49,3 +49,23 @@ yarn add @lugia/theme-hoc: 1.0.12
      *  CSSComponent增加themeMeta的属性__themeMeta，用来获取当前生效的主题信息值。
   修正BUG：   
   *  CSSComponent进行继承的时候，子组件的selectNames无法覆盖父类的配置问题。
+  
+  ## 20190619
+  【版本更新操作】
+  
+  yarn add @lugia/theme-css-hoc: 1.0.21
+  yarn add @lugia/theme-hoc-devtools: 1.0.1
+  yarn add @lugia/theme-hoc: 1.0.16
+  
+  【变更内容】
+  增加：
+     *  主题提取功能
+  ### 使用方法说明
+```javascript
+ import '@lugia/theme-hoc-devtools';
+ 
+ target.getThemeMetaInfo() // target 使用ref拿到的ThemeHOC组件的引用
+
+```
+     
+     
