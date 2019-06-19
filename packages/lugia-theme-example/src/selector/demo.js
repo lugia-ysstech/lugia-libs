@@ -49,14 +49,30 @@ function useCount() {
   return { disabled, setDisabled };
 }
 
+function useInstall() {
+  const [installState, setInstallState] = useState(true);
+  return {
+    installState,
+    install: () => setInstallState(true),
+    unInstall: () => setInstallState(false),
+  };
+}
+
 export default () => {
   const target = useRef();
   const { disabled, setDisabled } = useCount();
+  const { installState, install, unInstall } = useInstall();
   useEffect(() => {
     window.lgx = target;
   });
   return [
-    <Selector theme={config} ref={target} disabled={disabled} />,
-    <button onClick={() => setDisabled(!disabled)}>禁用</button>,
+    installState ? (
+      <Selector theme={config} ref={target} disabled={disabled} />
+    ) : null,
+    <button onClick={() => setDisabled(!disabled)}>
+      {!disabled ? '禁用' : '启用'}
+    </button>,
+    <button onClick={unInstall}>卸载</button>,
+    <button onClick={install}>装载</button>,
   ];
 };
