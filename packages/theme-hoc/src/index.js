@@ -277,8 +277,9 @@ const ThemeProvider = (
         const inspectVal = _inspectables.get(id);
         if (inspectVal) {
           props = inspectVal.props;
+        } else {
+          console.error(`not found ${id} props info`);
         }
-        console.info(id);
       }
       return {
         id,
