@@ -68,4 +68,11 @@ yarn add @lugia/theme-hoc: 1.0.12
 
 ```
      
-     
+ ## 20190619
+  【版本更新操作】
+  
+  yarn add @lugia/css: 1.0.10
+  
+  【变更内容】
+  增加：
+     *  支持web常用色
