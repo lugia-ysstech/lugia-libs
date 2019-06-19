@@ -1,11 +1,11 @@
 {
   "name": "@lugia/lugia-theme-example",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "dependencies": {
     "@lugia/theme-config": "^1.0.12",
-    "@lugia/theme-css-hoc": "^1.0.20",
-    "@lugia/theme-hoc": "^1.0.15",
-    "@lugia/theme-hoc-devtools": "^1.0.0",
+    "@lugia/theme-css-hoc": "^1.0.21",
+    "@lugia/theme-hoc": "^1.0.16",
+    "@lugia/theme-hoc-devtools": "^1.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
