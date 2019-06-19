@@ -495,18 +495,22 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
     const { themeProps } = props;
 
     const { themeState, themeConfig } = themeProps;
-
     const stateTypes = getStateTypes(themeState);
     return stateTypes.reduce(
       (result: Object, stateType: StateType) => {
         const gettor = stateType2Gettor[stateType];
         const { [stateType]: themeMeta = {} } = themeConfig;
-        result[stateType] = gettor(themeMeta);
-        result.themeMeta[stateType] = gettor(themeMeta);
+        let resultMeta = gettor(themeMeta);
+        result[stateType] = resultMeta;
+        result.themeMeta[stateType] = resultMeta;
+        result.themeMeta.current = deepMerge(
+          result.themeMeta.current,
+          resultMeta,
+        );
         return result;
       },
       {
-        themeMeta: {},
+        themeMeta: { current: {} },
       },
     );
   };
