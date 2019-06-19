@@ -7,7 +7,8 @@
 import { installBridge, installGlobalHook } from '@lugia/react-devtools-core';
 
 const id2All = {};
-const id2Theme = {};
+const stateId2ReactNodeInfo = {};
+const id2StateId = {};
 const store = {};
 
 export function getReactNodeInfo(id: string) {
@@ -18,8 +19,8 @@ export function getBridge() {
   return store.lugiaBridge;
 }
 
-export function getThemeReactNodeInfo(id: string) {
-  return id2Theme[id];
+export function getReactNodeInfoByThemeId(id: string) {
+  return stateId2ReactNodeInfo[id];
 }
 
 export function inject(window: Object) {
@@ -30,23 +31,31 @@ export function inject(window: Object) {
     }
     if (data.source === 'lugia-theme-bridge') {
       const { payload } = data;
-      const events = payload.events;
+      let { events } = payload;
       if (!events) {
         return;
       }
       events.forEach(item => {
-        const { data } = item;
-        id2All[data.id] = data;
+        const { data, evt } = item;
+        const { id } = data;
+        const isUnMount = evt === 'unmount';
+        if (isUnMount) {
+          delete id2All[data];
+          const stateId = id2StateId[data];
+          delete id2StateId[data];
+          delete stateId2ReactNodeInfo[stateId];
+        } else if (evt === 'mount') {
+          id2All[id] = data;
+          const { name } = data;
+          if (name && name.startsWith('lugia_t_hoc')) {
+            const {
+              state: { id: stateId },
+            } = data;
+            stateId2ReactNodeInfo[stateId] = data;
+            id2StateId[id] = stateId;
+          }
+        }
       });
-      events
-        .filter(e => {
-          let name = e.data.name;
-          return name && name.startsWith('lugia_t_hoc');
-        })
-        .forEach(item => {
-          const { data } = item;
-          id2Theme[data.state.id] = data;
-        });
     }
   });
   installGlobalHook(window);

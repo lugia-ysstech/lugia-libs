@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import {
   getBridge,
   getReactNodeInfo,
-  getThemeReactNodeInfo,
+  getReactNodeInfoByThemeId,
 } from '@lugia/theme-hoc-devtools';
 import { getConfig, selectThemePart } from '@lugia/theme-core';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
@@ -23,7 +23,7 @@ function uuid() {
 }
 window.getBridge = getBridge;
 window.getReactNodeInfo = getReactNodeInfo;
-window.getThemeReactNodeInfo = getThemeReactNodeInfo;
+window.getReactNodeInfoByThemeId = getReactNodeInfoByThemeId;
 const ThemeContainer = styled.span`
   display: inline-block;
 `;
@@ -217,7 +217,7 @@ const ThemeProvider = (
 
     getThemeMetaInfo = () => {
       let id2Path = {};
-      let node = getThemeReactNodeInfo(this.state.id);
+      let node = getReactNodeInfoByThemeId(this.state.id);
       if (node) {
         id2Path['root'] = '';
         this.getChildren(node, 'root', id2Path);
