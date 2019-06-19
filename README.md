@@ -21,10 +21,10 @@
 ##20190613
 【版本更新操作】
 
-yarn add @lugia/theme-config: 1.0.12
-yarn add @lugia/theme-core: 1.0.12
-yarn add @lugia/theme-css-hoc: 1.0.19
-yarn add @lugia/theme-hoc: 1.0.12
+yarn add @lugia/theme-config@1.0.12
+yarn add @lugia/theme-core@1.0.12
+yarn add @lugia/theme-css-hoc@1.0.19
+yarn add @lugia/theme-hoc@1.0.12
 
 【变更内容】
 修改：
@@ -38,8 +38,8 @@ yarn add @lugia/theme-hoc: 1.0.12
   ## 20190618
   【版本更新操作】
   
-  yarn add @lugia/theme-css-hoc: 1.0.20
-  yarn add @lugia/theme-hoc: 1.0.15
+  yarn add @lugia/theme-css-hoc@1.0.20
+  yarn add @lugia/theme-hoc@1.0.15
   
   【变更内容】
   修改：   
@@ -53,9 +53,9 @@ yarn add @lugia/theme-hoc: 1.0.12
   ## 20190619
   【版本更新操作】
   
-  yarn add @lugia/theme-css-hoc: 1.0.21
-  yarn add @lugia/theme-hoc-devtools: 1.0.1
-  yarn add @lugia/theme-hoc: 1.0.16
+  yarn add @lugia/theme-css-hoc@1.0.21
+  yarn add @lugia/theme-hoc-devtools@1.0.1
+  yarn add @lugia/theme-hoc@1.0.16
   
   【变更内容】
   增加：
@@ -71,7 +71,7 @@ yarn add @lugia/theme-hoc: 1.0.12
  ## 20190619
   【版本更新操作】
   
-  yarn add @lugia/css: 1.0.10
+  yarn add @lugia/css@1.0.10
   
   【变更内容】
   增加：
