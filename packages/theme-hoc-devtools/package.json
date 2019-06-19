@@ -1,6 +1,6 @@
 {
-  "name": "@lugia/theme-hoc",
-  "version": "1.0.15",
+  "name": "@lugia/theme-hoc-devtools",
+  "version": "1.0.0",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -17,18 +17,11 @@
   "author": "#lugia#",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">16.0.0",
-    "react-dom": ">16.0.0",
-    "styled-components": ">4.0.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
-    "@lugia/object-utils": "^1.0.7",
-    "@lugia/theme-hoc-devtools": "^1.0.0",
-    "@lugia/theme-core": "^1.0.12"
+    "@lugia/react-devtools-core": "^1.0.3"
   },
   "devDependencies": {
-    "@lugia/theme-config": "^1.0.12"
   },
   "files": [
     "lib",

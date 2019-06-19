@@ -6,11 +6,24 @@ import type { ProviderComponent, ThemeHocOption } from '@lugia/theme-hoc';
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import {
+  getBridge,
+  getReactNodeInfo,
+  getThemeReactNodeInfo,
+} from '@lugia/theme-hoc-devtools';
 import { getConfig, selectThemePart } from '@lugia/theme-core';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 
 import styled from 'styled-components';
 
+let cnt = 0;
+
+function uuid() {
+  return `hoc_${cnt++}`;
+}
+window.getBridge = getBridge;
+window.getReactNodeInfo = getReactNodeInfo;
+window.getThemeReactNodeInfo = getThemeReactNodeInfo;
 const ThemeContainer = styled.span`
   display: inline-block;
 `;
@@ -34,6 +47,7 @@ const ThemeProvider = (
       super(props);
       let initState: Object = {
         svThemVersion: 0,
+        id: uuid(),
       };
       if (needProcessThemeState()) {
         const themeState = {};
@@ -200,6 +214,91 @@ const ThemeProvider = (
         {},
       );
     };
+
+    getThemeMetaInfo = () => {
+      let id2Path = {};
+      let node = getThemeReactNodeInfo(this.state.id);
+      if (node) {
+        id2Path['root'] = '';
+        this.getChildren(node, 'root', id2Path);
+        let filterOnlyThemeOrCSS = id => {
+          let reactNodeInfo = getReactNodeInfo(id);
+          if (reactNodeInfo) {
+            let name = reactNodeInfo.name;
+            return (
+              name && (name.startsWith('lugia_t_hoc') || name == 'lugia_c_t')
+            );
+          }
+          return false;
+        };
+        let themeOrCSSId2Path = Object.keys(id2Path)
+          .filter(filterOnlyThemeOrCSS)
+          .reduce((res, id) => {
+            res[id] = id2Path[id];
+            return res;
+          }, {});
+        Object.keys(themeOrCSSId2Path).forEach(id => {
+          const path = themeOrCSSId2Path[id];
+          themeOrCSSId2Path[id] = path.split('/').filter(filterOnlyThemeOrCSS);
+        });
+        let paths = Object.values(themeOrCSSId2Path).sort(
+          (a: Object, b: Object) => {
+            return a.length - b.length;
+          },
+        );
+
+        const id2Node = {};
+        const nodes = [];
+        paths.forEach((path: any) => {
+          let level = path.length - 1;
+          const nodeId = path[level];
+          id2Node[nodeId] = {
+            ...this.getNodeInfo(nodeId),
+            path,
+          };
+          let father = nodes;
+          if (level > 0) {
+            father = id2Node[path[level - 1]].children;
+          }
+          father.push(id2Node[nodeId]);
+        });
+        return nodes;
+      }
+      return {};
+    };
+
+    getNodeInfo(id) {
+      const reactNodeInfo = getReactNodeInfo(id);
+      const { name } = reactNodeInfo;
+      const lugiaBridge = getBridge();
+      let props;
+      if (lugiaBridge) {
+        const { _inspectables } = lugiaBridge;
+        const inspectVal = _inspectables.get(id);
+        if (inspectVal) {
+          props = inspectVal.props;
+        }
+        console.info(id);
+      }
+      return {
+        id,
+        props,
+        name,
+        children: [],
+      };
+    }
+
+    getChildren(root: Object, father: string, id2Path) {
+      const { children, id: fatherId } = root;
+      const result = {};
+      result.id = fatherId;
+      result.path = `${id2Path[father]}/${fatherId}`;
+      id2Path[fatherId] = result.path;
+      children &&
+        children.forEach(id => {
+          this.getChildren(getReactNodeInfo(id), fatherId, id2Path);
+        });
+    }
 
     getThemeState() {
       const { disabled } = this.props;
