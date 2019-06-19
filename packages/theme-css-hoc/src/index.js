@@ -18,11 +18,11 @@ import type {
   BorderConfig,
   BorderRadiusDirection,
   CSSConfig,
+  CSSMeta,
   CSSProps,
   GetBorderOption,
   StateType,
   ThemeState,
-  CSSMeta,
 } from '@lugia/theme-css-hoc';
 
 import React from 'react';
@@ -40,6 +40,10 @@ type MarginOpt = {
     bottom: number,
   },
 };
+const Normal = 'normal';
+const Hover = 'hover';
+const Active = 'active';
+const Disabled = 'disabled';
 
 export function getAttributeValue(obj: Object, path: string[]): any {
   if (!obj) {
@@ -396,7 +400,7 @@ export function getThemeMeta(
     }
     const { defaultTheme = {}, selectNames } = config;
     const selectNameThemeMeta = getSelectNameThemeMeta(theme, selectNames);
-    if (stateType === 'hover' || stateType === 'disabled') {
+    if (stateType === Hover || stateType === Disabled) {
       return deepMerge(defaultTheme, selectNameThemeMeta);
     }
     return selectNameThemeMeta;
@@ -465,19 +469,21 @@ function getCSS(getStyle: Function) {
   };
 }
 
+const allState = [Normal, Hover, Active, Disabled];
+
 function getStateTypes(themeState: ThemeState = {}): StateType[] {
-  const res = ['normal'];
+  const res = [Normal];
 
   const { hover = false, disabled = false, active = false } = themeState;
 
   if (hover) {
-    res.push('hover');
+    res.push(Hover);
   }
   if (active) {
-    res.push('active');
+    res.push(Active);
   }
   if (disabled) {
-    res.push('disabled');
+    res.push(Disabled);
   }
   return res;
 }
@@ -486,31 +492,35 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
   const stateType2Gettor: {
     [key: StateType]: (themeMeta: ThemeMeta) => Object,
   } = {
-    normal: packStyle(cssConfig, 'normal'),
-    active: packStyle(cssConfig, 'active'),
-    hover: packStyle(cssConfig, 'hover'),
-    disabled: packStyle(cssConfig, 'disabled'),
+    normal: packStyle(cssConfig, Normal),
+    active: packStyle(cssConfig, Active),
+    hover: packStyle(cssConfig, Hover),
+    disabled: packStyle(cssConfig, Disabled),
   };
   return function(props: CSSProps) {
     const { themeProps } = props;
-
     const { themeState, themeConfig } = themeProps;
     const stateTypes = getStateTypes(themeState);
+    const themeMeta = { current: {} };
+
+    allState.reduce((result: Object, stateType: StateType) => {
+      const { [stateType]: themeMeta = {} } = themeConfig;
+      result[stateType] = themeMeta;
+      return result;
+    }, themeMeta);
     return stateTypes.reduce(
       (result: Object, stateType: StateType) => {
         const gettor = stateType2Gettor[stateType];
         const { [stateType]: themeMeta = {} } = themeConfig;
-        let resultMeta = gettor(themeMeta);
-        result[stateType] = resultMeta;
-        result.themeMeta[stateType] = resultMeta;
+        result[stateType] = gettor(themeMeta);
         result.themeMeta.current = deepMerge(
           result.themeMeta.current,
-          resultMeta,
+          themeMeta,
         );
         return result;
       },
       {
-        themeMeta: { current: {} },
+        themeMeta,
       },
     );
   };
@@ -653,7 +663,7 @@ function createGetStyleByDefaultThemeMeta(cssConfig: CSSConfig) {
       {
         createGetStyle(cssConfig: CSSConfig, stateType: StateType): Function {
           const alwaysEmptyObject = always({});
-          if (!cssConfig || stateType === 'hover' || stateType === 'disabled') {
+          if (!cssConfig || stateType === Hover || stateType === Disabled) {
             return alwaysEmptyObject;
           }
           const cssMeta = cssConfig[stateType];
@@ -709,6 +719,7 @@ export function filterRepeatCSSMetaSelctNames(outCSSMeta: CSSMeta) {
     outCSSMeta.selectNames = filterRepeatSelectNames(selectNames);
   }
 }
+
 export function filterRepeatCSSConfigSelectNames(outCSSConfig: CSSConfig) {
   if (!outCSSConfig) {
     return;
