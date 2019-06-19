@@ -22,37 +22,13 @@
     Learn how to configure a non-root public URL by running `npm run build`.
   -->
   <title>React App</title>
-  <script type="text/javascript">
-    window.id2css = {};
-    window.addEventListener('message', (event) => {
-      const { data } = event;
-      if (data && data.source === 'lugia-theme-bridge') {
-        const {payload} = data;
-        let events = payload.events;
-        if(!events){
-          return;
-        }
-        let items = events.filter(e=>e.data.name === 'lugia_c_t');
-        items.forEach(item=>{
-          const {data} = item;
-          id2css[data.id] = data;
-        });
-      }
-    });
-  </script>
-
-
 </head>
 <body>
 <noscript>
   You need to enable JavaScript to run this app.
 </noscript>
 <div id="root"></div>
-<script type="text/javascript" src="./inject.js">
-</script>
 
-<script type="text/javascript" src="./backend.js">
-</script>
 
 <!--
   This HTML file is a template.

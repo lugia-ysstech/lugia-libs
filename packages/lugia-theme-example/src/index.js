@@ -1,3 +1,4 @@
+import '@lugia/theme-hoc-devtools';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './selector/demo';

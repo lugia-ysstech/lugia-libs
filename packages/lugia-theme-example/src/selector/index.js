@@ -54,6 +54,7 @@ export default ThemeHoc(
             {...this.props.createThemeHocProps('selectWeb', {
               Block: blockPart,
             })}
+            disabled={this.props.disabled}
           />,
         );
       }
