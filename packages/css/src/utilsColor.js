@@ -6,13 +6,15 @@
  * by wangcuixia
  * @flow
  * */
-const { colors } = require('./colorTable.json');
+const { colors } = require('./colorTable.js');
 const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
 const regWord = /^[a-zA-Z]*$/;
 
 function colorIsWorrd(sHex) {
-  const newHex = sHex.replace(sHex.charAt(0), sHex.charAt(0).toUpperCase());
-  const item = colors.find(({ englishName }) => newHex === englishName);
+  const newHex = sHex.toLowerCase();
+  const item = colors.find(
+    ({ englishName }) => newHex === englishName.toLowerCase(),
+  );
   return {
     hex: item ? item.Hex : undefined,
     state: !!item,
@@ -20,7 +22,6 @@ function colorIsWorrd(sHex) {
 }
 
 function colorRgb(sHex: string): Array<number> {
-  console.log(sHex);
   let hexColor = sHex;
   const isWord = regWord.test(sHex);
   if (sHex && isWord) {
