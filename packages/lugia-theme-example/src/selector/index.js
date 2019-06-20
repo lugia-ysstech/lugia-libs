@@ -7,6 +7,7 @@
 import React from 'react';
 import CSSComponent from '@lugia/theme-css-hoc';
 import ThemeHoc from '@lugia/theme-hoc';
+import { addMouseEvent } from '@lugia/theme-hoc';
 
 const Block = CSSComponent({
   tag: 'span',
@@ -54,11 +55,12 @@ export default ThemeHoc(
             {...this.props.createThemeHocProps('selectWeb', {
               Block: blockPart,
             })}
+            themeState={this.props.themeProps.themeState}
             disabled={this.props.disabled}
           />,
         );
       }
-      return res;
+      return <div {...addMouseEvent(this)}>{res}</div>;
     }
   },
   'Selector',

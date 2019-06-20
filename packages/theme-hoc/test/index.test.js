@@ -10,7 +10,7 @@ import Theme from '@lugia/theme-config';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import styled from 'styled-components';
-import ThemeProvider from '../src';
+import ThemeProvider, { addMouseEvent } from '../src';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -591,5 +591,202 @@ describe('ThemeProvider', () => {
 
   it('themeState', () => {
     // todo: willtest
+  });
+
+  it('addMouseEvent for mouseEnter', () => {
+    const call = [];
+    const self = {
+      props: {
+        onMouseEnter(param) {
+          call.push(param);
+        },
+      },
+    };
+    let result = addMouseEvent(self);
+    result.onMouseEnter('a');
+
+    expect(call).toEqual(['a']);
+    expect(result.onMouseUp).toBeUndefined();
+    expect(result.onMouseLeave).toBeUndefined();
+    expect(result.onMouseDown).toBeUndefined();
+  });
+
+  it('addMouseEvent for only opt enter', () => {
+    const call = [];
+    const self = {
+      props: {},
+    };
+    let result = addMouseEvent(self, {
+      enter(param) {
+        call.push(param);
+      },
+    });
+    result.onMouseEnter('a');
+
+    expect(call).toEqual(['a']);
+    expect(result.onMouseUp).toBeUndefined();
+    expect(result.onMouseLeave).toBeUndefined();
+    expect(result.onMouseDown).toBeUndefined();
+  });
+
+  it('addMouseEvent for all ', () => {
+    const call = [];
+    const self = {
+      props: {
+        onMouseEnter(param) {
+          call.push(param);
+        },
+        onMouseUp(param) {
+          call.push(param);
+        },
+        onMouseLeave(param) {
+          call.push(param);
+        },
+        onMouseDown(param) {
+          call.push(param);
+        },
+      },
+    };
+    let result = addMouseEvent(self);
+    result.onMouseEnter('a');
+
+    expect(call).toEqual(['a']);
+    result.onMouseUp('b');
+
+    expect(call).toEqual(['a', 'b']);
+    result.onMouseLeave('c');
+
+    expect(call).toEqual(['a', 'b', 'c']);
+    result.onMouseDown('d');
+
+    expect(call).toEqual(['a', 'b', 'c', 'd']);
+  });
+  it('addMouseEvent for all opt ', () => {
+    const call = [];
+    const self = {
+      props: {},
+    };
+    let result = addMouseEvent(self, {
+      enter(param) {
+        call.push(param);
+      },
+      up(param) {
+        call.push(param);
+      },
+      leave(param) {
+        call.push(param);
+      },
+      down(param) {
+        call.push(param);
+      },
+    });
+    result.onMouseEnter('a');
+
+    expect(call).toEqual(['a']);
+    result.onMouseUp('b');
+
+    expect(call).toEqual(['a', 'b']);
+    result.onMouseLeave('c');
+
+    expect(call).toEqual(['a', 'b', 'c']);
+    result.onMouseDown('d');
+
+    expect(call).toEqual(['a', 'b', 'c', 'd']);
+  });
+
+  it('addMouseEvent for  all opt and props ', () => {
+    const call = [];
+    const self = {
+      props: {
+        onMouseEnter(param) {
+          call.push('p_' + param);
+        },
+        onMouseUp(param) {
+          call.push('p_' + param);
+        },
+        onMouseLeave(param) {
+          call.push('p_' + param);
+        },
+        onMouseDown(param) {
+          call.push('p_' + param);
+        },
+      },
+    };
+    let result = addMouseEvent(self, {
+      enter(param) {
+        call.push(param);
+      },
+      up(param) {
+        call.push(param);
+      },
+      leave(param) {
+        call.push(param);
+      },
+      down(param) {
+        call.push(param);
+      },
+    });
+    result.onMouseEnter('a');
+
+    expect(call).toEqual(['a', 'p_a']);
+    result.onMouseUp('b');
+
+    expect(call).toEqual(['a', 'p_a', 'b', 'p_b']);
+    result.onMouseLeave('c');
+
+    expect(call).toEqual(['a', 'p_a', 'b', 'p_b', 'c', 'p_c']);
+    result.onMouseDown('d');
+
+    expect(call).toEqual(['a', 'p_a', 'b', 'p_b', 'c', 'p_c', 'd', 'p_d']);
+  });
+
+  it('addMouseEvent for  all opt and props  is after', () => {
+    const call = [];
+    const self = {
+      props: {
+        onMouseEnter(param) {
+          call.push('p_' + param);
+        },
+        onMouseUp(param) {
+          call.push('p_' + param);
+        },
+        onMouseLeave(param) {
+          call.push('p_' + param);
+        },
+        onMouseDown(param) {
+          call.push('p_' + param);
+        },
+      },
+    };
+    let result = addMouseEvent(self, {
+      enter(param) {
+        call.push(param);
+      },
+      up(param) {
+        call.push(param);
+      },
+      leave(param) {
+        call.push(param);
+      },
+      down(param) {
+        call.push(param);
+      },
+      after: {
+        down: true,
+        leave: true,
+      },
+    });
+    result.onMouseEnter('a');
+
+    expect(call).toEqual(['a', 'p_a']);
+    result.onMouseUp('b');
+
+    expect(call).toEqual(['a', 'p_a', 'b', 'p_b']);
+    result.onMouseLeave('c');
+
+    expect(call).toEqual(['a', 'p_a', 'b', 'p_b', 'p_c', 'c']);
+    result.onMouseDown('d');
+
+    expect(call).toEqual(['a', 'p_a', 'b', 'p_b', 'p_c', 'c', 'p_d', 'd']);
   });
 });

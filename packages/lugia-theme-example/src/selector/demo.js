@@ -40,6 +40,11 @@ const config = {
           },
         },
       },
+      hover: {
+        background: {
+          color: 'pink',
+        },
+      },
     },
   },
 };

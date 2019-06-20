@@ -2,7 +2,11 @@
  * 组件样式处理增强
  * @flow
  */
-import type { ProviderComponent, ThemeHocOption } from '@lugia/theme-hoc';
+import type {
+  AddMouseEventOption,
+  ProviderComponent,
+  ThemeHocOption,
+} from '@lugia/theme-hoc';
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -14,19 +18,67 @@ import {
 import { getConfig, selectThemePart } from '@lugia/theme-core';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 
-import styled from 'styled-components';
-
 let cnt = 0;
 
 function uuid() {
   return `hoc_${cnt++}`;
 }
+
 window.getBridge = getBridge;
 window.getReactNodeInfo = getReactNodeInfo;
 window.getReactNodeInfoByThemeId = getReactNodeInfoByThemeId;
-const ThemeContainer = styled.span`
-  display: inline-block;
-`;
+
+const OptNames = {
+  onMouseDown: 'down',
+  onMouseUp: 'up',
+  onMouseEnter: 'enter',
+  onMouseLeave: 'leave',
+};
+
+export function addMouseEvent(
+  self: Object,
+  opt?: AddMouseEventOption = { after: {} },
+): Object {
+  const result = {};
+
+  if (!self) {
+    return result;
+  }
+
+  const { props } = self;
+  if (!props) {
+    return result;
+  }
+
+  const { after = {} } = opt;
+
+  Object.keys(OptNames).forEach((name: string) => {
+    const { [name]: cb } = props;
+    const optName = OptNames[name];
+    const { [optName]: optCb } = opt;
+
+    if (cb || optCb) {
+      const cbs = [];
+      if (cb) {
+        cbs.push(cb);
+      }
+      if (optCb) {
+        const { [optName]: isAfter } = after;
+        if (isAfter) {
+          cbs.push(optCb);
+        } else {
+          cbs.unshift(optCb);
+        }
+      }
+      result[name] = (...rest: any[]) => {
+        cbs.forEach(cb => cb(...rest));
+      };
+    }
+  });
+
+  return result;
+}
+
 const ThemeProvider = (
   Target: ProviderComponent,
   widgetName: string,
@@ -81,7 +133,7 @@ const ThemeProvider = (
       }
     }
 
-    onMouseDown = () => {
+    onMouseDown = (...rest: any[]) => {
       const themeState = this.getThemeState();
       const { active } = themeState;
       if (active === true) {
@@ -90,9 +142,11 @@ const ThemeProvider = (
       this.setState({
         themeState: { ...themeState, active: true },
       });
+      const { onMouseDown } = this.props;
+      onMouseDown && onMouseDown(...rest);
     };
 
-    onMouseUp = () => {
+    onMouseUp = (...rest: any[]) => {
       const themeState = this.getThemeState();
       const { active } = themeState;
       if (active === false) {
@@ -101,9 +155,11 @@ const ThemeProvider = (
       this.setState({
         themeState: { ...themeState, active: false },
       });
+      const { onMouseUp } = this.props;
+      onMouseUp && onMouseUp(...rest);
     };
 
-    onMouseEnter = () => {
+    onMouseEnter = (...rest: any[]) => {
       const themeState = this.getThemeState();
       const { hover } = themeState;
       if (hover === true) {
@@ -112,9 +168,11 @@ const ThemeProvider = (
       this.setState({
         themeState: { ...themeState, hover: true },
       });
+      const { onMouseEnter } = this.props;
+      onMouseEnter && onMouseEnter(...rest);
     };
 
-    onMouseLeave = () => {
+    onMouseLeave = (...rest: any[]) => {
       const themeState = this.getThemeState();
       const { hover } = themeState;
       if (hover === false) {
@@ -123,6 +181,8 @@ const ThemeProvider = (
       this.setState({
         themeState: { ...themeState, hover: false },
       });
+      const { onMouseLeave } = this.props;
+      onMouseLeave && onMouseLeave(...rest);
     };
 
     getThemeTarget = () => {
@@ -329,23 +389,22 @@ const ThemeProvider = (
       }
 
       return (
-        <ThemeContainer {...themeStateEventConfig}>
-          <Target
-            {...this.props}
-            themeProps={this.getThemeProps()}
-            getPartOfThemeHocProps={this.getPartOfThemeHocProps}
-            getPartOfThemeConfig={this.getPartOfThemeConfig}
-            getPartOfThemeProps={this.getPartOfThemeProps}
-            createThemeHocProps={this.createThemeHocProps}
-            getTheme={this.getTheme}
-            getWidgetThemeName={() => widgetName}
-            getThemeByDisplayName={this.getThemeByDisplayName}
-            svThemVersion={svThemVersion}
-            ref={(cmp: Object) => {
-              this.svtarget = cmp;
-            }}
-          />
-        </ThemeContainer>
+        <Target
+          {...this.props}
+          {...themeStateEventConfig}
+          themeProps={this.getThemeProps()}
+          getPartOfThemeHocProps={this.getPartOfThemeHocProps}
+          getPartOfThemeConfig={this.getPartOfThemeConfig}
+          getPartOfThemeProps={this.getPartOfThemeProps}
+          createThemeHocProps={this.createThemeHocProps}
+          getTheme={this.getTheme}
+          getWidgetThemeName={() => widgetName}
+          getThemeByDisplayName={this.getThemeByDisplayName}
+          svThemVersion={svThemVersion}
+          ref={(cmp: Object) => {
+            this.svtarget = cmp;
+          }}
+        />
       );
     }
   }
