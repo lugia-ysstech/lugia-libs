@@ -35,6 +35,17 @@ const OptNames = {
   onMouseLeave: 'leave',
 };
 
+function isCSSComponent(name: string): boolean {
+  return name == 'lugia_c_t';
+}
+
+const ThemeComponentPrefix = 'lugia_t_hoc_';
+const ThemeComponentPrefixLen = ThemeComponentPrefix.length;
+
+function isThemeComponent(name: string): boolean {
+  return name.startsWith(ThemeComponentPrefix);
+}
+
 export function addMouseEvent(
   self: Object,
   opt?: AddMouseEventOption = { after: {} },
@@ -79,6 +90,20 @@ export function addMouseEvent(
   return result;
 }
 
+export function unPackDisplayName(widgetName: string): string {
+  if (!widgetName) {
+    return '';
+  }
+  const prefixIndex = widgetName.indexOf(ThemeComponentPrefix);
+  return prefixIndex !== 0
+    ? widgetName
+    : widgetName.substr(ThemeComponentPrefixLen);
+}
+
+export function packDisplayName(widgetName: string): string {
+  return `${ThemeComponentPrefix}${widgetName}`;
+}
+
 const ThemeProvider = (
   Target: ProviderComponent,
   widgetName: string,
@@ -90,7 +115,7 @@ const ThemeProvider = (
     return hover == true || active == true;
   }
 
-  const displayName = `lugia_t_hoc_${widgetName}`;
+  const displayName = packDisplayName(widgetName);
 
   class ThemeWrapWidget extends React.Component<any, any> {
     svtarget: Object;
@@ -275,22 +300,21 @@ const ThemeProvider = (
       );
     };
 
-    getThemeMetaInfo = () => {
+    getThemeMetaInfo = (fields: string[] = ['themeMeta', 'widgetName']) => {
       let id2Path = {};
       let node = getReactNodeInfoByThemeId(this.state.id);
       if (node) {
         id2Path['root'] = '';
         this.getChildren(node, 'root', id2Path);
-        let filterOnlyThemeOrCSS = id => {
+        const filterOnlyThemeOrCSS = id => {
           let reactNodeInfo = getReactNodeInfo(id);
           if (reactNodeInfo) {
             let name = reactNodeInfo.name;
-            return (
-              name && (name.startsWith('lugia_t_hoc') || name == 'lugia_c_t')
-            );
+            return name && (isThemeComponent(name) || isCSSComponent(name));
           }
           return false;
         };
+
         let themeOrCSSId2Path = Object.keys(id2Path)
           .filter(filterOnlyThemeOrCSS)
           .reduce((res, id) => {
@@ -313,9 +337,11 @@ const ThemeProvider = (
           let level = path.length - 1;
           const nodeId = path[level];
           id2Node[nodeId] = {
-            ...this.getNodeInfo(nodeId),
-            path,
+            ...this.getNodeInfo(nodeId, fields),
           };
+          if (fields.indexOf('path') !== -1) {
+            id2Node[nodeId].path = path;
+          }
           let father = nodes;
           if (level > 0) {
             father = id2Node[path[level - 1]].children;
@@ -327,26 +353,60 @@ const ThemeProvider = (
       return {};
     };
 
-    getNodeInfo(id) {
+    getNodeInfo(id: string, fields: string[]) {
       const reactNodeInfo = getReactNodeInfo(id);
       const { name } = reactNodeInfo;
+      const isCSSCmp = isCSSComponent(name);
+      const isThemeCmp = isThemeComponent(name);
       const lugiaBridge = getBridge();
+      let themeMeta;
+      let widgetName;
+      let themeProps;
       let props;
       if (lugiaBridge) {
         const { _inspectables } = lugiaBridge;
         const inspectVal = _inspectables.get(id);
         if (inspectVal) {
           props = inspectVal.props;
+          if (props) {
+            themeMeta = props.__themeMeta;
+            widgetName = isCSSCmp ? props.__cssName : unPackDisplayName(name);
+          }
         } else {
           console.error(`not found ${id} props info`);
         }
+
+        if (isThemeCmp) {
+          const { children } = reactNodeInfo;
+          if (children && children.length === 1) {
+            const inspectVal = _inspectables.get(children[0]);
+            const { props = {} } = inspectVal;
+            themeProps = props.themeProps;
+          }
+        }
       }
-      return {
-        id,
-        props,
-        name,
-        children: [],
-      };
+
+      const result = {};
+      if (~fields.indexOf('id')) {
+        result.id = id;
+      }
+
+      result.widgetName = widgetName;
+
+      if (isCSSCmp) {
+        result.themeMeta = themeMeta;
+      }
+      if (isThemeCmp) {
+        result.themeProps = themeProps;
+      }
+      if (~fields.indexOf('name')) {
+        result.name = name;
+      }
+      if (~fields.indexOf('props')) {
+        result.props = props;
+      }
+      result.children = [];
+      return result;
     }
 
     getChildren(root: Object, father: string, id2Path) {

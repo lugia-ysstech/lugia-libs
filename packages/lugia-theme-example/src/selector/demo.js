@@ -68,7 +68,7 @@ export default () => {
   const { disabled, setDisabled } = useCount();
   const { installState, install, unInstall } = useInstall();
   useEffect(() => {
-    window.lgx = target;
+    window.lgx = target.current;
   });
   return [
     installState ? (

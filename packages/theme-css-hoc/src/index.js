@@ -814,6 +814,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
             themeMeta: deepMerge(themeMeta, cThemeMeta),
           }}
           ref={props.innerRef}
+          __cssName={className}
           className={getClassName(className, props)}
         />
       );
@@ -862,6 +863,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         __themeMeta={deepMerge(themeMeta, cThemeMeta)}
         style={targetStyle}
         ref={props.innerRef}
+        __cssName={className}
         className={getClassName(className, props)}
       />
     );
