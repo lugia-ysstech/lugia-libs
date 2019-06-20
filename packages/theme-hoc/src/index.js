@@ -371,6 +371,7 @@ const ThemeProvider = (
           if (props) {
             themeMeta = props.__themeMeta;
             widgetName = isCSSCmp ? props.__cssName : unPackDisplayName(name);
+            themeProps = props.themeProps;
           }
         } else {
           console.error(`not found ${id} props info`);
@@ -395,6 +396,7 @@ const ThemeProvider = (
 
       if (isCSSCmp) {
         result.themeMeta = themeMeta;
+        result.themeProps = themeProps;
       }
       if (isThemeCmp) {
         result.themeProps = themeProps;
