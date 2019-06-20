@@ -29,7 +29,7 @@ function colorRgb(sHex: string): Array<number> {
     if (!state) {
       return [255, 255, 255];
     }
-    hexColor = hex;
+    hexColor = hex || '';
   }
   let sColor = hexColor.toLowerCase();
   // 如果是16进制颜色
