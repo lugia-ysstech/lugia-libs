@@ -31,7 +31,7 @@ function colorRgb(sHex: string): Array<number> {
     }
     hexColor = hex || '';
   }
-  let sColor = hexColor.toLowerCase();
+  let sColor = hexColor && hexColor.toLowerCase();
   // 如果是16进制颜色
   if (sColor && reg.test(sColor)) {
     if (sColor.length === 4) {
