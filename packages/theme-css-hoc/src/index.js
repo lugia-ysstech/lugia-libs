@@ -503,9 +503,18 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
     const stateTypes = getStateTypes(themeState);
     const themeMeta = { current: {} };
 
+    function getDefaultTheme(
+      cssConfig: CSSConfig,
+      stateType: StateType,
+    ): Object {
+      const { [stateType]: config = {} } = cssConfig;
+      const { defaultTheme = {} } = config;
+      return defaultTheme;
+    }
     allState.reduce((result: Object, stateType: StateType) => {
       const { [stateType]: themeMeta = {} } = themeConfig;
-      result[stateType] = themeMeta;
+      const defaultTheme = getDefaultTheme(cssConfig, stateType);
+      result[stateType] = deepMerge(defaultTheme, themeMeta);
       return result;
     }, themeMeta);
     return stateTypes.reduce(
@@ -514,6 +523,7 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
         const { [stateType]: themeMeta = {} } = themeConfig;
         result[stateType] = gettor(themeMeta);
         result.themeMeta.current = deepMerge(
+          getDefaultTheme(cssConfig, stateType),
           result.themeMeta.current,
           themeMeta,
         );
