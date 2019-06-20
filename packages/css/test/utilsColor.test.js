@@ -46,4 +46,10 @@ describe('utilsColor', () => {
     expect(getColor('#f8ac30', 0, 0, 1.5).rgba).toBe('rgba(248,172,48,0.015)');
     expect(getColor('#f22735', 0, 0, 1.5).rgba).toBe('rgba(242,39,53,0.015)');
   });
+  it('单词颜色对应hex', () => {
+    expect(getColor('red').color).toBe('#ff0000');
+    expect(getColor('Red').color).toBe('#ff0000');
+    expect(getColor('pink').color).toBe('#ffc0cb');
+    expect(getColor('PINK').color).toBe('#ffc0cb');
+  });
 });
