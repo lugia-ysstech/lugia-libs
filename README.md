@@ -188,3 +188,28 @@ getCSS < defaultTheme < getStyle <getThemeMeta < 用户指定的theme
      }
   }
 ```
+
+    
+## 20190626
+  【版本更新操作】
+  
+  yarn add @lugia/theme-config@1.0.14
+  yarn add @lugia/theme-core@1.0.14
+  yarn add @lugia/theme-css-hoc@1.0.24
+  yarn add @lugia/theme-hoc@1.0.19
+
+  
+【变更内容】       
+1.增加对boxShadow的对象配置支持格式如下：
+   
+```jsx harmony
+  declare export type BoxShadowType = {
+    x: number,
+    y: number,
+    color?: string,
+    type?: 'outset' | 'inset',
+    blur?: number,
+    spread?: number,
+  };
+```
+2.实现theme-css-hoc里的getBoxShadow方法，支持将CSS串转为BoxShadowType的对象。
