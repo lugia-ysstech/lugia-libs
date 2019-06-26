@@ -72,9 +72,10 @@ declare module '@lugia/theme-core' {
 
   declare export type BoxShadowType = string;
   declare export type FontType = {
-    fontStyle: string,
-    fontWeight: number,
-    fontSize: number,
+    style: string,
+    weight: number,
+    size: number,
+    family: string,
   };
   declare export type FontSizeType = string | number;
   declare export type VisibilityType = 'visible' | 'hidden' | 'collapse';

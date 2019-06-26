@@ -13,6 +13,7 @@ import type {
   ThemeMeta,
   WidthType,
 } from '@lugia/theme-core';
+import { CSSComponentDisplayName, filterSelector } from '@lugia/theme-core';
 
 import type {
   BorderConfig,
@@ -26,7 +27,6 @@ import type {
 } from '@lugia/theme-css-hoc';
 
 import React from 'react';
-import { CSSComponentDisplayName, filterSelector } from '@lugia/theme-core';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
 import { style2css, units } from '@lugia/css';
@@ -268,12 +268,38 @@ function themeMeta2Style(theme: ThemeMeta): Object {
   const { position } = theme;
   Object.assign(
     style,
-    getObjectStyleFromTheme(font),
+    getFont(font),
     getBackGround(background),
     getBorderStyleFromTheme(border),
     getPosition(position),
   );
   return style;
+}
+
+function getFont(font: any) {
+  const res = {};
+  if (!font) {
+    return res;
+  }
+
+  const { style, weight, size, family } = font;
+
+  setObjectValueIfValueExist(res, 'fontStyle', style, getStringStyleFromTheme);
+
+  setObjectValueIfValueExist(
+    res,
+    'fontFamily',
+    family,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(res, 'fontSize', size, getSizeFromTheme);
+  setObjectValueIfValueExist(
+    res,
+    'fontWeight',
+    weight,
+    getNumberStyleFromTheme,
+  );
+  return res;
 }
 
 function getBackGround(background: any) {
@@ -512,6 +538,7 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
       const { defaultTheme = {} } = config;
       return defaultTheme;
     }
+
     allState.reduce((result: Object, stateType: StateType) => {
       const { [stateType]: themeMeta = {} } = themeConfig;
       const defaultTheme = getDefaultTheme(cssConfig, stateType);
