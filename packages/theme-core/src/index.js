@@ -114,7 +114,6 @@ export function selectThemeMeta(
   let res = { ...themePart };
   selectors.forEach(key => {
     const matchResult = res[key];
-    delete res[key];
     if (matchSelectors.includes(key)) {
       res = deepMerge(res, matchResult);
     }
@@ -142,5 +141,9 @@ export function selectThemePart(
   selectorIfExisitState('hover');
   selectorIfExisitState('disabled');
   selectorIfExisitState('active');
+  result.__index = index;
+  result.__count = total;
   return result;
 }
+export const CSSComponentDisplayName = 'lugia_c_t';
+export const ThemeComponentPrefix = 'lugia_t_hoc_';

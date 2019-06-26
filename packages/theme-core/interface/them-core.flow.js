@@ -5,6 +5,11 @@ declare module '@lugia/theme-core' {
     total: number,
   ): Object;
 
+  declare export function filterSelector(obj: any): string[];
+
+  declare export var CSSComponentDisplayName: string;
+  declare export var ThemeComponentPrefix: string;
+
   declare export function getKeys(obj: Object): string[];
 
   declare export function getObject(obj: Object, key: string): Object;

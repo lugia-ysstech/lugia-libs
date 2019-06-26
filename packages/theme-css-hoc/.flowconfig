@@ -12,7 +12,7 @@ packages/.*/src
 flow-typed/
 interface/
 ../../flow-typed/
-../../packages/theme-core/interface
+node_modules/@lugia/theme-core/interface
 node_modules/@lugia/css/interface
 node_modules/@lugia/object-utils/interface
 [options]

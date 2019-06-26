@@ -10,9 +10,14 @@
  * JavaScript will save your soul!
  */
 
-import { getConfig, getKeys, getObject } from '../src';
-import { filterSelector, getMatchSelector, selectThemeMeta } from '../src';
-import { deepMerge } from '@lugia/object-utils/src';
+import {
+  filterSelector,
+  getConfig,
+  getKeys,
+  getMatchSelector,
+  getObject,
+  selectThemeMeta,
+} from '../src';
 
 describe('theme-core-utils', () => {
   it('getKeys', () => {
@@ -123,7 +128,22 @@ describe('theme-core-utils', () => {
         },
       },
     };
-    expect(selectThemeMeta(themeMeta, 5, 10)).toEqual(defaultMeta);
+    expect(selectThemeMeta(themeMeta, 5, 10)).toEqual({
+      background: {
+        color: 'red',
+      },
+      first: {
+        background: {
+          color: 'yellow',
+          image: 'aaa',
+        },
+        border: {
+          top: {
+            color: 'red',
+          },
+        },
+      },
+    });
   });
 
   it('computeThemeMeta  match first selector', () => {
@@ -146,9 +166,28 @@ describe('theme-core-utils', () => {
         },
       },
     };
-    expect(selectThemeMeta(themeMeta, 0, 10)).toEqual(
-      deepMerge(defaultMeta, themeMeta.first),
-    );
+    expect(selectThemeMeta(themeMeta, 0, 10)).toEqual({
+      background: {
+        color: 'yellow',
+        image: 'aaa',
+      },
+      border: {
+        top: {
+          color: 'red',
+        },
+      },
+      first: {
+        background: {
+          color: 'yellow',
+          image: 'aaa',
+        },
+        border: {
+          top: {
+            color: 'red',
+          },
+        },
+      },
+    });
   });
 
   it('computeThemeMeta  match first and last selector', () => {
@@ -174,9 +213,32 @@ describe('theme-core-utils', () => {
         color: 'red',
       },
     };
-    expect(selectThemeMeta(themeMeta, 0, 1)).toEqual(
-      deepMerge(defaultMeta, themeMeta.first, themeMeta.last),
-    );
+    expect(selectThemeMeta(themeMeta, 0, 1)).toEqual({
+      background: {
+        color: 'yellow',
+        image: 'aaa',
+      },
+      border: {
+        top: {
+          color: 'red',
+        },
+      },
+      color: 'red',
+      first: {
+        background: {
+          color: 'yellow',
+          image: 'aaa',
+        },
+        border: {
+          top: {
+            color: 'red',
+          },
+        },
+      },
+      last: {
+        color: 'red',
+      },
+    });
   });
 
   it('filterSelector', () => {

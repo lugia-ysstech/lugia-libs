@@ -26,6 +26,7 @@ import type {
 } from '@lugia/theme-css-hoc';
 
 import React from 'react';
+import { CSSComponentDisplayName, filterSelector } from '@lugia/theme-core';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
 import { style2css, units } from '@lugia/css';
@@ -514,7 +515,27 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
     allState.reduce((result: Object, stateType: StateType) => {
       const { [stateType]: themeMeta = {} } = themeConfig;
       const defaultTheme = getDefaultTheme(cssConfig, stateType);
-      result[stateType] = deepMerge(defaultTheme, themeMeta);
+      const curThemeMeta = (result[stateType] = deepMerge(
+        defaultTheme,
+        themeMeta,
+      ));
+      const selectors = filterSelector(themeMeta);
+
+      if (selectors.length > 0) {
+        const excludeSelctorMeta = selectors.reduce(
+          (res: Object, selector: string) => {
+            delete res[selector];
+            return res;
+          },
+          deepMerge({}, curThemeMeta),
+        );
+        selectors.forEach((selector: string) => {
+          curThemeMeta[selector] = deepMerge(
+            excludeSelctorMeta,
+            curThemeMeta[selector],
+          );
+        });
+      }
       return result;
     }, themeMeta);
     return stateTypes.reduce(
@@ -776,7 +797,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     ${getCSS(getDefaultStyle)}
     ${getTheCSS}
   `;
-    result.displayName = 'lugia_c_t';
+    result.displayName = CSSComponentDisplayName;
     return result;
   }
 
