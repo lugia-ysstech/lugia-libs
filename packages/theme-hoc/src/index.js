@@ -163,53 +163,51 @@ const ThemeProvider = (
     }
 
     onMouseDown = (...rest: any[]) => {
-      const themeState = this.getThemeState();
-      const { active } = themeState;
-      if (active === true) {
-        return;
-      }
-      this.setState({
-        themeState: { ...themeState, active: true },
-      });
+      this.toggleActiveState(true);
       const { onMouseDown } = this.props;
       onMouseDown && onMouseDown(...rest);
     };
 
     onMouseUp = (...rest: any[]) => {
-      const themeState = this.getThemeState();
-      const { active } = themeState;
-      if (active === false) {
-        return;
-      }
-      this.setState({
-        themeState: { ...themeState, active: false },
-      });
+      this.toggleActiveState(false);
       const { onMouseUp } = this.props;
       onMouseUp && onMouseUp(...rest);
     };
 
-    onMouseEnter = (...rest: any[]) => {
+    toggleActiveState = (state: boolean) => {
       const themeState = this.getThemeState();
-      const { hover } = themeState;
-      if (hover === true) {
+      const { active } = themeState;
+      if (active === state) {
         return;
       }
       this.setState({
-        themeState: { ...themeState, hover: true },
+        themeState: { ...themeState, active: state },
       });
+      const { toggleActiveState } = this.props;
+      toggleActiveState && toggleActiveState(state);
+    };
+
+    onMouseEnter = (...rest: any[]) => {
+      this.toggleHoverState(true);
       const { onMouseEnter } = this.props;
       onMouseEnter && onMouseEnter(...rest);
     };
 
-    onMouseLeave = (...rest: any[]) => {
+    toggleHoverState = (state: boolean) => {
       const themeState = this.getThemeState();
       const { hover } = themeState;
-      if (hover === false) {
+      if (hover === state) {
         return;
       }
       this.setState({
-        themeState: { ...themeState, hover: false },
+        themeState: { ...themeState, hover: state },
       });
+      const { toggleHoverState } = this.props;
+      toggleHoverState && toggleHoverState(state);
+    };
+
+    onMouseLeave = (...rest: any[]) => {
+      this.toggleHoverState(false);
       const { onMouseLeave } = this.props;
       onMouseLeave && onMouseLeave(...rest);
     };
@@ -502,6 +500,8 @@ const ThemeProvider = (
         <Target
           {...this.props}
           {...themeStateEventConfig}
+          toggleActiveState={this.toggleActiveState}
+          toggleHoverState={this.toggleHoverState}
           themeProps={this.getThemeProps()}
           getPartOfThemeHocProps={this.getPartOfThemeHocProps}
           getPartOfThemeConfig={this.getPartOfThemeConfig}

@@ -37,6 +37,7 @@ declare module '@lugia/theme-css-hoc' {
   declare export type CSSMeta = {
     selectNames?: Array<string[]>, // 默认取全部属性
     getStyle?: (theme: ThemeMeta, themeProps: ThemeProps) => Object,
+    getThemeMeta?: (theme: ThemeMeta, themeProps: ThemeProps) => ThemeMeta,
     getCSS?: (theme: ThemeMeta, themeProps: ThemeProps) => string,
     defaultTheme?: ThemeMeta, // 自己写的样式
   };
