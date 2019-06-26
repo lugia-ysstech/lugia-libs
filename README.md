@@ -120,7 +120,7 @@ declare export type AddMouseEventOPtionAfterConfig = {
 ```
 
     
-## 20190620
+## 20190626
   【版本更新操作】
   
   yarn add @lugia/css@1.0.12
