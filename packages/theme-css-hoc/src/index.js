@@ -27,10 +27,11 @@ import type {
   ThemeState,
 } from '@lugia/theme-css-hoc';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
 import { style2css, units } from '@lugia/css';
+import { isEmptyObject } from '@lugia/object-utils';
 
 const { px2remcss, px2Number } = units;
 
@@ -882,8 +883,30 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   }
 
   const Target = getTargetComponent(styledElement);
+  const hasStaticHover = !isEmptyObject(cssConfig.hover);
+  const hasStaticActive = !isEmptyObject(cssConfig.active);
+  const Result = (props: Object) => {
+    const { themeProps } = props;
+    const [themeState, setThemeState] = useState({
+      hover: false,
+      active: false,
+      disabled: false,
+    });
+    let propsThemeState = themeProps.themeState;
+    if (propsThemeState) {
+      const finalState = { ...themeState, ...propsThemeState };
+      const { disabled, hover, active } = finalState;
+      const {
+        disabled: sDisabled,
+        hover: sHover,
+        active: sActive,
+      } = themeState;
+      if (disabled != sDisabled || hover !== sHover || sActive !== active) {
+        setThemeState(finalState);
+      }
+    }
 
-  const result = (props: Object) => {
+    let targetProps = deepMerge(props, { themeProps: { themeState } });
     const {
       normal = {},
       hover = {},
@@ -891,7 +914,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       disabled = {},
       theStyle = {},
       themeMeta = {},
-    } = attrsHook(props);
+    } = attrsHook(targetProps);
     const {
       _lugia_theme_style_: {
         normal: cNormal,
@@ -902,6 +925,26 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         themeMeta: cThemeMeta,
       } = {},
     } = props;
+
+    useEffect(() => {
+      const { themeProps } = props;
+      const { onLugia } = themeProps;
+      const unsubscribeHover = onLugia('hover', data => {
+        if (hasStaticHover || !isEmptyObject(themeProps.themeConfig.hover)) {
+          setThemeState({ ...themeState, ...data });
+        }
+      });
+      const unsubscribeActive = onLugia('active', data => {
+        if (hasStaticActive || !isEmptyObject(themeProps.themeConfig.active)) {
+          setThemeState({ ...themeState, ...data });
+        }
+      });
+      return () => {
+        unsubscribeHover();
+        unsubscribeActive();
+      };
+    }, [cHover, hover, props, themeState]);
+
     const targetStyle = deepMerge(
       normal,
       cNormal,
@@ -925,9 +968,9 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       />
     );
   };
-  CSSComponent2CSSConfig.set(result, cssConfig);
-  result.displayName = 'CSSComponent';
-  return result;
+  CSSComponent2CSSConfig.set(Result, cssConfig);
+  Result.displayName = 'CSSComponent';
+  return Result;
 }
 
 function packClassName(Target: Function, className: string) {

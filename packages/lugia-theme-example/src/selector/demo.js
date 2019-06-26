@@ -30,7 +30,6 @@ const config = {
             color: 'blue',
           },
         },
-
         nth3: {
           background: {
             color: 'blue',
@@ -42,7 +41,7 @@ const config = {
           },
         },
       },
-      hover: {
+      active: {
         background: {
           color: 'pink',
         },
@@ -53,6 +52,11 @@ const config = {
           spread: 5,
           blur: 5,
           color: 'rgb(0,0,5,0.9)',
+        },
+      },
+      disabled: {
+        background: {
+          color: 'black',
         },
       },
     },
@@ -72,7 +76,6 @@ function useInstall() {
     unInstall: () => setInstallState(false),
   };
 }
-
 export default () => {
   const target = useRef();
   const { disabled, setDisabled } = useCount();

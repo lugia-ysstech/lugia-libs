@@ -5,6 +5,7 @@ import {
   getAttributeFromObject,
   getIndexfromKey,
   getKeyfromIndex,
+  isEmptyObject,
   moveToTargetIfKeyIsInSource,
 } from '../src/index';
 
@@ -135,5 +136,13 @@ describe('Object', () => {
         ),
       ),
     ).toEqual(JSON.stringify(result));
+  });
+  it('isEmptyObject', () => {
+    expect(isEmptyObject(null)).toBeTruthy();
+    expect(isEmptyObject(undefined)).toBeTruthy();
+    expect(isEmptyObject({})).toBeTruthy();
+    expect(isEmptyObject({ a: 1 })).toBeFalsy();
+    expect(isEmptyObject(0)).toBeTruthy();
+    expect(isEmptyObject([])).toBeTruthy();
   });
 });

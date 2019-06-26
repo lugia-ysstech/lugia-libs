@@ -101,3 +101,12 @@ export function deepMergeAnB(
     });
   return deepMerge(target, objectA, objectB);
 }
+export function isEmptyObject(obj: any) {
+  if (obj === null || obj === undefined) {
+    return true;
+  }
+  if (typeof obj !== 'object') {
+    return true;
+  }
+  return Object.keys(obj).length === 0;
+}

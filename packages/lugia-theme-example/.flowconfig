@@ -12,6 +12,7 @@ packages/.*/src
 flow-typed/
 interface/
 ../../flow-typed/
+
 node_modules/@lugia/theme-config/interface
 node_modules/@lugia/theme-css-hoc/interface
 node_modules/@lugia/theme-hoc/interface

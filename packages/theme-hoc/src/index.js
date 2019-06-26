@@ -124,6 +124,11 @@ const ThemeProvider = (
   class ThemeWrapWidget extends React.Component<any, any> {
     svtarget: Object;
 
+    event: Object;
+    eventId: number;
+    hover: boolean;
+    active: boolean;
+
     constructor(props: any) {
       super(props);
       let initState: Object = {
@@ -131,16 +136,21 @@ const ThemeProvider = (
         id: uuid(),
       };
       if (needProcessThemeState()) {
-        const themeState = {};
         initState.themeState = {};
         if (hover) {
-          themeState.hover = false;
+          this.hover = false;
         }
         if (active) {
-          themeState.active = false;
+          this.active = false;
         }
       }
+      this.event = {};
+      this.eventId = 0;
       this.state = initState;
+    }
+
+    getEventId() {
+      return this.eventId++;
     }
 
     componentWillReceiveProps(props: any, context: any) {
@@ -175,14 +185,13 @@ const ThemeProvider = (
     };
 
     toggleActiveState = (state: boolean) => {
-      const themeState = this.getThemeState();
-      const { active } = themeState;
+      const { active } = this;
       if (active === state) {
         return;
       }
-      this.setState({
-        themeState: { ...themeState, active: state },
-      });
+      this.active = state;
+
+      this.emit('active', { active: state });
       const { toggleActiveState } = this.props;
       toggleActiveState && toggleActiveState(state);
     };
@@ -194,14 +203,12 @@ const ThemeProvider = (
     };
 
     toggleHoverState = (state: boolean) => {
-      const themeState = this.getThemeState();
-      const { hover } = themeState;
+      const { hover } = this;
       if (hover === state) {
         return;
       }
-      this.setState({
-        themeState: { ...themeState, hover: state },
-      });
+      this.hover = state;
+      this.emit('hover', { hover: state });
       const { toggleHoverState } = this.props;
       toggleHoverState && toggleHoverState(state);
     };
@@ -288,7 +295,40 @@ const ThemeProvider = (
           themeConfig = selectThemePart(themeConfig, index, count);
         }
       }
-      return { themeConfig, propsConfig, themeState };
+      return { themeConfig, propsConfig, themeState, onLugia: this.on };
+    };
+
+    on = (name: string, cb) => {
+      const { fatherOn } = this.props;
+      if (fatherOn) {
+        const exist = fatherOn(name, cb);
+        if (exist) {
+          return exist;
+        }
+      }
+
+      let eventHandler = this.event[name];
+      if (!eventHandler) {
+        eventHandler = this.event[name] = {};
+      }
+      let eventId = this.getEventId();
+      eventHandler[eventId] = cb;
+
+      return () => {
+        delete eventHandler[eventId];
+      };
+    };
+
+    emit = (name: string, data: any) => {
+      const { fatherEmit } = this.props;
+      fatherEmit && fatherEmit(name, data);
+      const handler = this.event[name];
+      if (!handler) {
+        return;
+      }
+      Object.values(handler).forEach((cb: Function) => {
+        cb(data);
+      });
     };
 
     getTheme = () => {
@@ -466,9 +506,9 @@ const ThemeProvider = (
     }
 
     getThemeState() {
-      const { disabled } = this.props;
+      const { disabled, themeState: pThemeState = {} } = this.props;
       const { themeState } = this.state;
-      return { ...themeState, disabled };
+      return { ...themeState, ...pThemeState, disabled };
     }
 
     getThemeProps = () => {
@@ -476,12 +516,51 @@ const ThemeProvider = (
       const result: Object = {
         themeState,
         themeConfig: this.getTheme(),
+        onLugia: this.on,
       };
       const { propsConfig } = this.props;
       if (propsConfig) {
         result.propsConfig = propsConfig;
       }
       return result;
+    };
+
+    dispatchEvent = (
+      eventNames: string[],
+      direction: 'f2c' | 'c2f',
+    ): Object => {
+      if (!eventNames || !eventNames.length || !direction) {
+        return {};
+      }
+      const hasEvent = eventNames.reduce((exist, name) => {
+        exist[name] = true;
+        return exist;
+      }, {});
+      switch (direction) {
+        case 'f2c': {
+          return {
+            fatherOn: (name: string, cb: Function) => {
+              const exist = hasEvent[name];
+              if (exist) {
+                return this.on(name, cb);
+              }
+              return;
+            },
+          };
+        }
+
+        case 'c2f':
+          return {
+            fatherEmit: (name: string, data: Object) => {
+              const exist = hasEvent[name];
+              if (exist) {
+                return this.emit(name, data);
+              }
+            },
+          };
+        default:
+      }
+      return {};
     };
 
     render() {
@@ -499,10 +578,9 @@ const ThemeProvider = (
 
       return (
         <Target
+          dispatchEvent={this.dispatchEvent}
           {...this.props}
           {...themeStateEventConfig}
-          toggleActiveState={this.toggleActiveState}
-          toggleHoverState={this.toggleHoverState}
           themeProps={this.getThemeProps()}
           getPartOfThemeHocProps={this.getPartOfThemeHocProps}
           getPartOfThemeConfig={this.getPartOfThemeConfig}
@@ -517,6 +595,20 @@ const ThemeProvider = (
           }}
         />
       );
+    }
+
+    mouseupHandler: any;
+
+    componentDidMount() {
+      this.mouseupHandler = () => {
+        if (this.active) {
+          this.toggleActiveState(false);
+        }
+      };
+      document.addEventListener('mouseup', this.mouseupHandler);
+    }
+    componentWillUnmount() {
+      document.removeEventListener('mouseup', this.mouseupHandler);
     }
   }
 

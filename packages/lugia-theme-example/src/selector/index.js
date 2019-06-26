@@ -8,6 +8,18 @@ import React from 'react';
 import CSSComponent, { getBorder } from '@lugia/theme-css-hoc';
 import ThemeHoc, { addMouseEvent } from '@lugia/theme-hoc';
 
+const BaseButton = CSSComponent({
+  tag: 'button',
+  className: 'button',
+});
+const Button = ThemeHoc(
+  CSSComponent({
+    extend: BaseButton,
+    className: 'button',
+  }),
+  'btn',
+  { hover: true, active: true },
+);
 const Block = CSSComponent({
   tag: 'span',
   className: 'selector_block',
@@ -15,7 +27,6 @@ const Block = CSSComponent({
   normal: {
     getThemeMeta(themeMeta, themeProps) {
       const { propsConfig } = themeProps;
-      console.info('get', propsConfig);
       const { index } = propsConfig;
 
       return {
@@ -45,6 +56,7 @@ const SelectorWeb = ThemeHoc(
 
       return (
         <Block
+          {...addMouseEvent(this)}
           themeProps={this.props.getPartOfThemeProps('BlockConfig', {
             selector: { index, count },
           })}
@@ -62,11 +74,13 @@ export default ThemeHoc(
   class extends React.Component<any, any> {
     render() {
       const res = [];
-      for (let i = 0; i < 10; i++) {
-        let blockPart = this.props.getPartOfThemeConfig('Block');
+
+      let blockPart = this.props.getPartOfThemeConfig('Block');
+      for (let i = 0; i < 100; i++) {
         res.push(
           <SelectorWeb
             propsConfig={{ index: i }}
+            {...this.props.dispatchEvent(['hover', 'active'], 'f2c')}
             index={i}
             count={10}
             {...this.props.createThemeHocProps('selectWeb', {
@@ -77,7 +91,24 @@ export default ThemeHoc(
           />,
         );
       }
-      return <div {...addMouseEvent(this)}>{res}</div>;
+      return (
+        <div {...addMouseEvent(this)}>
+          {res}
+          <Button
+            {...this.props.getPartOfThemeHocProps('Block')}
+            {...this.props.dispatchEvent(['hover', 'active'], 'c2f')}
+          >
+            btn
+          </Button>
+          <BaseButton
+            themeProps={this.props.getPartOfThemeProps('Block', {
+              state: { active: true },
+            })}
+          >
+            aaa
+          </BaseButton>
+        </div>
+      );
     }
   },
   'Selector',
