@@ -118,3 +118,73 @@ declare export type AddMouseEventOPtionAfterConfig = {
     opt?: AddMouseEventOption,
   ): Object;
 ```
+
+    
+## 20190620
+  【版本更新操作】
+  
+  yarn add @lugia/css@1.0.12
+  yarn add @lugia/theme-config@1.0.13
+  yarn add @lugia/theme-core@1.0.13
+  yarn add @lugia/theme-css-hoc@1.0.23
+  yarn add @lugia/theme-hoc-devtools@1.0.2
+  yarn add @lugia/theme-hoc@1.0.18
+
+  
+【变更内容】       
+1.获取的主题信息未考虑默认的主题信息 [fixedBUg]  
+
+2.提取的主题信息加入partName的信息作为提取组件主题配置树的路标；
+
+3.增加对propsConfig的直接配置功能，无需再使用多一层高阶组件的冗余来实现。
+
+```jsx harmony
+  const Tab = CSSComponent({}, '');
+  const BaseTab = ThemeHoc(Tab);
+
+  <BaseTab propsConfig={{tabType: 'xxx'}} /> 通过这样的写法CSSComponent的Tab就可以拿到指定的propsConfig值。   
+```
+4.ThemeHOC修改增加往目标组件注入
+```ecmascript 6
+           toggleHoverState(state);     //用来将切换宿主的hover状态为state
+           toggleActiveState(state);    //用来将切换宿主的active状态为state
+
+```
+      
+5.ThemeHOC增加自动根据hover和active的状态切换触发传入的toggleHoverState方法和toggleActiveState
+
+6.修正BUG： {font: fontSize: {}} 中的fontSize未转换为rem；
+
+7.修改：  theme的主题配置的字体配置
+```jsx harmony
+ font: {
+        fontSize,
+        fontWeight
+      }
+      改为
+      font:{
+          size,
+          weight
+      }
+      去除fontXXX的前缀
+```
+
+8.增加新的全局获取方法 getThemeMeta
+CSSConfig中的normal配置中增加getThemeMeta方法，用来返回自定义的ThemeMeta信息。改后的优先级如下
+
+9.状态的获取顺序如下：
+  
+
+getCSS < defaultTheme < getStyle <getThemeMeta < 用户指定的theme
+  normal active disabled的defaultTheme采用CSS方式生成
+  而hover状态的defaultTheme采用内联样式放入。 
+
+10.阴影获取方法
+   function getBoxShadow(boxShadow: string): Object;
+```jsx harmony
+  {
+     normal: {
+       boxShadow: getBoxShadow('5px 5px rgb(0,0,0,.5')
+     }
+  }
+```
