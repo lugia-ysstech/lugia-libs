@@ -458,10 +458,11 @@ const ThemeProvider = (
       result.id = fatherId;
       result.path = `${id2Path[father]}/${fatherId}`;
       id2Path[fatherId] = result.path;
-      children &&
+      if (Array.isArray(children)) {
         children.forEach(id => {
           this.getChildren(getReactNodeInfo(id), fatherId, id2Path);
         });
+      }
     }
 
     getThemeState() {
@@ -472,7 +473,7 @@ const ThemeProvider = (
 
     getThemeProps = () => {
       const themeState = this.getThemeState();
-      const result = {
+      const result: Object = {
         themeState,
         themeConfig: this.getTheme(),
       };

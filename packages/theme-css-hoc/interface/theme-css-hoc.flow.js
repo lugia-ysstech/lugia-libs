@@ -79,6 +79,8 @@ declare module '@lugia/theme-css-hoc' {
 
   declare export function StaticComponent(cssConfig: CSSConfig): Function;
 
+  declare export function getBoxShadow(boxShadow: string): Object;
+
   declare export default (cssConfig: CSSConfig) => Function;
 
   declare export var css: any; // styled keyframes;

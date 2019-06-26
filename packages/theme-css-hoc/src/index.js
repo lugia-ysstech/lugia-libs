@@ -538,9 +538,19 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
       const { defaultTheme = {} } = config;
       return defaultTheme;
     }
+    function getTargetThemeMeta(stateType: StateType) {
+      let { [stateType]: themeMeta = {} } = themeConfig;
 
+      const { [stateType]: cssConfigThemeMeta = {} } = cssConfig;
+      const { getThemeMeta } = cssConfigThemeMeta;
+      if (getThemeMeta) {
+        let getThemeMetaRes = getThemeMeta(themeMeta, themeProps) || {};
+        themeMeta = deepMerge(getThemeMetaRes, themeMeta);
+      }
+      return themeMeta;
+    }
     allState.reduce((result: Object, stateType: StateType) => {
-      const { [stateType]: themeMeta = {} } = themeConfig;
+      const themeMeta = getTargetThemeMeta(stateType);
       const defaultTheme = getDefaultTheme(cssConfig, stateType);
       const curThemeMeta = (result[stateType] = deepMerge(
         defaultTheme,
@@ -565,10 +575,11 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
       }
       return result;
     }, themeMeta);
+
     return stateTypes.reduce(
       (result: Object, stateType: StateType) => {
         const gettor = stateType2Gettor[stateType];
-        const { [stateType]: themeMeta = {} } = themeConfig;
+        const themeMeta = getTargetThemeMeta(stateType);
         result[stateType] = gettor(themeMeta);
         result.themeMeta.current = deepMerge(
           getDefaultTheme(cssConfig, stateType),
@@ -1009,4 +1020,7 @@ export function getBorderRadius(
   );
 }
 
+export function getBoxShadow(shadow: string): Object {
+  return {};
+}
 export { css, keyframes };
