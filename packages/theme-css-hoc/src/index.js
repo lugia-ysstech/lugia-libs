@@ -31,9 +31,8 @@ import React from 'react';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
 import { style2css, units } from '@lugia/css';
-import { px2Number } from '@lugia/css/src/units';
 
-const { px2remcss } = units;
+const { px2remcss, px2Number } = units;
 
 type MarginOpt = {
   default: {
