@@ -15,7 +15,12 @@ import {
   getReactNodeInfo,
   getReactNodeInfoByThemeId,
 } from '@lugia/theme-hoc-devtools';
-import { getConfig, selectThemePart } from '@lugia/theme-core';
+import {
+  CSSComponentDisplayName,
+  getConfig,
+  selectThemePart,
+  ThemeComponentPrefix,
+} from '@lugia/theme-core';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 
 let cnt = 0;
@@ -36,10 +41,9 @@ const OptNames = {
 };
 
 function isCSSComponent(name: string): boolean {
-  return name == 'lugia_c_t';
+  return name === CSSComponentDisplayName;
 }
 
-const ThemeComponentPrefix = 'lugia_t_hoc_';
 const ThemeComponentPrefixLen = ThemeComponentPrefix.length;
 
 function isThemeComponent(name: string): boolean {
@@ -218,10 +222,12 @@ const ThemeProvider = (
       return target;
     };
 
-    getPartOfThemeHocProps = (childWidgetName: string): Object => {
-      const viewClass = `${displayName}_${childWidgetName}`;
-      const targetTheme = this.getPartOfThemeConfig(childWidgetName);
-      return this.createThemeHocProps(viewClass, targetTheme);
+    getPartOfThemeHocProps = (partName: string): Object => {
+      const viewClass = `${displayName}_${partName}`;
+      const targetTheme = this.getPartOfThemeConfig(partName);
+      let result = this.createThemeHocProps(viewClass, targetTheme);
+      result.__partName = partName;
+      return result;
     };
     createThemeHocProps = (viewClass: string, targetTheme: Object): Object => {
       if (!targetTheme) {
@@ -235,15 +241,16 @@ const ThemeProvider = (
       };
     };
 
-    getPartOfThemeConfig = (childWidgetName: string): Object => {
-      if (!childWidgetName) {
+    getPartOfThemeConfig = (partName: string): Object => {
+      if (!partName) {
         return {};
       }
       const theme = this.getTheme() || {};
-      const { [childWidgetName]: targetTheme } = theme;
+      const { [partName]: targetTheme } = theme;
       if (!targetTheme) {
         return {};
       }
+      targetTheme.__partName = partName;
       return targetTheme;
     };
 
@@ -269,6 +276,10 @@ const ThemeProvider = (
         }
         if (props) {
           propsConfig = deepMerge(propsConfig, props);
+        }
+        const { propsConfig: hocPropsConfig } = this.props;
+        if (hocPropsConfig) {
+          propsConfig = deepMerge(hocPropsConfig, propsConfig);
         }
         if (state) {
           themeState = deepMerge(themeState, state);
@@ -321,27 +332,48 @@ const ThemeProvider = (
             res[id] = id2Path[id];
             return res;
           }, {});
+
         Object.keys(themeOrCSSId2Path).forEach(id => {
           const path = themeOrCSSId2Path[id];
           themeOrCSSId2Path[id] = path.split('/').filter(filterOnlyThemeOrCSS);
         });
-        let paths = Object.values(themeOrCSSId2Path).sort(
+
+        let paths: any = Object.values(themeOrCSSId2Path).sort(
           (a: Object, b: Object) => {
             return a.length - b.length;
           },
         );
+        // for (let i = 0; i < paths.length; i++) {
+        //   const path = paths[ i ];
+        //   if (path && path.length === 0) {
+        //     continue;
+        //   }
+        //   const result = [ path[ 0 ] ];
+        //   for (let j = 1; j < path.length; j++) {
+        //     const id = path[ j ];
+        //     let reactNodeInfo = getReactNodeInfo(id);
+        //     if (reactNodeInfo) {
+        //       let name = reactNodeInfo.name;
+        //       if (isCSSComponent(name)) {
+        //         result.push(id);
+        //       }
+        //     }
+        //   }
+        //   paths[i] = result;
+        // }
 
         const id2Node = {};
         const nodes = [];
         paths.forEach((path: any) => {
           let level = path.length - 1;
           const nodeId = path[level];
+          if (id2Node[nodeId]) {
+            return;
+          }
           id2Node[nodeId] = {
             ...this.getNodeInfo(nodeId, fields),
           };
-          if (fields.indexOf('path') !== -1) {
-            id2Node[nodeId].path = path;
-          }
+          id2Node[nodeId].path = path;
           let father = nodes;
           if (level > 0) {
             father = id2Node[path[level - 1]].children;
@@ -376,7 +408,6 @@ const ThemeProvider = (
         } else {
           console.error(`not found ${id} props info`);
         }
-
         if (isThemeCmp) {
           const { children } = reactNodeInfo;
           if (children && children.length === 1) {
@@ -396,11 +427,23 @@ const ThemeProvider = (
 
       if (isCSSCmp) {
         result.themeMeta = themeMeta;
-        result.themeProps = themeProps;
       }
-      if (isThemeCmp) {
+
+      if (themeProps) {
         result.themeProps = themeProps;
+        const { themeConfig = {} } = themeProps;
+        const { __partName, __index, __count } = themeConfig;
+        if (__partName) {
+          result.partName = __partName;
+        }
+        if (__index !== undefined) {
+          result.index = __index;
+        }
+        if (__count) {
+          result.count = __count;
+        }
       }
+
       if (~fields.indexOf('name')) {
         result.name = name;
       }
@@ -431,10 +474,15 @@ const ThemeProvider = (
 
     getThemeProps = () => {
       const themeState = this.getThemeState();
-      return {
+      const result = {
         themeState,
         themeConfig: this.getTheme(),
       };
+      const { propsConfig } = this.props;
+      if (propsConfig) {
+        result.propsConfig = propsConfig;
+      }
+      return result;
     };
 
     render() {
