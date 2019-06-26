@@ -70,7 +70,15 @@ declare module '@lugia/theme-core' {
     clip?: string,
   };
 
-  declare export type BoxShadowType = string;
+  declare export type BoxShadowType = {
+    x: number,
+    y: number,
+    color?: string,
+    type?: 'outset' | 'inset',
+    blur?: number,
+    spread?: number,
+  };
+
   declare export type FontType = {
     style: string,
     weight: number,

@@ -16,6 +16,7 @@ const config = {
         },
       },
       normal: {
+        fontSize: 22,
         background: {
           color: 'green',
         },
@@ -29,6 +30,7 @@ const config = {
             color: 'blue',
           },
         },
+
         nth3: {
           background: {
             color: 'blue',
@@ -43,6 +45,14 @@ const config = {
       hover: {
         background: {
           color: 'pink',
+        },
+        boxShadow: {
+          type: 'outset',
+          x: 5,
+          y: 5,
+          spread: 5,
+          blur: 5,
+          color: 'rgb(0,0,5,0.9)',
         },
       },
     },

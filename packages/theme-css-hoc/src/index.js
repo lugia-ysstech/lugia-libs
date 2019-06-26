@@ -7,6 +7,7 @@
 import type {
   BorderRadiusType,
   BorderType,
+  BoxShadowType,
   HeightType,
   MarginType,
   PaddingType,
@@ -30,6 +31,7 @@ import React from 'react';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
 import { style2css, units } from '@lugia/css';
+import { px2Number } from '@lugia/css/src/units';
 
 const { px2remcss } = units;
 
@@ -246,12 +248,7 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     opacity,
     getNumberStyleFromTheme,
   );
-  setObjectValueIfValueExist(
-    style,
-    'boxShadow',
-    boxShadow,
-    getStringStyleFromTheme,
-  );
+  setObjectValueIfValueExist(style, 'boxShadow', boxShadow, getBoxShadowCSS);
   setObjectValueIfValueExist(
     style,
     'visibility',
@@ -538,6 +535,7 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
       const { defaultTheme = {} } = config;
       return defaultTheme;
     }
+
     function getTargetThemeMeta(stateType: StateType) {
       let { [stateType]: themeMeta = {} } = themeConfig;
 
@@ -549,6 +547,7 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
       }
       return themeMeta;
     }
+
     allState.reduce((result: Object, stateType: StateType) => {
       const themeMeta = getTargetThemeMeta(stateType);
       const defaultTheme = getDefaultTheme(cssConfig, stateType);
@@ -1021,6 +1020,56 @@ export function getBorderRadius(
 }
 
 export function getBoxShadow(shadow: string): Object {
-  return {};
+  if (!shadow) {
+    return {};
+  }
+  let rgbIndex = shadow.toUpperCase().indexOf('RGB');
+  let color = '';
+
+  if (rgbIndex !== -1) {
+    color = shadow.substr(rgbIndex);
+    shadow = shadow.substr(0, rgbIndex);
+  }
+
+  let config = shadow.split(' ').filter(str => str !== '');
+  let type = 'outset';
+  if (config[0].toUpperCase() === 'INSET') {
+    type = 'inset';
+    config.splice(0, 1);
+  }
+  const [x, y, blur, spread] = config;
+  if (!color && config.length > 2) {
+    color = config[config.length - 1];
+  }
+  const vX = px2Number(x);
+  const vY = px2Number(y);
+  if (isNaN(vX) || isNaN(vY)) {
+    return {
+      x: 0,
+      y: 0,
+      blur: 0,
+      spread: 0,
+      color: '',
+      type: '',
+    };
+  }
+  return {
+    x: px2Number(x) || 0,
+    y: px2Number(y) || 0,
+    blur: px2Number(blur) || 0,
+    spread: px2Number(spread) || 0,
+    color,
+    type,
+  };
 }
+
+export function getBoxShadowCSS(boxConfig: BoxShadowType): string {
+  const { x, y, blur = 0, spread = 0, color = '' } = boxConfig;
+  let { type = 'outset' } = boxConfig;
+  if (type !== 'inset') {
+    type = '';
+  }
+  return `${type} ${x}px ${y}px ${blur}px ${spread}px ${color}`.trim();
+}
+
 export { css, keyframes };

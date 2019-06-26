@@ -8,6 +8,8 @@ import {
   getAttributeValue,
   getBorder,
   getBorderRadius,
+  getBoxShadow,
+  getBoxShadowCSS,
   getSelectNameThemeMeta,
   packObject,
 } from '../src/index';
@@ -230,5 +232,106 @@ describe('CSSComponent', () => {
       className: 'aa',
       hover: {},
     });
+  });
+
+  it('getBoxShadow', () => {
+    expect(getBoxShadow('8px   -12px   8px rgba(0, 0, 0, .6)')).toEqual({
+      x: 8,
+      y: -12,
+      blur: 8,
+      spread: 0,
+      type: 'outset',
+      color: 'rgba(0, 0, 0, .6)',
+    });
+
+    expect(
+      getBoxShadow('inset 8px   -12px   8px   6px rgba(0, 0, 0, .6)'),
+    ).toEqual({
+      x: 8,
+      y: -12,
+      blur: 8,
+      spread: 6,
+      type: 'inset',
+      color: 'rgba(0, 0, 0, .6)',
+    });
+
+    expect(getBoxShadow('inset 8px   -12px')).toEqual({
+      x: 8,
+      y: -12,
+      blur: 0,
+      spread: 0,
+      type: 'inset',
+      color: '',
+    });
+
+    expect(getBoxShadow('8px   -12px rgba(0, 0, 0, .6)')).toEqual({
+      x: 8,
+      y: -12,
+      blur: 0,
+      spread: 0,
+      type: 'outset',
+      color: 'rgba(0, 0, 0, .6)',
+    });
+
+    expect(getBoxShadow('inset 8px   -12px rgba(0, 0, 0, .6)')).toEqual({
+      x: 8,
+      y: -12,
+      blur: 0,
+      spread: 0,
+      type: 'inset',
+      color: 'rgba(0, 0, 0, .6)',
+    });
+
+    expect(getBoxShadow('8px   -12px red')).toEqual({
+      x: 8,
+      y: -12,
+      blur: 0,
+      spread: 0,
+      type: 'outset',
+      color: 'red',
+    });
+
+    expect(getBoxShadow('inset 8px   -12px red')).toEqual({
+      x: 8,
+      y: -12,
+      blur: 0,
+      spread: 0,
+      type: 'inset',
+      color: 'red',
+    });
+  });
+  it('getBoxShadowCSS', () => {
+    expect(
+      getBoxShadowCSS({
+        x: 8,
+        y: -12,
+        blur: 8,
+        spread: 0,
+        type: 'outset',
+        color: 'rgba(0, 0, 0, .6)',
+      }),
+    ).toEqual('8px -12px 8px 0px rgba(0, 0, 0, .6)');
+
+    expect(
+      getBoxShadowCSS({
+        x: 8,
+        y: -12,
+        blur: 5,
+        spread: 5,
+        type: 'outset',
+        color: 'red',
+      }),
+    ).toEqual('8px -12px 5px 5px red');
+
+    expect(
+      getBoxShadowCSS({
+        x: 8,
+        y: -12,
+        blur: 5,
+        spread: 5,
+        type: 'inset',
+        color: 'red',
+      }),
+    ).toEqual('inset 8px -12px 5px 5px red');
   });
 });

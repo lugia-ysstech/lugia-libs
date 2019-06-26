@@ -5,15 +5,28 @@
  * @flow
  */
 import React from 'react';
-import CSSComponent from '@lugia/theme-css-hoc';
-import ThemeHoc from '@lugia/theme-hoc';
-import { addMouseEvent } from '@lugia/theme-hoc';
+import CSSComponent, { getBorder } from '@lugia/theme-css-hoc';
+import ThemeHoc, { addMouseEvent } from '@lugia/theme-hoc';
 
 const Block = CSSComponent({
   tag: 'span',
   className: 'selector_block',
   css: 'display: inline-block',
   normal: {
+    getThemeMeta(themeMeta, themeProps) {
+      const { propsConfig } = themeProps;
+      console.info('get', propsConfig);
+      const { index } = propsConfig;
+
+      return {
+        border: getBorder({
+          width: 5,
+          style: 'solid',
+          color: index % 2 === 0 ? 'black' : 'red',
+        }),
+      };
+    },
+
     defaultTheme: {
       width: 20,
       margin: {
@@ -32,14 +45,17 @@ const SelectorWeb = ThemeHoc(
 
       return (
         <Block
-          themeProps={this.props.getPartOfThemeProps('Block', {
+          themeProps={this.props.getPartOfThemeProps('BlockConfig', {
             selector: { index, count },
           })}
-        />
+        >
+          1
+        </Block>
       );
     }
   },
   'SelectroWEb',
+  { hover: true, active: true },
 );
 
 export default ThemeHoc(
@@ -50,10 +66,11 @@ export default ThemeHoc(
         let blockPart = this.props.getPartOfThemeConfig('Block');
         res.push(
           <SelectorWeb
+            propsConfig={{ index: i }}
             index={i}
             count={10}
             {...this.props.createThemeHocProps('selectWeb', {
-              Block: blockPart,
+              BlockConfig: blockPart,
             })}
             themeState={this.props.themeProps.themeState}
             disabled={this.props.disabled}
