@@ -61,6 +61,7 @@ yarn add @lugia/theme-hoc@1.0.12
   增加：
      *  主题提取功能
   ### 使用方法说明
+  
 ```javascript
  import '@lugia/theme-hoc-devtools';
  
@@ -93,6 +94,7 @@ yarn add @lugia/theme-hoc@1.0.12
      * 删除ThemeHOC的外部span容器，mouse事件由Target提供。
   增加：  
      * addMouseEvent函数方便进行组件的鼠标事件添加。 
+     
 ```flow js
 declare export type AddMouseEventOPtionAfterConfig = {
     enter?: boolean, // 鼠标进入 默认false true 先调用props的方法再调用opt里面配置方法
@@ -144,18 +146,22 @@ declare export type AddMouseEventOPtionAfterConfig = {
 
   <BaseTab propsConfig={{tabType: 'xxx'}} /> 通过这样的写法CSSComponent的Tab就可以拿到指定的propsConfig值。   
 ```
+
 4.ThemeHOC修改增加往目标组件注入
+
 ```ecmascript 6
            toggleHoverState(state);     //用来将切换宿主的hover状态为state
            toggleActiveState(state);    //用来将切换宿主的active状态为state
 
 ```
+
       
 5.ThemeHOC增加自动根据hover和active的状态切换触发传入的toggleHoverState方法和toggleActiveState
 
 6.修正BUG： {font: fontSize: {}} 中的fontSize未转换为rem；
 
 7.修改：  theme的主题配置的字体配置
+
 ```jsx harmony
  font: {
         fontSize,
@@ -169,6 +175,7 @@ declare export type AddMouseEventOPtionAfterConfig = {
       去除fontXXX的前缀
 ```
 
+
 8.增加新的全局获取方法 getThemeMeta
 CSSConfig中的normal配置中增加getThemeMeta方法，用来返回自定义的ThemeMeta信息。改后的优先级如下
 
@@ -181,6 +188,7 @@ getCSS < defaultTheme < getStyle <getThemeMeta < 用户指定的theme
 
 10.阴影获取方法
    function getBoxShadow(boxShadow: string): Object;
+   
 ```jsx harmony
   {
      normal: {
@@ -188,6 +196,7 @@ getCSS < defaultTheme < getStyle <getThemeMeta < 用户指定的theme
      }
   }
 ```
+
 
     
 ## 20190626
@@ -212,6 +221,7 @@ getCSS < defaultTheme < getStyle <getThemeMeta < 用户指定的theme
     spread?: number,
   };
 ```
+
 2.实现theme-css-hoc里的getBoxShadow方法，支持将CSS串转为BoxShadowType的对象。
 
 ## 20190627
