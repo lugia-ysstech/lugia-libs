@@ -800,8 +800,10 @@ export function filterRepeatCSSConfigSelectNames(outCSSConfig: CSSConfig) {
 }
 
 export default function CSSComponent(cssConfig: CSSConfig) {
-  let { extend } = cssConfig;
-
+  let { extend, className } = cssConfig;
+  if (!className) {
+    console.trace('className is empty!');
+  }
   if (extend) {
     const extendCSSConfig = CSSComponent2CSSConfig.get(extend);
     if (extendCSSConfig) {
@@ -826,7 +828,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     return { theStyle: getTheStyle(props), ...getStyleByThemeMeta(props) };
   };
 
-  const { css, className } = cssConfig;
+  const { css } = cssConfig;
 
   function getTargetComponent(targetStyleComponent: Function): Function {
     const result = targetStyleComponent`
