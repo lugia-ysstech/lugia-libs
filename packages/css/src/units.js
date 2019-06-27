@@ -12,6 +12,7 @@ if (typeof document !== 'undefined') {
   const body: Object = document.body;
   if (body) {
     footerFontSize = getFontSize(body.parentElement, 10);
+    body.parentElement.style.fontSize = number2px(footerFontSize);
     console.info('footerFontSize', footerFontSize);
   }
 }
