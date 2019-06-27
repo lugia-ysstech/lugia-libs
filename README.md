@@ -253,3 +253,83 @@ c2f（children2father：是将子组件ThemeHOC的事件转发给父组件处理
 **新增属性**
 
 ThemeHOC组件增加themeState属性可以用来锁定ThemeHOC组件内部的主题状态。
+# 20190627-2
+
+##【更新操作】
+
+  yarn add @lugia/css@1.0.13
+  
+  yarn add @lugia/theme-config@1.0.16
+  
+  yarn add @lugia/theme-core@1.0.16
+  
+  yarn add @lugia/theme-css-hoc@1.0.30
+  
+  yarn add @lugia/theme-hoc@1.0.22
+  
+##【更新内容】
+
+ ### 注意： 手动合并themeProps处理时
+调用ThemeHOC增加注入getInternalThemeProps方法，用来获取CSSHOC组件里themeProps需要使用内部属性放在右侧进行合并。
+
+### margin & padding 修改
+优先转换为数字，转换失败将字符串直接放入
+
+容错处理如果有一个方向错误，不会导致错误。
+
+支持 margin: 5 等价于  marginTop: 5, marginLeft: 5, marginBottom: 5, marginRight: 5 
+
+PS: padding类似
+
+### 同级的ThemeHOC事件转发方案
+
+提供createEventChanel用于建立两个ThemeHoc组件之间的事件通道。
+
+createEventChannel(eventNames: string[]) : {provider, consumer}
+参数说明：
+
+eventNames：要建立通道的事件名称。
+
+返回说明：
+
+provider: 事件生产者
+
+consumer：事件消费者
+
+范例代码如下：
+
+当按钮A、按钮B触发active事件时，provider将会将active事件生产出来提供给对应的consumer进行使用。
+
+而按钮B会消费按钮A的事件，进行相应主题的处理。如：active事件的时候进行hover主题的切换
+而按钮C会消费按钮A和按钮B的事件，进行相应主题的处理。如：active事件的时候进行hover主题的切换
+
+```jsx harmony
+      let channel1 = this.props.createEventChannel(['active']);
+      let channel2 = this.props.createEventChannel(['active']);
+      
+      <Button
+        {...channel1.provider}  
+        {...this.props.getPartOfThemeHocProps('Button')}
+      >
+        按钮A
+      </Button>{' '}
+      ,
+      <Button
+        {...channel2.provider}
+        lugiaConsumers={channel2.consumer}
+        {...this.props.getPartOfThemeHocProps('Button')}
+      >
+        按钮B
+      </Button>
+      ,
+      <Button
+        lugiaConsumers={[channel1.consumer, channel2.consumer]}
+        {...this.props.getPartOfThemeHocProps('Button')}
+      >
+        按钮C
+      </Button>
+```
+
+### 增加行高的主题配置
+
+lineHeight: number | string 取值规则同宽高一致。
