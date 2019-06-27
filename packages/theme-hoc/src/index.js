@@ -295,7 +295,12 @@ const ThemeProvider = (
           themeConfig = selectThemePart(themeConfig, index, count);
         }
       }
-      return { themeConfig, propsConfig, themeState, onLugia: this.on };
+      return {
+        themeConfig,
+        propsConfig,
+        themeState,
+        ...this.getInternalThemeProps(),
+      };
     };
 
     on = (name: string, cb) => {
@@ -516,7 +521,7 @@ const ThemeProvider = (
       const result: Object = {
         themeState,
         themeConfig: this.getTheme(),
-        onLugia: this.on,
+        ...this.getInternalThemeProps(),
       };
       const { propsConfig } = this.props;
       if (propsConfig) {
@@ -562,6 +567,11 @@ const ThemeProvider = (
       }
       return {};
     };
+    getInternalThemeProps = () => {
+      return {
+        onLugia: this.on,
+      };
+    };
 
     render() {
       const { svThemVersion } = this.state;
@@ -582,6 +592,7 @@ const ThemeProvider = (
           {...this.props}
           {...themeStateEventConfig}
           themeProps={this.getThemeProps()}
+          getInternalThemeProps={this.getInternalThemeProps}
           getPartOfThemeHocProps={this.getPartOfThemeHocProps}
           getPartOfThemeConfig={this.getPartOfThemeConfig}
           getPartOfThemeProps={this.getPartOfThemeProps}
@@ -607,6 +618,7 @@ const ThemeProvider = (
       };
       document.addEventListener('mouseup', this.mouseupHandler);
     }
+
     componentWillUnmount() {
       document.removeEventListener('mouseup', this.mouseupHandler);
     }
