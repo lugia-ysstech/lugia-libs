@@ -234,10 +234,11 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     boxShadow,
     visibility,
     cursor,
+    lineHeight,
   } = theme;
   let { background } = theme;
-
   const style = {};
+  setObjectValueIfValueExist(style, 'lineHeight', lineHeight, getSizeFromTheme);
   setObjectValueIfValueExist(style, 'fontSize', fontSize, getSizeFromTheme);
 
   setObjectValueIfValueExist(style, 'width', width, getSizeFromTheme);

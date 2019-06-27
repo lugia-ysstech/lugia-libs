@@ -36,6 +36,7 @@ const config = {
         },
       },
       normal: {
+        lineHeight: 50,
         fontSize: 22,
         margin: {
           left: 15,

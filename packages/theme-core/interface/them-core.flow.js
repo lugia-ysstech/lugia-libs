@@ -109,6 +109,7 @@ declare module '@lugia/theme-core' {
     background?: BackgroundType,
     border?: BorderType,
     width?: WidthType,
+    lineHeight?: SizeType,
     height?: HeightType,
     font?: FontType,
     color?: ColorType,
