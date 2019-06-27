@@ -30,7 +30,9 @@ yarn add @lugia/theme-css-hoc@1.0.19
 yarn add @lugia/theme-hoc@1.0.12
 
 【变更内容】
+
 修改：
+
   * ThemeHoc.props.getPartOfThemeProps opt 里增加一个 selector的 { index: number, count: number } ，分别代表组件在序列里的位置(index),以及这个序列里的总数量。
   下标从0开始， count是真实的个数。
 增加：
@@ -94,13 +96,17 @@ yarn add @lugia/theme-hoc@1.0.12
   
   
   【变更内容】
+  
   修改： 
      * colorUtils的常用色进行忽略大小写处理；
      * 删除ThemeHOC的外部span容器，mouse事件由Target提供。
+     
   增加：  
      * addMouseEvent函数方便进行组件的鼠标事件添加。 
      
+     
 ```flow js
+
 declare export type AddMouseEventOPtionAfterConfig = {
     enter?: boolean, // 鼠标进入 默认false true 先调用props的方法再调用opt里面配置方法
     leave?: boolean, // 鼠标离开 同上
@@ -124,7 +130,9 @@ declare export type AddMouseEventOPtionAfterConfig = {
     self: MouseEventComponent, // 组件的this引用
     opt?: AddMouseEventOption,
   ): Object;
+  
 ```
+
 
     
 ## 20190626
@@ -146,17 +154,21 @@ declare export type AddMouseEventOPtionAfterConfig = {
 3.增加对propsConfig的直接配置功能，无需再使用多一层高阶组件的冗余来实现。
 
 ```jsx harmony
-  const Tab = CSSComponent({}, '');
-  const BaseTab = ThemeHoc(Tab);
 
-  <BaseTab propsConfig={{tabType: 'xxx'}} /> 通过这样的写法CSSComponent的Tab就可以拿到指定的propsConfig值。   
+ const Tab = CSSComponent({}, '');
+const BaseTab = ThemeHoc(Tab);
+
+<BaseTab propsConfig={{tabType: 'xxx'}} /> 通过这样的写法CSSComponent的Tab就可以拿到指定的propsConfig值。   
+
 ```
 
 4.ThemeHOC修改增加往目标组件注入
 
 ```ecmascript 6
-           toggleHoverState(state);     //用来将切换宿主的hover状态为state
-           toggleActiveState(state);    //用来将切换宿主的active状态为state
+
+       toggleHoverState(state); //用来将切换宿主的hover状态为state
+       toggleActiveState(state); //用来将切换宿主的active状态为state
+       
 
 ```
 
@@ -165,19 +177,19 @@ declare export type AddMouseEventOPtionAfterConfig = {
 
 6.修正BUG： {font: fontSize: {}} 中的fontSize未转换为rem；
 
-7.修改：  theme的主题配置的字体配置
+7.修改： theme的主题配置的字体配置
 
 ```jsx harmony
  font: {
-        fontSize,
-        fontWeight
-      }
-      改为
-      font:{
-          size,
-          weight
-      }
-      去除fontXXX的前缀
+   fontSize,
+   fontWeight
+   }
+   改为
+   font:{
+   size,
+   weight
+   }
+   去除fontXXX的前缀
 ```
 
 
@@ -185,11 +197,11 @@ declare export type AddMouseEventOPtionAfterConfig = {
 CSSConfig中的normal配置中增加getThemeMeta方法，用来返回自定义的ThemeMeta信息。改后的优先级如下
 
 9.状态的获取顺序如下：
-  
+
 
 getCSS < defaultTheme < getStyle <getThemeMeta < 用户指定的theme
-  normal active disabled的defaultTheme采用CSS方式生成
-  而hover状态的defaultTheme采用内联样式放入。 
+ normal active disabled的defaultTheme采用CSS方式生成
+ 而hover状态的defaultTheme采用内联样式放入。
 
 10.阴影获取方法
    function getBoxShadow(boxShadow: string): Object;
@@ -292,7 +304,7 @@ ThemeHOC组件增加themeState属性可以用来锁定ThemeHOC组件内部的主
 
 容错处理如果有一个方向错误，不会导致错误。
 
-支持 margin: 5 等价于  marginTop: 5, marginLeft: 5, marginBottom: 5, marginRight: 5 
+支持 margin: 5 等价于 marginTop: 5, marginLeft: 5, marginBottom: 5, marginRight: 5 
 
 PS: padding类似
 
@@ -317,6 +329,7 @@ consumer：事件消费者
 
 而按钮B会消费按钮A的事件，进行相应主题的处理。如：active事件的时候进行hover主题的切换
 而按钮C会消费按钮A和按钮B的事件，进行相应主题的处理。如：active事件的时候进行hover主题的切换
+
 
 ```jsx harmony
 
