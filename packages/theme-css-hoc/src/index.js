@@ -8,12 +8,7 @@ import type {
   BorderRadiusType,
   BorderType,
   BoxShadowType,
-  HeightType,
-  MarginType,
-  PaddingType,
-  SizeType,
   ThemeMeta,
-  WidthType,
 } from '@lugia/theme-core';
 import { CSSComponentDisplayName, filterSelector } from '@lugia/theme-core';
 
@@ -90,54 +85,55 @@ export function packObject(path: string[], value: any): Object {
   return result;
 }
 
-function getSizeFromTheme(size: any) {
+export function getSizeFromTheme(size: any) {
   return typeof size === 'number' || !isNaN(Number(size))
     ? px2remcss(size)
     : size;
 }
 
-const DefaultSpace = 0;
 export const getSpaceFromTheme = (
   spaceType: 'margin' | 'padding',
-  space: MarginType | PaddingType,
-  opt?: MarginOpt = {
-    default: {
-      left: DefaultSpace,
-      right: DefaultSpace,
-      top: DefaultSpace,
-      bottom: DefaultSpace,
-    },
-  },
+  space: Object,
 ) => {
-  const theSpace = '';
-  const {
-    default: {
-      left = DefaultSpace,
-      right = DefaultSpace,
-      top = DefaultSpace,
-      bottom = DefaultSpace,
-    },
-  } = opt;
+  const style = {};
+
   if (typeof space === 'number') {
-    return `:${px2remcss(space)} `;
+    space = {
+      left: space,
+      top: space,
+      bottom: space,
+      right: space,
+    };
   }
+
   if (space !== undefined) {
-    const spaceTop = getAttributeFromObject(space, 'top', top);
-    const spaceBottom = getAttributeFromObject(space, 'bottom', bottom);
-    const spaceLeft = getAttributeFromObject(space, 'left', left);
-    const spaceRight = getAttributeFromObject(space, 'right', right);
-
-    return `${getSizeFromTheme(spaceTop)} ${getSizeFromTheme(
-      spaceRight,
-    )} ${getSizeFromTheme(spaceBottom)} ${getSizeFromTheme(spaceLeft)}`;
+    setObjectValueIfValueExist(
+      style,
+      `${spaceType}Top`,
+      getAttributeFromObject(space, 'top', 0),
+      getSizeFromTheme,
+    );
+    setObjectValueIfValueExist(
+      style,
+      `${spaceType}Bottom`,
+      getAttributeFromObject(space, 'bottom', 0),
+      getSizeFromTheme,
+    );
+    setObjectValueIfValueExist(
+      style,
+      `${spaceType}Left`,
+      getAttributeFromObject(space, 'left', 0),
+      getSizeFromTheme,
+    );
+    setObjectValueIfValueExist(
+      style,
+      `${spaceType}Right`,
+      getAttributeFromObject(space, 'right', 0),
+      getSizeFromTheme,
+    );
   }
-  return theSpace;
+  return style;
 };
-
-function getObjectStyleFromTheme(obj: Object) {
-  if (!obj) return {};
-  return obj;
-}
 
 function getBorderStyleFromTheme(border: Object) {
   if (!border) return {};
@@ -262,12 +258,7 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     getStringStyleFromTheme,
   );
   setObjectValueIfValueExist(style, 'cursor', cursor, getStringStyleFromTheme);
-  setObjectValueIfValueExist(style, 'padding', padding, (target: Object) =>
-    getSpaceFromTheme('padding', target),
-  );
-  setObjectValueIfValueExist(style, 'margin', margin, (target: Object) =>
-    getSpaceFromTheme('margin', target),
-  );
+
   const { position } = theme;
   Object.assign(
     style,
@@ -275,6 +266,8 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     getBackGround(background),
     getBorderStyleFromTheme(border),
     getPosition(position),
+    getSpaceFromTheme('padding', padding),
+    getSpaceFromTheme('margin', margin),
   );
   return style;
 }
