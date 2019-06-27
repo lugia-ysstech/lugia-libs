@@ -929,19 +929,29 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     useEffect(() => {
       const { themeProps } = props;
       const { onLugia } = themeProps;
-      const unsubscribeHover = onLugia('hover', data => {
-        if (hasStaticHover || !isEmptyObject(themeProps.themeConfig.hover)) {
-          setThemeState({ ...themeState, ...data });
-        }
-      });
-      const unsubscribeActive = onLugia('active', data => {
-        if (hasStaticActive || !isEmptyObject(themeProps.themeConfig.active)) {
-          setThemeState({ ...themeState, ...data });
-        }
-      });
+      const unsubscribeHover =
+        onLugia &&
+        onLugia('hover', data => {
+          if (hasStaticHover || !isEmptyObject(themeProps.themeConfig.hover)) {
+            setThemeState({ ...themeState, ...data });
+          }
+        });
+      const unsubscribeActive =
+        onLugia &&
+        onLugia('active', data => {
+          if (
+            hasStaticActive ||
+            !isEmptyObject(themeProps.themeConfig.active)
+          ) {
+            setThemeState({ ...themeState, ...data });
+          }
+        });
+      if (!onLugia) {
+        console.error('onLugia不存在传入错误！');
+      }
       return () => {
-        unsubscribeHover();
-        unsubscribeActive();
+        onLugia && unsubscribeHover();
+        onLugia && unsubscribeActive();
       };
     }, [cHover, hover, props, themeState]);
 
