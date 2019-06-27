@@ -30,7 +30,9 @@ yarn add @lugia/theme-css-hoc@1.0.19
 yarn add @lugia/theme-hoc@1.0.12
 
 【变更内容】
+
 修改：
+
   * ThemeHoc.props.getPartOfThemeProps opt 里增加一个 selector的 { index: number, count: number } ，分别代表组件在序列里的位置(index),以及这个序列里的总数量。
   下标从0开始， count是真实的个数。
 增加：
@@ -101,6 +103,7 @@ yarn add @lugia/theme-hoc@1.0.12
      * addMouseEvent函数方便进行组件的鼠标事件添加。 
      
 ```flow js
+
 declare export type AddMouseEventOPtionAfterConfig = {
     enter?: boolean, // 鼠标进入 默认false true 先调用props的方法再调用opt里面配置方法
     leave?: boolean, // 鼠标离开 同上
@@ -124,6 +127,7 @@ declare export type AddMouseEventOPtionAfterConfig = {
     self: MouseEventComponent, // 组件的this引用
     opt?: AddMouseEventOption,
   ): Object;
+  
 ```
 
     
@@ -146,17 +150,21 @@ declare export type AddMouseEventOPtionAfterConfig = {
 3.增加对propsConfig的直接配置功能，无需再使用多一层高阶组件的冗余来实现。
 
 ```jsx harmony
+
   const Tab = CSSComponent({}, '');
   const BaseTab = ThemeHoc(Tab);
 
   <BaseTab propsConfig={{tabType: 'xxx'}} /> 通过这样的写法CSSComponent的Tab就可以拿到指定的propsConfig值。   
+  
 ```
 
 4.ThemeHOC修改增加往目标组件注入
 
 ```ecmascript 6
+
            toggleHoverState(state);     //用来将切换宿主的hover状态为state
            toggleActiveState(state);    //用来将切换宿主的active状态为state
+           
 
 ```
 
