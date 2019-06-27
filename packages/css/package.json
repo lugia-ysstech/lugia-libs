@@ -1,6 +1,6 @@
 {
   "name": "@lugia/css",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
