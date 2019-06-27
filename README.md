@@ -191,7 +191,7 @@ getCSS < defaultTheme < getStyle <getThemeMeta < 用户指定的theme
 
     
 ## 20190626
-  【版本更新操作】
+【版本更新操作】
   
   yarn add @lugia/theme-config@1.0.14
   yarn add @lugia/theme-core@1.0.14
@@ -213,3 +213,43 @@ getCSS < defaultTheme < getStyle <getThemeMeta < 用户指定的theme
   };
 ```
 2.实现theme-css-hoc里的getBoxShadow方法，支持将CSS串转为BoxShadowType的对象。
+
+## 20190627
+
+【版本更新操作】
+
+ yarn add @lugia/object-utils@1.0.8
+ 
+ yarn add @lugia/theme-config@1.0.15
+ 
+ yarn add @lugia/theme-core@1.0.15
+ 
+ yarn add @lugia/theme-css-hoc@1.0.26
+ 
+ yarn add @lugia/theme-hoc@1.0.20
+ 
+ 
+【变更内容】        
+
+1.将hover active的模式由父组件通过setState重新出发render的方式，改为采用ThemeHOC抛出相关事件，而CSSHoc组件主动监听自主变化的方式。
+
+PS：修改原因是为了提升性能。如果组件压根没配置hover active是不会触发更新的，原先无论如何都会触发更新。
+
+2.删除&新增方法
+
+**删除**
+
+原先注入的两个方法toggleActiveState={this.toggleActiveState}、toggleHoverState={this.toggleHoverState} 。
+
+
+**修改** 
+改为通过注入 dispatchEvent (eventNames: string[], direction: 'f2c' | 'c2f'): Object;
+PS：子组件与父组件指的都是ThemeHOC组件
+
+f2c（father2children）：是用来将子的ThemeHOC组件的事件控制权收由父组件来触发。 
+
+c2f（children2father：是将子组件ThemeHOC的事件转发给父组件处理。
+
+**新增属性**
+
+ThemeHOC组件增加themeState属性可以用来锁定ThemeHOC组件内部的主题状态。
