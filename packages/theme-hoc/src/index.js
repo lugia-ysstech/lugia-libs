@@ -126,6 +126,7 @@ const ThemeProvider = (
 
     event: Object;
     eventId: number;
+    eventPrefix: number;
     hover: boolean;
     active: boolean;
 
@@ -146,11 +147,19 @@ const ThemeProvider = (
       }
       this.event = {};
       this.eventId = 0;
+      this.eventPrefix = 0;
       this.state = initState;
     }
 
     getEventId() {
       return this.eventId++;
+    }
+
+    createParseEventName() {
+      const eventPrefix = this.eventPrefix++;
+      return (name: string): string => {
+        return `p${eventPrefix}:${name}`;
+      };
     }
 
     componentWillReceiveProps(props: any, context: any) {
@@ -304,6 +313,15 @@ const ThemeProvider = (
     };
 
     on = (name: string, cb) => {
+      let { lugiaConsumers } = this.props;
+      if (lugiaConsumers && !Array.isArray(lugiaConsumers)) {
+        lugiaConsumers = [lugiaConsumers];
+      }
+      lugiaConsumers &&
+        lugiaConsumers.forEach(({ __consumer }) => {
+          __consumer && __consumer(name, cb);
+        });
+
       const { fatherOn } = this.props;
       if (fatherOn) {
         const exist = fatherOn(name, cb);
@@ -325,8 +343,9 @@ const ThemeProvider = (
     };
 
     emit = (name: string, data: any) => {
-      const { fatherEmit } = this.props;
+      const { fatherEmit, lugiaProvider } = this.props;
       fatherEmit && fatherEmit(name, data);
+      lugiaProvider && lugiaProvider(name, data);
       const handler = this.event[name];
       if (!handler) {
         return;
@@ -537,10 +556,8 @@ const ThemeProvider = (
       if (!eventNames || !eventNames.length || !direction) {
         return {};
       }
-      const hasEvent = eventNames.reduce((exist, name) => {
-        exist[name] = true;
-        return exist;
-      }, {});
+      const hasEvent = this.getExistEvent(eventNames);
+
       switch (direction) {
         case 'f2c': {
           return {
@@ -567,6 +584,45 @@ const ThemeProvider = (
       }
       return {};
     };
+
+    createEventChannel = (eventNames: string[]): Object => {
+      if (!eventNames || !eventNames.length) {
+        return {};
+      }
+      const hasEvent = this.getExistEvent(eventNames);
+      const parse = this.createParseEventName();
+      return {
+        provider: {
+          lugiaProvider: (name: string, data: Object) => {
+            const exist = hasEvent[name];
+            if (exist) {
+              return this.emit(parse(name), data);
+            }
+          },
+        },
+        consumer: {
+          __consumer: (name: string, cb: Function) => {
+            const exist = hasEvent[name];
+            if (exist) {
+              return this.on(parse(name), data => {
+                cb(data);
+              });
+            }
+          },
+        },
+      };
+    };
+
+    getExistEvent(eventNames: string[]): Object {
+      if (!eventNames || !eventNames.length) {
+        return {};
+      }
+      return eventNames.reduce((exist, name) => {
+        exist[name] = true;
+        return exist;
+      }, {});
+    }
+
     getInternalThemeProps = () => {
       return {
         onLugia: this.on,
@@ -589,6 +645,7 @@ const ThemeProvider = (
       return (
         <Target
           dispatchEvent={this.dispatchEvent}
+          createEventChannel={this.createEventChannel}
           {...this.props}
           {...themeStateEventConfig}
           themeProps={this.getThemeProps()}

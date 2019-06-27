@@ -9,7 +9,27 @@ import Selector from './';
 
 const config = {
   Selector: {
+    Button: {
+      active: {
+        background: {
+          color: 'pink',
+        },
+        boxShadow: {
+          type: 'outset',
+          x: 5,
+          y: 5,
+          spread: 5,
+          blur: 5,
+          color: 'rgb(0,0,5,0.9)',
+        },
+      },
+    },
     Block: {
+      active: {
+        background: {
+          color: 'red',
+        },
+      },
       disabled: {
         background: {
           color: 'black',
@@ -17,6 +37,11 @@ const config = {
       },
       normal: {
         fontSize: 22,
+        margin: {
+          left: 15,
+          right: 'a',
+        },
+        padding: 5,
         background: {
           color: 'green',
         },
@@ -41,19 +66,7 @@ const config = {
           },
         },
       },
-      active: {
-        background: {
-          color: 'pink',
-        },
-        boxShadow: {
-          type: 'outset',
-          x: 5,
-          y: 5,
-          spread: 5,
-          blur: 5,
-          color: 'rgb(0,0,5,0.9)',
-        },
-      },
+
       disabled: {
         background: {
           color: 'black',
@@ -76,6 +89,7 @@ function useInstall() {
     unInstall: () => setInstallState(false),
   };
 }
+
 export default () => {
   const target = useRef();
   const { disabled, setDisabled } = useCount();

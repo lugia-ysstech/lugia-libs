@@ -76,7 +76,7 @@ export default ThemeHoc(
       const res = [];
 
       let blockPart = this.props.getPartOfThemeConfig('Block');
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 1; i++) {
         res.push(
           <SelectorWeb
             propsConfig={{ index: i }}
@@ -91,15 +91,33 @@ export default ThemeHoc(
           />,
         );
       }
+      let server1 = this.props.createEventChannel(['active']);
+      let server2 = this.props.createEventChannel(['active']);
       return (
         <div {...addMouseEvent(this)}>
           {res}
           <Button
-            {...this.props.getPartOfThemeHocProps('Block')}
-            {...this.props.dispatchEvent(['hover', 'active'], 'c2f')}
+            {...server1.provider}
+            {...this.props.getPartOfThemeHocProps('Button')}
           >
-            btn
+            A
+          </Button>{' '}
+          ,
+          <Button
+            {...server2.provider}
+            lugiaConsumers={server2.consumer}
+            {...this.props.getPartOfThemeHocProps('Button')}
+          >
+            B
           </Button>
+          ,
+          <Button
+            lugiaConsumers={[server1.consumer, server2.consumer]}
+            {...this.props.getPartOfThemeHocProps('Button')}
+          >
+            C
+          </Button>
+          ,
           <BaseButton
             themeProps={this.props.getPartOfThemeProps('Block', {
               state: { active: true },
