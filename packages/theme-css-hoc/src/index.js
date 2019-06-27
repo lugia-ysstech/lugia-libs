@@ -947,7 +947,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
           }
         });
       if (!onLugia) {
-        console.error('onLugia不存在传入错误！');
+        console.error(`${cssConfig.className} onLugia is not found ！`);
       }
       return () => {
         onLugia && unsubscribeHover();
