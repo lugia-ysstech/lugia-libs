@@ -11,6 +11,7 @@ import type {
   HeightType,
   MarginType,
   PaddingType,
+  SizeType,
   ThemeMeta,
   WidthType,
 } from '@lugia/theme-core';
@@ -28,10 +29,13 @@ import type {
 } from '@lugia/theme-css-hoc';
 
 import React, { useEffect, useState } from 'react';
-import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
+import {
+  deepMerge,
+  getAttributeFromObject,
+  isEmptyObject,
+} from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
 import { style2css, units } from '@lugia/css';
-import { isEmptyObject } from '@lugia/object-utils';
 
 const { px2remcss, px2Number } = units;
 
@@ -86,9 +90,10 @@ export function packObject(path: string[], value: any): Object {
   return result;
 }
 
-function getSizeFromTheme(size: WidthType | HeightType | BorderRadiusType) {
-  const theSize = typeof size === 'number' ? px2remcss(size) : size;
-  return theSize;
+function getSizeFromTheme(size: any) {
+  return typeof size === 'number' || !isNaN(Number(size))
+    ? px2remcss(size)
+    : size;
 }
 
 const DefaultSpace = 0;
@@ -121,9 +126,10 @@ export const getSpaceFromTheme = (
     const spaceBottom = getAttributeFromObject(space, 'bottom', bottom);
     const spaceLeft = getAttributeFromObject(space, 'left', left);
     const spaceRight = getAttributeFromObject(space, 'right', right);
-    return `${px2remcss(spaceTop)} ${px2remcss(spaceRight)} ${px2remcss(
-      spaceBottom,
-    )} ${px2remcss(spaceLeft)}`;
+
+    return `${getSizeFromTheme(spaceTop)} ${getSizeFromTheme(
+      spaceRight,
+    )} ${getSizeFromTheme(spaceBottom)} ${getSizeFromTheme(spaceLeft)}`;
   }
   return theSpace;
 };

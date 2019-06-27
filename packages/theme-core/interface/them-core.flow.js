@@ -20,19 +20,20 @@ declare module '@lugia/theme-core' {
     propsConfig: Object,
   ): Object;
 
+  declare export type SizeType = number | string;
   declare export type WidthType = number | string;
   declare export type HeightType = number | string;
   declare export type MarginType = {
-    top?: number,
-    right?: number,
-    bottom?: number,
-    left?: number,
+    top?: SizeType,
+    right?: SizeType,
+    bottom?: SizeType,
+    left?: SizeType,
   };
   declare export type PaddingType = {
-    top?: number,
-    right?: number,
-    bottom?: number,
-    left?: number,
+    top?: SizeType,
+    right?: SizeType,
+    bottom?: SizeType,
+    left?: SizeType,
   };
 
   declare export type BorderInnerType = {
