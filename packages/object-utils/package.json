@@ -1,6 +1,6 @@
 {
   "name": "@lugia/object-utils",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
