@@ -96,11 +96,14 @@ yarn add @lugia/theme-hoc@1.0.12
   
   
   【变更内容】
+  
   修改： 
      * colorUtils的常用色进行忽略大小写处理；
      * 删除ThemeHOC的外部span容器，mouse事件由Target提供。
+     
   增加：  
      * addMouseEvent函数方便进行组件的鼠标事件添加。 
+     
      
 ```flow js
 
@@ -129,6 +132,7 @@ declare export type AddMouseEventOPtionAfterConfig = {
   ): Object;
   
 ```
+
 
     
 ## 20190626
