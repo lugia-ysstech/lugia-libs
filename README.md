@@ -326,6 +326,7 @@ consumer：事件消费者
 而按钮B会消费按钮A的事件，进行相应主题的处理。如：active事件的时候进行hover主题的切换
 而按钮C会消费按钮A和按钮B的事件，进行相应主题的处理。如：active事件的时候进行hover主题的切换
 
+
 ```jsx harmony
 
       let channel1 = this.props.createEventChannel(['active']);
