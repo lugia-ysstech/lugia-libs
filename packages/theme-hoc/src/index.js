@@ -239,11 +239,15 @@ const ThemeProvider = (
     getPartOfThemeHocProps = (partName: string): Object => {
       const viewClass = `${displayName}_${partName}`;
       const targetTheme = this.getPartOfThemeConfig(partName);
-      let result = this.createThemeHocProps(viewClass, targetTheme);
+      let result = this.createThemeHocProps(viewClass, targetTheme, partName);
       result.__partName = partName;
       return result;
     };
     createThemeHocProps = (viewClass: string, targetTheme: Object): Object => {
+      if (!viewClass) {
+        console.error('viewClass can not be empty!');
+        return {};
+      }
       if (!targetTheme) {
         return {};
       }
@@ -264,7 +268,9 @@ const ThemeProvider = (
       if (!targetTheme) {
         return {};
       }
-      targetTheme.__partName = partName;
+      if (!targetTheme.__partName) {
+        targetTheme.__partName = partName;
+      }
       return targetTheme;
     };
 
@@ -373,7 +379,7 @@ const ThemeProvider = (
       );
     };
 
-    getThemeMetaInfo = (fields: string[] = ['themeMeta', 'widgetName']) => {
+    getThemeMetaInfo = (fields: string[] = ['themeMeta']) => {
       let id2Path = {};
       let node = getReactNodeInfoByThemeId(this.state.id);
       if (node) {
@@ -447,6 +453,34 @@ const ThemeProvider = (
       return {};
     };
 
+    getThemeData() {
+      const result = {};
+      let infos = this.getThemeMetaInfo();
+      console.info(infos);
+      this.recuriseThemeMetaInfoTree(infos[0], result);
+      return result;
+    }
+
+    recuriseThemeMetaInfoTree(node: Object, childData: Object) {
+      const { children } = node;
+      if (!children || children.length === 0) {
+        return;
+      }
+      children.forEach(childNode => {
+        const { partName, themeMeta } = childNode;
+        if (partName && themeMeta) {
+          childData[partName] = deepMerge(childData[partName], themeMeta);
+        } else {
+          if (partName && !childData[partName] && themeMeta) {
+            childData[partName] = {};
+            this.recuriseThemeMetaInfoTree(childNode, childData[partName]);
+          } else {
+            this.recuriseThemeMetaInfoTree(childNode, childData);
+          }
+        }
+      });
+    }
+
     getNodeInfo(id: string, fields: string[]) {
       const reactNodeInfo = getReactNodeInfo(id);
       const { name } = reactNodeInfo;
@@ -457,6 +491,7 @@ const ThemeProvider = (
       let widgetName;
       let themeProps;
       let props;
+      let fatherPartName;
       if (lugiaBridge) {
         const { _inspectables } = lugiaBridge;
         const inspectVal = _inspectables.get(id);
@@ -476,6 +511,7 @@ const ThemeProvider = (
             const inspectVal = _inspectables.get(children[0]);
             const { props = {} } = inspectVal;
             themeProps = props.themeProps;
+            fatherPartName = props.__fatherPartName;
           }
         }
       }
@@ -485,12 +521,15 @@ const ThemeProvider = (
         result.id = id;
       }
 
+      if (fatherPartName) {
+        result.fatherPartName = fatherPartName;
+      }
       result.widgetName = widgetName;
 
       if (isCSSCmp) {
         result.themeMeta = themeMeta;
       }
-
+      result.isCSSCmp = isCSSCmp;
       if (themeProps) {
         result.themeProps = themeProps;
         const { themeConfig = {} } = themeProps;

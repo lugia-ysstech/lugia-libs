@@ -23,11 +23,30 @@ const config = {
           color: 'rgb(0,0,5,0.9)',
         },
       },
+      disabled: {
+        background: {
+          color: 'black',
+        },
+      },
+    },
+    SelectWeb: {
+      Block: {
+        normal: {
+          background: {
+            color: 'orange',
+          },
+        },
+        active: {
+          background: {
+            color: 'yellow',
+          },
+        },
+      },
     },
     Block: {
       active: {
         background: {
-          color: 'red',
+          color: 'blue',
         },
       },
       disabled: {

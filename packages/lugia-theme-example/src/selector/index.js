@@ -44,7 +44,7 @@ const Block = CSSComponent({
         right: 20,
       },
       height: 20,
-      background: { color: 'red' },
+      background: { color: 'yellow' },
     },
   },
 });
@@ -54,13 +54,12 @@ const SelectorWeb = ThemeHoc(
     render() {
       const { index, count } = this.props;
 
+      let partOfThemeProps = this.props.getPartOfThemeProps('Block', {
+        selector: { index, count },
+      });
+      console.info('partOfThemeProps', partOfThemeProps);
       return (
-        <Block
-          {...addMouseEvent(this)}
-          themeProps={this.props.getPartOfThemeProps('BlockConfig', {
-            selector: { index, count },
-          })}
-        >
+        <Block {...addMouseEvent(this)} themeProps={partOfThemeProps}>
           1
         </Block>
       );
@@ -77,24 +76,29 @@ export default ThemeHoc(
 
       let blockPart = this.props.getPartOfThemeConfig('Block');
       for (let i = 0; i < 1; i++) {
+        let partOfThemeHocProps = this.props.getPartOfThemeHocProps(
+          'SelectWeb',
+        );
+        console.info(partOfThemeHocProps);
         res.push(
           <SelectorWeb
             propsConfig={{ index: i }}
             {...this.props.dispatchEvent(['hover', 'active'], 'f2c')}
             index={i}
             count={10}
-            {...this.props.createThemeHocProps('selectWeb', {
-              BlockConfig: blockPart,
-            })}
-            themeState={this.props.themeProps.themeState}
+            {...partOfThemeHocProps}
             disabled={this.props.disabled}
           />,
         );
       }
       let server1 = this.props.createEventChannel(['active']);
       let server2 = this.props.createEventChannel(['active']);
+      const object = this.props.createThemeHocProps('selectWeb', {
+        BlockConfig: blockPart,
+      });
       return (
         <div {...addMouseEvent(this)}>
+          <SelectorWeb {...object} />
           {res}
           <Button
             {...server1.provider}
@@ -112,6 +116,7 @@ export default ThemeHoc(
           </Button>
           ,
           <Button
+            diabled
             lugiaConsumers={[server1.consumer, server2.consumer]}
             {...this.props.getPartOfThemeHocProps('Button')}
           >
