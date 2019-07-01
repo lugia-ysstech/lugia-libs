@@ -16,6 +16,11 @@ const Button = ThemeHoc(
   CSSComponent({
     extend: BaseButton,
     className: 'button',
+    hover: {
+      defaultTheme: {
+        background: { color: 'red' },
+      },
+    },
   }),
   'btn',
   { hover: true, active: true },
@@ -116,7 +121,7 @@ export default ThemeHoc(
           </Button>
           ,
           <Button
-            diabled
+            disabled
             lugiaConsumers={[server1.consumer, server2.consumer]}
             {...this.props.getPartOfThemeHocProps('Button')}
           >

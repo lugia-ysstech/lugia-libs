@@ -23,11 +23,7 @@ const config = {
           color: 'rgb(0,0,5,0.9)',
         },
       },
-      disabled: {
-        background: {
-          color: 'black',
-        },
-      },
+      disabled: {},
     },
     SelectWeb: {
       Block: {
