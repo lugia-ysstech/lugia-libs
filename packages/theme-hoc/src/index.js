@@ -195,7 +195,7 @@ const ThemeProvider = (
 
     toggleActiveState = (state: boolean) => {
       const { active } = this;
-      if (active === state) {
+      if (active === state || this.props.disabled) {
         return;
       }
       this.active = state;
@@ -213,7 +213,7 @@ const ThemeProvider = (
 
     toggleHoverState = (state: boolean) => {
       const { hover } = this;
-      if (hover === state) {
+      if (hover === state || this.props.disabled) {
         return;
       }
       this.hover = state;
