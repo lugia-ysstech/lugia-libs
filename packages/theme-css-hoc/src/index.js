@@ -424,7 +424,7 @@ export function getThemeMeta(
     }
     const { defaultTheme = {}, selectNames } = config;
     const selectNameThemeMeta = getSelectNameThemeMeta(theme, selectNames);
-    if (stateType === Hover || stateType === Disabled) {
+    if (stateType === Active || stateType === Hover || stateType === Disabled) {
       return deepMerge(defaultTheme, selectNameThemeMeta);
     }
     return selectNameThemeMeta;
@@ -731,7 +731,12 @@ function createGetStyleByDefaultThemeMeta(cssConfig: CSSConfig) {
       {
         createGetStyle(cssConfig: CSSConfig, stateType: StateType): Function {
           const alwaysEmptyObject = always({});
-          if (!cssConfig || stateType === Hover || stateType === Disabled) {
+          if (
+            !cssConfig ||
+            stateType === Hover ||
+            stateType === Active ||
+            stateType === Disabled
+          ) {
             return alwaysEmptyObject;
           }
           const cssMeta = cssConfig[stateType];
