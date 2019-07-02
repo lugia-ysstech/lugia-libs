@@ -363,3 +363,28 @@ consumer：事件消费者
 ### 增加行高的主题配置
 
 lineHeight: number | string 取值规则同宽高一致。
+
+
+# 20190701
+
+##【更新操作】
+
+  yarn add @lugia/theme-hoc@1.0.23
+
+## 【更新内容】
+修正BUG：
+  * 组件如果处于disabled将不处理hover & active事件对应的渲染处理
+
+# 20190702
+
+##【更新操作】
+
+
+  
+  yarn add @lugia/theme-css-hoc@1.0.32
+  
+
+## 【更新内容】
+修正BUG：
+  *  根字体在某些显示器上获取错误
+  * active的defaultTheme无法覆盖normal的配置。
