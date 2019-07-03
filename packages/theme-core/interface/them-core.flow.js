@@ -60,7 +60,6 @@ declare module '@lugia/theme-core' {
     right?: BorderInnerType,
     bottom?: BorderInnerType,
     left?: BorderInnerType,
-    radius?: BorderRadiusType,
   };
 
   declare export type ColorType = string;
@@ -114,6 +113,7 @@ declare module '@lugia/theme-core' {
   declare export type SimpleThemeMeta = {
     background?: BackgroundType,
     border?: BorderType,
+    borderRadius?: BorderRadiusType,
     width?: WidthType,
     lineHeight?: SizeType,
     height?: HeightType,

@@ -89,29 +89,6 @@ describe('theme-utils', () => {
     });
   });
 
-  it('get Border top left radius ', () => {
-    const config = {
-      color: 'red',
-      width: 5,
-      style: 'solid',
-    };
-    expect(
-      getBorder(
-        { color: 'red', style: 'solid', width: 5 },
-        { directions: ['l', 't'], radius: 10 },
-      ),
-    ).toEqual({
-      top: config,
-      left: config,
-      radius: {
-        topLeft: 10,
-        topRight: 10,
-        bottomLeft: 10,
-        bottomRight: 10,
-      },
-    });
-  });
-
   it('getBoxShadow', () => {
     expect(getBoxShadow('8px   -12px   8px rgba(0, 0, 0, .6)')).toEqual({
       x: 8,

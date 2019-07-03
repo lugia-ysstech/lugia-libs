@@ -12,7 +12,6 @@ declare module '@lugia/theme-utils' {
   declare export type GetBorderOption = {
     radius?: number | string,
     directions?: BorderDirection[],
-    radiusDirections?: BorderRadiusDirection[],
   };
 
   declare export function getBorder(

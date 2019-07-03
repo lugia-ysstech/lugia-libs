@@ -178,19 +178,15 @@ function getBorderStyleFromTheme(border: Object) {
   setBorderStyle(borderBottom, 'borderBottom');
   setBorderStyle(borderLeft, 'borderLeft');
   setBorderStyle(borderRight, 'borderRight');
-  setBorderRadius(style, border);
   return style;
 }
 
-function setBorderRadius(style: Object, border: Object) {
-  if (!border) {
-    return;
+function getBorderRadius(borderRadius: Object): Object {
+  const style = {};
+  if (!borderRadius) {
+    return style;
   }
-  const { radius } = border;
-  if (!radius) {
-    return;
-  }
-  const { topLeft, topRight, bottomLeft, bottomRight } = radius;
+  const { topLeft, topRight, bottomLeft, bottomRight } = borderRadius;
 
   function setBorderRaidusIfExist(key: string, target: Object) {
     setObjectValueIfValueExist(style, key, target, getSizeFromTheme);
@@ -200,6 +196,7 @@ function setBorderRadius(style: Object, border: Object) {
   setBorderRaidusIfExist('borderTopRightRadius', topRight);
   setBorderRaidusIfExist('borderBottomRightRadius', bottomRight);
   setBorderRaidusIfExist('borderBottomLeftRadius', bottomLeft);
+  return style;
 }
 
 function getStringStyleFromTheme(stringStyle: string) {
@@ -229,6 +226,7 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     visibility,
     cursor,
     lineHeight,
+    borderRadius,
   } = theme;
   let { background } = theme;
   const style = {};
@@ -260,6 +258,7 @@ function themeMeta2Style(theme: ThemeMeta): Object {
     getFont(font),
     getBackGround(background),
     getBorderStyleFromTheme(border),
+    getBorderRadius(borderRadius),
     getPosition(position),
     getSpaceFromTheme('padding', padding),
     getSpaceFromTheme('margin', margin),

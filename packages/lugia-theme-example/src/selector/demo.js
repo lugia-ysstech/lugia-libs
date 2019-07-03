@@ -8,6 +8,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Selector from './';
 import Theme from '@lugia/theme-config';
 import { getBorder } from '@lugia/theme-utils';
+import { getBorderRadius } from '@lugia/theme-utils/src';
 
 const config = {
   Selector: {
@@ -53,6 +54,7 @@ const config = {
         },
         border: getBorder({ color: 'red', width: 5, style: 'solid' }),
       },
+      borderRadius: getBorderRadius(50),
     },
     Block: {
       active: {

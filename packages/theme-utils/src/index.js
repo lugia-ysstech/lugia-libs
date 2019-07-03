@@ -39,11 +39,7 @@ export function getBorder(
   }
 
   const result = {};
-  const { radius } = opt;
-  if (radius) {
-    const { radiusDirections } = opt;
-    result.radius = getBorderRadius(radius, radiusDirections);
-  }
+
   return directions.reduce((result: Object, direction: string) => {
     direction = borderDirectionMap[direction];
     if (result[direction]) {
