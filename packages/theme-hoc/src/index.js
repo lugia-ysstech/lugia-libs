@@ -89,7 +89,7 @@ function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
     themeState,
     svTarget,
   );
-  const { hover = false, active = false, focus = true } = opt;
+  const { hover = false, active = false, focus = false } = opt;
   const needProcessThemeState =
     hover === true || active === true || focus === true;
   if (needProcessThemeState) {
