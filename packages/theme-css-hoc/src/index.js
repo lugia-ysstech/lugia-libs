@@ -836,7 +836,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       while (orginalWidget.__OrginalWidget__) {
         orginalWidget = orginalWidget.__OrginalWidget__;
       }
-      extend = orginalWidget;
+      cssConfig.extend = orginalWidget;
     }
     const extendCSSConfig = CSSComponent2CSSConfig.get(extend);
     if (extendCSSConfig) {
