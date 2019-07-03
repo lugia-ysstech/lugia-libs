@@ -6,6 +6,7 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 import Selector from './';
+import Theme from '@lugia/theme-config';
 
 const config = {
   Selector: {
@@ -36,6 +37,13 @@ const config = {
           background: {
             color: 'yellow',
           },
+        },
+      },
+    },
+    Button: {
+      normal: {
+        background: {
+          color: '#6f9bfa',
         },
       },
     },
@@ -92,6 +100,18 @@ const config = {
   },
 };
 
+const ButtonTheme = {
+  Selector: {
+    Button: {
+      normal: {
+        background: {
+          color: 'red',
+        },
+      },
+    },
+  },
+};
+
 function useCount() {
   const [disabled, setDisabled] = useState(false);
   return { disabled, setDisabled };
@@ -99,28 +119,38 @@ function useCount() {
 
 function useInstall() {
   const [installState, setInstallState] = useState(true);
+  const [theme, changeTheme] = useState(config);
   return {
+    theme,
     installState,
     install: () => setInstallState(true),
     unInstall: () => setInstallState(false),
+    changeTheme: () => {
+      console.info('变更主题', ButtonTheme);
+      changeTheme(ButtonTheme);
+    },
   };
 }
 
 export default () => {
+  console.info('render one');
   const target = useRef();
   const { disabled, setDisabled } = useCount();
-  const { installState, install, unInstall } = useInstall();
+  const { installState, install, unInstall, changeTheme, theme } = useInstall();
   useEffect(() => {
     window.lgx = target.current;
   });
   return [
     installState ? (
-      <Selector theme={config} ref={target} disabled={disabled} />
+      <Theme config={theme}>
+        <Selector ref={target} disabled={disabled} />
+      </Theme>
     ) : null,
     <button onClick={() => setDisabled(!disabled)}>
       {!disabled ? '禁用' : '启用'}
     </button>,
     <button onClick={unInstall}>卸载</button>,
     <button onClick={install}>装载</button>,
+    <button onClick={changeTheme}>变更主题</button>,
   ];
 };
