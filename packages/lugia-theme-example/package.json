@@ -1,12 +1,12 @@
 {
   "name": "@lugia/lugia-theme-example",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "dependencies": {
-    "@lugia/theme-config": "^1.0.16",
-    "@lugia/theme-css-hoc": "^1.0.32",
-    "@lugia/theme-utils": "^1.0.0",
-    "@lugia/theme-hoc": "^1.0.23",
-    "@lugia/theme-hoc-devtools": "^1.0.2",
+    "@lugia/theme-config": "^1.0.17",
+    "@lugia/theme-css-hoc": "^1.0.33",
+    "@lugia/theme-hoc": "^1.0.24",
+    "@lugia/theme-hoc-devtools": "^1.0.3",
+    "@lugia/theme-utils": "^1.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
