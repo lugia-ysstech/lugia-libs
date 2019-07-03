@@ -1,4 +1,8 @@
-import type { BorderRadiusType, BorderType } from '@lugia/theme-core';
+import type {
+  BorderRadiusType,
+  BorderType,
+  BoxShadowType,
+} from '@lugia/theme-core';
 
 declare module '@lugia/theme-utils' {
   declare export type BorderConfig = {
@@ -25,4 +29,6 @@ declare module '@lugia/theme-utils' {
   ): BorderRadiusType;
 
   declare export function getBoxShadow(boxShadow: string): Object;
+
+  declare export function getBoxShadowCSS(boxConfig: BoxShadowType): string;
 }
