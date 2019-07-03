@@ -16,6 +16,7 @@ class Theme extends React.Component<ThemeConfigProps, StateType> {
   static defaultProps = {
     config: {},
   };
+  static contextType = ThemeContext;
   static displayName = 'lugia_theme_wrap';
   svThemeConfigTree: Object;
 
@@ -58,14 +59,5 @@ class Theme extends React.Component<ThemeConfigProps, StateType> {
     );
   }
 }
-
-Theme.childContextTypes = {
-  config: PropTypes.object,
-  svThemeConfigTree: PropTypes.object,
-};
-Theme.contextTypes = {
-  config: PropTypes.object,
-  svThemeConfigTree: PropTypes.object,
-};
 
 export default Theme;
