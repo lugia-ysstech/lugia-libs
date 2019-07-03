@@ -13,6 +13,7 @@ flow-typed/
 interface/
 ../../flow-typed/
 ../theme-css-hoc/interface
+../theme-core/interface
 node_modules/@lugia/css/interface
 node_modules/@lugia/object-utils/interface
 [options]
