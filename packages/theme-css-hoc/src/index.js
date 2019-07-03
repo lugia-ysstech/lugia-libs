@@ -1021,6 +1021,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     return (
       <Target
         {...props}
+        themeProps={targetProps.themeProps}
         __themeMeta={deepMerge(themeMeta, cThemeMeta)}
         style={targetStyle}
         ref={props.innerRef}

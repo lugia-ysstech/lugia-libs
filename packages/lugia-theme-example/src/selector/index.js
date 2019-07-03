@@ -15,11 +15,16 @@ const BaseButton = CSSComponent({
 });
 const Button = ThemeHoc(
   CSSComponent({
-    extend: BaseButton,
     className: 'button',
     hover: {
       defaultTheme: {
         background: { color: 'red' },
+      },
+      getCSS() {
+        return 'font-size: 50px';
+      },
+      getThemeMeta(themeMeta, themeProps) {
+        return {};
       },
     },
   }),
