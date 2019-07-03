@@ -388,3 +388,94 @@ lineHeight: number | string 取值规则同宽高一致。
 修正BUG：
   *  根字体在某些显示器上获取错误
   * active的defaultTheme无法覆盖normal的配置。
+
+# 20190703
+
+## 【更新内容】
+
+### 实现架构调整
+
+1. 上下文由旧版react的获取方式改为React.createContext；
+2. 拆分ThemeHoc的核心逻辑到ThemeCore以便复用；
+3. ThemeHoc采用hook进行重写。
+
+### 增加功能：
+
+增加focus的状态配置，与normal、hover、active、disabled的配置方式一致。
+
+触发的时机：Target抛出onFocus和onBlur事件。
+
+优先级：normal < hover < active < focus < disabled
+
+事件触发绑定：Target必须向外部提供对应的事件属性支持，与hover、active事件提供的addMouseEvent对应的，新包中提供了一个addFocusBlurEvent的方法。API如下：
+
+```flow js
+
+
+  declare export type AddFocusBlurEventOption = {
+    enter?: Function, // 自定义的鼠标进入事件
+    leave?: ?Function, // 同上
+    up?: Function, // 同上
+    down?: Function, // 同上
+    after?: AddMouseEventOPtionAfterConfig, // 是否配置事件触发顺序滞后
+  };
+
+  declare export type AddFocusBlurEventOptionAfterConfig = {
+    focus?: boolean, // 鼠标进入 默认false true 先调用props的方法再调用opt里面配置方法
+    blur?: boolean, // 鼠标点击 同上
+  };
+
+  declare export type MouseEventComponent = {
+    props: Object,
+  };
+
+  declare export function addFocusBlurEvent(
+    self: MouseEventComponent, // 组件的this引用
+    opt?: AddFocusBlurEventOption,
+  ): Object;
+
+
+
+```
+
+### 修正BUG：
+
+active、hover不触发CSSConfig.getCSS函数的问题
+
+### API调整：
+  
+  1. 去除 border.radius 改为 单独在外部配置 borderRadius
+
+```flow js
+
+
+  declare export type BorderRadiusType = {
+    topLeft?: number,
+    topRight?: number,
+    bottomLeft?: number,
+    bottomRight?: number,
+  };
+
+declare export type SimpleThemeMeta = {
+    background?: BackgroundType,
+    border?: BorderType,
+    borderRadius?: BorderRadiusType, // 这里
+    width?: WidthType,
+    lineHeight?: SizeType,
+    height?: HeightType,
+    font?: FontType,
+    color?: ColorType,
+    opacity?: OpacityType,
+    margin?: MarginType,
+    position?: Position,
+    padding?: PaddingType,
+    boxShadow?: BoxShadowType,
+    backgroundColor?: ColorType,
+    fontSize?: FontSizeType,
+    visibility?: VisibilityType,
+    cursor?: CursorType,
+  };
+
+```
+
+  2. getBorder getBoxShadow getBorderRadius 移动到 新增的 @lugia/theme-utils模块里
