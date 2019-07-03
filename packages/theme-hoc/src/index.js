@@ -134,6 +134,9 @@ const ThemeProvider = (
   widgetName: string,
   opt?: ThemeHocOption = { hover: false, active: false, focus: false },
 ): Function => {
+  if (Target.displayName === 'CSSComponent') {
+    console.warn('CSSComponent不推荐直接包括ThemeHoc');
+  }
   const { hover = false, active = false, focus = true } = opt;
 
   const ThemeWrapWidget = (props: Object) => {
