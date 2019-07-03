@@ -872,53 +872,6 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     return result;
   }
 
-  if (extend) {
-    const CSSComponent = getTargetComponent(styledElement);
-    const result = (props: Object) => {
-      const {
-        _lugia_theme_style_: {
-          normal: cNormal,
-          hover: cHover,
-          focus: cFocus,
-          active: cActived,
-          disabled: cDisabled,
-          theStyle: cTheStyle,
-          themeMeta: cThemeMeta,
-        } = {},
-      } = props;
-      const {
-        normal = {},
-        hover = {},
-        focus = {},
-        active = {},
-        disabled = {},
-        theStyle = {},
-        themeMeta = {},
-      } = attrsHook(props);
-
-      return (
-        <CSSComponent
-          {...props}
-          _lugia_theme_style_={{
-            normal: deepMerge(normal, cNormal),
-            hover: deepMerge(hover, cHover),
-            focus: deepMerge(focus, cFocus),
-            active: deepMerge(active, cActived),
-            disabled: deepMerge(disabled, cDisabled),
-            theStyle: deepMerge(theStyle, cTheStyle),
-            themeMeta: deepMerge(themeMeta, cThemeMeta),
-          }}
-          ref={props.innerRef}
-          __cssName={className}
-          className={getClassName(className, props)}
-        />
-      );
-    };
-    CSSComponent2CSSConfig.set(result, cssConfig);
-    result.displayName = 'CSSComponent';
-    return result;
-  }
-
   const Target = getTargetComponent(styledElement);
   const hasStaticHover = !isEmptyObject(cssConfig.hover);
   const hasStaticFocus = !isEmptyObject(cssConfig.focus);
