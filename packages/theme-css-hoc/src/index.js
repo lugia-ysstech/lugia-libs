@@ -833,10 +833,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   if (extend) {
     let orginalWidget = extend.__OrginalWidget__;
     if (orginalWidget) {
-      while (orginalWidget.__OrginalWidget__) {
-        orginalWidget = orginalWidget.__OrginalWidget__;
-      }
-      cssConfig.extend = orginalWidget;
+      throw new Error('Not support extend ThemeHoc Component!');
     }
     const extendCSSConfig = CSSComponent2CSSConfig.get(extend);
     if (extendCSSConfig) {
@@ -845,6 +842,8 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       const newExtendConfig = { ...cssConfig };
       delete newExtendConfig.extend;
       cssConfig.extend = CSSComponent(newExtendConfig);
+    } else {
+      // TODO: 处理普通的Component组件 传入style 和  className。
     }
   }
   const styledElement = getStyledComponent(cssConfig);
