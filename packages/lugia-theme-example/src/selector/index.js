@@ -5,7 +5,8 @@
  * @flow
  */
 import React from 'react';
-import CSSComponent, { getBorder } from '@lugia/theme-css-hoc';
+import CSSComponent from '@lugia/theme-css-hoc';
+import { getBorder } from '@lugia/theme-utils';
 import ThemeHoc, { addMouseEvent } from '@lugia/theme-hoc';
 
 const BaseButton = CSSComponent({

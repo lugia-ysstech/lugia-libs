@@ -5,7 +5,8 @@
  * @flow
  */
 import React from 'react';
-import CSSComponent, { keyframes, getBorder } from '@lugia/theme-css-hoc';
+import { getBorder } from '@lugia/theme-utils';
+import CSSComponent, { keyframes } from '@lugia/theme-css-hoc';
 import ThemeHoc from '@lugia/theme-hoc';
 
 const showUp = keyframes`

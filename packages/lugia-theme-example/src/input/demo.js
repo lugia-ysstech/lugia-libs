@@ -6,7 +6,7 @@
  */
 import React from 'react';
 import Input from './';
-import { getBorder } from '@lugia/theme-css-hoc';
+import { getBorder } from '@lugia/theme-utils';
 
 export default class Demo extends React.Component<any, any> {
   render() {

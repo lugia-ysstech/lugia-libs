@@ -4,6 +4,7 @@
   "dependencies": {
     "@lugia/theme-config": "^1.0.16",
     "@lugia/theme-css-hoc": "^1.0.32",
+    "@lugia/theme-utils": "^1.0.0",
     "@lugia/theme-hoc": "^1.0.23",
     "@lugia/theme-hoc-devtools": "^1.0.2",
     "react": "^16.8.6",

@@ -7,7 +7,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Selector from './';
 import Theme from '@lugia/theme-config';
-import { getBorder } from '@lugia/theme-css-hoc/src';
+import { getBorder } from '@lugia/theme-utils';
 
 const config = {
   Selector: {
