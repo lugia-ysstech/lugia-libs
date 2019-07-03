@@ -16,21 +16,19 @@ const BaseButton = CSSComponent({
 const Button = ThemeHoc(
   CSSComponent({
     className: 'button',
-    hover: {
+    tag: 'button',
+    focus: {
       defaultTheme: {
-        background: { color: 'red' },
-      },
-      getCSS() {
-        return 'font-size: 50px';
-      },
-      getThemeMeta(themeMeta, themeProps) {
-        return {};
+        background: {
+          color: 'blue',
+        },
       },
     },
   }),
   'btn',
-  { hover: true, active: true },
+  { hover: true, active: true, focus: true },
 );
+
 const Block = CSSComponent({
   tag: 'span',
   className: 'selector_block',
