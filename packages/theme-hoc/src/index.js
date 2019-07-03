@@ -202,7 +202,7 @@ const ThemeProvider = (
       />
     );
   };
-
+  ThemeWrapWidget.__OrginalWidget__ = Target;
   ThemeWrapWidget.displayName = packDisplayName(widgetName);
   return ThemeWrapWidget;
 };

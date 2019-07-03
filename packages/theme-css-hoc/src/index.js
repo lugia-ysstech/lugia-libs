@@ -831,6 +831,13 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     console.trace('className is empty!');
   }
   if (extend) {
+    let orginalWidget = extend.__OrginalWidget__;
+    if (orginalWidget) {
+      while (orginalWidget.__OrginalWidget__) {
+        orginalWidget = orginalWidget.__OrginalWidget__;
+      }
+      extend = orginalWidget;
+    }
     const extendCSSConfig = CSSComponent2CSSConfig.get(extend);
     if (extendCSSConfig) {
       cssConfig = deepMerge(extendCSSConfig, cssConfig);
