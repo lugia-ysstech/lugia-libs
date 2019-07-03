@@ -81,7 +81,6 @@ function useInitHandle(
   widgetName: string,
 ) {
   const themeConfig = useContext(ThemeContext);
-  console.info('inithandle');
   const [id] = useState(uuid());
   const [version, setVersion] = useState(0);
   const [themeState, setThemeState] = useState({});
@@ -146,12 +145,6 @@ const ThemeProvider = (
       version,
       themeConfig,
     } = useInitHandle(props, hover, active, widgetName);
-    console.info(
-      'useContext',
-      widgetName,
-      themeConfig,
-      themeConfig === handle.context,
-    );
     const { current: oldThemeConfig } = useRef({});
     useEffect(() => {
       const mouseupHandler = () => {
@@ -210,7 +203,6 @@ const ThemeProvider = (
   };
 
   ThemeWrapWidget.displayName = packDisplayName(widgetName);
-  console.info('ThemeWrapWidget.displayName', ThemeWrapWidget.displayName);
   return ThemeWrapWidget;
 };
 export default ThemeProvider;

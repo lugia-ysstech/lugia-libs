@@ -174,7 +174,6 @@ export default class ThemeProviderHandler {
   };
 
   getThemeByDisplayName = (displayName: string) => {
-    console.info('this.getTheme()', this.getTheme());
     return getAttributeFromObject(
       getAttributeFromObject(this.getTheme(), 'svThemeConfigTree', {}),
       displayName,
