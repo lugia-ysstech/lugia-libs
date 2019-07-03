@@ -2,13 +2,9 @@
  * 组件样式处理增强
  * @flow
  */
-import type {
-  AddMouseEventOption,
-  ProviderComponent,
-  ThemeHocOption,
-} from '@lugia/theme-hoc';
+import type { ProviderComponent, ThemeHocOption } from '@lugia/theme-hoc';
 
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import {
   packDisplayName,
@@ -30,56 +26,53 @@ const OptNames = {
   onMouseLeave: 'leave',
 };
 
-export function addMouseEvent(
-  self: Object,
-  opt?: AddMouseEventOption = { after: {} },
-): Object {
-  const result = {};
+export const addMouseEvent = createaddEventObject(OptNames);
+export const addFocusBlurEvent = createaddEventObject(OptNames);
 
-  if (!self) {
-    return result;
-  }
+export function createaddEventObject(optionNames: Object) {
+  return function(self: Object, opt?: Object = { after: {} }): Object {
+    const result = {};
 
-  const { props } = self;
-  if (!props) {
-    return result;
-  }
-
-  const { after = {} } = opt;
-
-  Object.keys(OptNames).forEach((name: string) => {
-    const { [name]: cb } = props;
-    const optName = OptNames[name];
-    const { [optName]: optCb } = opt;
-
-    if (cb || optCb) {
-      const cbs = [];
-      if (cb) {
-        cbs.push(cb);
-      }
-      if (optCb) {
-        const { [optName]: isAfter } = after;
-        if (isAfter) {
-          cbs.push(optCb);
-        } else {
-          cbs.unshift(optCb);
-        }
-      }
-      result[name] = (...rest: any[]) => {
-        cbs.forEach(cb => cb(...rest));
-      };
+    if (!self) {
+      return result;
     }
-  });
 
-  return result;
+    const { props } = self;
+    if (!props) {
+      return result;
+    }
+
+    const { after = {} } = opt;
+
+    Object.keys(optionNames).forEach((name: string) => {
+      const { [name]: cb } = props;
+      const optName = optionNames[name];
+      const { [optName]: optCb } = opt;
+
+      if (cb || optCb) {
+        const cbs = [];
+        if (cb) {
+          cbs.push(cb);
+        }
+        if (optCb) {
+          const { [optName]: isAfter } = after;
+          if (isAfter) {
+            cbs.push(optCb);
+          } else {
+            cbs.unshift(optCb);
+          }
+        }
+        result[name] = (...rest: any[]) => {
+          cbs.forEach(cb => cb(...rest));
+        };
+      }
+    });
+
+    return result;
+  };
 }
 
-function useInitHandle(
-  props: Object,
-  hover: boolean,
-  active: boolean,
-  widgetName: string,
-) {
+function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
   const themeConfig = useContext(ThemeContext);
   const [id] = useState(uuid());
   const [version, setVersion] = useState(0);
@@ -93,14 +86,18 @@ function useInitHandle(
     themeState,
     svTarget,
   );
-
-  const needProcessThemeState = hover === true || active === true;
+  const { hover = false, active = false, focus = true } = opt;
+  const needProcessThemeState =
+    hover === true || active === true || focus === true;
   if (needProcessThemeState) {
     if (hover) {
       initHandleObject.hover = false;
     }
     if (active) {
       initHandleObject.active = false;
+    }
+    if (focus) {
+      initHandleObject.focus = false;
     }
   }
   const { innerRef } = props;
@@ -132,9 +129,9 @@ function useInitHandle(
 const ThemeProvider = (
   Target: ProviderComponent,
   widgetName: string,
-  opt?: ThemeHocOption = { hover: false, active: false },
+  opt?: ThemeHocOption = { hover: false, active: false, focus: false },
 ): Function => {
-  const { hover = false, active = false } = opt;
+  const { hover = false, active = false, focus = true } = opt;
 
   const ThemeWrapWidget = (props: Object) => {
     const {
@@ -144,7 +141,7 @@ const ThemeProvider = (
       themeState,
       version,
       themeConfig,
-    } = useInitHandle(props, hover, active, widgetName);
+    } = useInitHandle(props, widgetName, opt);
     const { current: oldThemeConfig } = useRef({});
     useEffect(() => {
       const mouseupHandler = () => {
@@ -180,6 +177,10 @@ const ThemeProvider = (
     if (hover) {
       themeStateEventConfig.onMouseEnter = handle.onMouseEnter;
       themeStateEventConfig.onMouseLeave = handle.onMouseLeave;
+    }
+    if (focus) {
+      themeStateEventConfig.onFocus = handle.onFocus;
+      themeStateEventConfig.onBlur = handle.onBlur;
     }
     return (
       <Target

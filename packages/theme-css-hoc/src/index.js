@@ -44,6 +44,7 @@ type MarginOpt = {
 };
 const Normal = 'normal';
 const Hover = 'hover';
+const Focus = 'focus';
 const Active = 'active';
 const Disabled = 'disabled';
 
@@ -424,7 +425,12 @@ export function getThemeMeta(
     }
     const { defaultTheme = {}, selectNames } = config;
     const selectNameThemeMeta = getSelectNameThemeMeta(theme, selectNames);
-    if (stateType === Active || stateType === Hover || stateType === Disabled) {
+    if (
+      stateType === Active ||
+      stateType === Hover ||
+      stateType === Focus ||
+      stateType === Disabled
+    ) {
       return deepMerge(defaultTheme, selectNameThemeMeta);
     }
     return selectNameThemeMeta;
@@ -498,13 +504,21 @@ const allState = [Normal, Hover, Active, Disabled];
 function getStateTypes(themeState: ThemeState = {}): StateType[] {
   const res = [Normal];
 
-  const { hover = false, disabled = false, active = false } = themeState;
+  const {
+    hover = false,
+    disabled = false,
+    active = false,
+    focus = false,
+  } = themeState;
 
   if (hover) {
     res.push(Hover);
   }
   if (active) {
     res.push(Active);
+  }
+  if (focus) {
+    res.push(Focus);
   }
   if (disabled) {
     res.push(Disabled);
@@ -519,6 +533,7 @@ function createGetStyleFromPropsAndCSSConfig(cssConfig: CSSConfig) {
     normal: packStyle(cssConfig, Normal),
     active: packStyle(cssConfig, Active),
     hover: packStyle(cssConfig, Hover),
+    focus: packStyle(cssConfig, Focus),
     disabled: packStyle(cssConfig, Disabled),
   };
   return function(props: CSSProps) {
@@ -666,8 +681,20 @@ const always = (val: any) => () => val;
 const alwaysEmptyString = always('');
 
 export function createGetUserDefineCSS(cssConfig: CSSConfig) {
-  const { normal = {}, hover = {}, active = {}, disabled = {} } = cssConfig;
-  if (!normal.getCSS && !hover.getCSS && !active.getCSS && !disabled.getCSS) {
+  const {
+    normal = {},
+    hover = {},
+    active = {},
+    disabled = {},
+    focus = {},
+  } = cssConfig;
+  if (
+    !normal.getCSS &&
+    !hover.getCSS &&
+    !active.getCSS &&
+    !disabled.getCSS &&
+    !focus.getCSS
+  ) {
     return '';
   }
   return (props: CSSProps): string => {
@@ -734,6 +761,7 @@ function createGetStyleByDefaultThemeMeta(cssConfig: CSSConfig) {
           if (
             !cssConfig ||
             stateType === Hover ||
+            stateType === Focus ||
             stateType === Active ||
             stateType === Disabled
           ) {
@@ -797,11 +825,12 @@ export function filterRepeatCSSConfigSelectNames(outCSSConfig: CSSConfig) {
   if (!outCSSConfig) {
     return;
   }
-  const { normal, hover, disabled, active } = outCSSConfig;
+  const { normal, hover, disabled, active, focus } = outCSSConfig;
   normal && filterRepeatCSSMetaSelctNames(normal);
   hover && filterRepeatCSSMetaSelctNames(hover);
   disabled && filterRepeatCSSMetaSelctNames(disabled);
   active && filterRepeatCSSMetaSelctNames(active);
+  focus && filterRepeatCSSMetaSelctNames(focus);
 }
 
 export default function CSSComponent(cssConfig: CSSConfig) {
@@ -852,6 +881,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         _lugia_theme_style_: {
           normal: cNormal,
           hover: cHover,
+          focus: cFocus,
           active: cActived,
           disabled: cDisabled,
           theStyle: cTheStyle,
@@ -861,6 +891,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       const {
         normal = {},
         hover = {},
+        focus = {},
         active = {},
         disabled = {},
         theStyle = {},
@@ -873,6 +904,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
           _lugia_theme_style_={{
             normal: deepMerge(normal, cNormal),
             hover: deepMerge(hover, cHover),
+            focus: deepMerge(focus, cFocus),
             active: deepMerge(active, cActived),
             disabled: deepMerge(disabled, cDisabled),
             theStyle: deepMerge(theStyle, cTheStyle),
@@ -891,24 +923,32 @@ export default function CSSComponent(cssConfig: CSSConfig) {
 
   const Target = getTargetComponent(styledElement);
   const hasStaticHover = !isEmptyObject(cssConfig.hover);
+  const hasStaticFocus = !isEmptyObject(cssConfig.focus);
   const hasStaticActive = !isEmptyObject(cssConfig.active);
   const Result = (props: Object) => {
     const { themeProps } = props;
     const [themeState, setThemeState] = useState({
       hover: false,
+      focus: false,
       active: false,
       disabled: false,
     });
     let propsThemeState = themeProps.themeState;
     if (propsThemeState) {
       const finalState = { ...themeState, ...propsThemeState };
-      const { disabled, hover, active } = finalState;
+      const { disabled, hover, focus, active } = finalState;
       const {
         disabled: sDisabled,
         hover: sHover,
+        focus: sFocus,
         active: sActive,
       } = themeState;
-      if (disabled != sDisabled || hover !== sHover || sActive !== active) {
+      if (
+        disabled !== sDisabled ||
+        hover !== sHover ||
+        focus !== sFocus ||
+        sActive !== active
+      ) {
         setThemeState(finalState);
       }
     }
@@ -917,6 +957,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     const {
       normal = {},
       hover = {},
+      focus = {},
       active = {},
       disabled = {},
       theStyle = {},
@@ -926,6 +967,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       _lugia_theme_style_: {
         normal: cNormal,
         hover: cHover,
+        focus: cFocus,
         active: cActived,
         disabled: cDisabled,
         theStyle: cTheStyle,
@@ -940,6 +982,13 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         onLugia &&
         onLugia('hover', data => {
           if (hasStaticHover || !isEmptyObject(themeProps.themeConfig.hover)) {
+            setThemeState({ ...themeState, ...data });
+          }
+        });
+      const unsubscribeFocus =
+        onLugia &&
+        onLugia('focus', data => {
+          if (hasStaticFocus || !isEmptyObject(themeProps.themeConfig.focus)) {
             setThemeState({ ...themeState, ...data });
           }
         });
@@ -958,9 +1007,10 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       }
       return () => {
         onLugia && unsubscribeHover();
+        onLugia && unsubscribeFocus();
         onLugia && unsubscribeActive();
       };
-    }, [cHover, hover, props, themeState]);
+    }, [props, themeState]);
 
     const targetStyle = deepMerge(
       normal,
@@ -969,6 +1019,8 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       cHover,
       active,
       cActived,
+      focus,
+      cFocus,
       disabled,
       cDisabled,
       theStyle,

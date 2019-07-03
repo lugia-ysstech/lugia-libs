@@ -7,6 +7,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Selector from './';
 import Theme from '@lugia/theme-config';
+import { getBorder } from '@lugia/theme-css-hoc/src';
 
 const config = {
   Selector: {
@@ -45,6 +46,12 @@ const config = {
         background: {
           color: '#6f9bfa',
         },
+      },
+      focus: {
+        background: {
+          color: 'blue',
+        },
+        border: getBorder({ color: 'red', width: 5, style: 'solid' }),
       },
     },
     Block: {

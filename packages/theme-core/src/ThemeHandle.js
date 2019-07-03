@@ -38,12 +38,14 @@ export default class ThemeProviderHandler {
   eventPrefix: number;
   hover: boolean;
   active: boolean;
+  focus: boolean;
   props: Object;
   context: Object;
   widgetName: string;
   themeState: Object;
   svtarget: Object;
   displayName: string;
+
   constructor(
     props: Object,
     context: Object,
@@ -85,6 +87,27 @@ export default class ThemeProviderHandler {
     onMouseUp && onMouseUp(...rest);
   };
 
+  onFocus = (...rest: any[]) => {
+    this.toggleFocusState(true);
+    const { onFocus } = this.props;
+    onFocus && onFocus(...rest);
+  };
+
+  onBlur = (...rest: any[]) => {
+    this.toggleFocusState(false);
+    const { onBlur } = this.props;
+    onBlur && onBlur(...rest);
+  };
+
+  toggleFocusState = (state: boolean) => {
+    const { focus } = this;
+    if (focus === state || this.props.disabled) {
+      return;
+    }
+    this.focus = state;
+    this.emit('focus', { focus: state });
+  };
+
   onMouseEnter = (...rest: any[]) => {
     this.toggleHoverState(true);
     const { onMouseEnter } = this.props;
@@ -105,8 +128,6 @@ export default class ThemeProviderHandler {
     this.active = state;
 
     this.emit('active', { active: state });
-    const { toggleActiveState } = this.props;
-    toggleActiveState && toggleActiveState(state);
   };
 
   toggleHoverState = (state: boolean) => {
@@ -116,8 +137,6 @@ export default class ThemeProviderHandler {
     }
     this.hover = state;
     this.emit('hover', { hover: state });
-    const { toggleHoverState } = this.props;
-    toggleHoverState && toggleHoverState(state);
   };
 
   on = (name: string, cb: Function) => {
