@@ -27,7 +27,10 @@ const OptNames = {
 };
 
 export const addMouseEvent = createaddEventObject(OptNames);
-export const addFocusBlurEvent = createaddEventObject(OptNames);
+export const addFocusBlurEvent = createaddEventObject({
+  onFocus: 'focus',
+  onBlur: 'blur',
+});
 
 export function createaddEventObject(optionNames: Object) {
   return function(self: Object, opt?: Object = { after: {} }): Object {
