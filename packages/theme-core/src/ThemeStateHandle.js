@@ -74,7 +74,9 @@ export default class ThemeStateHandle {
   };
 
   onFocus = (...rest: any[]) => {
-    this.toggleFocusState(true);
+    setTimeout(() => {
+      this.toggleFocusState(true);
+    }, 0);
     const { onFocus } = this.props;
     onFocus && onFocus(...rest);
   };
