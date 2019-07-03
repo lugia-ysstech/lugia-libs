@@ -292,6 +292,15 @@ export default class ThemeProviderHandler {
   }
 
   getInternalThemeProps = () => {
+    const { themeProps } = this.props;
+    if (themeProps) {
+      const { onLugia } = themeProps;
+      if (onLugia) {
+        return {
+          onLugia,
+        };
+      }
+    }
     return {
       onLugia: this.on,
     };
