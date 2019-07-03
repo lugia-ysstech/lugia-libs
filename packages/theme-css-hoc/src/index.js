@@ -506,11 +506,11 @@ function getStateTypes(themeState: ThemeState = {}): StateType[] {
   if (hover) {
     res.push(Hover);
   }
-  if (active) {
-    res.push(Active);
-  }
   if (focus) {
     res.push(Focus);
+  }
+  if (active) {
+    res.push(Active);
   }
   if (disabled) {
     res.push(Disabled);
@@ -1015,10 +1015,10 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       cNormal,
       hover,
       cHover,
-      active,
-      cActived,
       focus,
       cFocus,
+      active,
+      cActived,
       disabled,
       cDisabled,
       theStyle,
