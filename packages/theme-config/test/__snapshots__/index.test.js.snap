@@ -6,3 +6,9 @@ exports[`Theme Theme 1`] = `
   hello everyone
 </div>
 `;
+
+exports[`ThemeConfig Theme 1`] = `
+<div>
+  hello everyone
+</div>
+`;

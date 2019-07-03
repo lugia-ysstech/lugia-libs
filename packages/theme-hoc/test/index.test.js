@@ -10,11 +10,7 @@ import Theme from '@lugia/theme-config';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import styled from 'styled-components';
-import ThemeProvider, {
-  addMouseEvent,
-  packDisplayName,
-  unPackDisplayName,
-} from '../src';
+import ThemeProvider, { addMouseEvent } from '../src';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -76,9 +72,8 @@ describe('ThemeProvider', () => {
   ) {
     return target
       .find(widgetDisplayName)
-      .at(0)
-      .props()
-      .getThemeByDisplayName(OtherWidgetDisplayName);
+      .instance()
+      .props.getThemeByDisplayName(OtherWidgetDisplayName);
   };
   it('config: {}', () => {
     const config = {};
@@ -792,11 +787,5 @@ describe('ThemeProvider', () => {
     result.onMouseDown('d');
 
     expect(call).toEqual(['a', 'p_a', 'b', 'p_b', 'p_c', 'c', 'p_d', 'd']);
-  });
-
-  it('packDisplayName', () => {
-    const widgetName = 'lgx';
-    expect(packDisplayName(widgetName)).toBe('lugia_t_hoc_lgx');
-    expect(unPackDisplayName(packDisplayName(widgetName))).toBe(widgetName);
   });
 });

@@ -7,6 +7,12 @@ declare module '@lugia/theme-core' {
 
   declare export function filterSelector(obj: any): string[];
 
+  declare export var ThemeHandle: any;
+  declare export var ThemeDesignHandle: any;
+  declare export var ThemeContext: any;
+
+  declare export function packDisplayName(widgetName: string): string;
+
   declare export var CSSComponentDisplayName: string;
   declare export var ThemeComponentPrefix: string;
 

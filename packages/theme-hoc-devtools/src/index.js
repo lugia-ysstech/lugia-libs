@@ -49,7 +49,7 @@ export function inject(window: Object) {
           const { name } = data;
           if (name && name.startsWith('lugia_t_hoc')) {
             const {
-              state: { id: stateId },
+              state: { baseState: stateId },
             } = data;
             stateId2ReactNodeInfo[stateId] = data;
             id2StateId[id] = stateId;

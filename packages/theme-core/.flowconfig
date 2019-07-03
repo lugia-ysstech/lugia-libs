@@ -12,5 +12,6 @@ packages/.*/src
 flow-typed/
 interface/
 ../../flow-typed/
+node_modules/@lugia/theme-hoc-devtools/interface
 [options]
 module.name_mapper='^core/\(.*\)$' -> '<PROJECT_ROOT>/src/core/\1'

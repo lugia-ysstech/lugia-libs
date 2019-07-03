@@ -5,6 +5,5 @@ declare module '@lugia/theme-config' {
     config: { [key: string]: ThemeConfig },
     className?: string,
   };
-
   declare export default React.ComponentType<ThemeConfigProps>;
 }

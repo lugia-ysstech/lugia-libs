@@ -5,7 +5,7 @@
  * @flow
  */
 import type { ThemeConfigProps } from '@lugia/theme-config';
-import { getConfig } from '@lugia/theme-core';
+import { getConfig, ThemeContext } from '@lugia/theme-core';
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -40,7 +40,7 @@ class Theme extends React.Component<ThemeConfigProps, StateType> {
     this.svThemeConfigTree = getConfig(svThemeConfigTree, config, props.config);
   }
 
-  getChildContext(): Object {
+  getContextValue(): Object {
     const { props } = this;
     const { config } = props;
     return {
@@ -51,7 +51,11 @@ class Theme extends React.Component<ThemeConfigProps, StateType> {
 
   render() {
     const { children } = this.props;
-    return children;
+    return (
+      <ThemeContext.Provider value={this.getContextValue()}>
+        {children}
+      </ThemeContext.Provider>
+    );
   }
 }
 
