@@ -46,8 +46,8 @@ export function filterRepeatSelectNames(
 }
 
 export function getStyledComponent(cssConfig: CSSConfig): Object {
-  const { tag = 'span' } = cssConfig;
-  const styledElement = styled[tag];
+  const { tag = 'span', extend } = cssConfig;
+  const styledElement = extend ? styled(extend) : styled[tag];
   if (!styledElement) {
     throw new Error(`Not support tag: ${tag}`);
   }

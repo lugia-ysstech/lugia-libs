@@ -44,6 +44,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   if (!className) {
     console.trace('className is empty!');
   }
+
   if (extend) {
     if (extend.__OrginalWidget__) {
       throw new Error('Not support extend ThemeHoc Component!');
@@ -51,12 +52,8 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     const extendCSSConfig = CSSComponent2CSSConfig.get(extend);
     if (extendCSSConfig) {
       cssConfig = deepMerge(extendCSSConfig, cssConfig);
+      delete cssConfig.extend;
       filterRepeatCSSConfigSelectNames(cssConfig);
-      const newExtendConfig = { ...cssConfig };
-      delete newExtendConfig.extend;
-      cssConfig.extend = CSSComponent(newExtendConfig);
-    } else {
-      // TODO: 处理普通的Component组件 传入style 和  className。
     }
   }
   const styledElement = getStyledComponent(cssConfig);
