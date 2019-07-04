@@ -1,6 +1,6 @@
 {
   "name": "@lugia/math",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
