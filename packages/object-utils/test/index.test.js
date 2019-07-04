@@ -5,6 +5,8 @@ import {
   getAttributeFromObject,
   getIndexfromKey,
   getKeyfromIndex,
+  getAttributeValue,
+  packObject,
   isEmptyObject,
   moveToTargetIfKeyIsInSource,
 } from '../src/index';
@@ -22,6 +24,26 @@ const data = [
   { key: undefined, index: 3 },
 ];
 describe('Object', () => {
+  it('getAttributeValue', () => {
+    expect(getAttributeValue(null, [])).toBeUndefined();
+    expect(getAttributeValue({}, [])).toBeUndefined();
+    expect(getAttributeValue({ a: { b: 1 } }, ['a'])).toEqual({ b: 1 });
+    expect(getAttributeValue({ a: { b: 1 } }, ['a', 'b'])).toEqual(1);
+  });
+
+  it('packObject', () => {
+    expect(packObject(['a', 'b', 'c'], 1)).toEqual({
+      a: {
+        b: {
+          c: 1,
+        },
+      },
+    });
+
+    const objA = { a: { b: { c: 1 } } };
+    const objB = { a: { b: { d: 100 } } };
+  });
+
   it('getAttributeFromObject has', () => {
     expect(getAttributeFromObject(Object, 'top', 0)).toEqual(1);
     expect(getAttributeFromObject(Object, 'left', 0)).toEqual(2);

@@ -20,64 +20,19 @@ import {
   deepMerge,
   getAttributeFromObject,
   isEmptyObject,
+  getAttributeValue,
+  packObject,
 } from '@lugia/object-utils';
 import styled, { css, keyframes } from 'styled-components';
 import { style2css, units } from '@lugia/css';
 import { getBoxShadowCSS } from '@lugia/theme-utils';
 
 const { px2remcss } = units;
-
-type MarginOpt = {
-  default: {
-    left: number,
-    right: number,
-    top: number,
-    bottom: number,
-  },
-};
 const Normal = 'normal';
 const Hover = 'hover';
 const Focus = 'focus';
 const Active = 'active';
 const Disabled = 'disabled';
-
-export function getAttributeValue(obj: Object, path: string[]): any {
-  if (!obj) {
-    return;
-  }
-  if (!path || path.length === 0) {
-    return;
-  }
-  let target = obj;
-  for (let i = 0; i < path.length; i++) {
-    const key = path[i];
-    target = target[key];
-    if (!target) {
-      return;
-    }
-  }
-  return target;
-}
-
-export function packObject(path: string[], value: any): Object {
-  if (!path || path.length === 0) {
-    return {};
-  }
-
-  const result = {};
-  let current = result;
-
-  const lastIndex = path.length - 1;
-  path.forEach((key: string, index: number) => {
-    if (lastIndex === index) {
-      current[key] = value;
-    } else {
-      current = current[key] = {};
-    }
-  });
-
-  return result;
-}
 
 export function getSizeFromTheme(size: any) {
   return typeof size === 'number' || !isNaN(Number(size))

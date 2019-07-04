@@ -110,3 +110,41 @@ export function isEmptyObject(obj: any) {
   }
   return Object.keys(obj).length === 0;
 }
+
+export function getAttributeValue(obj: Object, path: string[]): any {
+  if (!obj) {
+    return;
+  }
+  if (!path || path.length === 0) {
+    return;
+  }
+  let target = obj;
+  for (let i = 0; i < path.length; i++) {
+    const key = path[i];
+    target = target[key];
+    if (!target) {
+      return;
+    }
+  }
+  return target;
+}
+
+export function packObject(path: string[], value: any): Object {
+  if (!path || path.length === 0) {
+    return {};
+  }
+
+  const result = {};
+  let current = result;
+
+  const lastIndex = path.length - 1;
+  path.forEach((key: string, index: number) => {
+    if (lastIndex === index) {
+      current[key] = value;
+    } else {
+      current = current[key] = {};
+    }
+  });
+
+  return result;
+}

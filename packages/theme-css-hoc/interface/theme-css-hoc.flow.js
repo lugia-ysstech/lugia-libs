@@ -43,6 +43,12 @@ declare module '@lugia/theme-css-hoc' {
     defaultTheme?: ThemeMeta, // 自己写的样式
   };
 
+  declare export type CSSHocOption = {
+    hover?: boolean,
+    active?: boolean,
+    focus?: boolean,
+  };
+
   declare export type CSSConfig = {
     tag?: TagType,
     className: string, // 必填属性用来注入一个主题的class类名为CSS样式覆盖留下口子
@@ -53,6 +59,7 @@ declare module '@lugia/theme-css-hoc' {
     hover?: CSSMeta, // 默认为 {}
     focus?: CSSMeta, // 默认为 {}
     disabled?: CSSMeta, // 默认为 {}
+    option?: CSSHocOption,
   };
 
   declare export function StaticComponent(cssConfig: CSSConfig): Function;

@@ -34,5 +34,10 @@ declare module '@lugia/object-utils' {
   ): void;
 
   declare export function deepMerge(...objects: Object[]): Object;
+
   declare export function isEmptyObject(obj: any): boolean;
+
+  declare export function getAttributeValue(obj: Object, path: string[]): any;
+
+  declare export function packObject(path: string[], value: any): Object;
 }

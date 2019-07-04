@@ -5,34 +5,12 @@ import {
   filterRepeatCSSConfigSelectNames,
   filterRepeatCSSMetaSelctNames,
   filterRepeatSelectNames,
-  getAttributeValue,
   getSelectNameThemeMeta,
   getSizeFromTheme,
   getSpaceFromTheme,
-  packObject,
 } from '../src/index';
 
-describe('CSSComponent', () => {
-  it('getAttributeValue', () => {
-    expect(getAttributeValue(null, [])).toBeUndefined();
-    expect(getAttributeValue({}, [])).toBeUndefined();
-    expect(getAttributeValue({ a: { b: 1 } }, ['a'])).toEqual({ b: 1 });
-    expect(getAttributeValue({ a: { b: 1 } }, ['a', 'b'])).toEqual(1);
-  });
-
-  it('packObject', () => {
-    expect(packObject(['a', 'b', 'c'], 1)).toEqual({
-      a: {
-        b: {
-          c: 1,
-        },
-      },
-    });
-
-    const objA = { a: { b: { c: 1 } } };
-    const objB = { a: { b: { d: 100 } } };
-  });
-
+describe('theme-css-hoc', () => {
   it('getThemeByConfig', () => {});
 
   it('getSelectNameThemeMeta selectNames =[]', () => {
