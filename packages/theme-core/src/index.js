@@ -15,6 +15,7 @@ import {
   getMatchSelector,
   getObject,
   injectThemeStateEvent,
+  hasThemeStateEvent,
   selectThemeMeta,
   selectThemePart,
   ThemeComponentPrefix,
@@ -43,4 +44,5 @@ export {
   addFocusBlurEvent,
   addMouseEvent,
   injectThemeStateEvent,
+  hasThemeStateEvent,
 };

@@ -202,4 +202,7 @@ declare module '@lugia/theme-core' {
     option: ThemeStateEventOptions,
     handle: Object,
   ): Object;
+  declare export function hasThemeStateEvent(
+    option: ThemeStateEventOptions,
+  ): boolean;
 }

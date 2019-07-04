@@ -231,3 +231,8 @@ export function injectThemeStateEvent(
   }
   return themeStateEventConfig;
 }
+
+export function hasThemeStateEvent(option: ThemeStateEventOptions) {
+  const { hover = false, active = false, focus = false } = option;
+  return hover === true || active === true || focus === true;
+}

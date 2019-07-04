@@ -7,12 +7,13 @@ import type { ProviderComponent, ThemeHocOption } from '@lugia/theme-hoc';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import {
+  CSSComponentContainerDisplayName,
+  injectThemeStateEvent,
   packDisplayName,
   ThemeContext,
   ThemeDesignHandle,
   ThemeHandle,
-  CSSComponentContainerDisplayName,
-  injectThemeStateEvent,
+  hasThemeStateEvent,
 } from '@lugia/theme-core';
 
 export { addFocusBlurEvent, addMouseEvent } from '@lugia/theme-core';
@@ -36,19 +37,10 @@ function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
     themeState,
     svTarget,
   );
-  const { hover = false, active = false, focus = false } = opt;
-  const needProcessThemeState =
-    hover === true || active === true || focus === true;
-  if (needProcessThemeState) {
-    if (hover) {
-      initHandleObject.hover = false;
-    }
-    if (active) {
-      initHandleObject.active = false;
-    }
-    if (focus) {
-      initHandleObject.focus = false;
-    }
+  if (hasThemeStateEvent(opt)) {
+    initHandleObject.hover = false;
+    initHandleObject.active = false;
+    initHandleObject.focus = false;
   }
   const { innerRef } = props;
 
@@ -84,7 +76,6 @@ const ThemeProvider = (
   if (Target.displayName === CSSComponentContainerDisplayName) {
     console.warn('CSSComponent不推荐直接包括ThemeHoc');
   }
-  const { hover = false, active = false, focus = false } = opt;
 
   const ThemeWrapWidget = (props: Object) => {
     const {

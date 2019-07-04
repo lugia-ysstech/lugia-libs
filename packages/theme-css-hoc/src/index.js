@@ -6,10 +6,13 @@
  */
 import type { CSSConfig, CSSProps } from '@lugia/theme-css-hoc';
 import {
-  CSSComponentDisplayName,
   CSSComponentContainerDisplayName,
+  CSSComponentDisplayName,
+  injectThemeStateEvent,
+  ThemeStateHandle,
+  hasThemeStateEvent,
 } from '@lugia/theme-core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { deepMerge, isEmptyObject } from '@lugia/object-utils';
 import { css, keyframes } from 'styled-components';
 import {
@@ -39,12 +42,51 @@ function getClassName(cssConfigClassName: string, props: Object): string {
 
 const CSSComponent2CSSConfig = new WeakMap();
 
-export default function CSSComponent(cssConfig: CSSConfig) {
-  let { extend, className } = cssConfig;
-  if (!className) {
-    console.trace('className is empty!');
-  }
+function useHandle(
+  props: Object,
+  widgetName: string,
+  hasThemeStateEvent: boolean,
+) {
+  let handle = useRef({});
 
+  const [themeState, setThemeState] = useState({
+    hover: false,
+    focus: false,
+    active: false,
+    disabled: false,
+  });
+
+  const { themeProps } = props;
+  let propsThemeState = themeProps.themeState;
+  if (propsThemeState) {
+    const finalState = { ...themeState, ...propsThemeState };
+    const { disabled, hover, focus, active } = finalState;
+    const {
+      disabled: sDisabled,
+      hover: sHover,
+      focus: sFocus,
+      active: sActive,
+    } = themeState;
+    if (
+      disabled !== sDisabled ||
+      hover !== sHover ||
+      focus !== sFocus ||
+      sActive !== active
+    ) {
+      setThemeState(finalState);
+    }
+  }
+  if (hasThemeStateEvent) {
+    handle.current = new ThemeStateHandle(props, widgetName, themeState);
+  }
+  return {
+    handle: handle.current,
+    themeState: [themeState, setThemeState],
+  };
+}
+
+function extendCSSComponent(cssConfig: CSSConfig) {
+  const { extend } = cssConfig;
   if (extend) {
     if (extend.__OrginalWidget__) {
       throw new Error('Not support extend ThemeHoc Component!');
@@ -52,9 +94,25 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     const extendCSSConfig = CSSComponent2CSSConfig.get(extend);
     if (extendCSSConfig) {
       cssConfig = deepMerge(extendCSSConfig, cssConfig);
-      delete cssConfig.extend;
       filterRepeatCSSConfigSelectNames(cssConfig);
+      const newExtendConfig = { ...cssConfig };
+      delete newExtendConfig.extend;
+      return CSSComponent(newExtendConfig);
     }
+  }
+}
+
+/**
+ * @return {undefined}
+ */
+export default function CSSComponent(cssConfig: CSSConfig) {
+  const { className } = cssConfig;
+  if (!className) {
+    console.trace('className is empty!');
+  }
+  const extendResult = extendCSSComponent(cssConfig);
+  if (extendResult) {
+    return extendResult;
   }
   const styledElement = getStyledComponent(cssConfig);
   const getCSSInCSSConfig = createGetCSSInCSSConfig(cssConfig);
@@ -75,8 +133,11 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     };
   };
 
-  const { css } = cssConfig;
-
+  const {
+    css,
+    option = { hover: false, focus: false, active: false },
+  } = cssConfig;
+  const isHasThemeStateEvent = hasThemeStateEvent(option);
   function getTargetComponent(targetStyleComponent: Function): Function {
     const result = targetStyleComponent`
     ${css}
@@ -92,32 +153,10 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   const hasStaticFocus = !isEmptyObject(cssConfig.focus);
   const hasStaticActive = !isEmptyObject(cssConfig.active);
   const Result = (props: Object) => {
-    const { themeProps } = props;
-    const [themeState, setThemeState] = useState({
-      hover: false,
-      focus: false,
-      active: false,
-      disabled: false,
-    });
-    let propsThemeState = themeProps.themeState;
-    if (propsThemeState) {
-      const finalState = { ...themeState, ...propsThemeState };
-      const { disabled, hover, focus, active } = finalState;
-      const {
-        disabled: sDisabled,
-        hover: sHover,
-        focus: sFocus,
-        active: sActive,
-      } = themeState;
-      if (
-        disabled !== sDisabled ||
-        hover !== sHover ||
-        focus !== sFocus ||
-        sActive !== active
-      ) {
-        setThemeState(finalState);
-      }
-    }
+    const {
+      handle,
+      themeState: [themeState, setThemeState],
+    } = useHandle(props, className, isHasThemeStateEvent);
 
     const targetProps = deepMerge(props, { themeProps: { themeState } });
 
@@ -133,7 +172,10 @@ export default function CSSComponent(cssConfig: CSSConfig) {
 
     useEffect(() => {
       const { themeProps } = props;
-      const { onLugia } = themeProps;
+      let { onLugia } = themeProps;
+      if (isHasThemeStateEvent) {
+        onLugia = handle.on;
+      }
       const unsubscribeHover =
         onLugia &&
         onLugia('hover', data => {
@@ -162,11 +204,11 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         console.error(`${cssConfig.className} onLugia is not found ！`);
       }
       return () => {
-        onLugia && unsubscribeHover();
-        onLugia && unsubscribeFocus();
-        onLugia && unsubscribeActive();
+        unsubscribeHover && unsubscribeHover();
+        unsubscribeFocus && unsubscribeFocus();
+        unsubscribeActive && unsubscribeActive();
       };
-    }, [props, themeState]);
+    }, [handle.on, props, setThemeState, themeState]);
 
     const targetStyle = deepMerge(
       normal,
@@ -179,6 +221,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     return (
       <Target
         {...props}
+        {...injectThemeStateEvent(option, handle)}
         themeProps={targetProps.themeProps}
         __themeMeta={themeMeta}
         style={targetStyle}
