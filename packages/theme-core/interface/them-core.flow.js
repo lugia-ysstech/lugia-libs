@@ -14,6 +14,7 @@ declare module '@lugia/theme-core' {
   declare export function packDisplayName(widgetName: string): string;
 
   declare export var CSSComponentDisplayName: string;
+  declare export var CSSComponentContainerDisplayName: string;
   declare export var ThemeComponentPrefix: string;
 
   declare export function getKeys(obj: Object): string[];

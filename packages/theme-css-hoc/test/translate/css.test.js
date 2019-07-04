@@ -1,16 +1,12 @@
 // @flow
 
-import * as React from 'react';
 import {
-  filterRepeatCSSConfigSelectNames,
-  filterRepeatCSSMetaSelctNames,
-  filterRepeatSelectNames,
   getSelectNameThemeMeta,
   getSizeFromTheme,
   getSpaceFromTheme,
-} from '../src/index';
+} from '../../src/translate/css';
 
-describe('theme-css-hoc', () => {
+describe('theme-css-hoc/translate/css', () => {
   it('getThemeByConfig', () => {});
 
   it('getSelectNameThemeMeta selectNames =[]', () => {
@@ -31,80 +27,6 @@ describe('theme-css-hoc', () => {
         b: 2,
       }),
     ).toEqual({ a: 1, b: 2 });
-  });
-
-  it('filterRepeatSelectNames', () => {
-    expect(filterRepeatSelectNames([['a'], ['b'], ['a']])).toEqual([
-      ['a'],
-      ['b'],
-    ]);
-    expect(
-      filterRepeatSelectNames([
-        ['a'],
-        ['a', 'b'],
-        ['a', 'c'],
-        ['a', 'b'],
-        ['d'],
-      ]),
-    ).toEqual([['a'], ['a', 'b'], ['a', 'c'], ['d']]);
-  });
-
-  it('filterRepeatCSSMetaSelctNames has selNames', () => {
-    const meta = {
-      selectNames: [['a'], ['a', 'b'], ['a', 'c'], ['a', 'b'], ['d']],
-    };
-    filterRepeatCSSMetaSelctNames(meta);
-    expect(meta).toBe(meta);
-    expect(meta).toEqual({
-      selectNames: [['a'], ['a', 'b'], ['a', 'c'], ['d']],
-    });
-  });
-  it('filterRepeatCSSMetaSelctNames not has selNames', () => {
-    const meta = {};
-    filterRepeatCSSMetaSelctNames(meta);
-    expect(meta).toBe(meta);
-    expect(meta).toEqual({});
-  });
-  it('filterRepeatCSSConfigSelctNames not has selNames', () => {
-    const config = {
-      normal: {},
-      hover: {},
-      className: 'aa',
-    };
-    filterRepeatCSSConfigSelectNames(config);
-    expect(config).toBe(config);
-    expect(config).toEqual({
-      normal: {},
-      hover: {},
-      className: 'aa',
-    });
-  });
-
-  it('filterRepeatCSSConfigSelectNames  has selNames', () => {
-    const config = {
-      normal: {
-        selectNames: [
-          ['a'],
-          ['a', 'b', 'c'],
-          ['bc'],
-          ['a', 'b', 'c'],
-          ['bc'],
-          ['a'],
-          ['g'],
-        ],
-      },
-      hover: {},
-      className: 'aa',
-    };
-    filterRepeatCSSConfigSelectNames(config);
-    expect(config).toBe(config);
-    expect(config).toEqual({
-      normal: {
-        selectNames: [['a'], ['a', 'b', 'c'], ['bc'], ['g']],
-      },
-      className: 'aa',
-      hover: {},
-    });
   });
 
   it('getSpaceFromTheme margin', () => {

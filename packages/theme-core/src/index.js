@@ -14,6 +14,7 @@ import {
   selectThemePart,
   filterSelector,
   ThemeComponentPrefix,
+  CSSComponentContainerDisplayName,
 } from './utils';
 import ThemeHandle, { packDisplayName } from './ThemeHandle';
 import ThemeDesignHandle from './ThemeDesignHandle';
@@ -32,5 +33,6 @@ export {
   selectThemePart,
   selectThemeMeta,
   CSSComponentDisplayName,
+  CSSComponentContainerDisplayName,
   ThemeComponentPrefix,
 };

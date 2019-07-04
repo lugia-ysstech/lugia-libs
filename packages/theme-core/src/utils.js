@@ -146,5 +146,6 @@ export function selectThemePart(
   return result;
 }
 
-export const CSSComponentDisplayName = 'lugia_c_t';
+export const CSSComponentDisplayName = 'lugia_css_hoc_c';
+export const CSSComponentContainerDisplayName = 'lugia_css_hoc_f';
 export const ThemeComponentPrefix = 'lugia_t_hoc_';

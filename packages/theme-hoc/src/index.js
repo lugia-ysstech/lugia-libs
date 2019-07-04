@@ -11,6 +11,7 @@ import {
   ThemeContext,
   ThemeDesignHandle,
   ThemeHandle,
+  CSSComponentContainerDisplayName,
 } from '@lugia/theme-core';
 
 let cnt = 0;
@@ -134,7 +135,7 @@ const ThemeProvider = (
   widgetName: string,
   opt?: ThemeHocOption = { hover: false, active: false, focus: false },
 ): Function => {
-  if (Target.displayName === 'CSSComponent') {
+  if (Target.displayName === CSSComponentContainerDisplayName) {
     console.warn('CSSComponent不推荐直接包括ThemeHoc');
   }
   const { hover = false, active = false, focus = false } = opt;
