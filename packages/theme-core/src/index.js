@@ -5,25 +5,30 @@
  * @flow
  */
 import {
+  addFocusBlurEvent,
+  addMouseEvent,
+  CSSComponentContainerDisplayName,
   CSSComponentDisplayName,
-  getMatchSelector,
-  selectThemeMeta,
+  filterSelector,
   getConfig,
   getKeys,
+  getMatchSelector,
   getObject,
+  injectThemeStateEvent,
+  selectThemeMeta,
   selectThemePart,
-  filterSelector,
   ThemeComponentPrefix,
-  CSSComponentContainerDisplayName,
 } from './utils';
 import ThemeHandle, { packDisplayName } from './ThemeHandle';
 import ThemeDesignHandle from './ThemeDesignHandle';
+import ThemeStateHandle from './ThemeStateHandle';
 import * as React from 'react';
 
 export const ThemeContext: any = React.createContext({});
 export {
   packDisplayName,
   ThemeHandle,
+  ThemeStateHandle,
   filterSelector,
   ThemeDesignHandle,
   getKeys,
@@ -35,4 +40,7 @@ export {
   CSSComponentDisplayName,
   CSSComponentContainerDisplayName,
   ThemeComponentPrefix,
+  addFocusBlurEvent,
+  addMouseEvent,
+  injectThemeStateEvent,
 };

@@ -12,68 +12,14 @@ import {
   ThemeDesignHandle,
   ThemeHandle,
   CSSComponentContainerDisplayName,
+  injectThemeStateEvent,
 } from '@lugia/theme-core';
 
+export { addFocusBlurEvent, addMouseEvent } from '@lugia/theme-core';
 let cnt = 0;
 
 function uuid() {
   return `hoc_${cnt++}`;
-}
-
-const OptNames = {
-  onMouseDown: 'down',
-  onMouseUp: 'up',
-  onMouseEnter: 'enter',
-  onMouseLeave: 'leave',
-};
-
-export const addMouseEvent = createaddEventObject(OptNames);
-export const addFocusBlurEvent = createaddEventObject({
-  onFocus: 'focus',
-  onBlur: 'blur',
-});
-
-export function createaddEventObject(optionNames: Object) {
-  return function(self: Object, opt?: Object = { after: {} }): Object {
-    const result = {};
-
-    if (!self) {
-      return result;
-    }
-
-    const { props } = self;
-    if (!props) {
-      return result;
-    }
-
-    const { after = {} } = opt;
-
-    Object.keys(optionNames).forEach((name: string) => {
-      const { [name]: cb } = props;
-      const optName = optionNames[name];
-      const { [optName]: optCb } = opt;
-
-      if (cb || optCb) {
-        const cbs = [];
-        if (cb) {
-          cbs.push(cb);
-        }
-        if (optCb) {
-          const { [optName]: isAfter } = after;
-          if (isAfter) {
-            cbs.push(optCb);
-          } else {
-            cbs.unshift(optCb);
-          }
-        }
-        result[name] = (...rest: any[]) => {
-          cbs.forEach(cb => cb(...rest));
-        };
-      }
-    });
-
-    return result;
-  };
 }
 
 function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
@@ -176,25 +122,12 @@ const ThemeProvider = (
       setThemeState(propsThemeState);
     }
 
-    const themeStateEventConfig = {};
-    if (active) {
-      themeStateEventConfig.onMouseDown = handle.onMouseDown;
-      themeStateEventConfig.onMouseUp = handle.onMouseUp;
-    }
-    if (hover) {
-      themeStateEventConfig.onMouseEnter = handle.onMouseEnter;
-      themeStateEventConfig.onMouseLeave = handle.onMouseLeave;
-    }
-    if (focus) {
-      themeStateEventConfig.onFocus = handle.onFocus;
-      themeStateEventConfig.onBlur = handle.onBlur;
-    }
     return (
       <Target
         dispatchEvent={handle.dispatchEvent}
         createEventChannel={handle.createEventChannel}
         {...props}
-        {...themeStateEventConfig}
+        {...injectThemeStateEvent(opt, handle)}
         themeProps={handle.getThemeProps()}
         getInternalThemeProps={handle.getInternalThemeProps}
         getPartOfThemeHocProps={handle.getPartOfThemeHocProps}

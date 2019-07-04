@@ -4,6 +4,8 @@
  *
  * @flow
  */
+import type { ThemeStateEventOptions } from '@lugia/lugia-core';
+
 import { deepMerge } from '@lugia/object-utils';
 
 export function getKeys(obj: Object): string[] {
@@ -149,3 +151,83 @@ export function selectThemePart(
 export const CSSComponentDisplayName = 'lugia_css_hoc_c';
 export const CSSComponentContainerDisplayName = 'lugia_css_hoc_f';
 export const ThemeComponentPrefix = 'lugia_t_hoc_';
+
+export const addMouseEvent = createaddEventObject({
+  onMouseDown: 'down',
+  onMouseUp: 'up',
+  onMouseEnter: 'enter',
+  onMouseLeave: 'leave',
+});
+export const addFocusBlurEvent = createaddEventObject({
+  onFocus: 'focus',
+  onBlur: 'blur',
+});
+
+export function createaddEventObject(optionNames: Object) {
+  return function(self: Object, opt?: Object = { after: {} }): Object {
+    const result = {};
+
+    if (!self) {
+      return result;
+    }
+
+    const { props } = self;
+    if (!props) {
+      return result;
+    }
+
+    const { after = {} } = opt;
+
+    Object.keys(optionNames).forEach((name: string) => {
+      const { [name]: cb } = props;
+      const optName = optionNames[name];
+      const { [optName]: optCb } = opt;
+
+      if (cb || optCb) {
+        const cbs = [];
+        if (cb) {
+          cbs.push(cb);
+        }
+        if (optCb) {
+          const { [optName]: isAfter } = after;
+          if (isAfter) {
+            cbs.push(optCb);
+          } else {
+            cbs.unshift(optCb);
+          }
+        }
+        result[name] = (...rest: any[]) => {
+          cbs.forEach(cb => cb(...rest));
+        };
+      }
+    });
+
+    return result;
+  };
+}
+
+export function injectThemeStateEvent(
+  option: ThemeStateEventOptions,
+  handle: Object,
+) {
+  const themeStateEventConfig = {};
+
+  if (!option || !handle) {
+    return themeStateEventConfig;
+  }
+  const { hover = false, active = false, focus = false } = option;
+
+  if (active) {
+    themeStateEventConfig.onMouseDown = handle.onMouseDown;
+    themeStateEventConfig.onMouseUp = handle.onMouseUp;
+  }
+  if (hover) {
+    themeStateEventConfig.onMouseEnter = handle.onMouseEnter;
+    themeStateEventConfig.onMouseLeave = handle.onMouseLeave;
+  }
+  if (focus) {
+    themeStateEventConfig.onFocus = handle.onFocus;
+    themeStateEventConfig.onBlur = handle.onBlur;
+  }
+  return themeStateEventConfig;
+}
