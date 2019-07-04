@@ -3,19 +3,9 @@
  * @flow
  */
 
-import React from 'react';
-import {
-  getBridge,
-  getReactNodeInfo,
-  getReactNodeInfoByThemeId,
-} from '@lugia/theme-hoc-devtools';
 import { getConfig, selectThemePart, ThemeComponentPrefix } from './utils';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
-import ThemeStateHandle from './ThemeStateHandle';
-
-window.getBridge = getBridge;
-window.getReactNodeInfo = getReactNodeInfo;
-window.getReactNodeInfoByThemeId = getReactNodeInfoByThemeId;
+import ThemeEventChannelHandle from './ThemeEventChannelHandle';
 
 const ThemeComponentPrefixLen = ThemeComponentPrefix.length;
 
@@ -33,7 +23,7 @@ export function packDisplayName(widgetName: string): string {
   return `${ThemeComponentPrefix}${widgetName}`;
 }
 
-export default class ThemeHandle extends ThemeStateHandle {
+export default class ThemeHandle extends ThemeEventChannelHandle {
   props: Object;
   context: Object;
   widgetName: string;
