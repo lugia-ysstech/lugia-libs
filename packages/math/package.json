@@ -14,7 +14,7 @@
   "bugs": {
     "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings/issues"
   },
-  "author": "#lugia# @hanjingbo",
+  "author": "#lugia#",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5"
