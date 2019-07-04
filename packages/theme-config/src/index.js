@@ -8,7 +8,6 @@ import type { ThemeConfigProps } from '@lugia/theme-config';
 import { getConfig, ThemeContext } from '@lugia/theme-core';
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 
 type StateType = {};
 
