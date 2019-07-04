@@ -80,6 +80,13 @@ export function createGetStyleForThemeConfig(cssConfig: CSSConfig) {
         let getThemeMetaRes = getThemeMeta(themeMeta, themeProps) || {};
         themeMeta = deepMerge(getThemeMetaRes, themeMeta);
       }
+      const { getThemeMeta: getThemeMetaByUserDef } = themeMeta;
+      if (getThemeMetaByUserDef) {
+        themeMeta = deepMerge(
+          themeMeta,
+          getThemeMetaByUserDef(themeMeta, themeProps),
+        );
+      }
       return themeMeta;
     }
 
@@ -159,6 +166,6 @@ export function computeFinalThemeOutResult(
   return stateTypes.reduce((beforeValue: any, stateType: StateType) => {
     const { [stateType]: themeMeta = {} } = themeConfig;
     const translate = createTranslate(cssConfig, stateType);
-    return reduceResult(beforeValue, translate(themeMeta));
+    return reduceResult(beforeValue, translate(themeMeta, themeProps));
   }, initVal);
 }
