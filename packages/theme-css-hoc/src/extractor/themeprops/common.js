@@ -45,7 +45,7 @@ export function getStateTypes(themeState: ThemeState = {}): StateType[] {
 
 const allState = [Normal, Hover, Active, Disabled];
 
-export function createGetStyleForThemeConfig(cssConfig: CSSConfig) {
+export function createGetStyleInThemeMeta(cssConfig: CSSConfig) {
   const stateType2Getter: {
     [key: StateType]: (themeMeta: ThemeMeta) => Object,
   } = {

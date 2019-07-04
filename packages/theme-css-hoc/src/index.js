@@ -8,19 +8,22 @@ import type { CSSConfig, CSSProps } from '@lugia/theme-css-hoc';
 import {
   CSSComponentContainerDisplayName,
   CSSComponentDisplayName,
+  hasThemeStateEvent,
   injectThemeStateEvent,
   ThemeStateHandle,
-  hasThemeStateEvent,
 } from '@lugia/theme-core';
 import React, { useEffect, useRef, useState } from 'react';
 import { deepMerge, isEmptyObject } from '@lugia/object-utils';
-import { css, keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import {
   filterRepeatCSSConfigSelectNames,
   getStyledComponent,
 } from './extractor/cssconfig';
 
-import { createGetStyleForThemeConfig } from './extractor/themeprops/common';
+import {
+  createGetStyleInThemeMeta,
+  getStateTypes,
+} from './extractor/themeprops/common';
 import {
   createGetCSSByStyleTranslate,
   createGetCSSInCSSConfig,
@@ -124,7 +127,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     ? getStyleInCSSConfigDefaultTheme
     : undefined;
 
-  const getStyleByThemeMeta = createGetStyleForThemeConfig(cssConfig);
+  const getStyleByThemeMeta = createGetStyleInThemeMeta(cssConfig);
 
   const computeInLineStyle = (props: CSSProps): Object => {
     return {
@@ -138,6 +141,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     option = { hover: false, focus: false, active: false },
   } = cssConfig;
   const isHasThemeStateEvent = hasThemeStateEvent(option);
+
   function getTargetComponent(targetStyleComponent: Function): Function {
     const result = targetStyleComponent`
     ${css}
@@ -148,7 +152,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     return result;
   }
 
-  const Target = getTargetComponent(styledElement);
+  let Target = getTargetComponent(styledElement);
   const hasStaticHover = !isEmptyObject(cssConfig.hover);
   const hasStaticFocus = !isEmptyObject(cssConfig.focus);
   const hasStaticActive = !isEmptyObject(cssConfig.active);
@@ -218,11 +222,14 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       disabled,
       styleInCSSConfig,
     );
+
+    const { themeProps } = targetProps;
+    const RenderTarget = getRenderTargetByGetCSSInThemeMeta(Target, themeProps);
     return (
-      <Target
+      <RenderTarget
         {...props}
         {...injectThemeStateEvent(option, handle)}
-        themeProps={targetProps.themeProps}
+        themeProps={themeProps}
         __themeMeta={themeMeta}
         style={targetStyle}
         ref={props.innerRef}
@@ -235,6 +242,31 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   CSSComponent2CSSConfig.set(Result, cssConfig);
   Result.displayName = CSSComponentContainerDisplayName;
   return Result;
+}
+
+function getRenderTargetByGetCSSInThemeMeta(
+  Target: Function,
+  themeProps: Object,
+) {
+  const { themeConfig = {} } = themeProps;
+  const css = [];
+  const { themeState } = themeProps;
+
+  getStateTypes(themeState).map(stateType => {
+    const { [stateType]: themeMeta } = themeConfig;
+    const { getCSS } = themeMeta;
+    if (getCSS) {
+      css.push(getCSS(themeMeta, themeProps));
+    }
+  });
+
+  let RenderTarget = Target;
+  if (css.length > 0) {
+    RenderTarget = styled(Target)`
+      ${css}
+    `;
+  }
+  return RenderTarget;
 }
 
 function packClassName(Target: Function, className: string) {
