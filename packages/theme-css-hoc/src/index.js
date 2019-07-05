@@ -254,6 +254,9 @@ function getRenderTargetByGetCSSInThemeMeta(
 
   getStateTypes(themeState).map(stateType => {
     const { [stateType]: themeMeta } = themeConfig;
+    if (!themeMeta) {
+      return;
+    }
     const { getCSS } = themeMeta;
     if (getCSS) {
       css.push(getCSS(themeMeta, themeProps));
