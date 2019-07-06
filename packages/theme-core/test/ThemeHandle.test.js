@@ -236,7 +236,7 @@ describe('ThemeHandle.test.js', () => {
       VerifyOrderConfig.create('handle', order),
     );
     const getTheme = mock.mockFunction('getTheme');
-    const lgx = {
+    const lgx: Object = {
       normal: {
         bg: 'red',
       },
@@ -280,7 +280,7 @@ describe('ThemeHandle.test.js', () => {
     const targetTheme = { targetTheme: 1 };
     getPartOfThemeConfig.returned(targetTheme);
 
-    const result = { type: 'createThemeHocPropsResult' };
+    const result: Object = { type: 'createThemeHocPropsResult' };
     const createThemeHocProps = mock.mockFunction('createThemeHocProps');
     createThemeHocProps.returned(result);
     const displayName = packDisplayName(widgetName);

@@ -145,7 +145,7 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     childWidgetName: string,
     opt?: {
       themeConfig: ?Object,
-      props: ?Object,
+      props?: Object,
       state?: Object,
       selector?: { index: number, count: number },
     },
