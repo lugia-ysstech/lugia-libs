@@ -2149,6 +2149,15 @@
     redux-immutable "^4.0.0"
     redux-saga "^0.16.0"
 
+"@lugia/jverify@^1.0.7":
+  version "1.0.7"
+  resolved "http://192.168.102.79:5001/@lugia/jverify/download/@lugia/jverify-1.0.7.tgz#bc3da1ee7bb51f843ab026a2d17dba732a8a94b3"
+  integrity sha1-vD2h7nu1H4Q6sCai0X26cyqKlLM=
+  dependencies:
+    "@lugia/type-utils" "^1.0.1"
+    clone "^2.1.1"
+    deep-equal "^1.0.1"
+
 "@lugia/lugiad-loader@^1.0.3":
   version "1.0.3"
   resolved "http://192.168.102.79:5001/@lugia/lugiad-loader/download/@lugia/lugiad-loader-1.0.3.tgz#6338d21c6dd3c49aaafc25610594a13014ab3df3"
@@ -2363,6 +2372,19 @@
   dependencies:
     shell-quote "^1.6.1"
     ws "^3.3.1"
+
+"@lugia/react-test-utils@^1.0.0":
+  version "1.0.0"
+  resolved "http://192.168.102.79:5001/@lugia/react-test-utils/download/@lugia/react-test-utils-1.0.0.tgz#019bc028615d3c8ae454ec9b98b4546d027a7497"
+  integrity sha1-AZvAKGFdPIrkVOybmLRUbQJ6dJc=
+  dependencies:
+    react "^16.4.0"
+    react-dom "^16.4.0"
+
+"@lugia/type-utils@^1.0.1":
+  version "1.0.4"
+  resolved "http://192.168.102.79:5001/@lugia/type-utils/download/@lugia/type-utils-1.0.4.tgz#d1a4ffc670ae4bdac6326f376f97a18d3476b366"
+  integrity sha1-0aT/xnCuS9rGMm83b5ehjTR2s2Y=
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -13909,7 +13931,7 @@ react-dev-utils@^5.0.3:
     strip-ansi "3.0.1"
     text-table "0.2.0"
 
-react-dom@^16.8.6:
+react-dom@^16.4.0, react-dom@^16.8.6:
   version "16.8.6"
   resolved "https://registry.npm.taobao.org/react-dom/download/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
   integrity sha1-cdYwP2MeiwCX9WFl72CPBR/24Q8=
@@ -13939,7 +13961,7 @@ react-test-renderer@^16.0.0-0, react-test-renderer@^16.8.6:
     react-is "^16.8.6"
     scheduler "^0.13.6"
 
-react@^16.8.6:
+react@^16.4.0, react@^16.8.6:
   version "16.8.6"
   resolved "https://registry.npm.taobao.org/react/download/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
   integrity sha1-rWw6lhT9Ok6e9REX9U2IjaAfK74=

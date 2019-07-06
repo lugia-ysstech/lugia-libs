@@ -135,7 +135,7 @@ export default class ThemeStateHandle {
   };
 
   getThemeState() {
-    const { disabled, themeState: pThemeState = {} } = this.props;
+    const { disabled = false, themeState: pThemeState = {} } = this.props;
     const { themeState } = this;
     return { ...themeState, ...pThemeState, disabled };
   }
