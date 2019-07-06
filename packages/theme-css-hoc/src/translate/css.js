@@ -17,6 +17,7 @@ import { units } from '@lugia/css';
 import { getBoxShadowCSS } from '@lugia/theme-utils';
 
 import { Active, Disabled, Focus, Hover } from '../consts';
+import { isEmptyObject } from '@lugia/object-utils/src';
 
 const { px2remcss } = units;
 
@@ -70,9 +71,7 @@ export const getSpaceFromTheme = (
   return style;
 };
 
-function getBorderStyleFromTheme(border: Object) {
-  if (!border) return {};
-
+export function getBorderStyleFromTheme(border: Object) {
   if (border === 'none') {
     return {
       borderTopWidth: 0,
@@ -80,6 +79,10 @@ function getBorderStyleFromTheme(border: Object) {
       borderLeftWidth: 0,
       borderRightWidth: 0,
     };
+  }
+
+  if (isEmptyObject(border)) {
+    return {};
   }
 
   const borderTop = getAttributeFromObject(border, 'top', {});
@@ -122,9 +125,10 @@ function getBorderStyleFromTheme(border: Object) {
   return style;
 }
 
-function getBorderRadius(borderRadius: Object): Object {
+export function getBorderRadius(borderRadius: Object): Object {
   const style = {};
-  if (!borderRadius) {
+
+  if (isEmptyObject(borderRadius)) {
     return style;
   }
   const { topLeft, topRight, bottomLeft, bottomRight } = borderRadius;
@@ -140,11 +144,11 @@ function getBorderRadius(borderRadius: Object): Object {
   return style;
 }
 
-function getStringStyleFromTheme(stringStyle: string) {
+export function getStringStyleFromTheme(stringStyle: string) {
   return stringStyle && typeof stringStyle === 'string' ? stringStyle : '';
 }
 
-function getNumberStyleFromTheme(numberStyle: number) {
+export function getNumberStyleFromTheme(numberStyle: number) {
   return numberStyle && typeof numberStyle === 'number' ? numberStyle : 0;
 }
 
@@ -203,7 +207,7 @@ export function themeMeta2Style(theme: ThemeMeta): Object {
   return style;
 }
 
-function getFont(font: any) {
+export function getFont(font: any) {
   const res = {};
   if (!font) {
     return res;
@@ -229,7 +233,8 @@ function getFont(font: any) {
   return res;
 }
 
-function getBackGround(background: any) {
+// TODO: postion repea 错误
+export function getBackGround(background: any) {
   const style = {};
   if (!background) {
     return style;
@@ -307,7 +312,7 @@ function getBackGround(background: any) {
   return style;
 }
 
-function getPosition(position: Object): Object {
+export function getPosition(position: Object): Object {
   if (!position) {
     return {};
   }
