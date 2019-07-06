@@ -159,7 +159,7 @@ describe('Object', () => {
       ),
     ).toEqual(JSON.stringify(result));
 
-    expect(deepMergeAnB(null, null, {})).toEqual({});
+    expect(deepMergeAnB(null, null, { beforeNames: [] })).toEqual({});
   });
   it('isEmptyObject', () => {
     expect(isEmptyObject(null)).toBeTruthy();
