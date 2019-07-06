@@ -6,15 +6,17 @@
 import ThemeStateHandle from './ThemeStateHandle';
 
 export default class ThemeEventChannelHandle extends ThemeStateHandle {
+  eventPrefix: number;
   constructor(props: Object, widgetName: string, themeState: Object) {
     super(props, widgetName, themeState);
+    this.eventPrefix = 0;
   }
 
   dispatchEvent = (eventNames: string[], direction: 'f2c' | 'c2f'): Object => {
     if (!eventNames || !eventNames.length || !direction) {
       return {};
     }
-    const hasEvent = ThemeEventChannelHandle.getExistEvent(eventNames);
+    const hasEvent = this.getExistEvent(eventNames);
 
     switch (direction) {
       case 'f2c': {
@@ -46,7 +48,7 @@ export default class ThemeEventChannelHandle extends ThemeStateHandle {
     if (!eventNames || !eventNames.length) {
       return {};
     }
-    const hasEvent = ThemeEventChannelHandle.getExistEvent(eventNames);
+    const hasEvent = this.getExistEvent(eventNames);
     const parse = this.createParseEventName();
     return {
       provider: {
@@ -77,7 +79,7 @@ export default class ThemeEventChannelHandle extends ThemeStateHandle {
     };
   }
 
-  static getExistEvent(eventNames: string[]): Object {
+  getExistEvent(eventNames: string[]): Object {
     if (!eventNames || !eventNames.length) {
       return {};
     }

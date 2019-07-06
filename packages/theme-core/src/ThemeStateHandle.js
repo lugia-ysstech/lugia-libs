@@ -6,7 +6,6 @@
 export default class ThemeStateHandle {
   event: Object;
   eventId: number;
-  eventPrefix: number;
   hover: boolean;
   active: boolean;
   focus: boolean;
@@ -16,7 +15,6 @@ export default class ThemeStateHandle {
   constructor(props: Object, widgetName: string, themeState: Object) {
     this.event = {};
     this.eventId = 0;
-    this.eventPrefix = 0;
     this.props = props;
     this.themeState = themeState;
   }
