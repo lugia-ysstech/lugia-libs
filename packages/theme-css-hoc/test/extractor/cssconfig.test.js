@@ -2,7 +2,9 @@ import {
   filterRepeatCSSConfigSelectNames,
   filterRepeatCSSMetaSelectNames,
   filterRepeatSelectNames,
+  getStyledComponent,
 } from '../../src/extractor/cssconfig';
+import styled from 'styled-components';
 
 describe('theme-css-hoc/extractor/cssconfig', () => {
   it('filterRepeatSelectNames', () => {
@@ -77,5 +79,27 @@ describe('theme-css-hoc/extractor/cssconfig', () => {
       className: 'aa',
       hover: {},
     });
+  });
+
+  it('getStyledComponent', () => {
+    expect(
+      getStyledComponent({
+        tag: 'span',
+        className: 'hello',
+      }),
+    ).toBe(styled.span);
+    expect(
+      getStyledComponent({
+        tag: 'div',
+        className: 'hello',
+      }),
+    ).toBe(styled.div);
+
+    expect(() => {
+      getStyledComponent({
+        tag: 'lgx',
+        className: 'hello',
+      });
+    }).toThrowError('Not support tag: lgx');
   });
 });
