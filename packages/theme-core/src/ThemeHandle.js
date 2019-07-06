@@ -29,7 +29,10 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
   widgetName: string;
   svtarget: Object;
   displayName: string;
-
+  getAttributeFromObject: Function;
+  getConfig: Function;
+  deepMerge: Function;
+  selectThemePart: Function;
   constructor(
     props: Object,
     context: Object,
@@ -42,13 +45,17 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     this.props = props;
     this.context = context;
     this.widgetName = widgetName;
+    this.selectThemePart = selectThemePart;
+    this.deepMerge = deepMerge;
+    this.getConfig = getConfig;
+    this.getAttributeFromObject = getAttributeFromObject;
     this.displayName = packDisplayName(widgetName);
   }
 
   getTheme = () => {
     const { config = {}, svThemeConfigTree = {} } = this.context;
     const { viewClass, theme } = this.props;
-    const result = getConfig(svThemeConfigTree, config, theme);
+    const result = this.getConfig(svThemeConfigTree, config, theme);
     const viewClassResult = result[viewClass];
     const widgetNameResult = result[this.widgetName];
     const currConfig = { ...widgetNameResult, ...viewClassResult };
@@ -56,8 +63,8 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
   };
 
   getThemeByDisplayName = (displayName: string) => {
-    return getAttributeFromObject(
-      getAttributeFromObject(this.getTheme(), 'svThemeConfigTree', {}),
+    return this.getAttributeFromObject(
+      this.getAttributeFromObject(this.getTheme(), 'svThemeConfigTree', {}),
       displayName,
       {},
     );
@@ -70,7 +77,7 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
       themeConfig: this.getTheme(),
       ...this.getInternalThemeProps(),
     };
-    const { propsConfig } = this.props;
+    const { propsConfig = {} } = this.props;
     if (propsConfig) {
       result.propsConfig = propsConfig;
     }
@@ -102,6 +109,7 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     result.__partName = partName;
     return result;
   };
+
   createThemeHocProps = (viewClass: string, targetTheme: Object): Object => {
     if (!viewClass) {
       console.error('viewClass can not be empty!');
@@ -147,26 +155,23 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     }
     let themeConfig = this.getPartOfThemeConfig(childWidgetName);
     let themeState = this.getThemeState() || {};
-    let propsConfig = {};
+    let { propsConfig = {} } = this.props;
     if (opt) {
       const { themeConfig: mergetThemeConfig, props, state } = opt;
       if (mergetThemeConfig) {
-        themeConfig = deepMerge(themeConfig, mergetThemeConfig);
+        themeConfig = this.deepMerge(themeConfig, mergetThemeConfig);
       }
       if (props) {
-        propsConfig = deepMerge(propsConfig, props);
-      }
-      const { propsConfig: hocPropsConfig } = this.props;
-      if (hocPropsConfig) {
-        propsConfig = deepMerge(hocPropsConfig, propsConfig);
+        propsConfig = this.deepMerge(props, propsConfig);
       }
       if (state) {
-        themeState = deepMerge(themeState, state);
+        const { themeState: propsThemeState = {} } = this.props;
+        themeState = this.deepMerge(themeState, state, propsThemeState);
       }
       const { selector } = opt;
       if (selector) {
         const { index, count } = selector;
-        themeConfig = selectThemePart(themeConfig, index, count);
+        themeConfig = this.selectThemePart(themeConfig, index, count);
       }
     }
     return {
