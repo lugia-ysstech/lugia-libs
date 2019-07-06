@@ -56,7 +56,7 @@ export function filterSelector(obj: any): string[] {
     return key in obj;
   });
 
-  const nths = Object.keys(obj)
+  const nthKeys = Object.keys(obj)
     .filter(key => {
       return key.startsWith(Nth);
     })
@@ -64,7 +64,7 @@ export function filterSelector(obj: any): string[] {
       return NthExp.test(key);
     });
 
-  return [...result, ...nths];
+  return [...result, ...nthKeys];
 }
 
 export function getMatchSelector(
@@ -133,16 +133,17 @@ export function selectThemePart(
   }
   const result = { ...themePart };
 
-  function selectorIfExisitState(stateType: string) {
+  function selectorIfExistState(stateType: string) {
     if (stateType in themePart) {
       result[stateType] = selectThemeMeta(result[stateType], index, total);
     }
   }
 
-  selectorIfExisitState('normal');
-  selectorIfExisitState('hover');
-  selectorIfExisitState('disabled');
-  selectorIfExisitState('active');
+  selectorIfExistState('normal');
+  selectorIfExistState('hover');
+  selectorIfExistState('disabled');
+  selectorIfExistState('active');
+  selectorIfExistState('focus');
   result.__index = index;
   result.__count = total;
   return result;
@@ -152,19 +153,19 @@ export const CSSComponentDisplayName = 'lugia_css_hoc_c';
 export const CSSComponentContainerDisplayName = 'lugia_css_hoc_f';
 export const ThemeComponentPrefix = 'lugia_t_hoc_';
 
-export const addMouseEvent = createaddEventObject({
+export const addMouseEvent = createAddEventObject({
   onMouseDown: 'down',
   onMouseUp: 'up',
   onMouseEnter: 'enter',
   onMouseLeave: 'leave',
 });
-export const addFocusBlurEvent = createaddEventObject({
+export const addFocusBlurEvent = createAddEventObject({
   onFocus: 'focus',
   onBlur: 'blur',
 });
 
-export function createaddEventObject(optionNames: Object) {
-  return function(self: Object, opt?: Object = { after: {} }): Object {
+export function createAddEventObject(optionNames: Object) {
+  const result = function(self: Object, opt?: Object = { after: {} }): Object {
     const result = {};
 
     if (!self) {
@@ -204,6 +205,8 @@ export function createaddEventObject(optionNames: Object) {
 
     return result;
   };
+  result.__optionNames__ = optionNames;
+  return result;
 }
 
 export function injectThemeStateEvent(

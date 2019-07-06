@@ -19,93 +19,19 @@ import {
   selectThemeMeta,
 } from '../src';
 
+import * as utils from '../src/utils';
+
 describe('theme-core-utils', () => {
   it('getKeys', () => {
-    expect(getKeys({})).toEqual([]);
-    expect(getKeys({ a: '1', b: 'hell' })).toEqual(['a', 'b']);
+    expect(getKeys).toBe(utils.getKeys);
   });
 
   it('getObject', () => {
-    expect(getObject({}, 'a')).toBeUndefined();
-    expect(getObject({ a: 'hello' }, 'a')).toEqual('hello');
+    expect(getObject).toBe(utils.getObject);
   });
 
   it('getConfig', () => {
-    const result = {
-      a: {
-        normal: {
-          border: {
-            bottom: {
-              borderBottomColor: 'red',
-            },
-            top: {
-              borderBottomColor: 'red',
-            },
-          },
-        },
-      },
-      b: {
-        hover: {
-          background: {
-            backgroundColor: 'yellow',
-          },
-          border: {
-            bottom: {
-              borderBottomWidth: 5,
-            },
-          },
-        },
-      },
-      c: {
-        disabled: {
-          background: 'ylll',
-        },
-      },
-    };
-
-    expect(
-      getConfig(
-        {
-          a: {
-            normal: {
-              border: {
-                top: { borderBottomColor: 'red' },
-              },
-            },
-          },
-        },
-        {
-          a: {
-            normal: {
-              border: {
-                bottom: { borderBottomColor: 'red' },
-              },
-            },
-          },
-          b: {
-            hover: {
-              border: {
-                bottom: { borderBottomWidth: 5 },
-              },
-            },
-          },
-        },
-        {
-          b: {
-            hover: {
-              background: {
-                backgroundColor: 'yellow',
-              },
-            },
-          },
-          c: {
-            disabled: {
-              background: 'ylll',
-            },
-          },
-        },
-      ),
-    ).toEqual(result);
+    expect(getConfig).toBe(utils.getConfig);
   });
 
   it('computeThemeMeta not match selector', () => {
@@ -242,114 +168,10 @@ describe('theme-core-utils', () => {
   });
 
   it('filterSelector', () => {
-    expect(filterSelector(null)).toEqual([]);
-    expect(filterSelector(undefined)).toEqual([]);
-    expect(filterSelector({})).toEqual([]);
-
-    expect(
-      filterSelector({
-        first: 'hello',
-      }),
-    ).toEqual(['first']);
-    expect(
-      filterSelector({
-        last: 'hello',
-      }),
-    ).toEqual(['last']);
-    expect(
-      filterSelector({
-        odd: 'hello',
-      }),
-    ).toEqual(['odd']);
-    expect(
-      filterSelector({
-        even: 'hello',
-      }),
-    ).toEqual(['even']);
-
-    expect(
-      filterSelector({
-        first: 'hello',
-        last: 'hello',
-        odd: 'odd',
-        middle: 'hello',
-        even: 'hello',
-      }),
-    ).toEqual(['first', 'last', 'odd', 'even']);
-
-    expect(
-      filterSelector({
-        first: 'hello',
-        last: 'hello',
-        odd: 'odd',
-        middle: 'hello',
-        even: 'hello',
-        nth100: '',
-        nth50: '',
-      }),
-    ).toEqual(['first', 'last', 'odd', 'even', 'nth100', 'nth50']);
+    expect(filterSelector).toBe(utils.filterSelector);
   });
 
   it('getMatchSelector', () => {
-    expect(getMatchSelector(['last'], 0, 100)).toEqual([]);
-    expect(getMatchSelector(['first'], 0, 100)).toEqual(['first']);
-    expect(getMatchSelector(['first'], 1, 100)).toEqual([]);
-
-    expect(getMatchSelector(['last'], 0, 100)).toEqual([]);
-    expect(getMatchSelector(['last'], 99, 100)).toEqual(['last']);
-    expect(getMatchSelector(['odd', 'even'], 99, 100)).toEqual(['even']);
-    expect(getMatchSelector(['odd', 'even'], 88, 100)).toEqual(['odd']);
-    expect(getMatchSelector(['first', 'odd', 'even'], 0, 100)).toEqual([
-      'odd',
-      'first',
-    ]);
-    expect(getMatchSelector(['first', 'odd', 'even', 'last'], 99, 100)).toEqual(
-      ['even', 'last'],
-    );
-
-    expect(getMatchSelector(['first', 'odd', 'even', 'nth0'], 0, 100)).toEqual([
-      'odd',
-      'first',
-      'nth0',
-    ]);
-
-    expect(
-      getMatchSelector(['first', 'nth99', 'even', 'last', 'nth100'], 99, 100),
-    ).toEqual(['even', 'last', 'nth99']);
-    expect(
-      getMatchSelector(
-        ['first', 'nth99', 'even', 'odd', 'last', 'nth100', 'nth0'],
-        0,
-        1,
-      ),
-    ).toEqual(['odd', 'first', 'last', 'nth0']);
-    expect(
-      getMatchSelector(
-        ['first', 'nth99', 'even', 'odd', 'last', 'nth100', 'nth0'],
-        -1,
-        1,
-      ),
-    ).toEqual([]);
-    expect(
-      getMatchSelector(
-        ['first', 'nth99', 'even', 'odd', 'last', 'nth100', 'nth0'],
-        0,
-        -1,
-      ),
-    ).toEqual([]);
-    expect(
-      getMatchSelector(
-        ['first', 'nth99', 'even', 'odd', 'last', 'nth100', 'nth0'],
-        55,
-        5,
-      ),
-    ).toEqual([]);
-    expect(
-      getMatchSelector(
-        ['first', 'nth99', 'even', 'odd', 'last', 'nth100', 'nth0'],
-        5,
-        5,
-      ),
-    ).toEqual([]);
+    expect(getMatchSelector).toBe(utils.getMatchSelector);
   });
 });
