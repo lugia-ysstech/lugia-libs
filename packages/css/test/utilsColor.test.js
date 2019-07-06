@@ -5,6 +5,7 @@
  * @flow
  */
 import { color } from '../src/index';
+import { colorHex, colorRgb, hsb2rgb } from '../src/utilsColor';
 
 const { getColor } = color;
 describe('utilsColor', () => {
@@ -51,5 +52,20 @@ describe('utilsColor', () => {
     expect(getColor('Red').color).toBe('#ff0000');
     expect(getColor('pink').color).toBe('#ffc0cb');
     expect(getColor('PINK').color).toBe('#ffc0cb');
+  });
+  it('hsb2rgb', () => {
+    expect(hsb2rgb(349, 0.23, 1)).toEqual({ newR: 255, newG: 196, newB: 207 });
+  });
+  it('colorHex', () => {
+    expect(colorHex('#ff0000')).toBe('#ff0000');
+    expect(colorHex('#fff')).toBe('#ffffff');
+    expect(colorHex('rgb(255,255,255)')).toBe('#ffffff');
+    expect(colorHex('5151')).toBe('5151');
+  });
+
+  it('colorRgb', () => {
+    expect(colorRgb('#ffffff')).toEqual([255, 255, 255]);
+    expect(colorRgb('#fff')).toEqual([255, 255, 255]);
+    expect(colorRgb('red')).toEqual([255, 0, 0]);
   });
 });

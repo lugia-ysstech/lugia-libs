@@ -37,9 +37,9 @@ export function rem2em(rem: number, emMultipleForRem: number) {
 }
 
 export function getEmMultipleForRem(fontSize: any): number {
-  const defaulResult = 1;
+  const defaultResult = 1;
   if (!fontSize) {
-    return defaulResult;
+    return defaultResult;
   }
   if (typeof fontSize === 'string' && fontSize.indexOf('rem') !== -1) {
     const rem = rem2Number(fontSize);
@@ -51,7 +51,7 @@ export function getEmMultipleForRem(fontSize: any): number {
   if (!isNaN(fontNumber)) {
     return fontNumber / footerFontSize;
   }
-  return defaulResult;
+  return defaultResult;
 }
 
 export function px2emcss(emMultipleForRem: number) {

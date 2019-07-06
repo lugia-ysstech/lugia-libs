@@ -7,7 +7,7 @@
  * @flow
  * */
 const { colors } = require('./colorTable.js');
-const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+const hexColorRegExp = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
 const regWord = /^[a-zA-Z]*$/;
 
 function colorIsWorrd(sHex) {
@@ -21,7 +21,7 @@ function colorIsWorrd(sHex) {
   };
 }
 
-function colorRgb(sHex: string): Array<number> {
+export function colorRgb(sHex: string): Array<number> {
   let hexColor = sHex;
   const isWord = regWord.test(sHex);
   if (sHex && isWord) {
@@ -33,7 +33,7 @@ function colorRgb(sHex: string): Array<number> {
   }
   let sColor = hexColor && hexColor.toLowerCase();
   // 如果是16进制颜色
-  if (sColor && reg.test(sColor)) {
+  if (sColor && hexColorRegExp.test(sColor)) {
     if (sColor.length === 4) {
       let sColorNew = '#';
       for (let i = 1; i < 4; i += 1) {
@@ -77,7 +77,7 @@ function rgb2hsb(
   return [hsbH, hsbS, hsbB];
 }
 
-function hsb2rgb(h, s, v): Object {
+export function hsb2rgb(h: number, s: number, v: number): Object {
   let r = 0,
     g = 0,
     b = 0;
@@ -126,7 +126,7 @@ function hsb2rgb(h, s, v): Object {
   return { newR: r, newG: g, newB: b };
 }
 
-function colorHex(rgb): string {
+export function colorHex(rgb: string): string {
   // 如果是rgb颜色表示
   if (/^(rgb|RGB)/.test(rgb)) {
     const aColor = rgb.replace(/(?:\(|\)|rgb|RGB)*/g, '').split(',');
@@ -142,7 +142,7 @@ function colorHex(rgb): string {
       strHex = rgb;
     }
     return strHex;
-  } else if (reg.test(rgb)) {
+  } else if (hexColorRegExp.test(rgb)) {
     const aNum = rgb.replace(/#/, '').split('');
     if (aNum.length === 6) {
       return rgb;

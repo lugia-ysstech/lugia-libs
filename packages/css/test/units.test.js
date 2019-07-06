@@ -7,6 +7,7 @@
 import { style2css, units } from '../src';
 import {
   getEmMultipleForRem,
+  getFontSize,
   number2rem,
   px2remcss,
   rem2Number,
@@ -27,6 +28,11 @@ const {
 describe('units', () => {
   beforeEach(() => {});
 
+  it('getFontSize', () => {
+    const domNode: Object = null;
+    expect(getFontSize(domNode, 0)).toBe(0);
+    expect(getFontSize(domNode, 11)).toBe(11);
+  });
   it('px2rem', () => {
     expect(px2rem(5)).toBe(0.5);
     expect(px2rem(1)).toBe(0.1);
@@ -89,6 +95,8 @@ describe('units', () => {
   });
 
   it('getSizeByStyle', () => {
+    const obj: Object = null;
+    expect(getSizeByStyle(obj)).toEqual({ width: 0, height: 0 });
     expect(
       getSizeByStyle({
         width: '50px',
@@ -98,6 +106,8 @@ describe('units', () => {
   });
 
   it('size2Style', () => {
+    const obj: Object = null;
+    expect(size2Style(obj)).toEqual({});
     expect(size2Style({ width: 50, height: 100 })).toEqual({
       width: '50px',
       height: '100px',
@@ -106,12 +116,15 @@ describe('units', () => {
 
   it('getPointByStyle', () => {
     expect(getPointByStyle({ left: '5px', top: '11px' })).toEqual([5, 11]);
+    const obj: Object = null;
+    expect(getPointByStyle(obj)).toEqual([0, 0]);
   });
 
   it('getEmMultipleForRem', () => {
     expect(getEmMultipleForRem(undefined)).toEqual(1);
     expect(getEmMultipleForRem(null)).toEqual(1);
     expect(getEmMultipleForRem(3)).toEqual(0.3);
+    expect(getEmMultipleForRem('aaaa')).toEqual(1);
     expect(getEmMultipleForRem(25)).toEqual(2.5);
 
     expect(getEmMultipleForRem('100')).toEqual(10);
@@ -125,6 +138,15 @@ describe('units', () => {
   });
 
   it('point2Style', () => {
+    const obj: Object = null;
+    expect(point2Style(obj)).toEqual({});
     expect(point2Style([4, 3])).toEqual({ left: '4px', top: '3px' });
+  });
+
+  it('px2rem', () => {
+    expect(px2rem(50)).toBe(5);
+  });
+  it('px2remcss', () => {
+    expect(px2remcss(440)).toBe('44rem');
   });
 });
