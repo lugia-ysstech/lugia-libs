@@ -1,6 +1,10 @@
 module.exports = {
-  collectCoverageFrom: ['src/**/*.{js,jsx}', '!src/**/demo*.js', '!src/*.js'],
-  testMatch: ['<rootDir>/**/?(*.)(spec|test).js?(x)'],
+  collectCoverageFrom: [
+    'packages/**/src/**/*.{js,jsx}',
+    '!src/**/demo*.js',
+    '!src/*.js',
+  ],
+  testMatch: ['<rootDir>/packages/**/?(*.)(spec|test).js?(x)'],
   testEnvironment: 'node',
   testURL: 'http://localhost',
   transform: {
