@@ -12,11 +12,9 @@ export function getAttributeFromObject(
   attribute: string,
   defaultValue: any,
 ) {
-  const attributeValue =
-    object && object[attribute] !== undefined
-      ? object[attribute]
-      : defaultValue;
-  return attributeValue;
+  return object && object[attribute] !== undefined
+    ? object[attribute]
+    : defaultValue;
 }
 
 export function getKeyfromIndex(
@@ -25,7 +23,7 @@ export function getKeyfromIndex(
   expKey: string,
 ): string {
   let newKey = '';
-  data.map((v, i) => {
+  data.forEach((v, i) => {
     if (i === index) {
       newKey =
         v[expKey] !== null && v[expKey] !== undefined ? v[expKey] : '_key_' + i;
@@ -39,13 +37,7 @@ export function getIndexfromKey(
   keyName: string,
   keyValue: string,
 ): number {
-  let index = -99;
-  data.find((v, i) => {
-    if (v[keyName] === keyValue) {
-      index = i;
-    }
-  });
-  return index;
+  return data.findIndex(v => v[keyName] === keyValue);
 }
 
 export function deepMerge(...objects: Object[]): Object {

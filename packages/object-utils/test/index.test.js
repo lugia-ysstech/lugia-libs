@@ -28,6 +28,7 @@ describe('Object', () => {
     expect(getAttributeValue(null, [])).toBeUndefined();
     expect(getAttributeValue({}, [])).toBeUndefined();
     expect(getAttributeValue({ a: { b: 1 } }, ['a'])).toEqual({ b: 1 });
+    expect(getAttributeValue({ a: { b: 1 } }, ['d'])).toBeUndefined();
     expect(getAttributeValue({ a: { b: 1 } }, ['a', 'b'])).toEqual(1);
   });
 
@@ -39,11 +40,10 @@ describe('Object', () => {
         },
       },
     });
-
-    const objA = { a: { b: { c: 1 } } };
-    const objB = { a: { b: { d: 100 } } };
+    expect(packObject([], 1)).toEqual({});
+    const obj: Object = null;
+    expect(packObject(obj, 1)).toEqual({});
   });
-
   it('getAttributeFromObject has', () => {
     expect(getAttributeFromObject(Object, 'top', 0)).toEqual(1);
     expect(getAttributeFromObject(Object, 'left', 0)).toEqual(2);
@@ -158,6 +158,8 @@ describe('Object', () => {
         ),
       ),
     ).toEqual(JSON.stringify(result));
+
+    expect(deepMergeAnB(null, null, {})).toEqual({});
   });
   it('isEmptyObject', () => {
     expect(isEmptyObject(null)).toBeTruthy();
