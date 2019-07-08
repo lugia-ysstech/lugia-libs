@@ -1,9 +1,9 @@
 {
   "name": "@lugia/lugia-theme-example",
-  "version": "1.0.48",
+  "version": "1.0.49",
   "dependencies": {
     "@lugia/theme-config": "^1.0.22",
-    "@lugia/theme-css-hoc": "^1.0.42",
+    "@lugia/theme-css-hoc": "^1.0.43",
     "@lugia/theme-hoc": "^1.0.30",
     "@lugia/theme-hoc-devtools": "^1.0.3",
     "@lugia/theme-utils": "^1.0.3",
