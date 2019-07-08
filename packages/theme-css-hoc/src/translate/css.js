@@ -14,10 +14,9 @@ import {
   packObject,
 } from '@lugia/object-utils';
 import { units } from '@lugia/css';
-import { getBoxShadowCSS } from '@lugia/theme-utils';
+import { getBoxShadowCSS, isEmptyObject } from '@lugia/theme-utils';
 
 import { Active, Disabled, Focus, Hover } from '../consts';
-import { isEmptyObject } from '@lugia/object-utils/src';
 
 const { px2remcss } = units;
 
