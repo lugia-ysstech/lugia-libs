@@ -113,6 +113,9 @@ const ThemeProvider = (
       setThemeState(propsThemeState);
     }
 
+    if (props.innerRef) {
+      props.innerRef.current = handle;
+    }
     return (
       <Target
         dispatchEvent={handle.dispatchEvent}

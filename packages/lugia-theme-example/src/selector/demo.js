@@ -38,6 +38,11 @@ const config = {
         },
         border: getBorder({ color: 'red', width: 5, style: 'solid' }),
       },
+      hover: {
+        background: {
+          color: '#ad74ff',
+        },
+      },
       borderRadius: getBorderRadius(50),
     },
     Block: {
@@ -136,7 +141,7 @@ export default () => {
   return [
     installState ? (
       <Theme config={theme}>
-        <Selector ref={target} disabled={disabled} />
+        <Selector innerRef={target} disabled={disabled} />
       </Theme>
     ) : null,
     <button onClick={() => setDisabled(!disabled)}>
