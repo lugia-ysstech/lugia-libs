@@ -12,9 +12,10 @@ import {
   getAttributeFromObject,
   getAttributeValue,
   packObject,
+  isEmptyObject,
 } from '@lugia/object-utils';
 import { units } from '@lugia/css';
-import { getBoxShadowCSS, isEmptyObject } from '@lugia/theme-utils';
+import { getBoxShadowCSS } from '@lugia/theme-utils';
 
 import { Active, Disabled, Focus, Hover } from '../consts';
 
