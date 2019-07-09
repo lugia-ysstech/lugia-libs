@@ -53,7 +53,12 @@ function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
 
   const { innerRef } = props;
   if (innerRef) {
-    innerRef.current = handle.current;
+    if (typeof innerRef === 'object') {
+      innerRef.current = handle.current;
+    }
+    if (typeof innerRef === 'function') {
+      innerRef(handle.current);
+    }
   }
 
   let designHandle = useRef(null);
