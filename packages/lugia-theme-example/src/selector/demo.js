@@ -114,7 +114,7 @@ function useCount() {
   const [disabled, setDisabled] = useState(false);
   return { disabled, setDisabled };
 }
-
+let now = true;
 function useInstall() {
   const [installState, setInstallState] = useState(true);
   const [theme, changeTheme] = useState(config);
@@ -124,8 +124,8 @@ function useInstall() {
     install: () => setInstallState(true),
     unInstall: () => setInstallState(false),
     changeTheme: () => {
-      console.info('变更主题', ButtonTheme);
-      changeTheme(ButtonTheme);
+      changeTheme(now ? ButtonTheme : config);
+      now = !now;
     },
   };
 }
