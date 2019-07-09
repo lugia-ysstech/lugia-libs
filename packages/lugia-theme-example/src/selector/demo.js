@@ -133,15 +133,23 @@ function useInstall() {
 export default () => {
   console.info('render one');
   const target = useRef();
+  const design = useRef();
   const { disabled, setDisabled } = useCount();
   const { installState, install, unInstall, changeTheme, theme } = useInstall();
   useEffect(() => {
     window.lgx = target.current;
+    window.design = design.current;
   });
   return [
     installState ? (
       <Theme config={theme}>
-        <Selector innerRef={target} disabled={disabled} />
+        <Selector
+          innerRefForDesign={design}
+          innerRef={current => {
+            target.current = current;
+          }}
+          disabled={disabled}
+        />
       </Theme>
     ) : null,
     <button onClick={() => setDisabled(!disabled)}>
