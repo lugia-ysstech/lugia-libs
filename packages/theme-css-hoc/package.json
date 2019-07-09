@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-css-hoc",
-  "version": "1.0.44",
+  "version": "1.0.45",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "@lugia/css": "^1.0.16",
     "@lugia/object-utils": "^1.0.10",
     "@lugia/ramada": "^1.0.1",
-    "@lugia/theme-core": "^1.0.22",
+    "@lugia/theme-core": "^1.0.23",
     "@lugia/theme-utils": "^1.0.3",
     "decamelize": "^3.2.0"
   },
