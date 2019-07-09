@@ -123,6 +123,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   const getStyleInCSSConfigDefaultTheme = createGetDefaultThemeInCSSConfig(
     cssConfig,
   );
+  const getRenderTargetByGetCSSInThemeMeta = createGetRenderTargetByGetCSSInThemeMeta();
   const getDefaultStyle = getStyleInCSSConfigDefaultTheme
     ? getStyleInCSSConfigDefaultTheme
     : undefined;
@@ -147,6 +148,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     ${css}
     ${createGetCSSByStyleTranslate(getDefaultStyle)}
     ${getCSSInCSSConfig}
+    ${getRenderTargetByGetCSSInThemeMeta}
   `;
     result.displayName = CSSComponentDisplayName;
     return result;
@@ -224,9 +226,8 @@ export default function CSSComponent(cssConfig: CSSConfig) {
     );
 
     const { themeProps } = targetProps;
-    const RenderTarget = getRenderTargetByGetCSSInThemeMeta(Target, themeProps);
     return (
-      <RenderTarget
+      <Target
         {...props}
         {...injectThemeStateEvent(option, handle)}
         themeProps={themeProps}
@@ -244,32 +245,26 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   return Result;
 }
 
-function getRenderTargetByGetCSSInThemeMeta(
-  Target: Function,
-  themeProps: Object,
-) {
-  const { themeConfig = {} } = themeProps;
-  const css = [];
-  const { themeState } = themeProps;
+function createGetRenderTargetByGetCSSInThemeMeta() {
+  return (cssProps: CSSProps) => {
+    const { themeProps } = cssProps;
 
-  getStateTypes(themeState).map(stateType => {
-    const { [stateType]: themeMeta } = themeConfig;
-    if (!themeMeta) {
-      return;
-    }
-    const { getCSS } = themeMeta;
-    if (getCSS) {
-      css.push(getCSS(themeMeta, themeProps));
-    }
-  });
+    const { themeConfig = {} } = themeProps;
+    const css = [];
+    const { themeState } = themeProps;
 
-  let RenderTarget = Target;
-  if (css.length > 0) {
-    RenderTarget = styled(Target)`
-      ${css}
-    `;
-  }
-  return RenderTarget;
+    getStateTypes(themeState).map(stateType => {
+      const { [stateType]: themeMeta } = themeConfig;
+      if (!themeMeta) {
+        return;
+      }
+      const { getCSS } = themeMeta;
+      if (getCSS) {
+        css.push(getCSS(themeMeta, themeProps));
+      }
+    });
+    return css;
+  };
 }
 
 function packClassName(Target: Function, className: string) {
