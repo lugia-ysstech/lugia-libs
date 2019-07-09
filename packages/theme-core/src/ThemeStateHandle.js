@@ -19,6 +19,10 @@ export default class ThemeStateHandle {
     this.themeState = themeState;
   }
 
+  setProps(props: Object) {
+    this.props = props;
+  }
+
   getEventId() {
     return this.eventId++;
   }

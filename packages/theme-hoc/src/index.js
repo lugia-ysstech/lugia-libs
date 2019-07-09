@@ -30,7 +30,7 @@ function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
   const [themeState, setThemeState] = useState({});
   const svTarget = useRef({});
 
-  let handle = useRef(null);
+  let handle: Object = useRef(null);
 
   if (!handle.current) {
     const initHandleObject: Object = new ThemeHandle(
@@ -48,6 +48,9 @@ function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
     }
     handle.current = initHandleObject;
   }
+  handle.current.setProps(props);
+  handle.current.setContext(themeConfig);
+
   const { innerRef } = props;
   if (innerRef) {
     innerRef.current = handle.current;

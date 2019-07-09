@@ -50,7 +50,7 @@ function useHandle(
   widgetName: string,
   hasThemeStateEvent: boolean,
 ) {
-  let handle = useRef(null);
+  let handle: Object = useRef(null);
 
   const [themeState, setThemeState] = useState({
     hover: false,
@@ -82,8 +82,12 @@ function useHandle(
   if (hasThemeStateEvent && !handle.current) {
     handle.current = new ThemeStateHandle(props, widgetName, themeState);
   }
+  if (handle.current) {
+    handle.current.setProps(props);
+  }
+
   return {
-    handle: handle.current,
+    handle: handle.current || {},
     themeState: [themeState, setThemeState],
   };
 }

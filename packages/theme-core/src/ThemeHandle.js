@@ -24,7 +24,6 @@ export function packDisplayName(widgetName: string): string {
 }
 
 export default class ThemeHandle extends ThemeEventChannelHandle {
-  props: Object;
   context: Object;
   widgetName: string;
   svtarget: Object;
@@ -42,7 +41,6 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
   ) {
     super(props, widgetName, themeState);
     this.svtarget = svtarget;
-    this.props = props;
     this.context = context;
     this.widgetName = widgetName;
     this.selectThemePart = selectThemePart;
@@ -50,6 +48,10 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     this.getConfig = getConfig;
     this.getAttributeFromObject = getAttributeFromObject;
     this.displayName = packDisplayName(widgetName);
+  }
+
+  setContext(context: Object) {
+    this.context = context;
   }
 
   getTheme = () => {
