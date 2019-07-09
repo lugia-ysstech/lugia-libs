@@ -30,29 +30,32 @@ function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
   const [themeState, setThemeState] = useState({});
   const svTarget = useRef({});
 
-  const initHandleObject: Object = new ThemeHandle(
-    props,
-    themeConfig,
-    widgetName,
-    themeState,
-    svTarget,
-  );
-  if (hasThemeStateEvent(opt)) {
-    initHandleObject.hover = false;
-    initHandleObject.active = false;
-    initHandleObject.focus = false;
+  let handle = useRef(null);
+
+  if (!handle.current) {
+    const initHandleObject: Object = new ThemeHandle(
+      props,
+      themeConfig,
+      widgetName,
+      themeState,
+      svTarget,
+    );
+
+    if (hasThemeStateEvent(opt)) {
+      initHandleObject.hover = false;
+      initHandleObject.active = false;
+      initHandleObject.focus = false;
+    }
+    handle.current = initHandleObject;
   }
   const { innerRef } = props;
-
-  let handle = useRef({});
-  handle.current = initHandleObject;
   if (innerRef) {
     innerRef.current = handle.current;
   }
 
-  let designHandle = useRef({});
+  let designHandle = useRef(null);
   const { innerRefForDesign } = props;
-  if (innerRefForDesign) {
+  if (innerRefForDesign && !designHandle.current) {
     designHandle.current = new ThemeDesignHandle(id);
     innerRefForDesign.current = designHandle.current;
   }

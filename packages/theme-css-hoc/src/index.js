@@ -14,7 +14,7 @@ import {
 } from '@lugia/theme-core';
 import React, { useEffect, useRef, useState } from 'react';
 import { deepMerge, isEmptyObject } from '@lugia/object-utils';
-import styled, { css, keyframes } from 'styled-components';
+import { css, keyframes } from 'styled-components';
 import {
   filterRepeatCSSConfigSelectNames,
   getStyledComponent,
@@ -50,7 +50,7 @@ function useHandle(
   widgetName: string,
   hasThemeStateEvent: boolean,
 ) {
-  let handle = useRef({});
+  let handle = useRef(null);
 
   const [themeState, setThemeState] = useState({
     hover: false,
@@ -79,7 +79,7 @@ function useHandle(
       setThemeState(finalState);
     }
   }
-  if (hasThemeStateEvent) {
+  if (hasThemeStateEvent && !handle.current) {
     handle.current = new ThemeStateHandle(props, widgetName, themeState);
   }
   return {
