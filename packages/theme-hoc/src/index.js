@@ -74,7 +74,7 @@ const ThemeProvider = (
   }
 
   const ThemeWrapWidgetForward = (props: Object, ref: Object) => {
-    const { handle, svTarget, themeState, version } = useInitHandle(
+    const { handle, svTarget, themeState } = useInitHandle(
       props,
       widgetName,
       opt,
@@ -123,7 +123,6 @@ const ThemeProvider = (
         getTheme={handle.getTheme}
         getWidgetThemeName={() => widgetName}
         getThemeByDisplayName={handle.getThemeByDisplayName}
-        svThemVersion={version}
         ref={svTarget}
       />
     );
