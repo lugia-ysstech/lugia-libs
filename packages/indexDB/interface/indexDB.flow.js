@@ -9,7 +9,7 @@ declare module '@lugia/indexDB' {
     del(tableName: string, id: string): Promise<boolean>;
 
     clean(): void;
-
+    update(tableName: string, target: Object): Promise<string>;
     isSameDB(target: Object): boolean;
   }
 
@@ -32,7 +32,7 @@ declare module '@lugia/indexDB' {
     del(tableName: string, id: string): Promise<boolean>;
 
     clean(): void;
-
+    update(tableName: string, target: Object): Promise<string>;
     isSameDB(target: Object): boolean;
   }
 }
