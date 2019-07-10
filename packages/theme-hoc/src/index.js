@@ -51,16 +51,6 @@ function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
   handle.current.setProps(props);
   handle.current.setContext(themeConfig);
 
-  const { innerRef } = props;
-  if (innerRef) {
-    if (typeof innerRef === 'object') {
-      innerRef.current = handle.current;
-    }
-    if (typeof innerRef === 'function') {
-      innerRef(handle.current);
-    }
-  }
-
   let designHandle = useRef(null);
   const { innerRefForDesign } = props;
   if (innerRefForDesign && !designHandle.current) {
@@ -88,7 +78,7 @@ const ThemeProvider = (
     console.warn('CSSComponent不推荐直接包括ThemeHoc');
   }
 
-  const ThemeWrapWidget = (props: Object) => {
+  const ThemeWrapWidgetForward = (props: Object, ref: Object) => {
     const {
       handle,
       svTarget,
@@ -97,6 +87,14 @@ const ThemeProvider = (
       version,
       themeConfig,
     } = useInitHandle(props, widgetName, opt);
+    if (ref) {
+      if (typeof ref === 'object') {
+        ref.current = handle.current;
+      }
+      if (typeof ref === 'function') {
+        ref(handle);
+      }
+    }
     const { current: oldThemeConfig } = useRef({});
     useEffect(() => {
       const mouseupHandler = () => {
@@ -147,6 +145,7 @@ const ThemeProvider = (
       />
     );
   };
+  const ThemeWrapWidget: Object = React.forwardRef(ThemeWrapWidgetForward);
   ThemeWrapWidget.__OrginalWidget__ = Target;
   ThemeWrapWidget.displayName = packDisplayName(widgetName);
   return ThemeWrapWidget;

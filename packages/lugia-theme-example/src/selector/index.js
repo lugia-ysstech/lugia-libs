@@ -5,13 +5,19 @@
  * @flow
  */
 import React from 'react';
-import CSSComponent from '@lugia/theme-css-hoc';
+import CSSComponent, { StaticComponent, css } from '@lugia/theme-css-hoc';
 import { getBorder } from '@lugia/theme-utils';
 import ThemeHoc, { addMouseEvent } from '@lugia/theme-hoc';
 
 const BaseButton = CSSComponent({
   tag: 'button',
   className: 'button',
+});
+const StaticButton = StaticComponent({
+  className: 'StaticComponent',
+  css: css`
+    background: red;
+  `,
 });
 const Button = ThemeHoc(
   CSSComponent({
@@ -125,6 +131,9 @@ export default ThemeHoc(
           </Button>
           ,
           <Button
+            ref={cmp => {
+              console.info('ref', cmp);
+            }}
             disabled
             lugiaConsumers={[server1.consumer, server2.consumer]}
             {...this.props.getPartOfThemeHocProps('Button')}
@@ -133,12 +142,16 @@ export default ThemeHoc(
           </Button>
           ,
           <BaseButton
+            ref={cmp => {
+              console.info('ref', cmp);
+            }}
             themeProps={this.props.getPartOfThemeProps('Block', {
               state: { active: true },
             })}
           >
             aaa
           </BaseButton>
+          <StaticButton>StaticButton</StaticButton>
         </div>
       );
     }

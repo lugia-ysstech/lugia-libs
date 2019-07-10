@@ -45,7 +45,7 @@ function getClassName(cssConfigClassName: string, props: Object): string {
 
 const CSSComponent2CSSConfig = new WeakMap();
 
-function useHandle(
+function useInitHandle(
   props: Object,
   widgetName: string,
   hasThemeStateEvent: boolean,
@@ -162,11 +162,12 @@ export default function CSSComponent(cssConfig: CSSConfig) {
   const hasStaticHover = !isEmptyObject(cssConfig.hover);
   const hasStaticFocus = !isEmptyObject(cssConfig.focus);
   const hasStaticActive = !isEmptyObject(cssConfig.active);
-  const Result = (props: Object) => {
+
+  const ResultForward = (props: Object, ref: any) => {
     const {
       handle,
       themeState: [themeState, setThemeState],
-    } = useHandle(props, className, isHasThemeStateEvent);
+    } = useInitHandle(props, className, isHasThemeStateEvent);
 
     const targetProps = deepMerge(props, { themeProps: { themeState } });
 
@@ -240,9 +241,11 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         ref={props.innerRef}
         __cssName={className}
         className={getClassName(className, props)}
+        ref={ref}
       />
     );
   };
+  const Result: Object = React.forwardRef(ResultForward);
 
   CSSComponent2CSSConfig.set(Result, cssConfig);
   Result.displayName = CSSComponentContainerDisplayName;
@@ -272,9 +275,9 @@ function createGetRenderTargetByGetCSSInThemeMeta() {
 }
 
 function packClassName(Target: Function, className: string) {
-  return (props: any) => (
-    <Target {...props} className={getClassName(className, props)} />
-  );
+  return React.forwardRef((props: any, ref: any) => (
+    <Target {...props} className={getClassName(className, props)} ref={ref} />
+  ));
 }
 
 export function StaticComponent(cssConfig: CSSConfig): Function {
