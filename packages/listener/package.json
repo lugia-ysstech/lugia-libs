@@ -1,6 +1,6 @@
 {
   "name": "@lugia/listener",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -17,9 +17,9 @@
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {
-    "rxjs": "^6.3.3",
     "@babel/runtime": "^7.4.5",
-    "events": "^3.0.0"
+    "events": "^3.0.0",
+    "rxjs": "^6.3.3"
   },
   "files": [
     "lib",
