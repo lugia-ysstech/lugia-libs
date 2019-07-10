@@ -4,14 +4,21 @@
  *
  * @flow
  */
-import type { IndexDBOption, Store } from '@lugia/indexDB';
+import type {
+  IndexDBIndexOption,
+  IndexDBIndexOptionItem,
+  IndexDBOption,
+  Store,
+} from '@lugia/indexDB';
 
 import Unique, { now } from '@lugia/unique';
 import Listener from '@lugia/listener';
 
+type Field2Index = { [field: string]: IDBIndex };
 export default class IndexDB extends Listener<any> implements Store {
   db: Object;
   tableName2Unique: { [tableName: string]: Unique };
+  indexOption: IndexDBIndexOption;
 
   constructor(indexedDB: Object, option: IndexDBOption) {
     super();
@@ -31,6 +38,8 @@ export default class IndexDB extends Listener<any> implements Store {
     }
 
     this.tableName2Unique = {};
+    const { indexOption = {} } = option;
+    this.indexOption = indexOption;
     if (!Array.isArray(tableNames) || tableNames.length === 0) {
       console.warn('为存在要操作的表!');
       return;
@@ -97,9 +106,26 @@ export default class IndexDB extends Listener<any> implements Store {
     }
   }
 
+  tableName2Field2Index: { [tableName: string]: Field2Index };
+
   createObjectStore(tableName: string) {
     const db = this.getDb();
-    const req = db.createObjectStore(tableName, { keyPath: 'id' });
+    const req = db.createObjectStore(tableName, {
+      keyPath: 'id',
+    });
+    const createIndexOption = this.indexOption[tableName];
+
+    if (createIndexOption && Array.isArray(createIndexOption)) {
+      createIndexOption.forEach((item: IndexDBIndexOptionItem) => {
+        const { field, option = {} } = item;
+        if (!field) {
+          return;
+        }
+        let field2Index = this.getTableName2Field2Index(tableName);
+        field2Index[field] = req.createIndex(tableName, field, option);
+      });
+    }
+
     req.onsuccess = () => {
       console.info(`创建表${tableName}成功`);
       this.emit(tableName, { db });
@@ -108,6 +134,19 @@ export default class IndexDB extends Listener<any> implements Store {
     req.onerror = () => {
       console.info(`创建表${tableName}失败`);
     };
+  }
+
+  getTableName2Field2Index(tableName: string): Field2Index {
+    let field2Index = this.tableName2Field2Index[tableName];
+    if (!field2Index) {
+      field2Index = this.tableName2Field2Index[tableName] = {};
+    }
+    return field2Index;
+  }
+
+  getIndex(tableName: string, field: string): ?IDBIndex {
+    const field2Index = this.getTableName2Field2Index(tableName);
+    return field2Index[field];
   }
 
   updateDb(event: Object) {
