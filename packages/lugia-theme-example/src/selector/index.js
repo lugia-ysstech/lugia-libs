@@ -132,7 +132,7 @@ export default ThemeHoc(
           ,
           <Button
             ref={cmp => {
-              console.info('ref', cmp);
+              console.info('theme ref', cmp);
             }}
             disabled
             lugiaConsumers={[server1.consumer, server2.consumer]}
@@ -143,7 +143,7 @@ export default ThemeHoc(
           ,
           <BaseButton
             ref={cmp => {
-              console.info('ref', cmp);
+              console.info('css ref', cmp);
             }}
             themeProps={this.props.getPartOfThemeProps('Block', {
               state: { active: true },
@@ -151,7 +151,13 @@ export default ThemeHoc(
           >
             aaa
           </BaseButton>
-          <StaticButton>StaticButton</StaticButton>
+          <StaticButton
+            ref={cmp => {
+              console.info('static css ref', cmp);
+            }}
+          >
+            StaticButton
+          </StaticButton>
         </div>
       );
     }
