@@ -26,7 +26,6 @@ function uuid() {
 function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
   const themeConfig = useContext(ThemeContext);
   const [id] = useState(uuid());
-  const [version, setVersion] = useState(0);
   const [themeState, setThemeState] = useState({});
   const svTarget = useRef({});
 
@@ -58,10 +57,6 @@ function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
     innerRefForDesign.current = designHandle.current;
   }
   return {
-    updateVersion() {
-      setVersion(version);
-    },
-    version,
     themeConfig,
     themeState: [themeState, setThemeState],
     handle: handle.current,
@@ -79,14 +74,11 @@ const ThemeProvider = (
   }
 
   const ThemeWrapWidgetForward = (props: Object, ref: Object) => {
-    const {
-      handle,
-      svTarget,
-      updateVersion,
-      themeState,
-      version,
-      themeConfig,
-    } = useInitHandle(props, widgetName, opt);
+    const { handle, svTarget, themeState, version } = useInitHandle(
+      props,
+      widgetName,
+      opt,
+    );
     if (ref) {
       if (typeof ref === 'object') {
         ref.current = handle.current;
@@ -95,7 +87,6 @@ const ThemeProvider = (
         ref(handle);
       }
     }
-    const { current: oldThemeConfig } = useRef({});
     useEffect(() => {
       const mouseupHandler = () => {
         if (handle.active) {
@@ -107,14 +98,6 @@ const ThemeProvider = (
         document.removeEventListener('mouseup', mouseupHandler);
       };
     });
-    if (
-      oldThemeConfig.config !== themeConfig.config ||
-      oldThemeConfig.svThemeConfigTree !== themeConfig.svThemeConfigTree
-    ) {
-      oldThemeConfig.config = themeConfig.config;
-      oldThemeConfig.svThemeConfigTree = themeConfig.svThemeConfigTree;
-      updateVersion();
-    }
 
     if ('themeState' in props) {
       const [, setThemeState] = themeState;
