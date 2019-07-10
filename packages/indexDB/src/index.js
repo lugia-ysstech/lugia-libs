@@ -19,7 +19,8 @@ export default class IndexDB extends Listener<any> implements Store {
   db: Object;
   tableName2Unique: { [tableName: string]: Unique };
   indexOption: IndexDBIndexOption;
-
+  version: number;
+  dataBaseName: string;
   constructor(indexedDB: Object, option: IndexDBOption) {
     super();
     if (!indexedDB) {
@@ -52,9 +53,11 @@ export default class IndexDB extends Listener<any> implements Store {
 
     const { version = 1 } = option;
     const request = indexedDB.open(dataBaseName, version);
+    this.dataBaseName = dataBaseName;
 
+    this.version = version;
     request.onerror = () => {
-      console.log('打开数据库报错');
+      console.error(`打开数据库报错 [${dataBaseName}@${version}]`);
     };
 
     request.onsuccess = event => {
@@ -98,10 +101,10 @@ export default class IndexDB extends Listener<any> implements Store {
       const req = transaction.objectStore(tableName).clear();
 
       req.onsuccess = () => {
-        console.info(`清空${tableName}表成功`);
+        console.log(`清空${tableName}表成功`);
       };
       req.onerror = () => {
-        console.info(`清空${tableName}表失败`);
+        console.error(`清空${tableName}表失败`);
       };
     }
   }
@@ -127,12 +130,12 @@ export default class IndexDB extends Listener<any> implements Store {
     }
 
     req.onsuccess = () => {
-      console.info(`创建表${tableName}成功`);
+      console.log(`创建表${tableName}成功`);
       this.emit(tableName, { db });
     };
 
     req.onerror = () => {
-      console.info(`创建表${tableName}失败`);
+      console.error(`创建表${tableName}失败`);
     };
   }
 
@@ -150,7 +153,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   updateDb(event: Object) {
-    console.info('打开数据库成功');
+    console.log(`打开数据库成功 [${this.dataBaseName}@${this.version}]`);
     this.db = event.target.result;
     this.emit('connected', { db: this.db });
   }
@@ -175,11 +178,13 @@ export default class IndexDB extends Listener<any> implements Store {
     return new Promise(res => {
       request.onsuccess = event => {
         res(id);
-        console.log('新增记录成功，id = ', event.target.result);
+        console.log(
+          `${tableName} ${target} 新增记录成功，id = ${event.target.result}`,
+        );
       };
 
       request.onerror = function() {
-        console.log('新增记录失败');
+        console.error(`${tableName} ${target} 新增记录失败`);
         res('');
       };
     });
@@ -201,10 +206,12 @@ export default class IndexDB extends Listener<any> implements Store {
     return new Promise(res => {
       request.onsuccess = event => {
         res(id);
-        console.log('更新记录成功，id = ', event.target.result);
+        console.log(
+          `${tableName} ${target} 更新记录成功，id = ${event.target.result}`,
+        );
       };
       request.onerror = function() {
-        console.log('更新记录失败');
+        console.error(`${tableName} ${target} 更新记录失败`);
         res('');
       };
     });
@@ -232,12 +239,12 @@ export default class IndexDB extends Listener<any> implements Store {
 
     return new Promise(res => {
       request.onsuccess = event => {
-        console.log('数据获取成功');
+        console.log(`${tableName} ${id} 数据获取成功`);
         res(event.target.result);
       };
 
       request.onerror = function() {
-        console.log('数据获取失败');
+        console.error(`${tableName} ${id} 数据获取失败`);
         res(undefined);
       };
     });
@@ -258,12 +265,12 @@ export default class IndexDB extends Listener<any> implements Store {
 
     return new Promise(res => {
       request.onsuccess = () => {
-        console.log('数据删除成功');
+        console.log(`${tableName} ${id} 数据删除成功`);
         res(true);
       };
 
       request.onerror = function() {
-        console.log('数据删除失败');
+        console.error(`${tableName} ${id} 数据删除失败`);
         res(false);
       };
     });
