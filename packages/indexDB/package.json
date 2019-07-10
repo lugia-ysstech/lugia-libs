@@ -1,6 +1,6 @@
 {
   "name": "@lugia/indexDB",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -18,8 +18,8 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/listener": "^1.0.1",
-    "@lugia/unique": "^1.0.2"
+    "@lugia/listener": "^1.0.2",
+    "@lugia/unique": "^1.0.3"
   },
   "files": [
     "lib",
