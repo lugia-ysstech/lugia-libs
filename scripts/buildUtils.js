@@ -18,7 +18,7 @@ const nodeBabelConfig = {
       require.resolve('@babel/preset-env'),
       {
         targets: {
-          node: 8,
+          browsers: ['last 2 versions', 'ie 10'],
         },
       },
     ],
