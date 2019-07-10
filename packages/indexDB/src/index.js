@@ -36,8 +36,9 @@ export default class IndexDB extends Listener<any> implements Store {
       return;
     }
 
+    const { generateId = now } = option;
     tableNames.forEach((tableName: string) => {
-      this.tableName2Unique[tableName] = new Unique(0, tableName, now);
+      this.tableName2Unique[tableName] = new Unique(0, tableName, generateId);
     });
 
     const { version = 1 } = option;

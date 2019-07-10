@@ -18,6 +18,7 @@ declare module '@lugia/indexDB' {
     tableNames: string[], // 要操作的表名集合
     version?: number, // 操作的数据库版本 默认版本为1
     resetDataAfterConnect?: boolean, // 是否在每次连接后清空所有表的数据
+    generateId?: Function,
   };
 
   declare export default class IndexDB implements Store {
