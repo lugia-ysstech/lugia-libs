@@ -6,7 +6,7 @@
  */
 import type { IndexDBOption, Store } from '@lugia/indexDB';
 
-import Unique, { now } from '@lugia/unqiue';
+import Unique, { now } from '@lugia/unique';
 import Listener from '@lugia/listener';
 
 export default class IndexDB extends Listener<any> implements Store {

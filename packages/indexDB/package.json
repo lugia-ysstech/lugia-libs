@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "@lugia/listener": "^1.0.1",
-    "@lugia/unqiue": "^1.0.1"
+    "@lugia/unique": "^1.0.1"
   },
   "files": [
     "lib",

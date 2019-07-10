@@ -1,5 +1,5 @@
 {
-  "name": "@lugia/unqiue",
+  "name": "@lugia/unique",
   "version": "1.0.1",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
