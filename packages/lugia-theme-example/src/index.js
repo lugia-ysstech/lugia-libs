@@ -1,7 +1,7 @@
 import '@lugia/theme-hoc-devtools';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './selector/demo';
+import App from './indexDB/index';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));

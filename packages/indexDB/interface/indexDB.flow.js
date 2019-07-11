@@ -1,8 +1,16 @@
 declare module '@lugia/indexDB' {
-  declare export interface Store {
-    save(tableName: string, target: Object): Promise<string>;
-
+  declare export interface QueryInstance {
     get(tableName: string, id: string): Promise<Object>;
+
+    count(tableName: string): Promise<number>;
+
+    getAllKeys(tableName: string): Promise<string[]>;
+
+    getAll(tableName: string): Promise<Object[]>;
+  }
+
+  declare export interface Store extends QueryInstance {
+    save(tableName: string, target: Object): Promise<string>;
 
     getAndDel(tableName: string, id: string): Promise<Object>;
 
@@ -10,9 +18,11 @@ declare module '@lugia/indexDB' {
 
     clean(): void;
 
-    update(tableName: string, target: Object): Promise<string>;
-
     isSameDB(target: Object): boolean;
+
+    update(tableName: string, id: string, target: Object): Promise<string>;
+
+    getIndex(tableName: string, field: string): Promise<QueryInstance>;
   }
 
   declare export type IndexOption = {
@@ -44,14 +54,19 @@ declare module '@lugia/indexDB' {
 
     get(tableName: string, id: string): Promise<Object>;
 
+    count(tableName: string): Promise<number>;
+
+    getAllKeys(tableName: string): Promise<string[]>;
+
+    getAll(tableName: string): Promise<Object[]>;
+
     getAndDel(tableName: string, id: string): Promise<Object>;
 
     del(tableName: string, id: string): Promise<boolean>;
 
-    getIndex(tableName: string, field: string): ?IDBIndex;
+    getIndex(tableName: string, field: string): Promise<QueryInstance>;
 
     clean(): void;
-    update(tableName: string, target: Object): Promise<string>;
     isSameDB(target: Object): boolean;
   }
 }

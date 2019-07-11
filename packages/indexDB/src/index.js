@@ -14,7 +14,6 @@ import type {
 import Unique, { now } from '@lugia/unique';
 import Listener from '@lugia/listener';
 
-type Field2Index = { [field: string]: IDBIndex };
 export default class IndexDB extends Listener<any> implements Store {
   db: Object;
   tableName2Unique: { [tableName: string]: Unique };
@@ -22,6 +21,7 @@ export default class IndexDB extends Listener<any> implements Store {
   version: number;
   dataBaseName: string;
   tableExist: Object;
+  tableNames: string[];
 
   constructor(indexedDB: Object, option: IndexDBOption) {
     super();
@@ -40,6 +40,7 @@ export default class IndexDB extends Listener<any> implements Store {
       return;
     }
 
+    this.tableNames = [...tableNames];
     this.tableName2Unique = {};
     const { indexOption = {} } = option;
     this.indexOption = indexOption;
@@ -98,19 +99,18 @@ export default class IndexDB extends Listener<any> implements Store {
     return db.objectStoreNames.contains(tableName);
   }
 
-  truncateTable(tableName: string) {
-    const db = this.getDb();
-    if (db.objectStoreNames.contains(tableName)) {
-      const transaction = db.transaction([tableName], 'readwrite');
-      const req = transaction.objectStore(tableName).clear();
-
-      req.onsuccess = () => {
-        console.log(`清空${tableName}表成功`);
-      };
-      req.onerror = () => {
-        console.error(`清空${tableName}表失败`);
-      };
+  async truncateTable(tableName: string) {
+    const unique = this.getUnique(tableName);
+    if (!unique) {
+      console.error(`不存在的表名:${tableName}`);
+      return '';
     }
+    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    const request = store.clear();
+    return this.requestPromise(request, {
+      success: `清空${tableName}表成功`,
+      error: `清空${tableName}表失败`,
+    });
   }
 
   createObjectStore(tableName: string) {
@@ -132,8 +132,6 @@ export default class IndexDB extends Listener<any> implements Store {
         console.log(`创建表索引${indexName}成功`);
       });
     }
-    this.tableExist[tableName] = true;
-    this.emit(tableName, { db });
   }
 
   getIndexName(tableName: string, field: string): string {
@@ -141,27 +139,66 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async getIndex(tableName: string, field: string): Promise<Object> {
+    const unique = this.getUnique(tableName);
+    if (!unique) {
+      console.error(`不存在的表名:${tableName}`);
+      return {};
+    }
     return {
-      async get(key: string) {
-        return new Promise(async (res, reject) => {
-          const store = await this.getDBObjectStore(tableName, 'readonly');
-          const idbIndex = store.index(this.getIndexName(tableName, field));
-          if (!idbIndex) {
-            return null;
-          }
-          const req = idbIndex.get(key);
-          req.onsuccess = function(e) {
-            const result = e.target.result;
-            if (result) {
-              return res(result);
-            }
-          };
-          req.onerror = () => {
-            reject();
-          };
+      get: async (key: string) => {
+        const idbIndex = await this.getDBIndex(tableName, field);
+        if (!idbIndex) {
+          return null;
+        }
+        const request = idbIndex.get(key);
+        const msg = `${tableName}.${field} 查找 ${key}`;
+        return this.requestPromise(request, {
+          success: msg,
+          error: msg,
+        });
+      },
+      getAll: async () => {
+        const idbIndex = await this.getDBIndex(tableName, field);
+        if (!idbIndex) {
+          return null;
+        }
+        const request = idbIndex.getAll();
+        const msg = `${tableName}.${field} 查找全部`;
+        return this.requestPromise(request, {
+          success: msg,
+          error: msg,
+        });
+      },
+      getAllKeys: async () => {
+        const idbIndex = await this.getDBIndex(tableName, field);
+        if (!idbIndex) {
+          return null;
+        }
+        const request = idbIndex.getAllKeys();
+        const msg = `${tableName}.${field} 查找全部主键`;
+        return this.requestPromise(request, {
+          success: msg,
+          error: msg,
+        });
+      },
+      count: async () => {
+        const idbIndex = await this.getDBIndex(tableName, field);
+        if (!idbIndex) {
+          return null;
+        }
+        const request = idbIndex.count();
+        const msg = `${tableName}.${field} 统计`;
+        return this.requestPromise(request, {
+          success: msg,
+          error: msg,
         });
       },
     };
+  }
+
+  async getDBIndex(tableName: string, field: string): Promise<Object> {
+    const store = await this.getDBObjectStore(tableName, 'readonly');
+    return store.index(this.getIndexName(tableName, field));
   }
 
   updateDb(event: Object) {
@@ -182,55 +219,36 @@ export default class IndexDB extends Listener<any> implements Store {
     }
     const id = unique.getNext();
     const store = await this.getDBObjectStore(tableName, 'readwrite');
-    const req = store.add({ id, ...target });
 
-    return new Promise(res => {
-      req.onsuccess = event => {
-        res(id);
-        console.log(
-          `${tableName} ${target} 新增记录成功，id = ${event.target.result}`,
-        );
-      };
-
-      req.onerror = function() {
-        console.error(`${tableName} ${target} 新增记录失败`);
-        res('');
-      };
+    const request = store.add({ id, ...target });
+    return this.requestPromise(request, {
+      success: `${tableName} ${id} ${JSON.stringify(target)} 新增记录`,
+      error: `${tableName} ${target} 新增记录`,
     });
   }
 
-  async update(tableName: string, target: Object): Promise<string> {
+  async update(tableName: string, id: string, target: Object): Promise<string> {
     const unique = this.getUnique(tableName);
     if (!unique) {
       console.error(`不存在的表名:${tableName}`);
       return '';
     }
-    const id = unique.getNext();
     const store = await this.getDBObjectStore(tableName, 'readwrite');
-    const req = store.put({ id, ...target });
-
-    return new Promise(res => {
-      req.onsuccess = event => {
-        res(id);
-        console.log(
-          `${tableName} ${target} 更新记录成功，id = ${event.target.result}`,
-        );
-      };
-      req.onerror = function() {
-        console.error(`${tableName} ${target} 更新记录失败`);
-        res('');
-      };
+    const request = store.put({ id, ...target });
+    const msg = `${tableName} ${target} 更新记录 id =${id}`;
+    return this.requestPromise(request, {
+      success: msg,
+      error: msg,
     });
   }
 
   async getDBObjectStore(
     tableName: string,
     mode: 'readonly' | 'readwrite' | 'versionchange',
-  ): Promise<IDBObjectStore> {
+  ): Promise<Object> {
     const db = await this.getDbWaitTable(tableName);
-    return Promise.resolve(
-      db.transaction([tableName], mode).objectStore(tableName),
-    );
+    const transaction = db.transaction([tableName], mode);
+    return transaction.objectStore(tableName);
   }
 
   async getDbWaitTable(tableName: string): Promise<Object> {
@@ -248,19 +266,89 @@ export default class IndexDB extends Listener<any> implements Store {
     });
   }
 
-  async get(tableName: string, id: string): Object {
+  async getAll(tableName: string): Promise<Object[]> {
+    const unique = this.getUnique(tableName);
+    if (!unique) {
+      console.error(`不存在的表名:${tableName}`);
+      return [];
+    }
+    const store = await this.getDBObjectStore(tableName, 'readonly');
+    const req = store.getAll();
+    const msg = `获取[${tableName}]全部数据`;
+    return this.requestPromise(req, {
+      success: msg,
+      error: msg,
+    });
+  }
+
+  async getAllKeys(tableName: string): Promise<string[]> {
+    const unique = this.getUnique(tableName);
+    if (!unique) {
+      console.error(`不存在的表名:${tableName}`);
+      return [];
+    }
+    const store = await this.getDBObjectStore(tableName, 'readonly');
+    const req = store.getAllKeys();
+    const msg = `获取[${tableName}]全部主键`;
+    return this.requestPromise(req, {
+      success: msg,
+      error: msg,
+    });
+  }
+
+  async count(tableName: string): Promise<number> {
+    const unique = this.getUnique(tableName);
+    if (!unique) {
+      console.error(`不存在的表名:${tableName}`);
+      return 0;
+    }
+    const store = await this.getDBObjectStore(tableName, 'readonly');
+    const req = store.count();
+    const msg = `统计[${tableName}]数量`;
+    return this.requestPromise(req, {
+      success: msg,
+      error: msg,
+    });
+  }
+
+  async get(tableName: string, id: string): Promise<Object> {
+    const unique = this.getUnique(tableName);
+    if (!unique) {
+      console.error(`不存在的表名:${tableName}`);
+      return '';
+    }
     const store = await this.getDBObjectStore(tableName, 'readonly');
     const request = store.get(id);
 
-    return new Promise(res => {
+    const msg = `${tableName} ${id} 数据获取`;
+    return this.requestPromise(request, {
+      success: msg,
+      error: msg,
+    });
+  }
+
+  requestPromise(
+    request: IDBRequest,
+    msg: { success: string, error: string },
+    option: {
+      getSuccess?: (event: Object) => any,
+    } = {},
+  ): Promise<any> {
+    return new Promise((res, reject) => {
+      const { success, error } = msg;
       request.onsuccess = event => {
-        console.log(`${tableName} ${id} 数据获取成功`);
-        res(event.target.result);
+        const { getSuccess } = option;
+        console.log('成功:', success);
+        if (getSuccess) {
+          res(getSuccess(event));
+        } else {
+          res(event.target.result);
+        }
       };
 
-      request.onerror = function() {
-        console.error(`${tableName} ${id} 数据获取失败`);
-        res(undefined);
+      request.onerror = function(...rest) {
+        console.error('成功:', error, ...rest);
+        reject(error);
       };
     });
   }
@@ -271,20 +359,17 @@ export default class IndexDB extends Listener<any> implements Store {
     return res;
   }
 
-  async del(tableName: string, id: string): Promise<boolean> {
+  async del(tableName: string, id: string): Promise<Object> {
+    const unique = this.getUnique(tableName);
+    if (!unique) {
+      console.error(`不存在的表名:${tableName}`);
+      return '';
+    }
     const store = await this.getDBObjectStore(tableName, 'readwrite');
-    const req = store.delete(id);
-
-    return new Promise(res => {
-      req.onsuccess = () => {
-        console.log(`${tableName} ${id} 数据删除成功`);
-        res(true);
-      };
-
-      req.onerror = function() {
-        console.error(`${tableName} ${id} 数据删除失败`);
-        res(false);
-      };
+    const request = store.delete(id);
+    return this.requestPromise(request, {
+      success: `${tableName} ${id} 数据删除`,
+      error: `${tableName} ${id} 数据删除`,
     });
   }
 
@@ -292,7 +377,14 @@ export default class IndexDB extends Listener<any> implements Store {
     return this.tableName2Unique[tableName];
   }
 
-  clean(): void {}
+  clean(): void {
+    this.tableNames.forEach(async (tableName: string) => {
+      const isExist = this.existTable(tableName);
+      if (isExist) {
+        await this.truncateTable(tableName);
+      }
+    });
+  }
 
   isSameDB(target: Object): boolean {
     return target === this.db;
