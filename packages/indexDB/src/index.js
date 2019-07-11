@@ -41,6 +41,7 @@ export default class IndexDB extends Listener<any> implements Store {
     this.tableName2Unique = {};
     const { indexOption = {} } = option;
     this.indexOption = indexOption;
+    this.tableName2Field2Index = {};
     if (!Array.isArray(tableNames) || tableNames.length === 0) {
       console.warn('为存在要操作的表!');
       return;
