@@ -123,7 +123,16 @@ export default class IndexDB extends Listener<any> implements Store {
         if (!field) {
           return;
         }
-        req.createIndex(tableName, field, option);
+        const idxReq = req.createIndex(`${tableName}.${field}`, field, option);
+
+        idxReq.onsuccess = () => {
+          console.log(`创建表索引${tableName}.${field}成功`);
+          this.emit(tableName, { db });
+        };
+
+        idxReq.onerror = () => {
+          console.error(`创建表${tableName}.${field}失败`);
+        };
       });
     }
 
