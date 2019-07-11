@@ -1,8 +1,8 @@
 {
-  "name": "@lugia/theme",
+  "name": "@lugia/libs",
   "version": "1.0.0",
   "description": "A scaffolding of Lerna.",
-  "author": "@lugia#hanjingbo",
+  "author": "@lugia",
   "license": "ISC",
   "scripts": {
     "bootstrap": "lerna bootstrap",
