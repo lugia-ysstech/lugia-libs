@@ -115,30 +115,30 @@ export default class IndexDB extends Listener<any> implements Store {
     const req = db.createObjectStore(tableName, {
       keyPath: 'id',
     });
-    const createIndexOption = this.indexOption[tableName];
-
-    if (createIndexOption && Array.isArray(createIndexOption)) {
-      createIndexOption.forEach((item: IndexDBIndexOptionItem) => {
-        const { field, option = {} } = item;
-        if (!field) {
-          return;
-        }
-        const indexName = `${tableName}.${field}`;
-        const idxReq = req.createIndex(indexName, field, option);
-
-        idxReq.onsuccess = () => {
-          console.log(`创建表索引${indexName}成功`);
-          this.emit(tableName, { db });
-        };
-
-        idxReq.onerror = () => {
-          console.error(`创建表${indexName}失败`);
-        };
-      });
-    }
 
     req.onsuccess = () => {
       console.log(`创建表${tableName}成功`);
+      const createIndexOption = this.indexOption[tableName];
+
+      if (createIndexOption && Array.isArray(createIndexOption)) {
+        createIndexOption.forEach((item: IndexDBIndexOptionItem) => {
+          const { field, option = {} } = item;
+          if (!field) {
+            return;
+          }
+          const indexName = `${tableName}.${field}`;
+          const idxReq = req.createIndex(indexName, field, option);
+
+          idxReq.onsuccess = () => {
+            console.log(`创建表索引${indexName}成功`);
+            this.emit(tableName, { db });
+          };
+
+          idxReq.onerror = () => {
+            console.error(`创建表${indexName}失败`);
+          };
+        });
+      }
       this.emit(tableName, { db });
     };
 
