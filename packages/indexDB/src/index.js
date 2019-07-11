@@ -120,7 +120,6 @@ export default class IndexDB extends Listener<any> implements Store {
 
     console.log(`创建表${tableName}成功`);
     const createIndexOption = this.indexOption[tableName];
-    this.tableExist[tableName] = true;
     if (createIndexOption && Array.isArray(createIndexOption)) {
       createIndexOption.forEach((item: IndexDBIndexOptionItem) => {
         const { field, option = {} } = item;
@@ -132,6 +131,7 @@ export default class IndexDB extends Listener<any> implements Store {
         console.log(`创建表索引${indexName}成功`);
       });
     }
+    this.tableExist[tableName] = true;
     this.emit(tableName, { db });
   }
 
