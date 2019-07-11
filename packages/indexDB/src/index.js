@@ -21,6 +21,7 @@ export default class IndexDB extends Listener<any> implements Store {
   indexOption: IndexDBIndexOption;
   version: number;
   dataBaseName: string;
+
   constructor(indexedDB: Object, option: IndexDBOption) {
     super();
     if (!indexedDB) {
@@ -41,7 +42,6 @@ export default class IndexDB extends Listener<any> implements Store {
     this.tableName2Unique = {};
     const { indexOption = {} } = option;
     this.indexOption = indexOption;
-    this.tableName2Field2Index = {};
     if (!Array.isArray(tableNames) || tableNames.length === 0) {
       console.warn('为存在要操作的表!');
       return;
@@ -110,8 +110,6 @@ export default class IndexDB extends Listener<any> implements Store {
     }
   }
 
-  tableName2Field2Index: { [tableName: string]: Field2Index };
-
   createObjectStore(tableName: string) {
     const db = this.getDb();
     const req = db.createObjectStore(tableName, {
@@ -125,8 +123,7 @@ export default class IndexDB extends Listener<any> implements Store {
         if (!field) {
           return;
         }
-        let field2Index = this.getTableName2Field2Index(tableName);
-        field2Index[field] = req.createIndex(tableName, field, option);
+        req.createIndex(tableName, field, option);
       });
     }
 
@@ -140,17 +137,28 @@ export default class IndexDB extends Listener<any> implements Store {
     };
   }
 
-  getTableName2Field2Index(tableName: string): Field2Index {
-    let field2Index = this.tableName2Field2Index[tableName];
-    if (!field2Index) {
-      field2Index = this.tableName2Field2Index[tableName] = {};
+  async getIndex(tableName: string, field: string): Promise<Object> {
+    const store = await this.getDBObjectStore(tableName, 'readonly');
+    const idbIndex = store.index(field);
+    if (!idbIndex) {
+      return null;
     }
-    return field2Index;
-  }
-
-  getIndex(tableName: string, field: string): ?IDBIndex {
-    const field2Index = this.getTableName2Field2Index(tableName);
-    return field2Index[field];
+    return {
+      async get(key: string) {
+        return new Promise((res, reject) => {
+          const req = idbIndex.get(key);
+          req.onsuccess = function(e) {
+            const result = e.target.result;
+            if (result) {
+              return res(result);
+            }
+          };
+          req.onerror = () => {
+            reject();
+          };
+        });
+      },
+    };
   }
 
   updateDb(event: Object) {
@@ -170,21 +178,18 @@ export default class IndexDB extends Listener<any> implements Store {
       return '';
     }
     const id = unique.getNext();
-    const db = await this.getDbWaitTable(tableName);
-    const request = db
-      .transaction([tableName], 'readwrite')
-      .objectStore(tableName)
-      .add({ id, ...target });
+    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    const req = store.add({ id, ...target });
 
     return new Promise(res => {
-      request.onsuccess = event => {
+      req.onsuccess = event => {
         res(id);
         console.log(
           `${tableName} ${target} 新增记录成功，id = ${event.target.result}`,
         );
       };
 
-      request.onerror = function() {
+      req.onerror = function() {
         console.error(`${tableName} ${target} 新增记录失败`);
         res('');
       };
@@ -198,24 +203,31 @@ export default class IndexDB extends Listener<any> implements Store {
       return '';
     }
     const id = unique.getNext();
-    const db = await this.getDbWaitTable(tableName);
-    const request = db
-      .transaction([tableName], 'readwrite')
-      .objectStore(tableName)
-      .put({ id, ...target });
+    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    const req = store.put({ id, ...target });
 
     return new Promise(res => {
-      request.onsuccess = event => {
+      req.onsuccess = event => {
         res(id);
         console.log(
           `${tableName} ${target} 更新记录成功，id = ${event.target.result}`,
         );
       };
-      request.onerror = function() {
+      req.onerror = function() {
         console.error(`${tableName} ${target} 更新记录失败`);
         res('');
       };
     });
+  }
+
+  async getDBObjectStore(
+    tableName: string,
+    mode: 'readonly' | 'readwrite' | 'versionchange',
+  ): Promise<IDBObjectStore> {
+    const db = await this.getDbWaitTable(tableName);
+    return Promise.resolve(
+      db.transaction([tableName], mode).objectStoreobject(tableName),
+    );
   }
 
   async getDbWaitTable(tableName: string): Promise<Object> {
@@ -233,10 +245,8 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async get(tableName: string, id: string): Object {
-    const db = await this.getDbWaitTable(tableName);
-    const transaction = db.transaction([tableName]);
-    const objectStore = transaction.objectStore(tableName);
-    const request = objectStore.get(id);
+    const store = await this.getDBObjectStore(tableName, 'readonly');
+    const request = store.get(id);
 
     return new Promise(res => {
       request.onsuccess = event => {
@@ -258,19 +268,16 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async del(tableName: string, id: string): Promise<boolean> {
-    const db = await this.getDbWaitTable(tableName);
-    const request = db
-      .transaction([tableName], 'readwrite')
-      .objectStore(tableName)
-      .delete(id);
+    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    const req = store.delete(id);
 
     return new Promise(res => {
-      request.onsuccess = () => {
+      req.onsuccess = () => {
         console.log(`${tableName} ${id} 数据删除成功`);
         res(true);
       };
 
-      request.onerror = function() {
+      req.onerror = function() {
         console.error(`${tableName} ${id} 数据删除失败`);
         res(false);
       };
