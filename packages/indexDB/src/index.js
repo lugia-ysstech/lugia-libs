@@ -21,7 +21,7 @@ export default class IndexDB extends Listener<any> implements Store {
   indexOption: IndexDBIndexOption;
   version: number;
   dataBaseName: string;
-
+  tableExist: Object;
   constructor(indexedDB: Object, option: IndexDBOption) {
     super();
     if (!indexedDB) {
@@ -32,7 +32,7 @@ export default class IndexDB extends Listener<any> implements Store {
       console.error('option不能为空！');
       return;
     }
-
+    this.tableExist = {};
     const { tableNames = [], dataBaseName } = option;
     if (!dataBaseName) {
       console.error('数据库实例名称不能为空！');
@@ -66,13 +66,15 @@ export default class IndexDB extends Listener<any> implements Store {
       const { resetDataAfterConnect = false } = option;
 
       tableNames.forEach((tableName: string) => {
-        if (resetDataAfterConnect) {
-          if (this.existTable(tableName)) {
+        const isExist = this.existTable(tableName);
+        if (isExist) {
+          const { db } = this;
+          this.tableExist[tableName] = true;
+          this.emit(tableName, { db });
+          if (resetDataAfterConnect) {
             this.truncateTable(tableName);
           }
         }
-        const { db } = this;
-        this.emit(tableName, { db });
       });
     };
 
@@ -118,19 +120,23 @@ export default class IndexDB extends Listener<any> implements Store {
 
     console.log(`创建表${tableName}成功`);
     const createIndexOption = this.indexOption[tableName];
-
+    this.tableExist[tableName] = true;
     if (createIndexOption && Array.isArray(createIndexOption)) {
       createIndexOption.forEach((item: IndexDBIndexOptionItem) => {
         const { field, option = {} } = item;
         if (!field) {
           return;
         }
-        const indexName = `${tableName}.${field}`;
+        const indexName = this.getIndexName(tableName, field);
         req.createIndex(indexName, field, option);
         console.log(`创建表索引${indexName}成功`);
       });
     }
     this.emit(tableName, { db });
+  }
+
+  getIndexName(tableName: string, field: string): string {
+    return `${tableName}.${field}`;
   }
 
   async getIndex(tableName: string, field: string): Promise<Object> {
@@ -142,7 +148,7 @@ export default class IndexDB extends Listener<any> implements Store {
     return {
       async get(key: string) {
         return new Promise((res, reject) => {
-          const req = idbIndex.get(key);
+          const req = idbIndex.get(this.getIndexName(tableName, field));
           req.onsuccess = function(e) {
             const result = e.target.result;
             if (result) {
@@ -228,12 +234,13 @@ export default class IndexDB extends Listener<any> implements Store {
 
   async getDbWaitTable(tableName: string): Promise<Object> {
     const db = this.getDb();
-    if (db) {
+    if (db && this.tableExist[tableName]) {
       return Promise.resolve(db);
     }
     return new Promise(res => {
       const handler = this.once(tableName, data => {
         const { db } = data;
+        this.tableExist[tableName] = true;
         res(db);
         handler.removeListener();
       });
