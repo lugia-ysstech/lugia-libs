@@ -6,6 +6,10 @@ declare module '@lugia/indexDB' {
 
     getAllKeys(tableName: string): Promise<string[]>;
 
+    filter(tableName: string, cb: (item: any) => boolean): Promise<Object[]>;
+
+    filterKeys(tableName: string, cb: (key: any) => boolean): Promise<string[]>;
+
     getAll(tableName: string): Promise<Object[]>;
   }
 
@@ -69,5 +73,9 @@ declare module '@lugia/indexDB' {
 
     clean(): void;
     isSameDB(target: Object): boolean;
+
+    filter(tableName: string, cb: (item: any) => boolean): Promise<Object[]>;
+
+    filterKeys(tableName: string, cb: (key: any) => boolean): Promise<string[]>;
   }
 }

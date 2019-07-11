@@ -195,6 +195,34 @@ export default class IndexDB extends Listener<any> implements Store {
           error: msg,
         });
       },
+
+      filter: async (
+        tableName: string,
+        cb: (item: any) => boolean,
+      ): Promise<Object[]> => {
+        const idbIndex = await this.getDBIndex(tableName, field);
+        if (!idbIndex) {
+          return [];
+        }
+        return this.filterByStore(idbIndex, tableName, cb, {
+          valueField: 'value',
+          funcName: 'openCursor',
+        });
+      },
+
+      filterKeys: async (
+        tableName: string,
+        cb: (item: any) => boolean,
+      ): Promise<string[]> => {
+        const idbIndex = await this.getDBIndex(tableName, field);
+        if (!idbIndex) {
+          return [];
+        }
+        return this.filterByStore(idbIndex, tableName, cb, {
+          valueField: 'key',
+          funcName: 'openKeyCursor',
+        });
+      },
     };
   }
 
@@ -385,6 +413,58 @@ export default class IndexDB extends Listener<any> implements Store {
       if (isExist) {
         await this.truncateTable(tableName);
       }
+    });
+  }
+
+  async filter(
+    tableName: string,
+    cb: (item: any) => boolean,
+  ): Promise<Object[]> {
+    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    return this.filterByStore(store, tableName, cb, {
+      valueField: 'value',
+      funcName: 'openCursor',
+    });
+  }
+
+  async filterKeys(
+    tableName: string,
+    cb: (item: any) => boolean,
+  ): Promise<string[]> {
+    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    return this.filterByStore(store, tableName, cb, {
+      valueField: 'key',
+      funcName: 'openKeyCursor',
+    });
+  }
+
+  async filterByStore(
+    store: Object,
+    tableName: string,
+    cb: (item: any) => boolean,
+    option: { valueField: string, funcName: string },
+  ): Promise<string[]> {
+    const unique = this.getUnique(tableName);
+    if (!unique) {
+      console.error(`不存在的表名:${tableName}`);
+      return [];
+    }
+    const { valueField, funcName } = option;
+    const request = store[funcName]();
+    const result = [];
+    return new Promise(res => {
+      request.onsuccess = event => {
+        const cursor = event.target.result;
+        if (cursor) {
+          const { [valueField]: value } = cursor;
+          if (cb(value)) {
+            result.push(value);
+          }
+          cursor.continue();
+        } else {
+          res(result);
+        }
+      };
     });
   }
 
