@@ -407,7 +407,7 @@ export default class IndexDB extends Listener<any> implements Store {
     tableName: string,
     cb: (item: any) => boolean,
   ): Promise<Object[]> {
-    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    const store = await this.getDBObjectStore(tableName, 'readonly');
     return this.filterByStore(store, tableName, cb, {
       valueField: 'value',
       funcName: 'openCursor',
@@ -418,7 +418,7 @@ export default class IndexDB extends Listener<any> implements Store {
     tableName: string,
     cb: (item: any) => boolean,
   ): Promise<string[]> {
-    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    const store = await this.getDBObjectStore(tableName, 'readonly');
     return this.filterByStore(store, tableName, cb, {
       valueField: 'key',
       funcName: 'openKeyCursor',
@@ -431,7 +431,7 @@ export default class IndexDB extends Listener<any> implements Store {
     cb: (item: any) => boolean,
     option: { valueField: string, funcName: string },
   ): Promise<string[]> {
-    if (this.getUnique(tableName)) {
+    if (!this.getUnique(tableName)) {
       return [];
     }
     const { valueField, funcName } = option;
