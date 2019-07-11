@@ -65,6 +65,7 @@ declare module '@lugia/indexDB' {
     del(tableName: string, id: string): Promise<boolean>;
 
     getIndex(tableName: string, field: string): Promise<QueryInstance>;
+    update(tableName: string, id: string, target: Object): Promise<string>;
 
     clean(): void;
     isSameDB(target: Object): boolean;
