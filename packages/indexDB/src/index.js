@@ -25,6 +25,10 @@ export default class IndexDB extends Listener<any> implements Store {
 
   constructor(indexedDB: Object, option: IndexDBOption) {
     super();
+
+    this.tableExist = {};
+    this.tableName2Unique = {};
+
     if (!indexedDB) {
       console.error('indexDB不能为空！');
       return;
@@ -33,7 +37,6 @@ export default class IndexDB extends Listener<any> implements Store {
       console.error('option不能为空！');
       return;
     }
-    this.tableExist = {};
     const { tableNames = [], dataBaseName } = option;
     if (!dataBaseName) {
       console.error('数据库实例名称不能为空！');
@@ -41,7 +44,6 @@ export default class IndexDB extends Listener<any> implements Store {
     }
 
     this.tableNames = [...tableNames];
-    this.tableName2Unique = {};
     const { indexOption = {} } = option;
     this.indexOption = indexOption;
     if (!Array.isArray(tableNames) || tableNames.length === 0) {
