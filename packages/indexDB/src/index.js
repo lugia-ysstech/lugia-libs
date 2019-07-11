@@ -102,9 +102,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async truncateTable(tableName: string) {
-    const unique = this.getUnique(tableName);
-    if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
+    if (!this.getUnique(tableName)) {
       return '';
     }
     const store = await this.getDBObjectStore(tableName, 'readwrite');
@@ -141,9 +139,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async getIndex(tableName: string, field: string): Promise<Object> {
-    const unique = this.getUnique(tableName);
-    if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
+    if (!this.getUnique(tableName)) {
       return {};
     }
     return {
@@ -244,7 +240,6 @@ export default class IndexDB extends Listener<any> implements Store {
   async save(tableName: string, target: Object): Promise<string> {
     const unique = this.getUnique(tableName);
     if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
       return '';
     }
     const id = unique.getNext();
@@ -258,9 +253,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async update(tableName: string, id: string, target: Object): Promise<string> {
-    const unique = this.getUnique(tableName);
-    if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
+    if (!this.getUnique(tableName)) {
       return '';
     }
     const store = await this.getDBObjectStore(tableName, 'readwrite');
@@ -297,9 +290,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async getAll(tableName: string): Promise<Object[]> {
-    const unique = this.getUnique(tableName);
-    if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
+    if (!this.getUnique(tableName)) {
       return [];
     }
     const store = await this.getDBObjectStore(tableName, 'readonly');
@@ -312,9 +303,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async getAllKeys(tableName: string): Promise<string[]> {
-    const unique = this.getUnique(tableName);
-    if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
+    if (!this.getUnique(tableName)) {
       return [];
     }
     const store = await this.getDBObjectStore(tableName, 'readonly');
@@ -327,9 +316,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async count(tableName: string): Promise<number> {
-    const unique = this.getUnique(tableName);
-    if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
+    if (!this.getUnique(tableName)) {
       return 0;
     }
     const store = await this.getDBObjectStore(tableName, 'readonly');
@@ -342,9 +329,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async get(tableName: string, id: string): Promise<Object> {
-    const unique = this.getUnique(tableName);
-    if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
+    if (!this.getUnique(tableName)) {
       return '';
     }
     const store = await this.getDBObjectStore(tableName, 'readonly');
@@ -390,9 +375,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async del(tableName: string, id: string): Promise<Object> {
-    const unique = this.getUnique(tableName);
-    if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
+    if (!this.getUnique(tableName)) {
       return '';
     }
     const store = await this.getDBObjectStore(tableName, 'readwrite');
@@ -404,7 +387,11 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   getUnique(tableName: string): ?Unique {
-    return this.tableName2Unique[tableName];
+    const has = this.tableName2Unique[tableName];
+    if (!has) {
+      console.error(`不存在的表名:${tableName}`);
+    }
+    return has;
   }
 
   clean(): void {
@@ -444,9 +431,7 @@ export default class IndexDB extends Listener<any> implements Store {
     cb: (item: any) => boolean,
     option: { valueField: string, funcName: string },
   ): Promise<string[]> {
-    const unique = this.getUnique(tableName);
-    if (!unique) {
-      console.error(`不存在的表名:${tableName}`);
+    if (this.getUnique(tableName)) {
       return [];
     }
     const { valueField, funcName } = option;
