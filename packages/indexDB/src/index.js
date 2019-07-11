@@ -22,6 +22,7 @@ export default class IndexDB extends Listener<any> implements Store {
   version: number;
   dataBaseName: string;
   tableExist: Object;
+
   constructor(indexedDB: Object, option: IndexDBOption) {
     super();
     if (!indexedDB) {
@@ -140,14 +141,14 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async getIndex(tableName: string, field: string): Promise<Object> {
-    const store = await this.getDBObjectStore(tableName, 'readonly');
-    const idbIndex = store.index(this.getIndexName(tableName, field));
-    if (!idbIndex) {
-      return null;
-    }
     return {
       async get(key: string) {
-        return new Promise((res, reject) => {
+        return new Promise(async (res, reject) => {
+          const store = await this.getDBObjectStore(tableName, 'readonly');
+          const idbIndex = store.index(this.getIndexName(tableName, field));
+          if (!idbIndex) {
+            return null;
+          }
           const req = idbIndex.get(key);
           req.onsuccess = function(e) {
             const result = e.target.result;
