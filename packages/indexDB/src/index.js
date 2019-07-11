@@ -226,7 +226,7 @@ export default class IndexDB extends Listener<any> implements Store {
   ): Promise<IDBObjectStore> {
     const db = await this.getDbWaitTable(tableName);
     return Promise.resolve(
-      db.transaction([tableName], mode).objectStoreobject(tableName),
+      db.transaction([tableName], mode).objectStore(tableName),
     );
   }
 
