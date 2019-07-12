@@ -32,6 +32,7 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
   getConfig: Function;
   deepMerge: Function;
   selectThemePart: Function;
+
   constructor(
     props: Object,
     context: Object,
@@ -130,18 +131,27 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
 
   getPartOfThemeConfig = (partName: string): Object => {
     if (!partName) {
-      return {};
+      return this.packPartName({}, partName);
     }
     const theme = this.getTheme() || {};
     const { [partName]: targetTheme } = theme;
     if (!targetTheme) {
-      return {};
+      return this.packPartName({}, partName, theme);
     }
-    if (!targetTheme.__partName) {
-      targetTheme.__partName = partName;
-    }
-    return targetTheme;
+    return this.packPartName(targetTheme, partName, theme);
   };
+
+  packPartName(
+    result: Object,
+    partName: string,
+    fatherTheme: Object = {},
+  ): void {
+    if (fatherTheme && fatherTheme.__partName) {
+      partName = fatherTheme.__partName + '.' + partName;
+    }
+    result.__partName = partName;
+    return result;
+  }
 
   getPartOfThemeProps = (
     childWidgetName: string,

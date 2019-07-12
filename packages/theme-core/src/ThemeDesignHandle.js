@@ -110,25 +110,32 @@ export default class ThemeProviderHandler {
     const result = {};
     let infos = this.getThemeMetaInfo();
     console.info(infos);
-    this.recuriseThemeMetaInfoTree(infos[0], result);
+    this.recuriseThemeMetaInfoTree(infos[0], result, 0);
     return result;
   }
 
-  recuriseThemeMetaInfoTree(node: Object, childData: Object) {
+  recuriseThemeMetaInfoTree(node: Object, childData: Object, level: number) {
     const { children } = node;
     if (!children || children.length === 0) {
       return;
     }
     children.forEach(childNode => {
       const { partName, themeMeta } = childNode;
+
       if (partName && themeMeta) {
         childData[partName] = deepMerge(childData[partName], themeMeta);
       } else {
         if (partName && !childData[partName] && themeMeta) {
           childData[partName] = {};
-          this.recuriseThemeMetaInfoTree(childNode, childData[partName]);
+          this.recuriseThemeMetaInfoTree(
+            childNode,
+            childData[partName],
+            level + 1,
+          );
         } else {
-          this.recuriseThemeMetaInfoTree(childNode, childData);
+          if (childNode.partName) {
+            this.recuriseThemeMetaInfoTree(childNode, childData, level + 1);
+          }
         }
       }
     });
@@ -158,6 +165,7 @@ export default class ThemeProviderHandler {
       } else {
         console.error(`not found ${id} props info`);
       }
+
       if (isThemeCmp) {
         const { children } = reactNodeInfo;
         if (children && children.length === 1) {

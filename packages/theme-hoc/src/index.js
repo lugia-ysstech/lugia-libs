@@ -116,7 +116,6 @@ const ThemeProvider = (
         getPartOfThemeHocProps={handle.getPartOfThemeHocProps}
         getPartOfThemeConfig={handle.getPartOfThemeConfig}
         getPartOfThemeProps={handle.getPartOfThemeProps}
-        createThemeHocProps={handle.createThemeHocProps}
         getTheme={handle.getTheme}
         getWidgetThemeName={() => widgetName}
         getThemeByDisplayName={handle.getThemeByDisplayName}
