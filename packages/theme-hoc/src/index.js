@@ -81,7 +81,7 @@ const ThemeProvider = (
     );
     if (ref) {
       if (typeof ref === 'object') {
-        ref.current = handle.current;
+        ref.current = handle;
       }
       if (typeof ref === 'function') {
         ref(handle);
@@ -105,9 +105,6 @@ const ThemeProvider = (
       setThemeState(propsThemeState);
     }
 
-    if (props.innerRef) {
-      props.innerRef.current = handle;
-    }
     return (
       <Target
         dispatchEvent={handle.dispatchEvent}
