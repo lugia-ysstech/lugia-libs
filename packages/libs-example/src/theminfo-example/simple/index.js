@@ -30,6 +30,6 @@ export default ThemeHoc(
       );
     }
   },
-  'Selector',
+  'One',
   { hover: true, active: true },
 );

@@ -24,6 +24,6 @@ export default ThemeHoc(
       );
     }
   },
-  'Selector',
+  'Two',
   { hover: true, active: true },
 );
