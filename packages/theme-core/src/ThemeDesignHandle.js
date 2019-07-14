@@ -11,7 +11,6 @@ import {
 } from '@lugia/theme-hoc-devtools';
 import { CSSComponentDisplayName, ThemeComponentPrefix } from './utils';
 import { unPackDisplayName } from './ThemeHandle';
-import { deepMerge } from '@lugia/object-utils';
 
 window.getBridge = getBridge;
 window.getReactNodeInfo = getReactNodeInfo;
@@ -110,35 +109,121 @@ export default class ThemeProviderHandler {
     const result = {};
     let infos = this.getThemeMetaInfo();
     console.info(infos);
-    this.recuriseThemeMetaInfoTree(infos[0], result, 0);
+    this.recuriseThemeMetaInfoTree(infos[0], result);
     return result;
   }
 
-  recuriseThemeMetaInfoTree(node: Object, childData: Object, level: number) {
+  recuriseThemeMetaInfoTree(node: Object, childData: Object) {
+    this.tillChildDataByNode(node, childData);
     const { children } = node;
     if (!children || children.length === 0) {
       return;
     }
+
     children.forEach(childNode => {
       const { partName, themeMeta } = childNode;
 
-      if (partName && themeMeta) {
-        childData[partName] = deepMerge(childData[partName], themeMeta);
-      } else {
-        if (partName && !childData[partName] && themeMeta) {
-          childData[partName] = {};
-          this.recuriseThemeMetaInfoTree(
-            childNode,
-            childData[partName],
-            level + 1,
-          );
-        } else {
-          if (childNode.partName) {
-            this.recuriseThemeMetaInfoTree(childNode, childData, level + 1);
+      const { themeProps } = childNode;
+      if (themeProps) {
+        const { themeConfig } = themeProps;
+        if (themeConfig) {
+          const res = this.getOtherPath(themeConfig);
+          if (res.length > 0) {
+            res.forEach(item => {
+              const { partName, path } = item;
+              const data = (childData[partName] = {});
+              this.recuriseThemeMetaInfoTreeForPath(childNode, data, path, '');
+            });
           }
         }
       }
+      if (!partName) {
+        return;
+      }
+      if (!this.tillChildDataByNode(childNode, childData)) {
+        if (themeMeta) {
+          this.recuriseThemeMetaInfoTree(childNode, (childData[partName] = {}));
+        } else {
+          this.recuriseThemeMetaInfoTree(childNode, childData);
+        }
+      }
     });
+  }
+
+  tillChildDataByNode(node: Object, childData: Object) {
+    if (!node || !childData) {
+      return false;
+    }
+    const { partName, themeMeta } = node;
+    if (partName && themeMeta) {
+      childData[partName] = themeMeta;
+      return true;
+    }
+    return false;
+  }
+
+  recuriseThemeMetaInfoTreeForPath(
+    node: Object,
+    childData: Object,
+    collectionPath: Object[],
+    father: string,
+  ) {
+    const { children } = node;
+
+    if (!children || children.length === 0) {
+      return;
+    }
+
+    if (collectionPath.length <= 0) {
+      return;
+    }
+
+    const partName2Node = {};
+    children.forEach(childNode => {
+      const { partName } = childNode;
+      if (partName) {
+        partName2Node[partName] = childNode;
+      }
+    });
+    const levelPath = collectionPath.shift();
+    const fullPath = father ? `${father}.${levelPath}` : levelPath;
+    const theNode = partName2Node[fullPath];
+    if (!theNode) {
+      return;
+    }
+    if (collectionPath.length === 0) {
+      this.recuriseThemeMetaInfoTree(theNode, childData);
+    } else {
+      const data = (childData[levelPath] = {});
+      this.recuriseThemeMetaInfoTreeForPath(
+        theNode,
+        data,
+        collectionPath,
+        fullPath,
+      );
+    }
+  }
+
+  getOtherPath(themeConfig: Object, path: string[] = []): Object[] {
+    const res = [];
+    if (!themeConfig || typeof themeConfig !== 'object') {
+      return res;
+    }
+
+    Object.keys(themeConfig).forEach(partName => {
+      const item = themeConfig[partName];
+      if (!item) {
+        return;
+      }
+      if (partName === '__partName') {
+        res.push({
+          partName: item,
+          path,
+        });
+      }
+      res.push(...this.getOtherPath(item, [...path, partName]));
+    });
+    return res;
   }
 
   getNodeInfo(id: string, fields: string[]) {
