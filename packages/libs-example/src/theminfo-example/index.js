@@ -25,7 +25,35 @@ const SimpleDemo = Factory(
   'one',
 );
 const TwoLevelDemo = Factory(Two, {}, 'two');
-const ThreeLevelDemo = Factory(ThreeLevel, {}, 'three');
+const ThreeLevelDemo = Factory(
+  ThreeLevel,
+  {
+    BButtonA: {
+      PartA: {
+        normal: {
+          background: {
+            color: 'yellow',
+          },
+        },
+      },
+      PartB: {
+        normal: {
+          background: {
+            color: 'blue',
+          },
+        },
+      },
+    },
+    BButtonBPartA: {
+      normal: {
+        background: {
+          color: 'black',
+        },
+      },
+    },
+  },
+  'three',
+);
 export default () => {
   return (
     <div>
