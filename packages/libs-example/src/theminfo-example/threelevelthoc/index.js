@@ -37,9 +37,9 @@ export default ThemeHoc(
 
       const TwoC = {
         TwoC: {
-          ButtonA: this.props.getPartOfThemeProps('BButtonA'),
+          ButtonA: this.props.getPartOfThemeConfig('BButtonA'),
           ButtonB: {
-            PartA: this.props.getPartOfThemeProps('BButtonBPartA'),
+            PartA: this.props.getPartOfThemeConfig('BButtonBPartA'),
           },
         },
       };
