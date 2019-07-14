@@ -36,7 +36,7 @@ export default ThemeHoc(
       );
 
       const TwoC = {
-        SimpleC: {
+        TwoC: {
           ButtonA: this.props.getPartOfThemeProps('BButtonA'),
           ButtonB: {
             PartA: this.props.getPartOfThemeProps('BButtonBPartA'),
