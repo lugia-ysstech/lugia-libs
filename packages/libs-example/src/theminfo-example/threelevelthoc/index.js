@@ -62,6 +62,6 @@ export default ThemeHoc(
       );
     }
   },
-  'Selector',
+  'Three',
   { hover: true, active: true },
 );
