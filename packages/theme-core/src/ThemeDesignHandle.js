@@ -9,6 +9,9 @@ import {
   getReactNodeInfo,
   getReactNodeInfoByThemeId,
 } from '@lugia/theme-hoc-devtools';
+
+import { getAttributeValue, packObject } from '@lugia/object-utils';
+
 import { CSSComponentDisplayName, ThemeComponentPrefix } from './utils';
 import { unPackDisplayName } from './ThemeHandle';
 
@@ -110,6 +113,26 @@ export default class ThemeProviderHandler {
     let infos = this.getThemeMetaInfo();
     console.info(infos);
     this.recuriseThemeMetaInfoTree(infos[0], result);
+
+    const keys = Object.keys(result);
+
+    const res = {};
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const paths = key.split('.');
+      const attributeValue = getAttributeValue(res, paths);
+      if (attributeValue) {
+      } else {
+      }
+      const itemValue = result[key];
+
+      for (let j = 0; j < paths.length; j++) {
+        const path = paths[j];
+        const item = {};
+        if (res[path]) {
+        }
+      }
+    }
     return result;
   }
 
@@ -194,10 +217,9 @@ export default class ThemeProviderHandler {
     if (collectionPath.length === 0) {
       this.recuriseThemeMetaInfoTree(theNode, childData);
     } else {
-      const data = (childData[levelPath] = {});
       this.recuriseThemeMetaInfoTreeForPath(
         theNode,
-        data,
+        childData,
         collectionPath,
         fullPath,
       );
