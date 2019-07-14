@@ -35,13 +35,16 @@ export default ThemeHoc(
         theme,
       );
 
-      const ButtonC = {
-        viewClass: 'ButtonC',
-        theme: {
-          ButtonB: this.props.getPartOfThemeProps('BButtonC'),
+      const TwoC = {
+        SimpleC: {
+          ButtonA: this.props.getPartOfThemeProps('BButtonA'),
+          ButtonB: {
+            PartA: this.props.getPartOfThemeProps('BButtonBPartA'),
+          },
         },
       };
 
+      console.info(TwoC);
       return (
         <div {...addMouseEvent(this)} style={{ border: '1px solid' }}>
           three
@@ -52,7 +55,7 @@ export default ThemeHoc(
           <Button themeProps={PartB}>BPartB</Button>
           <Simple {...this.props.getPartOfThemeHocProps('ButtonA')} />
           <Simple viewClass={viewClass} theme={ButtonB} />
-          <Simple viewClass={'ButtonC'} theme={ButtonC} />
+          <Two viewClass={'TwoC'} theme={TwoC} />
           <Two {...this.props.getPartOfThemeHocProps('BigA')} />
           <Two {...this.props.getPartOfThemeHocProps('BigB')} />
         </div>
