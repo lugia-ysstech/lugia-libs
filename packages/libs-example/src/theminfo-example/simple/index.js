@@ -6,9 +6,8 @@
  * @flow
  */
 import React from 'react';
-import BaseButton from '../base/button';
+import BaseButton, { BlackButton } from '../base/button';
 import ThemeHoc, { addMouseEvent } from '@lugia/theme-hoc';
-
 export default ThemeHoc(
   class extends React.Component<any, any> {
     render() {
@@ -18,10 +17,10 @@ export default ThemeHoc(
             {' '}
             PartA{' '}
           </BaseButton>
-          <BaseButton themeProps={this.props.getPartOfThemeProps('PartB')}>
+          <BlackButton themeProps={this.props.getPartOfThemeProps('PartB')}>
             {' '}
             PartB{' '}
-          </BaseButton>
+          </BlackButton>
           <BaseButton themeProps={this.props.getPartOfThemeProps('PartC')}>
             {' '}
             PartC{' '}
