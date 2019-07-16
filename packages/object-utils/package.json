@@ -18,7 +18,8 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "deepmerge": "^3.2.0"
+    "deepmerge": "^3.2.0",
+    "is-plain-object": "^3.0.0"
   },
   "files": [
     "lib",
