@@ -61,5 +61,3 @@ export function inject(window: Object) {
   installGlobalHook(window);
   installBridge(store);
 }
-
-inject(window);
