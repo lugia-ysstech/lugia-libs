@@ -28,6 +28,29 @@ const TwoLevelDemo = Factory(Two, {}, 'two');
 const ThreeLevelDemo = Factory(
   ThreeLevel,
   {
+    FBButtonA: {
+      PartA: {
+        normal: {
+          background: {
+            color: 'black',
+          },
+        },
+      },
+    },
+    FBButtonBPartA: {
+      normal: {
+        color: 'red',
+      },
+    },
+    FTwo: {
+      ButtonA: {
+        PartA: {
+          normal: {
+            color: 'green',
+          },
+        },
+      },
+    },
     BButtonA: {
       PartA: {
         normal: {
@@ -57,8 +80,6 @@ const ThreeLevelDemo = Factory(
 export default () => {
   return (
     <div>
-      <SimpleDemo />
-      <TwoLevelDemo />
       <ThreeLevelDemo />
     </div>
   );
