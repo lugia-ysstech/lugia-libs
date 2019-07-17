@@ -9,27 +9,6 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@lugia/object-utils@^1.0.3-alpha.0":
-  version "1.0.3-alpha.0"
-  resolved "http://192.168.102.79:5001/@lugia/object-utils/download/@lugia/object-utils-1.0.3-alpha.0.tgz#90cb1faf46bfd1dd36ca9c43bbfb2d1c856f7271"
-  integrity sha1-kMsfr0a/0d02ypxDu/stHIVvcnE=
-  dependencies:
-    "@babel/runtime" "^7.4.5"
-    deepmerge "^3.2.0"
-
-"@lugia/theme-core@^1.0.3-alpha.0":
-  version "1.0.3-alpha.0"
-  resolved "http://192.168.102.79:5001/@lugia/theme-core/download/@lugia/theme-core-1.0.3-alpha.0.tgz#7094a01d243623af2c3f4bfcd2a3d926f9b765e8"
-  integrity sha1-cJSgHSQ2I68sP0v80qPZJvm3Zeg=
-  dependencies:
-    "@babel/runtime" "^7.4.5"
-    "@lugia/object-utils" "^1.0.3-alpha.0"
-
-deepmerge@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-3.2.0.tgz#58ef463a57c08d376547f8869fdc5bcee957f44e"
-  integrity sha1-WO9GOlfAjTdlR/iGn9xbzulX9E4=
-
 "js-tokens@^3.0.0 || ^4.0.0":
   version "4.0.0"
   resolved "https://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
