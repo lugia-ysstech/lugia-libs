@@ -132,7 +132,11 @@ export default class ThemeProviderHandler {
     otherKeys.forEach(key => {
       const item = path[key];
       const targetKey = this.fixPathByDispatchPath(key, dispatchPaths);
-      res = this.merge(res, packObject(targetKey.split('.'), item));
+      if (!targetKey) {
+        res = this.merge(res, item);
+      } else {
+        res = this.merge(res, packObject(targetKey.split('.'), item));
+      }
     });
     return res;
   }
