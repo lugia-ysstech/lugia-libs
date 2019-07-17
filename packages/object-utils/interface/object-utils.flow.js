@@ -39,5 +39,19 @@ declare module '@lugia/object-utils' {
 
   declare export function getAttributeValue(obj: Object, path: string[]): any;
 
+  declare export function setAttributeValue(
+    outResult: Object,
+    paths: string[],
+    val: any,
+  ): void;
   declare export function packObject(path: string[], value: any): Object;
+
+  declare export function object2pathObject(obj: Object): Object;
+
+  declare export function diffABWhenAttrIfExist(
+    objA: Object,
+    objB: Object,
+  ): string[];
+
+  declare export function packPathObject(object: Object): Object;
 }

@@ -9,9 +9,16 @@ import {
   getReactNodeInfo,
   getReactNodeInfoByThemeId,
 } from '@lugia/theme-hoc-devtools';
+
 import { CSSComponentDisplayName, ThemeComponentPrefix } from './utils';
 import { unPackDisplayName } from './ThemeHandle';
-import { deepMerge } from '@lugia/object-utils';
+import {
+  deepMerge,
+  diffABWhenAttrIfExist,
+  isEmptyObject,
+  packPathObject,
+  setAttributeValue,
+} from '@lugia/object-utils';
 
 window.getBridge = getBridge;
 window.getReactNodeInfo = getReactNodeInfo;
@@ -25,11 +32,19 @@ function isThemeComponent(name: string): boolean {
   return name.startsWith(ThemeComponentPrefix);
 }
 
+const compareLengthAsc = (a: Object, b: Object) => {
+  return a.length - b.length;
+};
+const compareLengthDesc = (a: Object, b: Object) => {
+  return b.length - a.length;
+};
 export default class ThemeProviderHandler {
   id: string;
+  packPathObject: Function;
 
   constructor(id: string) {
     this.id = id;
+    this.packPathObject = packPathObject;
   }
 
   getThemeMetaInfo = (fields: string[] = ['themeMeta']) => {
@@ -59,11 +74,7 @@ export default class ThemeProviderHandler {
         themeOrCSSId2Path[id] = path.split('/').filter(filterOnlyThemeOrCSS);
       });
 
-      let paths: any = Object.values(themeOrCSSId2Path).sort(
-        (a: Object, b: Object) => {
-          return a.length - b.length;
-        },
-      );
+      let paths: any = Object.values(themeOrCSSId2Path).sort(compareLengthAsc);
       // for (let i = 0; i < paths.length; i++) {
       //   const path = paths[ i ];
       //   if (path && path.length === 0) {
@@ -107,38 +118,243 @@ export default class ThemeProviderHandler {
   };
 
   getThemeData() {
-    const result = {};
+    const inPartNameRes = {};
     let infos = this.getThemeMetaInfo();
     console.info(infos);
-    this.recuriseThemeMetaInfoTree(infos[0], result, 0);
+    const notInPartNameRes = [];
+    this.recuriseThemeMetaInfoTree(infos[0], inPartNameRes, notInPartNameRes);
+    console.info('notInPartNameRes', notInPartNameRes);
+    const result = this.packPathObject(inPartNameRes);
+
+    notInPartNameRes.forEach(item => {
+      const { partName, path } = item;
+      result[partName] = this.packNotInPartObject(path);
+    });
     return result;
   }
 
-  recuriseThemeMetaInfoTree(node: Object, childData: Object, level: number) {
+  packNotInPartObject(path: Object): Object {
+    if (!path) {
+      return {};
+    }
+
+    let keys = Object.keys(path);
+
+    const hocTarget = this.getHocTarget(path);
+    const hockeys = Object.keys(hocTarget);
+
+    if (hockeys.length > 0) {
+      let res = {};
+      for (let i = 0; i < hockeys.length; i++) {
+        const head = hockeys[i];
+        console.info('head ', head, 'info', hocTarget[head]);
+      }
+      return res;
+    } else {
+      let res = path[keys[0]];
+      for (let i = 1; i < keys.length; i++) {
+        const targetItem = path[keys[i]];
+        res = this.merge(res, targetItem);
+      }
+      return res;
+    }
+  }
+
+  merge(res: Object, targetItem: Object): Object {
+    const diffPath = diffABWhenAttrIfExist(res, targetItem);
+    res = deepMerge(res, targetItem);
+    diffPath.forEach(path => {
+      setAttributeValue(res, path.split('.'), undefined);
+    });
+    return res;
+  }
+
+  getHocTarget(target: Object): Object {
+    const { otherKeys, branchNodeMap } = this.foundBranchNode(target);
+    const lastBranchNode = {};
+    otherKeys.forEach(key => {
+      const prefix = this.getPathPrefix(key, 1);
+      if (prefix && branchNodeMap[prefix]) {
+        lastBranchNode[prefix] = true;
+      }
+    });
+
+    const paths = this.sortBranchNodeMapAcsByLevelCount(lastBranchNode);
+    const targetBranch = this.fetchTargetBranch(paths);
+
+    const result = {};
+    otherKeys.forEach(key => {
+      const branchPath = this.getPathIfInBranchObject(
+        targetBranch,
+        key.split('.'),
+      );
+      if (branchPath) {
+        let items = result[branchPath];
+        if (!items) {
+          items = result[branchPath] = [];
+        }
+        items.push(key);
+      }
+    });
+    return result;
+  }
+
+  pullHocPathData(head: string, paths: string[], target: Object): Object {
+    return {};
+  }
+
+  getPathIfInBranchObject(branchObject: Object, path: string[]): ?string {
+    for (let i = 0; i < path.length; i++) {
+      const key = path.slice(0, i + 1).join('.');
+      if (branchObject[key]) {
+        return key;
+      }
+    }
+    return;
+  }
+
+  isInBranchObject(targetBranch: Object, path: string[]) {
+    return !!this.getPathIfInBranchObject(targetBranch, path);
+  }
+
+  fetchTargetBranch(paths: Array<string[]>): Object {
+    const targetBranch: Object = {};
+
+    paths.forEach((path: string[]) => {
+      if (!this.isInBranchObject(targetBranch, path)) {
+        targetBranch[path.join('.')] = true;
+      }
+    });
+    return targetBranch;
+  }
+
+  sortBranchNodeMapAcsByLevelCount(branchNodeMap: Object): Array<string[]> {
+    return Object.keys(branchNodeMap)
+      .map(path => path.split('.'))
+      .sort(compareLengthAsc);
+  }
+
+  foundBranchNode(
+    target: Object,
+  ): { branchNodeMap: Object, otherKeys: string[] } {
+    const branchNodeMap: Object = {};
+    const otherKeys = Object.keys(target).filter(key => {
+      const isHoc = isEmptyObject(target[key]);
+      if (isHoc) {
+        branchNodeMap[key] = true;
+      }
+      return !isHoc;
+    });
+    return { branchNodeMap, otherKeys };
+  }
+
+  getPathPrefix(key: string, space: number): string {
+    if (!key) {
+      return key;
+    }
+
+    const split = key.split('.');
+    if (split.length <= 1) {
+      return '';
+    }
+    const idx = split.slice(0, split.length - space);
+    return idx.join('.');
+  }
+
+  recuriseThemeMetaInfoTree(node: Object, childData: Object, out: any) {
+    this.tillChildDataByNode(node, childData);
     const { children } = node;
     if (!children || children.length === 0) {
       return;
     }
+
     children.forEach(childNode => {
       const { partName, themeMeta } = childNode;
 
-      if (partName && themeMeta) {
-        childData[partName] = deepMerge(childData[partName], themeMeta);
-      } else {
-        if (partName && !childData[partName] && themeMeta) {
-          childData[partName] = {};
-          this.recuriseThemeMetaInfoTree(
-            childNode,
-            childData[partName],
-            level + 1,
-          );
-        } else {
-          if (childNode.partName) {
-            this.recuriseThemeMetaInfoTree(childNode, childData, level + 1);
+      const { themeProps } = childNode;
+      if (!partName && themeProps) {
+        const { themeConfig } = themeProps;
+        if (themeConfig) {
+          const res = this.getOtherPath(themeConfig);
+          if (res.length > 0) {
+            this.recuriseTreeNode(childNode, res);
+            out.push(...res);
           }
         }
       }
+      if (!partName) {
+        return;
+      }
+      if (!this.tillChildDataByNode(childNode, childData)) {
+        if (themeMeta) {
+          this.recuriseThemeMetaInfoTree(
+            childNode,
+            (childData[partName] = {}),
+            out,
+          );
+        } else {
+          this.recuriseThemeMetaInfoTree(childNode, childData, out);
+        }
+      }
     });
+  }
+
+  recuriseTreeNode(node: Object, res: Object[]) {
+    const { children } = node;
+    children &&
+      children.forEach(childNode => {
+        const { partName: targetPartName, themeMeta = {} } = childNode;
+        targetPartName &&
+          res.forEach(item => {
+            const { partName, path } = item;
+            const partOf = `${partName}.`;
+            const idx = targetPartName.indexOf(partOf);
+            if (idx === 0) {
+              const targetPath = targetPartName.substr(partOf.length);
+              if (path[targetPath]) {
+                console.info(`存在了:${targetPath}`, path[targetPath]);
+                path[targetPath] = deepMerge(path[targetPath], themeMeta);
+              } else {
+                path[targetPath] = themeMeta;
+              }
+            }
+          });
+        this.recuriseTreeNode(childNode, res);
+      });
+  }
+
+  tillChildDataByNode(node: Object, childData: Object) {
+    if (!node || !childData) {
+      return false;
+    }
+    const { partName, themeMeta } = node;
+    if (partName && themeMeta) {
+      childData[partName] = themeMeta;
+      return true;
+    }
+    return false;
+  }
+
+  getOtherPath(themeConfig: Object): Object[] {
+    const res = [];
+    if (!themeConfig || typeof themeConfig !== 'object') {
+      return res;
+    }
+
+    Object.keys(themeConfig).forEach(partName => {
+      const item = themeConfig[partName];
+      if (!item) {
+        return;
+      }
+      if (partName === '__partName') {
+        res.push({
+          partName: item,
+          path: {},
+        });
+      }
+      res.push(...this.getOtherPath(item));
+    });
+    return res;
   }
 
   getNodeInfo(id: string, fields: string[]) {

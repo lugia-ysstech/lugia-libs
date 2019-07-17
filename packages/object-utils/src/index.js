@@ -5,6 +5,7 @@
  * @flow
  */
 import merge from 'deepmerge';
+import isPlainObject from 'is-plain-object';
 import type { DeepMergeOption } from '@lugia/object-utils';
 
 export function getAttributeFromObject(
@@ -93,6 +94,7 @@ export function deepMergeAnB(
     });
   return deepMerge(target, objectA, objectB);
 }
+
 export function isEmptyObject(obj: any) {
   if (obj === null || obj === undefined) {
     return true;
@@ -121,6 +123,60 @@ export function getAttributeValue(obj: Object, path: string[]): any {
   return target;
 }
 
+export function setAttributeValue(
+  outResult: Object,
+  paths: string[],
+  val: any,
+): void {
+  if (!outResult) {
+    return;
+  }
+  if (!paths || paths.length === 0) {
+    return;
+  }
+  const length = paths.length;
+  if (length === 0) {
+    return;
+  }
+
+  const fatherKey = paths[0];
+
+  if (length === 1) {
+    outResult[fatherKey] = val;
+    return;
+  }
+
+  const obj = outResult[fatherKey];
+  let father = isPlainObject(obj) ? obj || {} : {};
+  outResult[fatherKey] = father;
+  for (let i = 1; i < length - 1; i++) {
+    const thePath = paths[i];
+    let theFather = father[thePath];
+    if (!theFather) {
+      theFather = father[thePath] = {};
+    }
+
+    if (!isPlainObject(father[thePath])) {
+      father[thePath] = {};
+    }
+    father = father[thePath];
+  }
+
+  const valKey = paths[length - 1];
+  father[valKey] = val;
+}
+
+export function packPathObject(object: Object): Object {
+  const keys = Object.keys(object).sort((a, b) => a.length - b.length);
+  const outResult = {};
+  keys.forEach(key => {
+    const paths = key.split('.');
+    const item = object[key];
+    setAttributeValue(outResult, paths, item);
+  });
+  return outResult;
+}
+
 export function packObject(path: string[], value: any): Object {
   if (!path || path.length === 0) {
     return {};
@@ -139,4 +195,55 @@ export function packObject(path: string[], value: any): Object {
   });
 
   return result;
+}
+
+export function object2pathObject(obj: Object): Object {
+  return object2pathObjectHelper(obj, '');
+}
+
+function object2pathObjectHelper(obj: Object, father: string): Object {
+  if (!isPlainObject(obj)) {
+    return obj;
+  }
+
+  let res = {};
+
+  Object.keys(obj).forEach(key => {
+    const val = obj[key];
+    const targetKey = father ? `${father}.${key}` : key;
+    if (!isPlainObject(val)) {
+      res[targetKey] = val;
+    } else {
+      res = { ...res, ...object2pathObjectHelper(val, targetKey) };
+    }
+  });
+  return res;
+}
+export function diffABWhenAttrIfExist(objA: Object, objB: Object): string[] {
+  const res = [];
+  if (!objA || !objB) {
+    return res;
+  }
+
+  const pathObjectsA = object2pathObject(objA);
+  const pathObjectsB = object2pathObject(objB);
+  const pathsA = Object.keys(pathObjectsA);
+  const pathsB = Object.keys(pathObjectsB);
+  const minPath = pathsA.length > pathsB.length ? pathsA : pathsB;
+
+  function isNotEqualSimple(key) {
+    const path = key.split('.');
+    let valA = pathObjectsA[key] || getAttributeValue(objA, path);
+    let valB = pathObjectsB[key] || getAttributeValue(objB, path);
+    return valA != undefined && valB != undefined && valA != valB;
+  }
+
+  const resObj = {};
+  minPath.forEach(key => {
+    if (isNotEqualSimple(key)) {
+      resObj[key] = true;
+    }
+  });
+
+  return Object.keys(resObj);
 }

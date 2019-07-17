@@ -8,7 +8,7 @@
 import React from 'react';
 import CSSComponent from '@lugia/theme-css-hoc';
 
-export default CSSComponent({
+const Button = CSSComponent({
   tag: 'button',
   className: 'button',
   normal: {
@@ -47,3 +47,42 @@ export default CSSComponent({
     },
   },
 });
+
+export const BlackButton = CSSComponent({
+  extend: Button,
+  className: 'BlackButton',
+  normal: {
+    defaultTheme: {
+      background: {
+        color: 'black',
+      },
+    },
+  },
+});
+export const BlueButton = CSSComponent({
+  extend: Button,
+  className: 'BlueButton',
+  normal: {
+    defaultTheme: {
+      background: {
+        color: 'blue',
+      },
+      color: 'blue',
+    },
+  },
+});
+
+export const PinkButton = CSSComponent({
+  extend: Button,
+  className: 'BlueButton',
+  normal: {
+    defaultTheme: {
+      background: {
+        color: 'pink',
+      },
+      color: 'blue',
+    },
+  },
+});
+
+export default Button;

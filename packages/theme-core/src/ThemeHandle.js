@@ -135,21 +135,31 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     }
     const theme = this.getTheme() || {};
     const { [partName]: targetTheme } = theme;
+    const themeParthName = theme.__partName;
     if (!targetTheme) {
-      return this.packPartName({}, partName, theme);
+      return this.packPartName({}, partName, theme, themeParthName);
     }
-    return this.packPartName(targetTheme, partName, theme);
+    return this.packPartName(targetTheme, partName, theme, themeParthName);
   };
 
   packPartName(
     result: Object,
     partName: string,
     fatherTheme: Object = {},
+    themeParthName: any,
   ): void {
-    if (fatherTheme && fatherTheme.__partName) {
-      partName = fatherTheme.__partName + '.' + partName;
+    let partNameResult = [];
+    if (fatherTheme) {
+      const father = fatherTheme[partName];
+      if (father && father.__partName) {
+        partNameResult.push(father.__partName);
+      }
     }
-    result.__partName = partName;
+    if (themeParthName) {
+      partNameResult.push(themeParthName);
+    }
+    partNameResult.push(partName);
+    result.__partName = partNameResult.join('.');
     return result;
   }
 

@@ -2,13 +2,17 @@
 import {
   deepMerge,
   deepMergeAnB,
+  diffABWhenAttrIfExist,
   getAttributeFromObject,
+  getAttributeValue,
   getIndexfromKey,
   getKeyfromIndex,
-  getAttributeValue,
-  packObject,
   isEmptyObject,
   moveToTargetIfKeyIsInSource,
+  object2pathObject,
+  packObject,
+  packPathObject,
+  setAttributeValue,
 } from '../src/index';
 
 const Object = {
@@ -168,5 +172,313 @@ describe('Object', () => {
     expect(isEmptyObject({ a: 1 })).toBeFalsy();
     expect(isEmptyObject(0)).toBeTruthy();
     expect(isEmptyObject([])).toBeTruthy();
+  });
+
+  it('object2pathObject', () => {
+    expect(
+      object2pathObject({
+        a: {
+          b: 1,
+          c: 2,
+          f: {
+            h: 'fhello',
+            age: 155,
+          },
+          g: {
+            h: 'hello',
+            age: 15,
+          },
+
+          k: {
+            f: {
+              h: '11',
+              age: 55,
+            },
+            g: {
+              h: '22',
+              age: 2315,
+            },
+          },
+        },
+        d: 3,
+      }),
+    ).toEqual({
+      'a.b': 1,
+      'a.c': 2,
+      'a.g.h': 'hello',
+      'a.g.age': 15,
+      'a.f.h': 'fhello',
+      'a.f.age': 155,
+      'a.k.f.h': '11',
+      'a.k.f.age': 55,
+      'a.k.g.h': '22',
+      'a.k.g.age': 2315,
+      d: 3,
+    });
+  });
+
+  it('diffWhenAttrExistAandB d,f,g', () => {
+    expect(
+      diffABWhenAttrIfExist(
+        {
+          a: 'hello',
+          d: {
+            f: {
+              g: 100,
+            },
+          },
+        },
+        {
+          a: 'hello',
+          d: {
+            f: {
+              g: 101,
+              ab: 1,
+            },
+          },
+        },
+      ),
+    ).toEqual(['d.f.g']);
+  });
+
+  it('diffWhenAttrExistAandB adfg a', () => {
+    expect(
+      diffABWhenAttrIfExist(
+        {
+          a: {
+            d: {
+              f: {
+                g: 100,
+              },
+            },
+          },
+          d: {
+            f: {
+              g: 100,
+            },
+          },
+        },
+        {
+          a: 'hello',
+          d: {
+            f: {
+              g: 101,
+              ab: 1,
+            },
+          },
+        },
+      ),
+    ).toEqual(['a', 'd.f.g']);
+    expect(
+      diffABWhenAttrIfExist(
+        {
+          a: 'hello',
+          d: {
+            f: {
+              g: 101,
+              ab: 1,
+            },
+          },
+        },
+        {
+          a: {
+            d: {
+              f: {
+                g: 100,
+              },
+            },
+          },
+          d: {
+            f: {
+              g: 100,
+            },
+          },
+        },
+      ),
+    ).toEqual(['a', 'd.f.g']);
+  });
+  it('diffWhenAttrExistAandB dfg dfg', () => {
+    expect(
+      diffABWhenAttrIfExist(
+        {
+          a: 'hello',
+          d: {
+            f: {
+              g: 101,
+              ab: 1,
+              a: 'hello',
+            },
+          },
+        },
+        {
+          a: {
+            d: {
+              f: {
+                g: 100,
+              },
+            },
+          },
+          d: {
+            f: {
+              g: 100,
+              a: {
+                d: {
+                  f: {
+                    g: 100,
+                  },
+                },
+              },
+            },
+          },
+        },
+      ),
+    ).toEqual(['a', 'd.f.g', 'd.f.a']);
+  });
+  it('diffWhenAttrExistAandB', () => {
+    expect(diffABWhenAttrIfExist({}, {})).toEqual([]);
+
+    expect(
+      diffABWhenAttrIfExist(
+        {
+          a: 'hello',
+        },
+        {},
+      ),
+    ).toEqual([]);
+
+    expect(
+      diffABWhenAttrIfExist({
+        a: 'hello',
+      }),
+    ).toEqual([]);
+
+    expect(
+      diffABWhenAttrIfExist(
+        {
+          a: 'hello',
+        },
+        {
+          a: 'world',
+        },
+      ),
+    ).toEqual(['a']);
+
+    expect(
+      diffABWhenAttrIfExist(
+        {
+          a: 'hello',
+        },
+        {
+          a: 'hello',
+        },
+      ),
+    ).toEqual([]);
+  });
+
+  it('setAttributeValue', () => {
+    const obj = {};
+    setAttributeValue(obj, ['hello', 'name'], 'ligx');
+    expect(obj).toEqual({
+      hello: {
+        name: 'ligx',
+      },
+    });
+
+    setAttributeValue(obj, ['hello', 'age'], 15);
+
+    expect(obj).toEqual({
+      hello: {
+        name: 'ligx',
+        age: 15,
+      },
+    });
+
+    setAttributeValue(obj, ['hello', 'name'], { title: 'xiaoming' });
+    expect(obj).toEqual({
+      hello: {
+        name: { title: 'xiaoming' },
+        age: 15,
+      },
+    });
+
+    setAttributeValue(obj, ['hello', 'name', 'age'], 155);
+    expect(obj).toEqual({
+      hello: {
+        name: { title: 'xiaoming', age: 155 },
+        age: 15,
+      },
+    });
+
+    setAttributeValue(obj, ['hello', 'name'], 155);
+    expect(obj).toEqual({
+      hello: {
+        name: 155,
+        age: 15,
+      },
+    });
+
+    setAttributeValue(obj, ['hello', 'name', 'age'], 155);
+    expect(obj).toEqual({
+      hello: {
+        name: {
+          age: 155,
+        },
+        age: 15,
+      },
+    });
+
+    setAttributeValue(obj, ['hello'], 155);
+    expect(obj).toEqual({
+      hello: 155,
+    });
+    setAttributeValue(obj, ['hello', 'age'], 155);
+    expect(obj).toEqual({
+      hello: {
+        age: 155,
+      },
+    });
+    setAttributeValue(obj, ['hello', 'age'], 155);
+    expect(obj).toEqual({
+      hello: {
+        age: 155,
+      },
+    });
+    setAttributeValue(obj, ['hello', 'age', 'add', 'info'], {
+      ip: '1987',
+    });
+    expect(obj).toEqual({
+      hello: {
+        age: {
+          add: {
+            info: {
+              ip: '1987',
+            },
+          },
+        },
+      },
+    });
+  });
+
+  it('packPathObject', () => {
+    const res = packPathObject({
+      a: { val: 'hello' },
+      'a.b.c': { val: 'world' },
+      'b.d.e': {
+        val: 'bde',
+      },
+    });
+    expect(res).toEqual({
+      a: {
+        val: 'hello',
+        b: {
+          c: { val: 'world' },
+        },
+      },
+      b: {
+        d: {
+          e: { val: 'bde' },
+        },
+      },
+    });
   });
 });
