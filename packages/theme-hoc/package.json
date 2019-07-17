@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-hoc",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -23,12 +23,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/object-utils": "^1.0.10",
-    "@lugia/theme-core": "^1.0.23",
-    "@lugia/theme-hoc-devtools": "^1.0.3"
+    "@lugia/object-utils": "^1.0.11",
+    "@lugia/theme-core": "^1.0.24",
+    "@lugia/theme-hoc-devtools": "^1.0.4"
   },
   "devDependencies": {
-    "@lugia/theme-config": "^1.0.23"
+    "@lugia/theme-config": "^1.0.24"
   },
   "files": [
     "lib",
