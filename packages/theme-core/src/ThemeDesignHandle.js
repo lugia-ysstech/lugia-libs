@@ -140,122 +140,125 @@ export default class ThemeProviderHandler {
 
     let keys = Object.keys(path);
 
-    function merge(res, targetItem): Object {
-      const diffPath = diffABWhenAttrIfExist(res, targetItem);
-      res = deepMerge(res, targetItem);
-      diffPath.forEach(path => {
-        setAttributeValue(res, path.split('.'), undefined);
-      });
-      return res;
-    }
-
-    const isHocKey = {};
-
-    const hockeys = keys
-      .filter(key => {
-        isHocKey[key] = isEmptyObject(path[key]);
-        return isHocKey[key];
-      })
-      .sort(compareLengthDesc);
+    const hocTarget = this.getHocTarget(path);
+    const hockeys = Object.keys(hocTarget);
 
     if (hockeys.length > 0) {
-      const isDo = {};
       let res = {};
       for (let i = 0; i < hockeys.length; i++) {
-        const hocKey = hockeys[i];
-        const from = hocKey.length + 1;
-        for (let j = 0; j < keys.length; j++) {
-          const key = keys[j];
-          if (isDo[key]) {
-            continue;
-          }
-          if (key.startsWith(hocKey) && !isHocKey[key]) {
-            isDo[key] = true;
-            const part = key.substr(from);
-            const item = path[key];
-            res = merge(res, { [part]: item });
-          }
-        }
+        const head = hockeys[i];
+        console.info('head ', head, 'info', hocTarget[head]);
       }
       return res;
     } else {
       let res = path[keys[0]];
       for (let i = 1; i < keys.length; i++) {
         const targetItem = path[keys[i]];
-        res = merge(res, targetItem);
+        res = this.merge(res, targetItem);
       }
       return res;
     }
   }
 
-  getHocTarget(target: Object): Object[] {
-    const level2HocKeys = {};
-    const rootField = '__root__';
-    const root = {
-      key: rootField,
-      children: [],
-    };
+  merge(res: Object, targetItem: Object): Object {
+    const diffPath = diffABWhenAttrIfExist(res, targetItem);
+    res = deepMerge(res, targetItem);
+    diffPath.forEach(path => {
+      setAttributeValue(res, path.split('.'), undefined);
+    });
+    return res;
+  }
 
-    const nodeMap: Object = {
-      [rootField]: root,
-    };
-    const allNodeMap = {
-      [rootField]: root,
-    };
-    const allKeys = Object.keys(target).filter(key => {
+  getHocTarget(target: Object): Object {
+    const { otherKeys, branchNodeMap } = this.foundBranchNode(target);
+    const lastBranchNode = {};
+    otherKeys.forEach(key => {
+      const prefix = this.getPathPrefix(key, 1);
+      if (prefix && branchNodeMap[prefix]) {
+        lastBranchNode[prefix] = true;
+      }
+    });
+
+    const paths = this.sortBranchNodeMapAcsByLevelCount(lastBranchNode);
+    const targetBranch = this.fetchTargetBranch(paths);
+
+    const result = {};
+    otherKeys.forEach(key => {
+      const branchPath = this.getPathIfInBranchObject(
+        targetBranch,
+        key.split('.'),
+      );
+      if (branchPath) {
+        let items = result[branchPath];
+        if (!items) {
+          items = result[branchPath] = [];
+        }
+        items.push(key);
+      }
+    });
+    return result;
+  }
+
+  pullHocPathData(head: string, paths: string[], target: Object): Object {
+    return {};
+  }
+
+  getPathIfInBranchObject(branchObject: Object, path: string[]): ?string {
+    for (let i = 0; i < path.length; i++) {
+      const key = path.slice(0, i + 1).join('.');
+      if (branchObject[key]) {
+        return key;
+      }
+    }
+    return;
+  }
+
+  isInBranchObject(targetBranch: Object, path: string[]) {
+    return !!this.getPathIfInBranchObject(targetBranch, path);
+  }
+
+  fetchTargetBranch(paths: Array<string[]>): Object {
+    const targetBranch: Object = {};
+
+    paths.forEach((path: string[]) => {
+      if (!this.isInBranchObject(targetBranch, path)) {
+        targetBranch[path.join('.')] = true;
+      }
+    });
+    return targetBranch;
+  }
+
+  sortBranchNodeMapAcsByLevelCount(branchNodeMap: Object): Array<string[]> {
+    return Object.keys(branchNodeMap)
+      .map(path => path.split('.'))
+      .sort(compareLengthAsc);
+  }
+
+  foundBranchNode(
+    target: Object,
+  ): { branchNodeMap: Object, otherKeys: string[] } {
+    const branchNodeMap: Object = {};
+    const otherKeys = Object.keys(target).filter(key => {
       const isHoc = isEmptyObject(target[key]);
       if (isHoc) {
-        const { prefix: fatherKey, self } = this.getPathPrefix(key, 1);
-        const node = {
-          key: self,
-          children: [],
-        };
-        nodeMap[key] = node;
-        const fatherNode = allNodeMap[fatherKey];
-        if (fatherNode) {
-          fatherNode.children.push(node);
-          delete nodeMap[key];
-        }
-        allNodeMap[key] = node;
+        branchNodeMap[key] = true;
       }
       return !isHoc;
     });
-
-    allKeys.forEach(key => {
-      const { prefix: fatherKey, self } = this.getPathPrefix(key, 1);
-      const fatherNode = allNodeMap[fatherKey];
-      const node = {
-        key,
-        data: target[key],
-      };
-      nodeMap[key] = node;
-      if (fatherNode) {
-        fatherNode.children.push(node);
-        delete nodeMap[key];
-      }
-    });
-    console.info(nodeMap);
-    console.info(allNodeMap);
-    return [];
+    return { branchNodeMap, otherKeys };
   }
 
-  getPathPrefix(key: string, space: number): Object {
+  getPathPrefix(key: string, space: number): string {
     if (!key) {
       return key;
     }
 
     const split = key.split('.');
     if (split.length <= 1) {
-      return {
-        prefix: '',
-        self: key,
-      };
+      return '';
     }
     const idx = split.slice(0, split.length - space);
-    return {
-      prefix: idx.join('.'),
-      self: split.slice(split.length - space).join('.'),
-    };
+    return idx.join('.');
   }
 
   recuriseThemeMetaInfoTree(node: Object, childData: Object, out: any) {
@@ -307,11 +310,13 @@ export default class ThemeProviderHandler {
             const partOf = `${partName}.`;
             const idx = targetPartName.indexOf(partOf);
             if (idx === 0) {
-              if (path[targetPartName.substr(partOf.length)]) {
-                console.info('存在了1 ');
+              const targetPath = targetPartName.substr(partOf.length);
+              if (path[targetPath]) {
+                console.info(`存在了:${targetPath}`, path[targetPath]);
+                path[targetPath] = deepMerge(path[targetPath], themeMeta);
+              } else {
+                path[targetPath] = themeMeta;
               }
-
-              path[targetPartName.substr(partOf.length)] = themeMeta;
             }
           });
         this.recuriseTreeNode(childNode, res);

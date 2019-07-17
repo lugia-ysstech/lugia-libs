@@ -28,6 +28,24 @@ const TwoLevelDemo = Factory(Two, {}, 'two');
 const ThreeLevelDemo = Factory(
   ThreeLevel,
   {
+    Root: {
+      A: {
+        B: {
+          C: {
+            C1: {
+              normal: {
+                background: 'c1',
+              },
+            },
+            C2: {
+              normal: {
+                background: 'c2',
+              },
+            },
+          },
+        },
+      },
+    },
     FBButtonA: {
       PartA: {
         normal: {

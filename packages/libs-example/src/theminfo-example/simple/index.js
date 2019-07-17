@@ -1,6 +1,6 @@
 /**
  *
- * 单个简单的组件
+ * 直接使用配置的项(normal,hover)作为 themeProps
  * create by ligx
  *
  * @flow

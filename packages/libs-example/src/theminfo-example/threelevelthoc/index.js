@@ -1,6 +1,6 @@
 /**
  *
- * 单个简单的组件
+ * 综合使用的例子
  * create by ligx
  *
  * @flow
@@ -11,6 +11,9 @@ import Two from '../twolevelthoc';
 import Four from '../four';
 import Button from '../base/button';
 import Simple from '../simple';
+import Single from '../single';
+import Abc from '../abc';
+import PackAbc from '../packabc';
 import { deepMerge } from '../../../../object-utils/src';
 
 export default ThemeHoc(
@@ -46,14 +49,17 @@ export default ThemeHoc(
       };
       const FourC = {
         FourC: {
-          BButtonBPartA_0: this.props.getPartOfThemeConfig('FBButtonA'),
-          BButtonBPartB_0: this.props.getPartOfThemeConfig('FBButtonBPartA'),
+          Two: this.props.getPartOfThemeConfig('FTwo'),
+          BButtonBPartA_0: this.props.getPartOfThemeConfig('FBButtonBPartA'),
+          BButtonA_0: this.props.getPartOfThemeConfig('FBButtonA'),
         },
       };
       return (
         <div {...addMouseEvent(this)} style={{ border: '1px solid' }}>
           three
           <Four viewClass={'FourC'} theme={FourC} />
+          <Abc {...this.props.getPartOfThemeHocProps('Root')} />
+          <PackAbc {...this.props.getPartOfThemeHocProps('Root')} />
           <Two viewClass={'TwoC'} theme={TwoC} />
           <Two {...this.props.getPartOfThemeHocProps('BigA')} />
           <Two {...this.props.getPartOfThemeHocProps('BigB')} />
