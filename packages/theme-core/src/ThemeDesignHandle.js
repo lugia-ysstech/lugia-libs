@@ -76,25 +76,6 @@ export default class ThemeProviderHandler {
       });
 
       let paths: any = Object.values(themeOrCSSId2Path).sort(compareLengthAsc);
-      // for (let i = 0; i < paths.length; i++) {
-      //   const path = paths[ i ];
-      //   if (path && path.length === 0) {
-      //     continue;
-      //   }
-      //   const result = [ path[ 0 ] ];
-      //   for (let j = 1; j < path.length; j++) {
-      //     const id = path[ j ];
-      //     let reactNodeInfo = getReactNodeInfo(id);
-      //     if (reactNodeInfo) {
-      //       let name = reactNodeInfo.name;
-      //       if (isCSSComponent(name)) {
-      //         result.push(id);
-      //       }
-      //     }
-      //   }
-      //   paths[i] = result;
-      // }
-
       const id2Node = {};
       const nodes = [];
       paths.forEach((path: any) => {
