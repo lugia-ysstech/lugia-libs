@@ -9,7 +9,7 @@ import React from 'react';
 import ThemeHoc, { addMouseEvent } from '@lugia/theme-hoc';
 import Two from '../twolevelthoc';
 import Four from '../four';
-import Button from '../base/button';
+import Button, { PinkButton, BlueButton, BlackButton } from '../base/button';
 import Simple from '../simple';
 import Single from '../single';
 import Abc from '../abc';
@@ -63,6 +63,18 @@ export default ThemeHoc(
           <Two viewClass={'TwoC'} theme={TwoC} />
           <Two {...this.props.getPartOfThemeHocProps('BigA')} />
           <Two {...this.props.getPartOfThemeHocProps('BigB')} />
+          <PinkButton themeProps={this.props.getPartOfThemeProps('Button')}>
+            普通的
+          </PinkButton>
+          <PinkButton themeProps={this.props.getPartOfThemeProps('Button')}>
+            粉色
+          </PinkButton>
+          <BlueButton themeProps={this.props.getPartOfThemeProps('Button')}>
+            粉色
+          </BlueButton>
+          <PinkButton themeProps={this.props.getPartOfThemeProps('Button')}>
+            粉色
+          </PinkButton>
         </div>
       );
     }

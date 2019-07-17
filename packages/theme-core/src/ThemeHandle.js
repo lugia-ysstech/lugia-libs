@@ -129,17 +129,25 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     };
   };
 
-  getPartOfThemeConfig = (partName: string): Object => {
+  getPartOfThemeConfig = (partName: string, sign: boolean = false): Object => {
+    function fillSign(result) {
+      if (sign) {
+        result.__sign = true;
+      }
+      return result;
+    }
     if (!partName) {
-      return this.packPartName({}, partName);
+      return fillSign(this.packPartName({}, partName));
     }
     const theme = this.getTheme() || {};
     const { [partName]: targetTheme } = theme;
-    const themeParthName = theme.__partName;
+    const themePartName = theme.__partName;
     if (!targetTheme) {
-      return this.packPartName({}, partName, theme, themeParthName);
+      return fillSign(this.packPartName({}, partName, theme, themePartName));
     }
-    return this.packPartName(targetTheme, partName, theme, themeParthName);
+    return fillSign(
+      this.packPartName(targetTheme, partName, theme, themePartName),
+    );
   };
 
   packPartName(
