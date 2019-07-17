@@ -8,7 +8,7 @@ import React from 'react';
 
 import Factory from './Factory';
 import Simple from './simple';
-import Two from './twolevelthoc';
+import Two from './twolevelthocwrapcsshoc';
 import ThreeLevel from './threelevelthoc';
 
 const SimpleDemo = Factory(
@@ -99,6 +99,7 @@ export default () => {
   return (
     <div>
       <ThreeLevelDemo />
+      <TwoLevelDemo />
     </div>
   );
 };

@@ -186,7 +186,7 @@ export default class ThemeProviderHandler {
     }
 
     children.forEach(childNode => {
-      const { partName, themeMeta } = childNode;
+      const { partName, themeMeta, isCSSCmp } = childNode;
 
       const { themeProps } = childNode;
       if (!partName && themeProps) {
@@ -202,16 +202,15 @@ export default class ThemeProviderHandler {
       if (!partName) {
         return;
       }
-      if (!this.tillChildDataByNode(childNode, childData)) {
-        if (themeMeta) {
-          this.recuriseThemeMetaInfoTree(
-            childNode,
-            (childData[partName] = {}),
-            out,
-          );
-        } else {
-          this.recuriseThemeMetaInfoTree(childNode, childData, out);
-        }
+      this.tillChildDataByNode(childNode, childData);
+      if (themeMeta && !isCSSCmp) {
+        this.recuriseThemeMetaInfoTree(
+          childNode,
+          (childData[partName] = {}),
+          out,
+        );
+      } else {
+        this.recuriseThemeMetaInfoTree(childNode, childData, out);
       }
     });
   }

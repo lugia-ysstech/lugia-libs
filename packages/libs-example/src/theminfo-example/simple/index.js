@@ -8,6 +8,7 @@
 import React from 'react';
 import BaseButton, { BlackButton } from '../base/button';
 import ThemeHoc, { addMouseEvent } from '@lugia/theme-hoc';
+
 export default ThemeHoc(
   class extends React.Component<any, any> {
     render() {
