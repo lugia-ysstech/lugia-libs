@@ -204,23 +204,68 @@ describe('ThemeHandle.test.js', () => {
     const res = handle.getHocTarget(target);
     expect(res).toEqual({
       'A.B.C.C1': [
-        'A.B.C.C1.PartA',
-        'A.B.C.C1.ButtonA.PartA',
-        'A.B.C.C1.ButtonA.ButtonAB.PartA',
-        'A.B.C.C1.ButtonA.PartB',
-        'A.B.C.C1.ButtonA.PartC',
-        'A.B.C.C1.ButtonB.PartA',
-        'A.B.C.C1.ButtonB.PartB',
-        'A.B.C.C1.ButtonB.PartC',
+        {
+          father: 'A.B.C.C1',
+          key: 'A.B.C.C1.PartA',
+        },
+        {
+          father: 'A.B.C.C1.ButtonA',
+          key: 'A.B.C.C1.ButtonA.PartA',
+        },
+        {
+          father: 'A.B.C.C1.ButtonA.ButtonAB',
+          key: 'A.B.C.C1.ButtonA.ButtonAB.PartA',
+        },
+        {
+          father: 'A.B.C.C1.ButtonA',
+          key: 'A.B.C.C1.ButtonA.PartB',
+        },
+        {
+          father: 'A.B.C.C1.ButtonA',
+          key: 'A.B.C.C1.ButtonA.PartC',
+        },
+        {
+          father: 'A.B.C.C1.ButtonB',
+          key: 'A.B.C.C1.ButtonB.PartA',
+        },
+        {
+          father: 'A.B.C.C1.ButtonB',
+          key: 'A.B.C.C1.ButtonB.PartB',
+        },
+        {
+          father: 'A.B.C.C1.ButtonB',
+          key: 'A.B.C.C1.ButtonB.PartC',
+        },
       ],
       'A.B.C.C2': [
-        'A.B.C.C2.PartA',
-        'A.B.C.C2.ButtonA.PartA',
-        'A.B.C.C2.ButtonA.PartB',
-        'A.B.C.C2.ButtonA.PartC',
-        'A.B.C.C2.ButtonB.PartA',
-        'A.B.C.C2.ButtonB.PartB',
-        'A.B.C.C2.ButtonB.PartC',
+        {
+          father: 'A.B.C.C2',
+          key: 'A.B.C.C2.PartA',
+        },
+        {
+          father: 'A.B.C.C2.ButtonA',
+          key: 'A.B.C.C2.ButtonA.PartA',
+        },
+        {
+          father: 'A.B.C.C2.ButtonA',
+          key: 'A.B.C.C2.ButtonA.PartB',
+        },
+        {
+          father: 'A.B.C.C2.ButtonA',
+          key: 'A.B.C.C2.ButtonA.PartC',
+        },
+        {
+          father: 'A.B.C.C2.ButtonB',
+          key: 'A.B.C.C2.ButtonB.PartA',
+        },
+        {
+          father: 'A.B.C.C2.ButtonB',
+          key: 'A.B.C.C2.ButtonB.PartB',
+        },
+        {
+          father: 'A.B.C.C2.ButtonB',
+          key: 'A.B.C.C2.ButtonB.PartC',
+        },
       ],
     });
   });
@@ -250,11 +295,26 @@ describe('ThemeHandle.test.js', () => {
     });
     expect(res).toEqual({
       'a.b': [
-        'a.b.partA',
-        'a.b.partB',
-        'a.b.c.partA',
-        'a.b.c.partB',
-        'a.b.c.partC',
+        {
+          father: 'a.b',
+          key: 'a.b.partA',
+        },
+        {
+          father: 'a.b',
+          key: 'a.b.partB',
+        },
+        {
+          father: 'a.b.c',
+          key: 'a.b.c.partA',
+        },
+        {
+          father: 'a.b.c',
+          key: 'a.b.c.partB',
+        },
+        {
+          father: 'a.b.c',
+          key: 'a.b.c.partC',
+        },
       ],
     });
   });
@@ -286,9 +346,36 @@ describe('ThemeHandle.test.js', () => {
       'a.3.5.6.f.k4': { normal: {} },
     });
     expect(res).toEqual({
-      'a.1.2.3.b': ['a.1.2.3.b.k1', 'a.1.2.3.b.k4'],
-      'a.3.5.6.f': ['a.3.5.6.f.k3', 'a.3.5.6.f.k4'],
-      'a.b': ['a.b.k1', 'a.b.k2'],
+      'a.1.2.3.b': [
+        {
+          father: 'a.1.2.3.b',
+          key: 'a.1.2.3.b.k1',
+        },
+        {
+          father: 'a.1.2.3.b',
+          key: 'a.1.2.3.b.k4',
+        },
+      ],
+      'a.3.5.6.f': [
+        {
+          father: 'a.3.5.6.f',
+          key: 'a.3.5.6.f.k3',
+        },
+        {
+          father: 'a.3.5.6.f',
+          key: 'a.3.5.6.f.k4',
+        },
+      ],
+      'a.b': [
+        {
+          father: 'a.b',
+          key: 'a.b.k1',
+        },
+        {
+          father: 'a.b',
+          key: 'a.b.k2',
+        },
+      ],
     });
   });
 
@@ -318,8 +405,26 @@ describe('ThemeHandle.test.js', () => {
       'a.3.5.6.f.k4': { normal: {} },
     });
     expect(res).toEqual({
-      'a.1.2.3.b': ['a.1.2.3.b.k1', 'a.1.2.3.b.k4'],
-      'a.b': ['a.b.k1', 'a.b.k2'],
+      'a.1.2.3.b': [
+        {
+          father: 'a.1.2.3.b',
+          key: 'a.1.2.3.b.k1',
+        },
+        {
+          father: 'a.1.2.3.b',
+          key: 'a.1.2.3.b.k4',
+        },
+      ],
+      'a.b': [
+        {
+          father: 'a.b',
+          key: 'a.b.k1',
+        },
+        {
+          father: 'a.b',
+          key: 'a.b.k2',
+        },
+      ],
     });
   });
 
@@ -612,11 +717,13 @@ describe('ThemeHandle.test.js', () => {
     ).toEqual(true);
   });
 
-  it('getKeyIfInTargetBranch', () => {
+  it('getPathIfInBranchObjectLeft2Right', () => {
     const handle = new ThemeDesignHandle('11');
-    expect(handle.getPathIfInBranchObject({}, ['a', 'b'])).toEqual(undefined);
+    expect(handle.getPathIfInBranchObjectLeft2Right({}, ['a', 'b'])).toEqual(
+      undefined,
+    );
     expect(
-      handle.getPathIfInBranchObject(
+      handle.getPathIfInBranchObjectLeft2Right(
         {
           a: true,
           g: true,
@@ -626,7 +733,7 @@ describe('ThemeHandle.test.js', () => {
     ).toEqual('a');
 
     expect(
-      handle.getPathIfInBranchObject(
+      handle.getPathIfInBranchObjectLeft2Right(
         {
           a: true,
           g: true,
@@ -636,7 +743,7 @@ describe('ThemeHandle.test.js', () => {
     ).toEqual('a');
 
     expect(
-      handle.getPathIfInBranchObject(
+      handle.getPathIfInBranchObjectLeft2Right(
         {
           'a.e.f': true,
           g: true,
@@ -645,7 +752,7 @@ describe('ThemeHandle.test.js', () => {
       ),
     ).toEqual('a.e.f');
     expect(
-      handle.getPathIfInBranchObject(
+      handle.getPathIfInBranchObjectLeft2Right(
         {
           'a.e.f.g.h': true,
           g: true,
@@ -655,57 +762,447 @@ describe('ThemeHandle.test.js', () => {
     ).toEqual('a.e.f.g.h');
   });
 
-  it('merge', () => {
+  it('getPathIfInBranchObjectRight2Left', () => {
+    const handle = new ThemeDesignHandle('11');
+    expect(handle.getPathIfInBranchObjectRight2Left({}, ['a', 'b'])).toEqual(
+      undefined,
+    );
+    expect(
+      handle.getPathIfInBranchObjectRight2Left(
+        {
+          a: true,
+          'a.b': true,
+          g: true,
+        },
+        ['a', 'b'],
+      ),
+    ).toEqual('a.b');
+    expect(
+      handle.getPathIfInBranchObjectRight2Left(
+        {
+          a: true,
+          g: true,
+          'a.b': true,
+        },
+        ['a', 'b'],
+      ),
+    ).toEqual('a.b');
+  });
+
+  it('getHocTarget', () => {
+    const handle = new ThemeDesignHandle('11');
+    const path = {
+      'Two.TwoTwo.TwoTwoTwo': {},
+      'Two.TwoTwo.TwoTwoTwo.PartA': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonA': {},
+      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartA': {
+        current: { background: { color: 'orange' }, color: 'green' },
+        normal: { background: { color: 'orange' }, color: 'green' },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartB': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartC': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonB': {},
+      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartA': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartB': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartC': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      Two: {},
+      'Two.PartA': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonA': {},
+      'Two.ButtonA.PartA': {
+        current: { background: { color: 'orange' }, color: 'green' },
+        normal: { background: { color: 'orange' }, color: 'green' },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonA.PartB': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonA.PartC': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonB': {},
+      'Two.ButtonB.PartA': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonB.PartB': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonB.PartC': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+    };
+    expect(handle.getHocTarget(path)).toEqual({
+      Two: [
+        { key: 'Two.TwoTwo.TwoTwoTwo.PartA', father: 'Two.TwoTwo.TwoTwoTwo' },
+        {
+          key: 'Two.TwoTwo.TwoTwoTwo.ButtonA.PartA',
+          father: 'Two.TwoTwo.TwoTwoTwo.ButtonA',
+        },
+        {
+          key: 'Two.TwoTwo.TwoTwoTwo.ButtonA.PartB',
+          father: 'Two.TwoTwo.TwoTwoTwo.ButtonA',
+        },
+        {
+          key: 'Two.TwoTwo.TwoTwoTwo.ButtonA.PartC',
+          father: 'Two.TwoTwo.TwoTwoTwo.ButtonA',
+        },
+        {
+          key: 'Two.TwoTwo.TwoTwoTwo.ButtonB.PartA',
+          father: 'Two.TwoTwo.TwoTwoTwo.ButtonB',
+        },
+        {
+          key: 'Two.TwoTwo.TwoTwoTwo.ButtonB.PartB',
+          father: 'Two.TwoTwo.TwoTwoTwo.ButtonB',
+        },
+        {
+          key: 'Two.TwoTwo.TwoTwoTwo.ButtonB.PartC',
+          father: 'Two.TwoTwo.TwoTwoTwo.ButtonB',
+        },
+        { key: 'Two.PartA', father: 'Two' },
+        { key: 'Two.ButtonA.PartA', father: 'Two.ButtonA' },
+        { key: 'Two.ButtonA.PartB', father: 'Two.ButtonA' },
+        { key: 'Two.ButtonA.PartC', father: 'Two.ButtonA' },
+        { key: 'Two.ButtonB.PartA', father: 'Two.ButtonB' },
+        { key: 'Two.ButtonB.PartB', father: 'Two.ButtonB' },
+        { key: 'Two.ButtonB.PartC', father: 'Two.ButtonB' },
+      ],
+    });
+  });
+  it('getHocTarget B', () => {
+    const handle = new ThemeDesignHandle('11');
+    const path = {
+      'BButtonA_0.BBBButtonA.ButtonA.ButtonA': {},
+      'BButtonA_0.BBBButtonA.ButtonA.ButtonA.PartA': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'BButtonA_0.BBBButtonA.ButtonA.ButtonA.PartB': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'BButtonA_0.BBBButtonA.ButtonA.ButtonA.PartC': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+    };
+    expect(handle.getHocTarget(path)).toEqual({
+      'BButtonA_0.BBBButtonA.ButtonA.ButtonA': [
+        {
+          father: 'BButtonA_0.BBBButtonA.ButtonA.ButtonA',
+          key: 'BButtonA_0.BBBButtonA.ButtonA.ButtonA.PartA',
+        },
+        {
+          father: 'BButtonA_0.BBBButtonA.ButtonA.ButtonA',
+          key: 'BButtonA_0.BBBButtonA.ButtonA.ButtonA.PartB',
+        },
+        {
+          father: 'BButtonA_0.BBBButtonA.ButtonA.ButtonA',
+          key: 'BButtonA_0.BBBButtonA.ButtonA.ButtonA.PartC',
+        },
+      ],
+    });
+  });
+  it('pullHocPathData', () => {
     const handle = new ThemeDesignHandle('11');
     const paths = [
-      'Two.TwoTwo.TwoTwoTwo.PartA',
-      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartA',
-      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartB',
-      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartC',
-      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartA',
-      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartB',
-      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartC',
-      'Two.PartA',
-      'Two.ButtonA.PartA',
-      'Two.ButtonA.PartB',
-      'Two.ButtonA.PartC',
-      'Two.ButtonB.PartA',
-      'Two.ButtonB.PartB',
-      'Two.ButtonB.PartC',
+      { key: 'Two.TwoTwo.TwoTwoTwo.PartA', father: 'Two.TwoTwo.TwoTwoTwo' },
+      {
+        key: 'Two.TwoTwo.TwoTwoTwo.ButtonA.PartA',
+        father: 'Two.TwoTwo.TwoTwoTwo.ButtonA',
+      },
+      {
+        key: 'Two.TwoTwo.TwoTwoTwo.ButtonA.PartB',
+        father: 'Two.TwoTwo.TwoTwoTwo.ButtonA',
+      },
+      {
+        key: 'Two.TwoTwo.TwoTwoTwo.ButtonA.PartC',
+        father: 'Two.TwoTwo.TwoTwoTwo.ButtonA',
+      },
+      {
+        key: 'Two.TwoTwo.TwoTwoTwo.ButtonB.PartA',
+        father: 'Two.TwoTwo.TwoTwoTwo.ButtonB',
+      },
+      {
+        key: 'Two.TwoTwo.TwoTwoTwo.ButtonB.PartB',
+        father: 'Two.TwoTwo.TwoTwoTwo.ButtonB',
+      },
+      {
+        key: 'Two.TwoTwo.TwoTwoTwo.ButtonB.PartC',
+        father: 'Two.TwoTwo.TwoTwoTwo.ButtonB',
+      },
+      { key: 'Two.PartA', father: 'Two' },
+      { key: 'Two.ButtonA.PartA', father: 'Two.ButtonA' },
+      { key: 'Two.ButtonA.PartB', father: 'Two.ButtonA' },
+      { key: 'Two.ButtonA.PartC', father: 'Two.ButtonA' },
+      { key: 'Two.ButtonB.PartA', father: 'Two.ButtonB' },
+      { key: 'Two.ButtonB.PartB', father: 'Two.ButtonB' },
+      { key: 'Two.ButtonB.PartC', father: 'Two.ButtonB' },
     ];
 
     const target = {
-      'Two.TwoTwo.TwoTwoTwo.PartA': { a: 1, b: 2 },
-
-      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartA': { a: 1, b: 2 },
-      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartB': { a: 1, b: 2 },
-      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartC': { a: 1, b: 2 },
-
-      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartA': { a: 1, b: 2 },
-      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartB': { a: 1, b: 2 },
-      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartC': { a: 1, b: 2 },
-
-      'Two.PartA': { a: 1, b: 2 },
-
-      'Two.ButtonA.PartA': { a: 1, b: 2 },
-      'Two.ButtonA.PartB': { a: 1, b: 2 },
-      'Two.ButtonA.PartC': { a: 1, b: 2 },
-
-      'Two.ButtonB.PartA': { a: 1, b: 2 },
-      'Two.ButtonB.PartB': { a: 1, b: 2 },
-      'Two.ButtonB.PartC': { a: 1, b: 2 },
-    };
-    expect(handle.pullHocPathData('Two', paths, target)).toEqual({
-      PartA: { a: 1, b: 2 },
-      ButtonA: {
-        PartA: { a: 1, b: 2 },
-        PartB: { a: 1, b: 2 },
-        PartC: { a: 1, b: 2 },
+      'Two.TwoTwo.TwoTwoTwo': {},
+      'Two.TwoTwo.TwoTwoTwo.PartA': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
       },
-      ButtonB: {
-        PartA: { a: 1, b: 2 },
-        PartB: { a: 1, b: 2 },
-        PartC: { a: 1, b: 2 },
+      'Two.TwoTwo.TwoTwoTwo.ButtonA': {},
+      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartA': {
+        current: { background: { color: 'orange' }, color: 'green' },
+        normal: { background: { color: 'orange' }, color: 'green' },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartB': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonA.PartC': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonB': {},
+      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartA': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartB': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.TwoTwo.TwoTwoTwo.ButtonB.PartC': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      Two: {},
+      'Two.PartA': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonA': {},
+      'Two.ButtonA.PartA': {
+        current: { background: { color: 'orange' }, color: 'green' },
+        normal: { background: { color: 'orange' }, color: 'green' },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonA.PartB': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonA.PartC': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonB': {},
+      'Two.ButtonB.PartA': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonB.PartB': {
+        current: { background: { color: 'black' } },
+        normal: { background: { color: 'black' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+      'Two.ButtonB.PartC': {
+        current: { background: { color: 'orange' } },
+        normal: { background: { color: 'orange' } },
+        hover: { background: { color: 'blue' } },
+        active: { background: { color: 'purple' } },
+        disabled: { background: { color: 'black' } },
+      },
+    };
+    expect(handle.pullHocPathData(paths, target)).toEqual({
+      PartA: {
+        active: {
+          background: {
+            color: 'purple',
+          },
+        },
+        current: {
+          background: {
+            color: 'orange',
+          },
+          color: 'green',
+        },
+        disabled: {
+          background: {
+            color: 'black',
+          },
+        },
+        hover: {
+          background: {
+            color: 'blue',
+          },
+        },
+        normal: {
+          background: {
+            color: 'orange',
+          },
+          color: 'green',
+        },
+      },
+      PartB: {
+        active: {
+          background: {
+            color: 'purple',
+          },
+        },
+        current: {
+          background: {
+            color: 'black',
+          },
+        },
+        disabled: {
+          background: {
+            color: 'black',
+          },
+        },
+        hover: {
+          background: {
+            color: 'blue',
+          },
+        },
+        normal: {
+          background: {
+            color: 'black',
+          },
+        },
+      },
+      PartC: {
+        active: {
+          background: {
+            color: 'purple',
+          },
+        },
+        current: {
+          background: {
+            color: 'orange',
+          },
+        },
+        disabled: {
+          background: {
+            color: 'black',
+          },
+        },
+        hover: {
+          background: {
+            color: 'blue',
+          },
+        },
+        normal: {
+          background: {
+            color: 'orange',
+          },
+        },
       },
     });
   });

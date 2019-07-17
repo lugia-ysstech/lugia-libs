@@ -147,7 +147,6 @@ export default class ThemeProviderHandler {
       let res = {};
       for (let i = 0; i < hockeys.length; i++) {
         const head = hockeys[i];
-        console.info('head ', head, 'info', hocTarget[head]);
       }
       return res;
     } else {
@@ -184,26 +183,42 @@ export default class ThemeProviderHandler {
 
     const result = {};
     otherKeys.forEach(key => {
-      const branchPath = this.getPathIfInBranchObject(
+      let paths = key.split('.');
+      const branchPath = this.getPathIfInBranchObjectLeft2Right(
         targetBranch,
-        key.split('.'),
+        paths,
+      );
+      const father = this.getPathIfInBranchObjectRight2Left(
+        branchNodeMap,
+        paths,
       );
       if (branchPath) {
         let items = result[branchPath];
         if (!items) {
           items = result[branchPath] = [];
         }
-        items.push(key);
+        items.push({ key, father });
       }
     });
     return result;
   }
 
-  pullHocPathData(head: string, paths: string[], target: Object): Object {
-    return {};
+  pullHocPathData(paths: Object[], target: Object): Object {
+    let res = {};
+    paths.forEach(item => {
+      const { key, father } = item;
+      let partName = key.substr(father.length + 1);
+      res = this.merge(res, {
+        [partName]: target[key],
+      });
+    });
+    return res;
   }
 
-  getPathIfInBranchObject(branchObject: Object, path: string[]): ?string {
+  getPathIfInBranchObjectLeft2Right(
+    branchObject: Object,
+    path: string[],
+  ): ?string {
     for (let i = 0; i < path.length; i++) {
       const key = path.slice(0, i + 1).join('.');
       if (branchObject[key]) {
@@ -213,8 +228,21 @@ export default class ThemeProviderHandler {
     return;
   }
 
+  getPathIfInBranchObjectRight2Left(
+    branchObject: Object,
+    path: string[],
+  ): ?string {
+    for (let i = path.length; i > 0; i--) {
+      const key = path.slice(0, i).join('.');
+      if (branchObject[key]) {
+        return key;
+      }
+    }
+    return;
+  }
+
   isInBranchObject(targetBranch: Object, path: string[]) {
-    return !!this.getPathIfInBranchObject(targetBranch, path);
+    return !!this.getPathIfInBranchObjectLeft2Right(targetBranch, path);
   }
 
   fetchTargetBranch(paths: Array<string[]>): Object {
@@ -303,7 +331,8 @@ export default class ThemeProviderHandler {
     const { children } = node;
     children &&
       children.forEach(childNode => {
-        const { partName: targetPartName, themeMeta = {} } = childNode;
+        const { partName: targetPartName, themeMeta = {}, sign } = childNode;
+
         targetPartName &&
           res.forEach(item => {
             const { partName, path } = item;
@@ -410,7 +439,7 @@ export default class ThemeProviderHandler {
     if (themeProps) {
       result.themeProps = themeProps;
       const { themeConfig = {} } = themeProps;
-      const { __partName, __index, __count } = themeConfig;
+      const { __partName, __index, __count, __sign } = themeConfig;
       if (__partName) {
         result.partName = __partName;
       }
