@@ -20,6 +20,7 @@ declare module '@lugia/unique' {
       opt: ?UniqueOption,
     ): Unique;
     getNext(): string;
+    getLastIndex(): number;
     equalTo(unique: Object): boolean;
   }
 }
