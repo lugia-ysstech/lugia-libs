@@ -101,6 +101,14 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     return target.current;
   };
 
+  setPopupVisible(popupVisible: boolean) {
+    const target = this.getThemeTarget();
+    if (!target) {
+      return;
+    }
+    target.setPopupVisible(popupVisible);
+  }
+
   getDisplayName() {
     return this.displayName;
   }
