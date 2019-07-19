@@ -103,6 +103,7 @@
   ],
   "main": "dist",
   "dependencies": {
+    "debug": "^4.1.1",
     "react": "^16.8.6"
   }
 }

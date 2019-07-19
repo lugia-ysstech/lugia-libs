@@ -20,6 +20,9 @@ import {
   packPathObject,
   setAttributeValue,
 } from '@lugia/object-utils';
+import Debug from 'debug';
+
+const debug = Debug('lugia-theme:designhandle');
 
 window.getBridge = getBridge;
 window.getReactNodeInfo = getReactNodeInfo;
@@ -102,10 +105,10 @@ export default class ThemeProviderHandler {
   getThemeData() {
     const inPartNameRes = {};
     let infos = this.getThemeMetaInfo();
-    console.info(infos);
+    debug('infos: %o', infos);
     const notInPartNameRes = [];
     this.recuriseThemeMetaInfoTree(infos[0], inPartNameRes, notInPartNameRes);
-    console.info('notInPartNameRes', notInPartNameRes);
+    debug('notInPartNameRes %o', notInPartNameRes);
     const result = this.packPathObject(inPartNameRes);
 
     notInPartNameRes.forEach(item => {
@@ -229,7 +232,7 @@ export default class ThemeProviderHandler {
             if (idx === 0) {
               const targetPath = targetPartName.substr(partOf.length);
               if (path[targetPath]) {
-                console.info(`存在了:${targetPath}`, path[targetPath]);
+                debug('存在了: %s %s', targetPath, path[targetPath]);
                 path[targetPath] = deepMerge(path[targetPath], themeMeta);
               } else {
                 path[targetPath] = themeMeta;
@@ -240,7 +243,7 @@ export default class ThemeProviderHandler {
                   dispatchPaths = item.dispatchPaths = [];
                 }
                 dispatchPaths.push(targetPath);
-                console.info('转发的路径', targetPath);
+                debug('转发的路径 %s', targetPath);
               }
             }
           });

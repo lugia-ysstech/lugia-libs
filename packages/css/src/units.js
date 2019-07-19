@@ -5,7 +5,9 @@
  * @flow
  */
 import type { Point, SizePos, SizeType, StylePos } from '@lugia/css';
+import Debug from 'debug';
 
+const debug = Debug('lugia-theme:font');
 let footerFontSize = 10;
 
 if (typeof document !== 'undefined') {
@@ -13,7 +15,7 @@ if (typeof document !== 'undefined') {
   if (body) {
     footerFontSize = getFontSize(body.parentElement, 10);
     body.parentElement.style.fontSize = number2px(footerFontSize);
-    console.info('footerFontSize', footerFontSize);
+    debug('footerFontSize %s', footerFontSize);
   }
 }
 
