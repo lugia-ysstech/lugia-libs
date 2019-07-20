@@ -8,6 +8,7 @@ import React from 'react';
 import CSSComponent, { StaticComponent, css } from '@lugia/theme-css-hoc';
 import { getBorder } from '@lugia/theme-utils';
 import ThemeHoc, { addMouseEvent } from '@lugia/theme-hoc';
+import { getBoxShadow } from '@lugia/theme-utils/src';
 
 const BaseButton = CSSComponent({
   tag: 'button',
@@ -23,6 +24,11 @@ const Button = ThemeHoc(
   CSSComponent({
     className: 'button',
     tag: 'button',
+    normal: {
+      defaultTheme: {
+        boxShadow: getBoxShadow('5px 5px rgba(0, 0, 0, .6)'),
+      },
+    },
     focus: {
       defaultTheme: {
         background: {

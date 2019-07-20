@@ -131,6 +131,9 @@ export function getBoxShadow(shadow: string): Object {
 }
 
 export function getBoxShadowCSS(boxConfig: BoxShadowType): string {
+  if (boxConfig === 'none') {
+    return 'none';
+  }
   const { x, y, blur = 0, spread = 0, color = '' } = boxConfig;
   let { type = 'outset' } = boxConfig;
   if (type !== 'inset') {

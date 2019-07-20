@@ -31,6 +31,7 @@ const config = {
         background: {
           color: '#6f9bfa',
         },
+        boxShadow: 'none',
       },
       focus: {
         background: {
