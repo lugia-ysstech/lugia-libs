@@ -108,12 +108,21 @@ export default ThemeHoc(
       }
       let server1 = this.props.createEventChannel(['active']);
       let server2 = this.props.createEventChannel(['active']);
-      const object = this.props.createThemeHocProps('selectWeb', {
-        BlockConfig: blockPart,
-      });
+      const newViewClass = 'BlockConfig';
+      const { viewClass, theme } = this.props.getPartOfThemeHocProps(
+        'selectWeb',
+        {
+          BlockConfig: blockPart,
+        },
+      );
       return (
         <div {...addMouseEvent(this)}>
-          <SelectorWeb {...object} />
+          <SelectorWeb
+            viewClass={newViewClass}
+            theme={{
+              [newViewClass]: theme[viewClass],
+            }}
+          />
           {res}
           <Button
             {...server1.provider}
