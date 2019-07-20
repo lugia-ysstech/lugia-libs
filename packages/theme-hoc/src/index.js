@@ -93,9 +93,25 @@ const ThemeProvider = (
           handle.toggleActiveState(false);
         }
       };
+      const { innerRefForDesign } = props;
+
+      if (innerRefForDesign) {
+        const designHandle = innerRefForDesign.current;
+        const { widgetId } = props;
+
+        widgetId && designHandle.updateDesignHandle(widgetId, designHandle);
+      }
+
       document.addEventListener('mouseup', mouseupHandler);
       return () => {
         document.removeEventListener('mouseup', mouseupHandler);
+        const { innerRefForDesign, widgetId } = props;
+
+        if (innerRefForDesign) {
+          const designHandle = innerRefForDesign.current;
+          const { widgetId } = props;
+          widgetId && designHandle.deleteDesignHandle(widgetId);
+        }
       };
     });
 

@@ -11,6 +11,20 @@ const stateId2ReactNodeInfo = {};
 const id2StateId = {};
 const store = {};
 
+const widgetId2DesignHandle = {};
+
+export function updateDesignHandle(widgetId: string, handle: Object) {
+  widgetId2DesignHandle[widgetId] = handle;
+}
+
+export function deleteDesignHandle(widgetId: string) {
+  delete widgetId2DesignHandle[widgetId];
+}
+
+export function getDesignHandle(widgetId: string): Object {
+  return widgetId2DesignHandle[widgetId];
+}
+
 export function getReactNodeInfo(id: string) {
   return id2All[id];
 }
@@ -37,7 +51,7 @@ export function inject(window: Object) {
       }
       events.forEach(item => {
         const { data, evt } = item;
-        const { id } = data;
+        const { id, props } = data;
         const isUnMount = evt === 'unmount';
         if (isUnMount) {
           delete id2All[data];

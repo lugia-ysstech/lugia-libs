@@ -8,6 +8,8 @@ import {
   getBridge,
   getReactNodeInfo,
   getReactNodeInfoByThemeId,
+  updateDesignHandle,
+  deleteDesignHandle,
 } from '@lugia/theme-hoc-devtools';
 
 import { CSSComponentDisplayName, ThemeComponentPrefix } from './utils';
@@ -45,10 +47,13 @@ const compareLengthDesc = (a: Object, b: Object) => {
 export default class ThemeProviderHandler {
   id: string;
   packPathObject: Function;
-
+  updateDesignHandle: Function;
+  deleteDesignHandle: Function;
   constructor(id: string) {
     this.id = id;
     this.packPathObject = packPathObject;
+    this.updateDesignHandle = updateDesignHandle;
+    this.deleteDesignHandle = deleteDesignHandle;
   }
 
   getThemeMetaInfo = (fields: string[] = ['themeMeta']) => {
@@ -99,12 +104,16 @@ export default class ThemeProviderHandler {
       });
       return nodes;
     }
-    return {};
+    return [];
   };
 
   getThemeData() {
     const inPartNameRes = {};
     let infos = this.getThemeMetaInfo();
+    if (infos.length === 0) {
+      console.warn('not found widgets');
+      return;
+    }
     debug('infos: %o', infos);
     const notInPartNameRes = [];
     this.recuriseThemeMetaInfoTree(infos[0], inPartNameRes, notInPartNameRes);

@@ -88,12 +88,6 @@ const config = {
           },
         },
       },
-
-      disabled: {
-        background: {
-          color: 'black',
-        },
-      },
     },
   },
 };
@@ -144,6 +138,7 @@ export default () => {
     installState ? (
       <Theme config={theme}>
         <Selector
+          widgetId={'select'}
           innerRefForDesign={design}
           innerRef={current => {
             target.current = current;
