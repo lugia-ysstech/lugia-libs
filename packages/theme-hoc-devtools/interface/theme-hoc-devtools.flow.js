@@ -13,7 +13,26 @@ declare module '@lugia/theme-hoc-devtools' {
   ): void;
 
   declare export function deleteDesignHandle(widgetId: string): void;
+
   declare export function getDesignHandle(widgetId: string): Object;
 
   declare export function inject(window: Object): Function;
+
+  declare export default {
+    getBridge(): Object,
+
+    getReactNodeInfo(id: string): Object,
+
+    getThemeReactNodeInfo(id: string): Object,
+
+    getReactNodeInfoByThemeId(id: string): Object,
+
+    updateDesignHandle(widgetId: string, handle: Object): void,
+
+    deleteDesignHandle(widgetId: string): void,
+
+    getDesignHandle(widgetId: string): Object,
+
+    inject(window: Object): Function,
+  };
 }

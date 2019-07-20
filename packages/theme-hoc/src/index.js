@@ -105,7 +105,7 @@ const ThemeProvider = (
       document.addEventListener('mouseup', mouseupHandler);
       return () => {
         document.removeEventListener('mouseup', mouseupHandler);
-        const { innerRefForDesign, widgetId } = props;
+        const { innerRefForDesign } = props;
 
         if (innerRefForDesign) {
           const designHandle = innerRefForDesign.current;

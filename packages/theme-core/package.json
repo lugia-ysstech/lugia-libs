@@ -18,8 +18,13 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/object-utils": "^1.0.11",
+    "@lugia/object-utils": "^1.0.11"
+  },
+  "devDependencies": {
     "@lugia/theme-hoc-devtools": "^1.0.5"
+  },
+  "peerDependencies": {
+    "@lugia/theme-hoc-devtools": "1.0.5"
   },
   "files": [
     "lib",

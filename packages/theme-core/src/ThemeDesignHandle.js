@@ -4,13 +4,7 @@
  */
 
 import React from 'react';
-import {
-  getBridge,
-  getReactNodeInfo,
-  getReactNodeInfoByThemeId,
-  updateDesignHandle,
-  deleteDesignHandle,
-} from '@lugia/theme-hoc-devtools';
+import LugiaThemeDevTools from '@lugia/theme-hoc-devtools';
 
 import { CSSComponentDisplayName, ThemeComponentPrefix } from './utils';
 import { unPackDisplayName } from './ThemeHandle';
@@ -25,7 +19,13 @@ import {
 import Debug from 'debug';
 
 const debug = Debug('lugia-theme:designhandle');
-
+const {
+  getBridge,
+  getReactNodeInfo,
+  getReactNodeInfoByThemeId,
+  updateDesignHandle,
+  deleteDesignHandle,
+} = LugiaThemeDevTools;
 window.getBridge = getBridge;
 window.getReactNodeInfo = getReactNodeInfo;
 window.getReactNodeInfoByThemeId = getReactNodeInfoByThemeId;

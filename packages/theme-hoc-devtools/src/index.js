@@ -75,3 +75,13 @@ export function inject(window: Object) {
   installGlobalHook(window);
   installBridge(store);
 }
+
+export default {
+  inject,
+  updateDesignHandle,
+  deleteDesignHandle,
+  getDesignHandle,
+  getReactNodeInfo,
+  getBridge,
+  getReactNodeInfoByThemeId,
+};
