@@ -30,6 +30,7 @@ const config = {
       normal: {
         background: {
           color: '#6f9bfa',
+          image: 'linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1))',
         },
         boxShadow: 'none',
       },
