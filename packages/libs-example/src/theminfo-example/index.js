@@ -10,6 +10,7 @@ import Factory from './Factory';
 import Simple from './simple';
 import Two from './twolevelthocwrapcsshoc';
 import ThreeLevel from './threelevelthoc';
+import Middle from './middleisnotthemeHocOrCSSHoc';
 
 const SimpleDemo = Factory(
   Simple,
@@ -25,6 +26,7 @@ const SimpleDemo = Factory(
   'one',
 );
 const TwoLevelDemo = Factory(Two, {}, 'two');
+const MiddleDemo = Factory(Middle, {}, 'middle');
 const ThreeLevelDemo = Factory(
   ThreeLevel,
   {
@@ -98,8 +100,7 @@ const ThreeLevelDemo = Factory(
 export default () => {
   return (
     <div>
-      <ThreeLevelDemo />
-      <TwoLevelDemo />
+      <MiddleDemo />
     </div>
   );
 };

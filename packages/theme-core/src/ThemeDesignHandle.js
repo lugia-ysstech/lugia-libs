@@ -35,7 +35,7 @@ function isCSSComponent(name: string): boolean {
 }
 
 function isThemeComponent(name: string): boolean {
-  return name.startsWith(ThemeComponentPrefix);
+  return name && name.startsWith(ThemeComponentPrefix);
 }
 
 const compareLengthAsc = (a: Object, b: Object) => {
@@ -66,7 +66,13 @@ export default class ThemeProviderHandler {
         let reactNodeInfo = getReactNodeInfo(id);
         if (reactNodeInfo) {
           let name = reactNodeInfo.name;
-          return name && (isThemeComponent(name) || isCSSComponent(name));
+          const info = this.getNodeInfo(id, fields);
+          reactNodeInfo.themePass &&
+            console.info(name, reactNodeInfo.themePass);
+          return (
+            name &&
+            (isThemeComponent(name) || isCSSComponent(name) || info.themePass)
+          );
         }
         return false;
       };
@@ -200,7 +206,7 @@ export default class ThemeProviderHandler {
     children.forEach(childNode => {
       const { partName, themeMeta, isCSSCmp } = childNode;
 
-      const { themeProps } = childNode;
+      const { themeProps, themePass } = childNode;
       if (!partName && themeProps) {
         const { themeConfig } = themeProps;
         if (themeConfig) {
@@ -212,6 +218,9 @@ export default class ThemeProviderHandler {
         }
       }
       if (!partName) {
+        if (themePass) {
+          this.recuriseThemeMetaInfoTree(childNode, childData, out);
+        }
         return;
       }
       this.tillChildDataByNode(childNode, childData);
@@ -304,6 +313,7 @@ export default class ThemeProviderHandler {
     let themeMeta;
     let widgetName;
     let themeProps;
+    let themePass = false;
     let props;
     let fatherPartName;
     if (lugiaBridge) {
@@ -312,6 +322,7 @@ export default class ThemeProviderHandler {
       if (inspectVal) {
         props = inspectVal.props;
         if (props) {
+          themePass = props.themePass;
           themeMeta = props.__themeMeta;
           widgetName = isCSSCmp ? props.__cssName : unPackDisplayName(name);
           themeProps = props.themeProps;
@@ -340,6 +351,7 @@ export default class ThemeProviderHandler {
       result.fatherPartName = fatherPartName;
     }
     result.widgetName = widgetName;
+    result.themePass = themePass;
 
     if (isCSSCmp) {
       result.themeMeta = themeMeta;
