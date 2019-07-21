@@ -58,7 +58,7 @@ export function inject(window: Object) {
           const stateId = id2StateId[data];
           delete id2StateId[data];
           delete stateId2ReactNodeInfo[stateId];
-        } else if (evt === 'mount') {
+        } else if (evt === 'mount' || evt === 'update') {
           id2All[id] = data;
           const { name } = data;
           if (name && name.startsWith('lugia_t_hoc')) {
