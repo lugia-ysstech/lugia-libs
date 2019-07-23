@@ -6532,6 +6532,13 @@ eslint-plugin-flowtype@^2.50.3:
   dependencies:
     lodash "^4.17.10"
 
+eslint-plugin-flowtype@^3.12.1:
+  version "3.12.1"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-flowtype/download/eslint-plugin-flowtype-3.12.1.tgz#b673c716b578c9aa66887feef3bc146f8cbe1c21"
+  integrity sha1-tnPHFrV4yapmiH/u87wUb4y+HCE=
+  dependencies:
+    lodash "^4.17.11"
+
 eslint-plugin-html@^5.0.5:
   version "5.0.5"
   resolved "https://registry.npm.taobao.org/eslint-plugin-html/download/eslint-plugin-html-5.0.5.tgz#e2388f813f75b2287cde884811eab287de8e0f56"
