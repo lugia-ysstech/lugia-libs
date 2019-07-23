@@ -169,8 +169,12 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       themeState: [themeState, setThemeState],
     } = useInitHandle(props, className, isHasThemeStateEvent);
 
-    const targetProps = deepMerge(props, { themeProps: { themeState } });
-
+    let targetProps = deepMerge(props, { themeProps: { themeState } });
+    if ('disabled' in targetProps) {
+      targetProps = deepMerge(targetProps, {
+        themeProps: { themeState: targetProps.disabled },
+      });
+    }
     const {
       normal = {},
       hover = {},
