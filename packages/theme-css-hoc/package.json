@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-css-hoc",
-  "version": "1.0.57",
+  "version": "1.0.58",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
