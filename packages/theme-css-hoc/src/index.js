@@ -171,8 +171,9 @@ export default function CSSComponent(cssConfig: CSSConfig) {
 
     let targetProps = deepMerge(props, { themeProps: { themeState } });
     if ('disabled' in targetProps) {
+      const { disabled } = targetProps;
       targetProps = deepMerge(targetProps, {
-        themeProps: { themeState: targetProps.disabled },
+        themeProps: { themeState: { disabled } },
       });
     }
     const {
