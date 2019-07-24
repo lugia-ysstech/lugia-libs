@@ -29,6 +29,7 @@ const data = [
 ];
 describe('Object', () => {
   it('getAttributeValue', () => {
+    expect(getAttributeValue({ a: 0 }, ['a'])).toBe(0);
     expect(getAttributeValue(null, [])).toBeUndefined();
     expect(getAttributeValue({}, [])).toBeUndefined();
     expect(getAttributeValue({ a: { b: 1 } }, ['a'])).toEqual({ b: 1 });
