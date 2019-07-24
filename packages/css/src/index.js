@@ -24,7 +24,9 @@ export function style2css(style: Object): string {
   return keys
     .map((key: string) => {
       const val = style[key];
-      return val ? `${decamelize(key, '-')}:${val};` : '';
+      return val !== undefined && val !== null
+        ? `${decamelize(key, '-')}:${val};`
+        : '';
     })
     .join('');
 }

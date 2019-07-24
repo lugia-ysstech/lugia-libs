@@ -57,10 +57,11 @@ describe('units', () => {
       style2css({
         background: 'hello',
         red: undefined,
+        opacity: 0,
         fontSize: 1,
         color: 'rgb(121,11,11,5)',
       }),
-    ).toEqual('background:hello;font-size:1;color:rgb(121,11,11,5);');
+    ).toEqual('background:hello;opacity:0;font-size:1;color:rgb(121,11,11,5);');
   });
 
   it('style2css backgroundColor', () => {
