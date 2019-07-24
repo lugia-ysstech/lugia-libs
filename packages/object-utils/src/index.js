@@ -116,6 +116,9 @@ export function getAttributeValue(obj: Object, path: string[]): any {
   for (let i = 0; i < path.length; i++) {
     const key = path[i];
     target = target[key];
+    if (target === 0) {
+      return target;
+    }
     if (!target) {
       return;
     }
