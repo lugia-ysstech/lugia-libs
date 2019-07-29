@@ -40,6 +40,7 @@ export function getIndexfromKey(
 ): number {
   return data.findIndex(v => v[keyName] === keyValue);
 }
+const overwriteMerge = (destinationArray, sourceArray, options) => sourceArray;
 
 export function deepMerge(...objects: Object[]): Object {
   if (!objects || objects.length === 0) {
@@ -48,7 +49,7 @@ export function deepMerge(...objects: Object[]): Object {
 
   return objects.reduce((pre: Object, next: Object) => {
     next = next || {};
-    return merge(pre, next);
+    return merge(pre, next, { arrayMerge: overwriteMerge });
   }, {});
 }
 

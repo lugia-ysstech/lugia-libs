@@ -81,6 +81,7 @@ describe('Object', () => {
     expect(getIndexfromKey(data, 'key', '1111')).toEqual(0);
   });
   it('deepMerge', () => {
+    expect(deepMerge({ a: [1, 2] }, { a: [3, 4] })).toEqual({ a: [3, 4] });
     expect(deepMerge(null, {})).toEqual({});
     expect(deepMerge({}, null)).toEqual({});
     expect(deepMerge({ title: 'hello' }, null)).toEqual({ title: 'hello' });
