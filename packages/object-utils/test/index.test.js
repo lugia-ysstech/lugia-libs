@@ -2,6 +2,7 @@
 import {
   deepMerge,
   deepMergeAnB,
+  deepMergeForArrayMerge,
   diffABWhenAttrIfExist,
   getAttributeFromObject,
   getAttributeValue,
@@ -79,6 +80,11 @@ describe('Object', () => {
   });
   it('getIndexfromKey key 1111 ', () => {
     expect(getIndexfromKey(data, 'key', '1111')).toEqual(0);
+  });
+  it('deepMergeForArrayMerge', () => {
+    expect(deepMergeForArrayMerge({ a: [1, 2] }, { a: [3, 4] })).toEqual({
+      a: [1, 2, 3, 4],
+    });
   });
   it('deepMerge', () => {
     expect(deepMerge({ a: [1, 2] }, { a: [3, 4] })).toEqual({ a: [3, 4] });

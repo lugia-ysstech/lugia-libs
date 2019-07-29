@@ -34,6 +34,7 @@ declare module '@lugia/object-utils' {
   ): void;
 
   declare export function deepMerge(...objects: Object[]): Object;
+  declare export function deepMergeForArrayMerge(...objects: Object[]): Object;
 
   declare export function isEmptyObject(obj: any): boolean;
 

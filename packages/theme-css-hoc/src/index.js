@@ -13,7 +13,11 @@ import {
   ThemeStateHandle,
 } from '@lugia/theme-core';
 import React, { useEffect, useRef, useState } from 'react';
-import { deepMerge, isEmptyObject } from '@lugia/object-utils';
+import {
+  deepMerge,
+  isEmptyObject,
+  deepMergeForArrayMerge,
+} from '@lugia/object-utils';
 import { css, keyframes } from 'styled-components';
 import {
   filterRepeatCSSConfigSelectNames,
@@ -100,7 +104,7 @@ function extendCSSComponent(cssConfig: CSSConfig) {
     }
     const extendCSSConfig = CSSComponent2CSSConfig.get(extend);
     if (extendCSSConfig) {
-      cssConfig = deepMerge(extendCSSConfig, cssConfig);
+      cssConfig = deepMergeForArrayMerge(extendCSSConfig, cssConfig);
       filterRepeatCSSConfigSelectNames(cssConfig);
       const newExtendConfig = { ...cssConfig };
       delete newExtendConfig.extend;

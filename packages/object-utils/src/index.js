@@ -53,6 +53,17 @@ export function deepMerge(...objects: Object[]): Object {
   }, {});
 }
 
+export function deepMergeForArrayMerge(...objects: Object[]): Object {
+  if (!objects || objects.length === 0) {
+    return {};
+  }
+
+  return objects.reduce((pre: Object, next: Object) => {
+    next = next || {};
+    return merge(pre, next);
+  }, {});
+}
+
 export function moveToTargetIfKeyIsInSource(
   key: string,
   source: Object,
