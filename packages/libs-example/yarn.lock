@@ -1114,7 +1114,7 @@
 
 "@lugia/babel-preset-mega@^1.0.9":
   version "1.0.9"
-  resolved "http://192.168.102.79:5001/@lugia/babel-preset-mega/download/@lugia/babel-preset-mega-1.0.9.tgz#362e041dde3e4304da95c44d6578a4cc02c3b6da"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/babel-preset-mega/download/@lugia/babel-preset-mega-1.0.9.tgz#362e041dde3e4304da95c44d6578a4cc02c3b6da"
   integrity sha1-Ni4EHd4+QwTalcRNZXikzALDtto=
   dependencies:
     "@babel/core" "7.1.5"
@@ -1138,7 +1138,7 @@
 
 "@lugia/devtools-conversion@^1.0.3":
   version "1.0.3"
-  resolved "http://192.168.102.79:5001/@lugia/devtools-conversion/download/@lugia/devtools-conversion-1.0.3.tgz#6f780acb84f052704ab00c26488ca0a3533d25ec"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/devtools-conversion/download/@lugia/devtools-conversion-1.0.3.tgz#6f780acb84f052704ab00c26488ca0a3533d25ec"
   integrity sha1-b3gKy4TwUnBKsAwmSIygo1M9Jew=
   dependencies:
     "@lugia/devtools-core" "^1.0.2"
@@ -1146,7 +1146,7 @@
 
 "@lugia/devtools-core@^1.0.2":
   version "1.0.2"
-  resolved "http://192.168.102.79:5001/@lugia/devtools-core/download/@lugia/devtools-core-1.0.2.tgz#e4558bba6ef168dce727b230d229ff2fb66453c3"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/devtools-core/download/@lugia/devtools-core-1.0.2.tgz#e4558bba6ef168dce727b230d229ff2fb66453c3"
   integrity sha1-5FWLum7xaNznJ7Iw0in/L7ZkU8M=
   dependencies:
     chai "^4.1.2"
@@ -1159,7 +1159,7 @@
 
 "@lugia/lugiad-loader@^1.0.4":
   version "1.0.4"
-  resolved "http://192.168.102.79:5001/@lugia/lugiad-loader/download/@lugia/lugiad-loader-1.0.4.tgz#4c35c84dc905ac74d1c66c959381cf0a80cd2aaf"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/lugiad-loader/download/@lugia/lugiad-loader-1.0.4.tgz#4c35c84dc905ac74d1c66c959381cf0a80cd2aaf"
   integrity sha1-TDXITckFrHTRxmyVk4HPCoDNKq8=
   dependencies:
     "@babel/runtime" "^7.4.3"
@@ -1167,7 +1167,7 @@
 
 "@lugia/mega-config@^1.0.10":
   version "1.0.10"
-  resolved "http://192.168.102.79:5001/@lugia/mega-config/download/@lugia/mega-config-1.0.10.tgz#de601ce37f9047687acd4b51813e05d0150bb66f"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-config/download/@lugia/mega-config-1.0.10.tgz#de601ce37f9047687acd4b51813e05d0150bb66f"
   integrity sha1-3mAc43+QR2h6zUtRgT4F0BULtm8=
   dependencies:
     "@babel/runtime" "^7.1.5"
@@ -1182,7 +1182,7 @@
 
 "@lugia/mega-jest@^1.2.27":
   version "1.2.27"
-  resolved "http://192.168.102.79:5001/@lugia/mega-jest/download/@lugia/mega-jest-1.2.27.tgz#5663ecf5acff222f39f186e9939ef71321ba6798"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-jest/download/@lugia/mega-jest-1.2.27.tgz#5663ecf5acff222f39f186e9939ef71321ba6798"
   integrity sha1-VmPs9az/Ii858Ybpk573EyG6Z5g=
   dependencies:
     "@babel/core" "7.1.5"
@@ -1211,7 +1211,7 @@
 
 "@lugia/mega-scripts@^1.3.34":
   version "1.3.34"
-  resolved "http://192.168.102.79:5001/@lugia/mega-scripts/download/@lugia/mega-scripts-1.3.34.tgz#24032ea1eab4ae9c4e63a10e6cf146e63667169b"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-scripts/download/@lugia/mega-scripts-1.3.34.tgz#24032ea1eab4ae9c4e63a10e6cf146e63667169b"
   integrity sha1-JAMuoeq0rpxOY6EObPFG5jZnFps=
   dependencies:
     "@babel/core" "7.1.5"
@@ -1243,7 +1243,7 @@
 
 "@lugia/mega-utils@^1.4.20":
   version "1.4.20"
-  resolved "http://192.168.102.79:5001/@lugia/mega-utils/download/@lugia/mega-utils-1.4.20.tgz#4d444e237779f125c75c9a350ebc896c863570a4"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-utils/download/@lugia/mega-utils-1.4.20.tgz#4d444e237779f125c75c9a350ebc896c863570a4"
   integrity sha1-TUROI3d58SXHXJo1DryJbIY1cKQ=
   dependencies:
     "@babel/plugin-transform-modules-commonjs" "^7.4.3"
@@ -1274,7 +1274,7 @@
 
 "@lugia/mega-webpack@^1.3.31":
   version "1.3.31"
-  resolved "http://192.168.102.79:5001/@lugia/mega-webpack/download/@lugia/mega-webpack-1.3.31.tgz#7d80864d374e272078ba88e969f4bea94b6c56ca"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-webpack/download/@lugia/mega-webpack-1.3.31.tgz#7d80864d374e272078ba88e969f4bea94b6c56ca"
   integrity sha1-fYCGTTdOJyB4uojpafS+qUtsVso=
   dependencies:
     "@babel/core" "7.1.5"

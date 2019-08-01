@@ -4,7 +4,7 @@
 
 "@lugia/react-devtools-core@^1.0.3":
   version "1.0.3"
-  resolved "http://192.168.102.79:5001/@lugia/react-devtools-core/download/@lugia/react-devtools-core-1.0.3.tgz#9533850da98000b49cf9c62db34383d5270d669e"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/react-devtools-core/download/@lugia/react-devtools-core-1.0.3.tgz#9533850da98000b49cf9c62db34383d5270d669e"
   integrity sha1-lTOFDamAALSc+cYts0OD1ScNZp4=
   dependencies:
     shell-quote "^1.6.1"

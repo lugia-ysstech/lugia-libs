@@ -2106,7 +2106,7 @@
 
 "@lugia/babel-preset-mega@^1.0.9":
   version "1.0.9"
-  resolved "http://192.168.102.79:5001/@lugia/babel-preset-mega/download/@lugia/babel-preset-mega-1.0.9.tgz#362e041dde3e4304da95c44d6578a4cc02c3b6da"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/babel-preset-mega/download/@lugia/babel-preset-mega-1.0.9.tgz#362e041dde3e4304da95c44d6578a4cc02c3b6da"
   integrity sha1-Ni4EHd4+QwTalcRNZXikzALDtto=
   dependencies:
     "@babel/core" "7.1.5"
@@ -2130,7 +2130,7 @@
 
 "@lugia/devtools-conversion@^1.0.2":
   version "1.0.2"
-  resolved "http://192.168.102.79:5001/@lugia/devtools-conversion/download/@lugia/devtools-conversion-1.0.2.tgz#4f20f53897a1b57d7b6ab00fd08178658391f1cf"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/devtools-conversion/download/@lugia/devtools-conversion-1.0.2.tgz#4f20f53897a1b57d7b6ab00fd08178658391f1cf"
   integrity sha1-TyD1OJehtX17arAP0IF4ZYOR8c8=
   dependencies:
     "@lugia/devtools-core" "^1.0.1"
@@ -2138,7 +2138,7 @@
 
 "@lugia/devtools-core@^1.0.1":
   version "1.0.1"
-  resolved "http://192.168.102.79:5001/@lugia/devtools-core/download/@lugia/devtools-core-1.0.1.tgz#c8684a23444d7a7cd3a1ec3762b902e3b2e319c9"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/devtools-core/download/@lugia/devtools-core-1.0.1.tgz#c8684a23444d7a7cd3a1ec3762b902e3b2e319c9"
   integrity sha1-yGhKI0RNenzToew3YrkC47LjGck=
   dependencies:
     chai "^4.1.2"
@@ -2151,7 +2151,7 @@
 
 "@lugia/jverify@^1.0.7":
   version "1.0.7"
-  resolved "http://192.168.102.79:5001/@lugia/jverify/download/@lugia/jverify-1.0.7.tgz#bc3da1ee7bb51f843ab026a2d17dba732a8a94b3"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/jverify/download/@lugia/jverify-1.0.7.tgz#bc3da1ee7bb51f843ab026a2d17dba732a8a94b3"
   integrity sha1-vD2h7nu1H4Q6sCai0X26cyqKlLM=
   dependencies:
     "@lugia/type-utils" "^1.0.1"
@@ -2160,7 +2160,7 @@
 
 "@lugia/lugiad-loader@^1.0.3":
   version "1.0.3"
-  resolved "http://192.168.102.79:5001/@lugia/lugiad-loader/download/@lugia/lugiad-loader-1.0.3.tgz#6338d21c6dd3c49aaafc25610594a13014ab3df3"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/lugiad-loader/download/@lugia/lugiad-loader-1.0.3.tgz#6338d21c6dd3c49aaafc25610594a13014ab3df3"
   integrity sha1-YzjSHG3TxJqq/CVhBZShMBSrPfM=
   dependencies:
     "@babel/runtime" "^7.4.3"
@@ -2168,7 +2168,7 @@
 
 "@lugia/mega-config@^1.0.10":
   version "1.0.10"
-  resolved "http://192.168.102.79:5001/@lugia/mega-config/download/@lugia/mega-config-1.0.10.tgz#de601ce37f9047687acd4b51813e05d0150bb66f"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-config/download/@lugia/mega-config-1.0.10.tgz#de601ce37f9047687acd4b51813e05d0150bb66f"
   integrity sha1-3mAc43+QR2h6zUtRgT4F0BULtm8=
   dependencies:
     "@babel/runtime" "^7.1.5"
@@ -2183,7 +2183,7 @@
 
 "@lugia/mega-jest@^1.2.27":
   version "1.2.27"
-  resolved "http://192.168.102.79:5001/@lugia/mega-jest/download/@lugia/mega-jest-1.2.27.tgz#5663ecf5acff222f39f186e9939ef71321ba6798"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-jest/download/@lugia/mega-jest-1.2.27.tgz#5663ecf5acff222f39f186e9939ef71321ba6798"
   integrity sha1-VmPs9az/Ii858Ybpk573EyG6Z5g=
   dependencies:
     "@babel/core" "7.1.5"
@@ -2212,7 +2212,7 @@
 
 "@lugia/mega-scripts@^1.3.33":
   version "1.3.33"
-  resolved "http://192.168.102.79:5001/@lugia/mega-scripts/download/@lugia/mega-scripts-1.3.33.tgz#0a69deef64700f4ab23d727baec65fc07876f91d"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-scripts/download/@lugia/mega-scripts-1.3.33.tgz#0a69deef64700f4ab23d727baec65fc07876f91d"
   integrity sha1-Cmne72RwD0qyPXJ7rsZfwHh2+R0=
   dependencies:
     "@babel/core" "7.1.5"
@@ -2244,7 +2244,7 @@
 
 "@lugia/mega-utils@^1.4.20":
   version "1.4.20"
-  resolved "http://192.168.102.79:5001/@lugia/mega-utils/download/@lugia/mega-utils-1.4.20.tgz#4d444e237779f125c75c9a350ebc896c863570a4"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-utils/download/@lugia/mega-utils-1.4.20.tgz#4d444e237779f125c75c9a350ebc896c863570a4"
   integrity sha1-TUROI3d58SXHXJo1DryJbIY1cKQ=
   dependencies:
     "@babel/plugin-transform-modules-commonjs" "^7.4.3"
@@ -2275,7 +2275,7 @@
 
 "@lugia/mega-webpack@^1.3.30":
   version "1.3.30"
-  resolved "http://192.168.102.79:5001/@lugia/mega-webpack/download/@lugia/mega-webpack-1.3.30.tgz#48fb593ec7aa3db7ba757f607ff91d8478cbbb84"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega-webpack/download/@lugia/mega-webpack-1.3.30.tgz#48fb593ec7aa3db7ba757f607ff91d8478cbbb84"
   integrity sha1-SPtZPseqPbe6dX9gf/kdhHjLu4Q=
   dependencies:
     "@babel/core" "7.1.5"
@@ -2341,7 +2341,7 @@
 
 "@lugia/mega@^1.3.44":
   version "1.3.44"
-  resolved "http://192.168.102.79:5001/@lugia/mega/download/@lugia/mega-1.3.44.tgz#586e2fe1ef5487d4010a970beccc525daa98060f"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/mega/download/@lugia/mega-1.3.44.tgz#586e2fe1ef5487d4010a970beccc525daa98060f"
   integrity sha1-WG4v4e9Uh9QBCpcL7MxSXaqYBg8=
   dependencies:
     "@babel/runtime" "^7.1.5"
@@ -2367,7 +2367,7 @@
 
 "@lugia/react-devtools-core@^1.0.1":
   version "1.0.1"
-  resolved "http://192.168.102.79:5001/@lugia/react-devtools-core/download/@lugia/react-devtools-core-1.0.1.tgz#465793c26177eb031f6101f89dc3ac8b7f1c6f97"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/react-devtools-core/download/@lugia/react-devtools-core-1.0.1.tgz#465793c26177eb031f6101f89dc3ac8b7f1c6f97"
   integrity sha1-RleTwmF36wMfYQH4ncOsi38cb5c=
   dependencies:
     shell-quote "^1.6.1"
@@ -2375,7 +2375,7 @@
 
 "@lugia/react-test-utils@^1.0.0":
   version "1.0.0"
-  resolved "http://192.168.102.79:5001/@lugia/react-test-utils/download/@lugia/react-test-utils-1.0.0.tgz#019bc028615d3c8ae454ec9b98b4546d027a7497"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/react-test-utils/download/@lugia/react-test-utils-1.0.0.tgz#019bc028615d3c8ae454ec9b98b4546d027a7497"
   integrity sha1-AZvAKGFdPIrkVOybmLRUbQJ6dJc=
   dependencies:
     react "^16.4.0"
@@ -2383,7 +2383,7 @@
 
 "@lugia/type-utils@^1.0.1":
   version "1.0.4"
-  resolved "http://192.168.102.79:5001/@lugia/type-utils/download/@lugia/type-utils-1.0.4.tgz#d1a4ffc670ae4bdac6326f376f97a18d3476b366"
+  resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/type-utils/download/@lugia/type-utils-1.0.4.tgz#d1a4ffc670ae4bdac6326f376f97a18d3476b366"
   integrity sha1-0aT/xnCuS9rGMm83b5ehjTR2s2Y=
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
