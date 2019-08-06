@@ -1,5 +1,5 @@
 {
-  "name": "@lugia/indexDB",
+  "name": "@lugia/indexdb",
   "version": "1.0.13",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
@@ -7,12 +7,9 @@
     "start": "node ./lib"
   },
   "repository": {
-    "type": "git",
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings"
+    "type": "git"
   },
-  "homepage": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings",
   "bugs": {
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings/issues"
   },
   "author": "#lugia#",
   "license": "MIT",
@@ -23,8 +20,7 @@
   },
   "files": [
     "lib",
-    "interface",
-    "yarn.lock"
+    "interface"
   ],
   "engines": {
     "node": ">=10",

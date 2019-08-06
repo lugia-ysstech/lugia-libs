@@ -1,18 +1,15 @@
 {
   "name": "@lugia/css",
   "version": "1.0.18",
-  "description": "An example of lerna package.",
+  "description": "css",
   "main": "./lib/index.js",
   "scripts": {
     "start": "node ./lib"
   },
   "repository": {
-    "type": "git",
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings"
+    "type": "git"
   },
-  "homepage": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings",
   "bugs": {
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings/issues"
   },
   "author": "#lugia#",
   "license": "MIT",
@@ -22,8 +19,7 @@
   },
   "files": [
     "lib",
-    "interface",
-    "yarn.lock"
+    "interface"
   ],
   "engines": {
     "node": ">=10",

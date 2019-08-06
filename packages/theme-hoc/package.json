@@ -1,18 +1,10 @@
 {
   "name": "@lugia/theme-hoc",
   "version": "1.0.46",
-  "description": "An example of lerna package.",
-  "main": "./lib/index.js",
+  "description": "Theme hoc",
+  "main": "./lib/.js",
   "scripts": {
     "start": "node ./lib"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings"
-  },
-  "homepage": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings",
-  "bugs": {
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings/issues"
   },
   "author": "#lugia#",
   "license": "MIT",
@@ -32,8 +24,7 @@
   },
   "files": [
     "lib",
-    "interface",
-    "yarn.lock"
+    "interface"
   ],
   "engines": {
     "node": ">=10",

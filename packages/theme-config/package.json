@@ -1,19 +1,12 @@
 {
   "name": "@lugia/theme-config",
   "version": "1.0.35",
-  "description": "An example of lerna package.",
+  "description": "Theme context",
   "main": "./lib/index.js",
   "scripts": {
     "start": "node ./lib"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings"
-  },
-  "homepage": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings",
-  "bugs": {
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings/issues"
-  },
+
   "peerDependencies": {
     "react": ">16.0.0",
     "react-dom": ">16.0.0"
@@ -27,8 +20,7 @@
   },
   "files": [
     "interface",
-    "lib",
-    "yarn.lock"
+    "lib"
   ],
   "engines": {
     "node": ">=10",

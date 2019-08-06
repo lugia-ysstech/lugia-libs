@@ -1,19 +1,12 @@
 {
   "name": "@lugia/math",
   "version": "1.0.8",
-  "description": "An example of lerna package.",
+  "description": "math utils",
   "main": "./lib/index.js",
   "scripts": {
     "start": "node ./lib"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings"
-  },
-  "homepage": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings",
-  "bugs": {
-    "url": "http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-scaffoldings/issues"
-  },
+
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {
@@ -21,8 +14,7 @@
   },
   "files": [
     "lib",
-    "interface",
-    "yarn.lock"
+    "interface"
   ],
   "engines": {
     "node": ">=10",
