@@ -2,7 +2,7 @@
   "name": "@lugia/theme-hoc",
   "version": "1.0.46",
   "description": "Theme hoc",
-  "main": "./lib/.js",
+  "main": "./lib/index.js",
   "scripts": {
     "start": "node ./lib"
   },
