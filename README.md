@@ -1,7 +1,7 @@
 # 说明
 本项目包括主题相关的公共模块
 
-项目地址：http://192.168.102.73:8081/BigFrontend/Work/lugia/lugia-theme.git 
+项目地址：https://github.com/lugia-ysstech/lugia-libs.git
  
 ## @lugia/math
  数学相关处理功能  
