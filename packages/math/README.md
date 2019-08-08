@@ -3,4 +3,5 @@
 # 使用方法
 ```js
  install @lugia/math
+ 
 ``` 
