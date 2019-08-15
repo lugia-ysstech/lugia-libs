@@ -7,12 +7,12 @@
     "start": "node ./lib"
   },
   "repository": {
-    "type": "git"
+    "type": "https://github.com/lugia-ysstech/lugia-libs"
   },
   "bugs": {
   },
   "author": "#lugia#",
-  "license": "MIT",
+  "license": "Apache License 2.0",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "@lugia/listener": "^1.0.2",
