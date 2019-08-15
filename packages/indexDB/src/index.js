@@ -353,7 +353,6 @@ export default class IndexDB extends Listener<any> implements Store {
       const { success, error } = msg;
       request.onsuccess = event => {
         const { getSuccess } = option;
-        console.log('成功:', success);
         if (getSuccess) {
           res(getSuccess(event));
         } else {
@@ -362,7 +361,7 @@ export default class IndexDB extends Listener<any> implements Store {
       };
 
       request.onerror = function(...rest) {
-        console.error('成功:', error, ...rest);
+        console.error('失败:', error, ...rest);
         reject(error);
       };
     });
