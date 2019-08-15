@@ -49,6 +49,6 @@ function publishToNpm() {
     .forEach(repo => {
       shell.cd(join(cwd, packagesDirName, repo));
       console.log(`[${repo}] npm publish`);
-      shell.exec('npm publish');
+      shell.exec('npm publish --access=public');
     });
 }
