@@ -1,20 +1,19 @@
 {
   "name": "@lugia/theme-core",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "description": "Theme core",
   "main": "./lib/index.js",
   "scripts": {
     "start": "node ./lib"
   },
-
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/object-utils": "^1.0.14"
+    "@lugia/object-utils": "^1.0.15"
   },
   "devDependencies": {
-    "@lugia/theme-hoc-devtools": "^1.0.7"
+    "@lugia/theme-hoc-devtools": "^1.0.8"
   },
   "peerDependencies": {
     "@lugia/theme-hoc-devtools": "1.0.5"

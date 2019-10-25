@@ -1,6 +1,6 @@
 {
   "name": "@lugia/css",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "css",
   "main": "./lib/index.js",
   "scripts": {
@@ -9,8 +9,7 @@
   "repository": {
     "type": "git"
   },
-  "bugs": {
-  },
+  "bugs": {},
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {

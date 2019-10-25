@@ -1,12 +1,11 @@
 {
   "name": "@lugia/theme-config",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "description": "Theme context",
   "main": "./lib/index.js",
   "scripts": {
     "start": "node ./lib"
   },
-
   "peerDependencies": {
     "react": ">16.0.0",
     "react-dom": ">16.0.0"
@@ -15,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/theme-core": "^1.0.35",
+    "@lugia/theme-core": "^1.0.36",
     "prop-types": "^15.7.2"
   },
   "files": [

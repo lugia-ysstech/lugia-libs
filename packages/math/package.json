@@ -1,12 +1,11 @@
 {
   "name": "@lugia/math",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "math utils",
   "main": "./lib/index.js",
   "scripts": {
     "start": "node ./lib"
   },
-
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {

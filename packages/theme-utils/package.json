@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-utils",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/css": "^1.0.18"
+    "@lugia/css": "^1.0.19"
   },
   "files": [
     "lib",

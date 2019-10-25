@@ -1,6 +1,6 @@
 {
   "name": "@lugia/indexdb",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -9,14 +9,13 @@
   "repository": {
     "type": "https://github.com/lugia-ysstech/lugia-libs"
   },
-  "bugs": {
-  },
+  "bugs": {},
   "author": "#lugia#",
   "license": "Apache License 2.0",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/listener": "^1.0.2",
-    "@lugia/unique": "^1.0.4"
+    "@lugia/listener": "^1.0.3",
+    "@lugia/unique": "^1.0.5"
   },
   "files": [
     "lib",
