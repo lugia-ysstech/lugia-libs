@@ -67,14 +67,14 @@ export default class IndexDB extends Listener<any> implements Store {
 
     request.onsuccess = event => {
       this.updateDb(event);
-      const { resetDataAfterConnect = false } = option;
+      const { resetDataAfterConnect = {} } = option;
 
       tableNames.forEach(async (tableName: string) => {
         const isExist = this.existTable(tableName);
         if (isExist) {
           const { db } = this;
           this.tableExist[tableName] = true;
-          if (resetDataAfterConnect) {
+          if (resetDataAfterConnect[tableName]) {
             await this.truncateTable(tableName);
           }
           this.emit(tableName, { db });
