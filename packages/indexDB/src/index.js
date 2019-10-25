@@ -9,7 +9,7 @@ import type {
   IndexDBIndexOptionItem,
   IndexDBOption,
   Store,
-} from '@lugia/indexDB';
+} from '@lugia/indexdb';
 
 import Unique, { now } from '@lugia/unique';
 import Listener from '@lugia/listener';

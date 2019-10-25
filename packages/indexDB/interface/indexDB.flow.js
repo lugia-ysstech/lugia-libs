@@ -1,4 +1,4 @@
-declare module '@lugia/indexDB' {
+declare module '@lugia/indexdb' {
   declare export interface QueryInstance {
     get(tableName: string, id: string): Promise<Object>;
 
