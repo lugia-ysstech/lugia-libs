@@ -1,6 +1,6 @@
 {
   "name": "@lugia/listener",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "listener",
   "main": "./lib/index.js",
   "scripts": {
