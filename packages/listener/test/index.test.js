@@ -136,4 +136,17 @@ describe('Listener', () => {
       },
     ]);
   });
+
+  it('awaitEvent', async () => {
+    const listener = new Listener();
+
+    const event = 'hello';
+    const data = 12341;
+    setTimeout(() => {
+      listener.emit(event, data);
+    }, 1000);
+
+    const res = await listener.awaitEvent(event);
+    expect(res).toBe(data);
+  });
 });

@@ -63,4 +63,12 @@ export default class Listener<T> {
       .pipe(take(count))
       .toPromise();
   }
+
+  async awaitEvent(eventName: string): Promise<any> {
+    return new Promise(res => {
+      this.once(eventName, (...param: any) => {
+        res(...param);
+      });
+    });
+  }
 }
