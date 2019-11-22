@@ -2,7 +2,7 @@
   "name": "@lugia/libs-example",
   "version": "1.0.78",
   "dependencies": {
-    "@lugia/indexDB": "^1.0.13",
+    "@lugia/indexdb": "^1.0.13",
     "@lugia/theme-config": "^1.0.36",
     "@lugia/theme-css-hoc": "^1.0.63",
     "@lugia/theme-hoc": "^1.0.48",
