@@ -843,6 +843,14 @@
     core-js "^2.5.7"
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime-corejs2@^7.2.0":
+  version "7.7.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.7.7.tgz#44885957b275a5fd70413142eda9cff4662847ac"
+  integrity sha512-P91T3dFYQL7aj44PxOMIAbo66Ag3NbmXG9fseSYaXxapp3K9XTct5HU9IpTOm2D0AoktKusgqzN5YcSxZXEKBQ==
+  dependencies:
+    core-js "^2.6.5"
+    regenerator-runtime "^0.13.2"
+
 "@babel/runtime@^7.1.5":
   version "7.1.5"
   resolved "http://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.1.5.tgz#4170907641cf1f61508f563ece3725150cc6fe39"
@@ -854,6 +862,13 @@
   version "7.4.5"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
   integrity sha1-WCu1MfX53GfS/LaCl5iU914lPxI=
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
+"@babel/runtime@^7.4.5":
+  version "7.7.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.7.7.tgz#194769ca8d6d7790ec23605af9ee3e42a0aa79cf"
+  integrity sha512-uCnC2JEVAu8AKB5do1WRIsvrdJ0flYx/A/9f/6chdacnEZ7LmavjdsDXr5ksYBegxtuTPR5Va9/+13QF/kFkCA==
   dependencies:
     regenerator-runtime "^0.13.2"
 
@@ -1136,6 +1151,14 @@
     babel-plugin-transform-dynamic-import "2.1.0"
     babel-plugin-transform-react-remove-prop-types "0.4.20"
 
+"@lugia/css@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@lugia/css/-/css-1.0.19.tgz#e56fb183b43191f996dc8413d4ab6da5d293f409"
+  integrity sha512-clq57XfSUIvQp8tPJNYJOEEpHz5j8zouN/ZX4e14pmYRIe38wkcwH/XIPWkUCZwy8FBdA8QOH6upr6Ty+SdgWQ==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    decamelize "^3.2.0"
+
 "@lugia/devtools-conversion@^1.0.3":
   version "1.0.3"
   resolved "http://219.141.235.71:18081/repository/lugia-group/@lugia/devtools-conversion/download/@lugia/devtools-conversion-1.0.3.tgz#6f780acb84f052704ab00c26488ca0a3533d25ec"
@@ -1156,6 +1179,24 @@
     redux "^4.0.0"
     redux-immutable "^4.0.0"
     redux-saga "^0.16.0"
+
+"@lugia/indexdb@^1.0.16":
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/@lugia/indexdb/-/indexdb-1.0.16.tgz#c9daccaffcb034f1b9433dbc8cf55dd883ebb9ac"
+  integrity sha512-KQTlyBYFk7X6bh4IDxaZdvlPjUFrU2pqtEOxY3pMYOotuLnqVMr5UIzapPZjuIVp1d79Lw4y4Kg2cTeUTtCshQ==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/listener" "^1.0.4"
+    "@lugia/unique" "^1.0.5"
+
+"@lugia/listener@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@lugia/listener/-/listener-1.0.4.tgz#bd42c8d154c997003ea82971106be434b840ddf8"
+  integrity sha512-ub2rZ1fJOsR69C51E7hjIZoRQuedzI0znN9FEtKVernf2QoR+n5pJomURSQdC8QPLHxd1ngoYMEtjxgyKwCYAw==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    events "^3.0.0"
+    rxjs "^6.3.3"
 
 "@lugia/lugiad-loader@^1.0.4":
   version "1.0.4"
@@ -1337,6 +1378,92 @@
     webpack-manifest-plugin "^1.3.2"
     webpack-merge "^4.2.1"
     webpack-parallel-uglify-plugin "^1.1.0"
+
+"@lugia/object-utils@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@lugia/object-utils/-/object-utils-1.0.15.tgz#ac1dbf6fdaee696d2adb7069e75621dbaf808084"
+  integrity sha512-03FD7ACx2aXS1NZkpXfQODpHLimLxqHQoCtBvSGhyV6I9VEUBklMnsG0NeD9GTrXg4rzywVGK/6xeWSoA7nIfw==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    deepmerge "^3.2.0"
+    is-plain-object "^3.0.0"
+
+"@lugia/ramada@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@lugia/ramada/-/ramada-1.0.3.tgz#387bdeb032dc79763a353d2be2044070380fe0d3"
+  integrity sha512-gtciTVy141OoHe2pjXwH6cnDTENQBb8knWCyFm1l8QLuK9Q9oW+ub8cm5DSgd2yf4bW/CG5Ugd1PuK18qL9gNQ==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+
+"@lugia/react-devtools-core@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@lugia/react-devtools-core/-/react-devtools-core-1.0.3.tgz#725ba0178f3ebf946beaec19675de6c4049a3220"
+  integrity sha512-yrzu/WRj5Vf/5ZxyBv6WPjdRG/UWlvqCpVzNkniAHGm5y+nJbRKUOeJDAyJoDMdogy3m1GLrxIbafjTvhQZg2Q==
+  dependencies:
+    shell-quote "^1.6.1"
+    ws "^3.3.1"
+
+"@lugia/theme-config@^1.0.36":
+  version "1.0.36"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-config/-/theme-config-1.0.36.tgz#1dcd584a7bd48aecfe25d2f16ddb0d2665d3c67d"
+  integrity sha512-U9W0aernpRyL8GaGLaJvyGB4eyHEN7mo40CmpuKtBxA9Cx7/Clp8FJAEdleJtu8ACFmsLx0fYs0S5Dw/WO6sbQ==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/theme-core" "^1.0.36"
+    prop-types "^15.7.2"
+
+"@lugia/theme-core@^1.0.36":
+  version "1.0.36"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-core/-/theme-core-1.0.36.tgz#a6a3192c61b3a9133ac81a224ed93e94fe69fc15"
+  integrity sha512-DU0ZFuANps1ZXn1Iky6RDw+3RYlvI6jRq9IT/SzHjkzDFbEeodJArgvB8b/uG42cwoLPffOL6dXr04uCaQ0zMA==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/object-utils" "^1.0.15"
+
+"@lugia/theme-css-hoc@^1.0.63":
+  version "1.0.63"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-css-hoc/-/theme-css-hoc-1.0.63.tgz#1c61ef1fde1fdc18755d386596d0b74dad593f3d"
+  integrity sha512-XjQbmQ5iWiwyM8oLEnlv0akxcwRju8+KgAvFgxvh+MUd3nHAYL7iqXbafSFXiN1bEC8KulO/ETCAXh1463shIw==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/css" "^1.0.19"
+    "@lugia/object-utils" "^1.0.15"
+    "@lugia/ramada" "^1.0.3"
+    "@lugia/theme-core" "^1.0.36"
+    "@lugia/theme-utils" "^1.0.8"
+    decamelize "^3.2.0"
+
+"@lugia/theme-hoc-devtools@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-hoc-devtools/-/theme-hoc-devtools-1.0.8.tgz#b957144cce86939b8ab04028a52bef22d54ddf1e"
+  integrity sha512-DNF2g+V7NQuToV5OLiqbZPe8GGgFZqe8aKQrGzB+X/6PD/8Hno/KsDbfZM1shGh6w5HgJbYZ1mwpJng8+SCzWA==
+  dependencies:
+    "@lugia/react-devtools-core" "^1.0.3"
+
+"@lugia/theme-hoc@^1.0.48":
+  version "1.0.48"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-hoc/-/theme-hoc-1.0.48.tgz#a1557271dfb91986a43954824a33cda4d39f53c6"
+  integrity sha512-kSMtX24JMO0NISnyhBRWPH1xqlHp/IG+OdlIkYt8xj3WsbHGaIEOOBzrzxiNPbVzElsXEbznJU9qKykGe8bONQ==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/object-utils" "^1.0.15"
+    "@lugia/theme-core" "^1.0.36"
+    "@lugia/theme-hoc-devtools" "^1.0.8"
+
+"@lugia/theme-utils@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-utils/-/theme-utils-1.0.8.tgz#31d1e50bef2e29b662452151e5d77e0b122efaca"
+  integrity sha512-rez8/TTPEteMWAud65Y+T500XSaNq4rMM7tluuZsO8LpXfWlpwPQBnitmHgqFoU5L5oZYCRFfihzjGDM7R5oXg==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/css" "^1.0.19"
+
+"@lugia/unique@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@lugia/unique/-/unique-1.0.5.tgz#2f24d76bfcfe2aa373da8238b1dfc29c110c124e"
+  integrity sha512-q0+kVBux+ANUhnNlqXfQZ5c4py5iHH9lEP39kPlYLx5dxWA+SeRlTqMa2WUHQkQFTYSVssfYurZy2aj3dpgMEg==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
 
 "@sindresorhus/is@^0.11.0":
   version "0.11.0"
@@ -1893,7 +2020,7 @@ async@1.5.2, async@^1.5.2:
   resolved "http://registry.npm.taobao.org/async/download/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
   integrity sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
 
-async@^2.1.2, async@^2.1.4, async@^2.4.1, async@^2.5.0:
+async@^2.1.2, async@^2.1.4, async@^2.4.1:
   version "2.6.1"
   resolved "http://registry.npm.taobao.org/async/download/async-2.6.1.tgz#b245a23ca71930044ec53fa46aa00a3e87c6a610"
   integrity sha1-skWiPKcZMAROxT+kaqAKPofGphA=
@@ -3296,6 +3423,11 @@ commander@~2.20.0:
   resolved "https://registry.npm.taobao.org/commander/download/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
   integrity sha1-1YuytcHuj4ew00ACfp6U4iLFpCI=
 
+commander@~2.20.3:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
+
 commander@~2.8.1:
   version "2.8.1"
   resolved "https://registry.npm.taobao.org/commander/download/commander-2.8.1.tgz#06be367febfda0c330aa1e2a072d3dc9762425d4"
@@ -3484,6 +3616,11 @@ core-js@^2.4.0, core-js@^2.5.0, core-js@^2.5.7:
   version "2.5.7"
   resolved "http://registry.npm.taobao.org/core-js/download/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
   integrity sha1-+XJgj/DOrWi4QaFqky0LGDeRgU4=
+
+core-js@^2.6.5:
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
+  integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
 
 core-js@^3.0.0:
   version "3.1.3"
@@ -3847,6 +3984,13 @@ decamelize@^2.0.0:
   dependencies:
     xregexp "4.0.0"
 
+decamelize@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-3.2.0.tgz#84b8e8f4f8c579f938e35e2cc7024907e0090851"
+  integrity sha512-4TgkVUsmmu7oCSyGBm5FvfMoACuoh9EOidm7V5/J2X2djAwwt57qb3F2KMP2ITqODTCSwb+YRV+0Zqrv18k/hw==
+  dependencies:
+    xregexp "^4.2.4"
+
 decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "http://registry.npm.taobao.org/decode-uri-component/download/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
@@ -3933,6 +4077,11 @@ deep-is@~0.1.3:
   version "0.1.3"
   resolved "http://registry.npm.taobao.org/deep-is/download/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
+
+deepmerge@^3.2.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.3.0.tgz#d3c47fd6f3a93d517b14426b0628a17b0125f5f7"
+  integrity sha512-GRQOafGHwMHpjPx9iCvTgpu9NojZ49q794EEL94JVEw6VaeA8XTUyBKvAkOOjBX9oJNiV6G3P+T+tihFjo2TqA==
 
 default-require-extensions@^1.0.0:
   version "1.0.0"
@@ -4853,6 +5002,11 @@ events@^1.0.0:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/events/download/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
   integrity sha1-nr23Y1rQmccNzEwqH1AEKI6L2SQ=
+
+events@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/events/-/events-3.0.0.tgz#9a0a0dfaf62893d92b875b8f2698ca4114973e88"
+  integrity sha512-Dc381HFWJzEOhQ+d8pkNon++bk9h6cdAoAj4iE6Q4y6xgTzySWXlKn05/TVNpjnfRqi/X0EpJEJohPjNI3zpVA==
 
 eventsource@0.1.6:
   version "0.1.6"
@@ -5914,21 +6068,10 @@ handle-thing@^1.2.5:
   resolved "http://registry.npm.taobao.org/handle-thing/download/handle-thing-1.2.5.tgz#fd7aad726bf1a5fd16dfc29b2f7a6601d27139c4"
   integrity sha1-/Xqtcmvxpf0W38KbL3pmAdJxOcQ=
 
-handlebars@^4.0.3:
-  version "4.0.12"
-  resolved "http://registry.npm.taobao.org/handlebars/download/handlebars-4.0.12.tgz#2c15c8a96d46da5e266700518ba8cb8d919d5bc5"
-  integrity sha1-LBXIqW1G2l4mZwBRi6jLjZGdW8U=
-  dependencies:
-    async "^2.5.0"
-    optimist "^0.6.1"
-    source-map "^0.6.1"
-  optionalDependencies:
-    uglify-js "^3.1.4"
-
-handlebars@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.npm.taobao.org/handlebars/download/handlebars-4.1.2.tgz#b6b37c1ced0306b221e094fc7aca3ec23b131b67"
-  integrity sha1-trN8HO0DBrIh4JT8eso+wjsTG2c=
+handlebars@^4.0.3, handlebars@^4.1.2:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.5.3.tgz#5cf75bd8714f7605713511a56be7c349becb0482"
+  integrity sha512-3yPecJoJHK/4c6aZhSvxOyG4vJKDshV36VHp0iVCDVh7o9w2vwi3NSnL2MMPj3YdduqaBcu7cGbggJQM0br9xA==
   dependencies:
     neo-async "^2.6.0"
     optimist "^0.6.1"
@@ -6802,6 +6945,13 @@ is-plain-object@^2.0.1, is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   dependencies:
     isobject "^3.0.1"
 
+is-plain-object@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-3.0.0.tgz#47bfc5da1b5d50d64110806c199359482e75a928"
+  integrity sha512-tZIpofR+P05k8Aocp7UI/2UTa9lTJSebCXpFFoR9aibpokDj/uXBsJ8luUu0tTVYKkMU6URDUuOfJZ7koewXvg==
+  dependencies:
+    isobject "^4.0.0"
+
 is-posix-bracket@^0.1.0:
   version "0.1.1"
   resolved "http://registry.npm.taobao.org/is-posix-bracket/download/is-posix-bracket-0.1.1.tgz#3334dc79774368e92f016e6fbc0a88f5cd6e6bc4"
@@ -6938,6 +7088,11 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/isobject/download/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
+
+isobject@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/isobject/-/isobject-4.0.0.tgz#3f1c9155e73b192022a80819bacd0343711697b0"
+  integrity sha512-S/2fF5wH8SJA/kmwr6HYhK/RI/OkhD84k8ntalo0iJjZikgq1XFvR5M8NPT1x5F7fBwCG3qHfnzeP/Vh/ZxCUA==
 
 isstream@~0.1.2:
   version "0.1.2"
@@ -8755,7 +8910,7 @@ minimist@^1.1.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
 
 minimist@~0.0.1:
   version "0.0.10"
-  resolved "http://registry.npm.taobao.org/minimist/download/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
   integrity sha1-3j+YVD2/lggr5IrRoMfNqDYwHc8=
 
 minipass@^2.2.1, minipass@^2.3.4:
@@ -8911,15 +9066,10 @@ negotiator@0.6.1:
   resolved "http://registry.npm.taobao.org/negotiator/download/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
   integrity sha1-KzJxhOiZIQEXeyhWP7XnECrNDKk=
 
-neo-async@^2.5.0:
-  version "2.6.0"
-  resolved "http://registry.npm.taobao.org/neo-async/download/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
-  integrity sha1-udFeTXHGdikIZUtRg+04t1M0CDU=
-
-neo-async@^2.6.0:
+neo-async@^2.5.0, neo-async@^2.6.0:
   version "2.6.1"
-  resolved "https://registry.npm.taobao.org/neo-async/download/neo-async-2.6.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fneo-async%2Fdownload%2Fneo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
-  integrity sha1-rCetpmFn+ohJpq3dg39rGJrSCBw=
+  resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
+  integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
 next-tick@1:
   version "1.0.0"
@@ -9388,7 +9538,7 @@ opn@^5.1.0:
 
 optimist@^0.6.1:
   version "0.6.1"
-  resolved "http://registry.npm.taobao.org/optimist/download/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
+  resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
   integrity sha1-2j6nRob6IaGaERwybpDrFaAZZoY=
   dependencies:
     minimist "~0.0.1"
@@ -11266,6 +11416,13 @@ rxjs@^5.5.6:
   dependencies:
     symbol-observable "1.0.1"
 
+rxjs@^6.3.3:
+  version "6.5.4"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.4.tgz#e0777fe0d184cec7872df147f303572d414e211c"
+  integrity sha512-naMQXcgEo3csAEGvw/NydRA0fuS2nDZJiw1YUWFKU7aPPAPGZEsD4Iimit96qwCieH6y614MCLYwdkrWx7z/7Q==
+  dependencies:
+    tslib "^1.9.0"
+
 safe-buffer@5.1.2, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "http://registry.npm.taobao.org/safe-buffer/download/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
@@ -12449,6 +12606,11 @@ tslib@^1.8.0, tslib@^1.8.1:
   resolved "http://registry.npm.taobao.org/tslib/download/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha1-1+TdeSRdhUKMTX5IIqeZF5VMooY=
 
+tslib@^1.9.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
+  integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
+
 tslint-loader@^3.5.4:
   version "3.5.4"
   resolved "https://registry.npm.taobao.org/tslint-loader/download/tslint-loader-3.5.4.tgz#052af7f0772434451ea1b247bb55407f878a4c40"
@@ -12546,7 +12708,7 @@ uglify-es@^3.0.26, uglify-es@^3.3.9:
     commander "~2.13.0"
     source-map "~0.6.1"
 
-uglify-js@3.4.x, uglify-js@^3.1.4:
+uglify-js@3.4.x:
   version "3.4.9"
   resolved "http://registry.npm.taobao.org/uglify-js/download/uglify-js-3.4.9.tgz#af02f180c1207d76432e473ed24a28f4a782bae3"
   integrity sha1-rwLxgMEgfXZDLkc+0koo9KeCuuM=
@@ -12570,6 +12732,14 @@ uglify-js@^3.0.21:
   integrity sha1-/itTeP0LCeEWhkBBQ3v/iJEFziQ=
   dependencies:
     commander "~2.20.0"
+    source-map "~0.6.1"
+
+uglify-js@^3.1.4:
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.7.3.tgz#f918fce9182f466d5140f24bb0ff35c2d32dcc6a"
+  integrity sha512-7tINm46/3puUA4hCkKYo4Xdts+JDaVC9ZPRcG8Xw9R4nhO/gZgUM3TENq8IF4Vatk8qCig4MzP/c8G4u2BkVQg==
+  dependencies:
+    commander "~2.20.3"
     source-map "~0.6.1"
 
 uglify-to-browserify@~1.0.0:
@@ -13170,7 +13340,7 @@ wordwrap@0.0.2:
 
 wordwrap@~0.0.2:
   version "0.0.3"
-  resolved "http://registry.npm.taobao.org/wordwrap/download/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"
+  resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"
   integrity sha1-o9XabNXAvAAI03I0u68b7WMFkQc=
 
 wordwrap@~1.0.0:
@@ -13235,6 +13405,15 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
+ws@^3.3.1, ws@~3.3.1:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-3.3.3.tgz#f1cf84fe2d5e901ebce94efaece785f187a228f2"
+  integrity sha512-nnWLa/NwZSt4KQJu51MYlCcSQ5g7INpOrOMt4XV8j4dqTXdmlUmSHQ8/oLC069ckre0fRsgfvsKwbTdtKLCDkA==
+  dependencies:
+    async-limiter "~1.0.0"
+    safe-buffer "~5.1.0"
+    ultron "~1.1.0"
+
 ws@^4.0.0:
   version "4.1.0"
   resolved "http://registry.npm.taobao.org/ws/download/ws-4.1.0.tgz#a979b5d7d4da68bf54efe0408967c324869a7289"
@@ -13256,15 +13435,6 @@ ws@^7.0.0:
   integrity sha1-eTUcvD94Szwg0IIbr0tP+An/v1E=
   dependencies:
     async-limiter "^1.0.0"
-
-ws@~3.3.1:
-  version "3.3.3"
-  resolved "https://registry.npm.taobao.org/ws/download/ws-3.3.3.tgz?cache=0&sync_timestamp=1560788200711&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fws%2Fdownload%2Fws-3.3.3.tgz#f1cf84fe2d5e901ebce94efaece785f187a228f2"
-  integrity sha1-8c+E/i1ekB686U767OeF8YeiKPI=
-  dependencies:
-    async-limiter "~1.0.0"
-    safe-buffer "~5.1.0"
-    ultron "~1.1.0"
 
 xdg-basedir@^3.0.0:
   version "3.0.0"
@@ -13303,6 +13473,13 @@ xregexp@4.0.0:
   version "4.0.0"
   resolved "http://registry.npm.taobao.org/xregexp/download/xregexp-4.0.0.tgz#e698189de49dd2a18cc5687b05e17c8e43943020"
   integrity sha1-5pgYneSd0qGMxWh7BeF8jkOUMCA=
+
+xregexp@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-4.2.4.tgz#02a4aea056d65a42632c02f0233eab8e4d7e57ed"
+  integrity sha512-sO0bYdYeJAJBcJA8g7MJJX7UrOZIfJPd8U2SC7B2Dd/J24U0aQNoGp33shCaBSWeb0rD5rh6VBUIXOkGal1TZA==
+  dependencies:
+    "@babel/runtime-corejs2" "^7.2.0"
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.1"
