@@ -26,6 +26,14 @@ class Theme extends React.Component<ThemeConfigProps, StateType> {
 
   componentWillReceiveProps(nextProps: ThemeConfigProps, context: Object) {
     const nowContext = this.context;
+    const { toJSONString } = this;
+    const isSame =
+      toJSONString(nextProps.config) === toJSONString(this.props.config) &&
+      toJSONString(nowContext.config) === toJSONString(context.config) &&
+      toJSONString(nowContext.svThemeConfigTree) ===
+        toJSONString(context.svThemeConfigTree);
+    if (isSame) return;
+
     if (
       nextProps.config !== this.props.config ||
       nowContext.config !== context.config ||
@@ -33,6 +41,10 @@ class Theme extends React.Component<ThemeConfigProps, StateType> {
     ) {
       this.updateTreeConfig(nextProps, context);
     }
+  }
+
+  toJSONString(target: Object) {
+    return JSON.stringify(target);
   }
 
   updateTreeConfig(props: ThemeConfigProps, context: Object) {
