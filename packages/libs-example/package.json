@@ -1,6 +1,6 @@
 {
   "name": "@lugia/libs-example",
-  "version": "1.0.79",
+  "version": "1.0.80",
   "dependencies": {
     "@lugia/indexdb": "^1.0.16",
     "@lugia/theme-config": "^1.0.36",
