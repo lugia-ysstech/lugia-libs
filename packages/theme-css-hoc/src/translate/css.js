@@ -168,6 +168,7 @@ export function themeMeta2Style(theme: ThemeMeta): Object {
     cursor,
     lineHeight,
     borderRadius,
+    overflow,
   } = theme;
   let { background } = theme;
   const style = {};
@@ -178,6 +179,12 @@ export function themeMeta2Style(theme: ThemeMeta): Object {
   setObjectValueIfValueExist(style, 'height', height, getSizeFromTheme);
 
   setObjectValueIfValueExist(style, 'color', color, getStringStyleFromTheme);
+  setObjectValueIfValueExist(
+    style,
+    'overflow',
+    overflow,
+    getStringStyleFromTheme,
+  );
   setObjectValueIfValueExist(
     style,
     'opacity',
