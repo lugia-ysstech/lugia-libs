@@ -67,7 +67,7 @@ function useInitHandle(props: Object, widgetName: string, opt: ThemeHocOption) {
 const ThemeProvider = (
   Target: ProviderComponent,
   widgetName: string,
-  opt?: ThemeHocOption = { hover: false, active: false, focus: false },
+  opt: ?ThemeHocOption = { hover: false, active: false, focus: false },
 ): Function => {
   if (Target.displayName === CSSComponentContainerDisplayName) {
     console.warn('CSSComponent不推荐直接包括ThemeHoc');
@@ -120,8 +120,9 @@ const ThemeProvider = (
       const { themeState: propsThemeState = {} } = props;
       setThemeState(propsThemeState);
     }
+    const { lugiaHidden = false } = props;
 
-    return (
+    return lugiaHidden ? null : (
       <Target
         dispatchEvent={handle.dispatchEvent}
         createEventChannel={handle.createEventChannel}
