@@ -172,7 +172,7 @@ describe('combine', () => {
       },
     };
 
-    const result = combineFunction(eventA, eventB, eventC);
+    const result = combineFunction({ targets: [eventA, eventB, eventC] });
     result.onChange('hello');
     expect(res).toEqual(['changeAhello', 'changeBhello', 'changeChello']);
   });
@@ -196,8 +196,105 @@ describe('combine', () => {
       },
     };
 
-    const result = combineFunction(eventA, eventB, eventC);
+    const result = combineFunction({ targets: [eventA, eventB, eventC] });
     result.onChange('hello');
+    expect(changeRes).toEqual(['changeAhello', 'changeChello']);
+    result.onClick('clk');
+    expect(clickRes).toEqual(['onClickclk']);
+  });
+
+  it('combineFunction option return number', () => {
+    const changeRes = [];
+    const clickRes = [];
+    const eventA = {
+      onChange(v) {
+        changeRes.push('changeA' + v);
+      },
+    };
+
+    const eventB = {
+      onClick(v) {
+        clickRes.push('onClick' + v);
+      },
+    };
+    const eventC = {
+      onChange(v) {
+        changeRes.push('changeC' + v);
+        return 5;
+      },
+    };
+
+    const result = combineFunction({
+      targets: [eventA, eventB, eventC],
+      option: { returned: eventC },
+    });
+    expect(result.onChange('hello')).toBe(5);
+    expect(changeRes).toEqual(['changeAhello', 'changeChello']);
+    result.onClick('clk');
+    expect(clickRes).toEqual(['onClickclk']);
+  });
+
+  it('combineFunction option returned promise', async () => {
+    const changeRes = [];
+    const clickRes = [];
+    const eventA = {
+      onChange(v) {
+        changeRes.push('changeA' + v);
+        return Promise.resolve(1);
+      },
+    };
+
+    const eventB = {
+      onClick(v) {
+        clickRes.push('onClick' + v);
+        return 3;
+      },
+    };
+    const eventC = {
+      onChange(v) {
+        changeRes.push('changeC' + v);
+        return 5;
+      },
+    };
+
+    const result = combineFunction({
+      targets: [eventA, eventB, eventC],
+      option: { returned: eventA },
+    });
+    expect(await result.onChange('hello')).toBe(1);
+    expect(changeRes).toEqual(['changeAhello', 'changeChello']);
+    result.onClick('clk');
+    expect(clickRes).toEqual(['onClickclk']);
+  });
+
+  it('combineFunction option func is async', async () => {
+    const changeRes = [];
+    const clickRes = [];
+    const eventA = {
+      async onChange(v) {
+        changeRes.push('changeA' + v);
+        return 1;
+      },
+    };
+
+    const eventB = {
+      onClick(v) {
+        clickRes.push('onClick' + v);
+        return 3;
+      },
+    };
+    const eventC = {
+      async onChange(v) {
+        changeRes.push('changeC' + v);
+        return 5;
+      },
+    };
+
+    const result = combineFunction({
+      targets: [eventA, eventB, eventC],
+      option: { returned: eventA },
+    });
+    expect(await result.onChange('hello')).toBe(1);
     expect(changeRes).toEqual(['changeAhello', 'changeChello']);
     result.onClick('clk');
     expect(clickRes).toEqual(['onClickclk']);

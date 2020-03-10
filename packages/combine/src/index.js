@@ -50,13 +50,28 @@ export function combineMethodObject(...rest: Object[]): Object {
   return res;
 }
 
-export function combineFunction(...rest: Object[]): Object {
-  const combineObj = combineMethodObject(...rest);
+export function combineFunction(param: {
+  targets: Object[],
+  option?: { returned: ?Object },
+}): Object {
+  const { targets, option = {} } = param;
+
+  const { returned } = option;
+  const combineObj = combineMethodObject(...targets);
   const res = {};
   Object.keys(combineObj).forEach(key => {
     const method = combineObj[key];
     res[key] = (...rest) => {
-      method && method.forEach(f => f(...rest));
+      let result;
+      method &&
+        method.forEach(call => {
+          const callResult = call(...rest);
+          if (returned && returned[key] === call) {
+            result = callResult;
+          }
+        });
+
+      return result;
     };
   });
   return res;
