@@ -1,0 +1,19 @@
+{
+  "name": "@lugia/dict",
+  "version": "1.0.0",
+  "description": "dict",
+  "main": "./lib/index.js",
+  "scripts": {
+    "start": "node ./lib"
+  },
+  "author": "#lugia#",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "interface"
+  ],
+  "engines": {
+    "node": ">=10",
+    "npm": ">=5.2.0"
+  }
+}

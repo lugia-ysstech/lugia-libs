@@ -1,0 +1,16 @@
+[ignore]
+.*/node_modules/.*
+.*/build/.*
+.*/config/.*
+.*/public/.*
+.*/scripts/.*
+.*/flow-typed/.*
+.*/.history/.*
+[include]
+packages/.*/src
+[libs]
+flow-typed/
+interface/
+../../flow-typed/
+[options]
+module.name_mapper='^core/\(.*\)$' -> '<PROJECT_ROOT>/src/core/\1'
