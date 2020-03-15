@@ -1,6 +1,6 @@
 {
   "name": "@lugia/dict",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "dict",
   "main": "./lib/index.js",
   "scripts": {
