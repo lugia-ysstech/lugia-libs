@@ -252,7 +252,9 @@ describe('ThemeHandle.test.js', () => {
 
     expect(target.getPartOfThemeConfig('lgx')).toEqual(lgx);
     expect(lgx.__partName).toBe('lgx');
-    expect(target.getPartOfThemeConfig('lgx')).toEqual({});
+    expect(target.getPartOfThemeConfig('lgx')).toEqual({
+      __partName: 'lgx',
+    });
     order.verify(param => {
       const { handle } = param;
       handle.getTheme();
@@ -270,7 +272,9 @@ describe('ThemeHandle.test.js', () => {
     const props = {
       propsConfig,
     };
-    const target = new ThemeHandle(props, {}, widgetName, themeState, {});
+    const target = new ThemeHandle(props, {}, widgetName, themeState, {
+      __partName: 'lgx',
+    });
     const order = VerifyOrder.create();
     const mock = mockObject.create(
       target,
