@@ -65,7 +65,7 @@ const Block = CSSComponent({
         right: 20,
       },
       height: 20,
-      background: { color: 'yellow' },
+      background: { color: '$lugia-dict.lugia-web.bgColor' },
     },
   },
 });

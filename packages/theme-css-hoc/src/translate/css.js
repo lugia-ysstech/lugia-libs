@@ -4,6 +4,8 @@
  *
  * @flow
  */
+import { getDict, existDict } from '@lugia/dict';
+
 import type { ThemeMeta } from '@lugia/theme-core';
 import type { CSSConfig, StateType } from '@lugia/theme-css-hoc';
 import { always } from '@lugia/ramada';
@@ -11,8 +13,8 @@ import {
   deepMerge,
   getAttributeFromObject,
   getAttributeValue,
-  packObject,
   isEmptyObject,
+  packObject,
 } from '@lugia/object-utils';
 import { units } from '@lugia/css';
 import { getBoxShadowCSS } from '@lugia/theme-utils';
@@ -22,9 +24,14 @@ import { Active, Disabled, Focus, Hover } from '../consts';
 const { px2remcss } = units;
 
 export function getSizeFromTheme(size: any) {
-  return typeof size === 'number' || !isNaN(Number(size))
-    ? px2remcss(size)
-    : size;
+  if (typeof size === 'number' || !isNaN(Number(size))) {
+    return px2remcss(size);
+  }
+  const dict = getDictValue(size);
+
+  return typeof dict === 'number' || !isNaN(Number(dict))
+    ? px2remcss(dict)
+    : dict;
 }
 
 export const getSpaceFromTheme = (
@@ -145,11 +152,37 @@ export function getBorderRadius(borderRadius: Object): Object {
 }
 
 export function getStringStyleFromTheme(stringStyle: string) {
-  return stringStyle && typeof stringStyle === 'string' ? stringStyle : '';
+  if (!stringStyle || typeof stringStyle !== 'string') {
+    return '';
+  }
+  return getDictValue(stringStyle);
+}
+
+export function getDictValue(value: any) {
+  if (!value || typeof value !== 'string') {
+    return value;
+  }
+  if (value.startsWith('$lugia-dict')) {
+    const dictConfig = value.split('.');
+    if (dictConfig.length === 3) {
+      const dictName = dictConfig[1];
+      const keyValue = dictConfig[2];
+      if (!existDict(dictName)) {
+        return undefined;
+      }
+      const dict = getDict(dictName);
+      return dict.get(keyValue);
+    }
+  }
+  return value;
 }
 
 export function getNumberStyleFromTheme(numberStyle: number) {
-  return numberStyle && typeof numberStyle === 'number' ? numberStyle : 0;
+  if (numberStyle && typeof numberStyle === 'number') {
+    return numberStyle;
+  }
+  const dictValue = getDictValue(numberStyle);
+  return dictValue && typeof dictValue === 'number' ? dictValue : 0;
 }
 
 export function themeMeta2Style(theme: ThemeMeta): Object {

@@ -6,4 +6,5 @@ declare module '@lugia/dict' {
   }
   declare export function createDict(): Dict;
   declare export function getDict(dictName: string): Dict;
+  declare export function existDict(dictName: string): boolean;
 }

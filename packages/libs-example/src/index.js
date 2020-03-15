@@ -1,9 +1,20 @@
-import LugiaThemeDevTools from '@lugia/theme-hoc-devtools';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './selector/demo';
 import * as serviceWorker from './serviceWorker';
-LugiaThemeDevTools.inject(window);
+import { getDict } from '@lugia/dict';
+
+let dict = getDict('lugia-web');
+dict.load('default', {
+  bgColor: 'green',
+});
+
+window.changeGlobal = () => {
+  dict.load('default', {
+    bgColor: 'blue',
+  });
+  ReactDOM.render(<App />, document.getElementById('root'));
+};
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

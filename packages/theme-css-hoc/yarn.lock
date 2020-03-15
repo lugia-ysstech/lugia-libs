@@ -17,6 +17,51 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@lugia/css@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.npm.taobao.org/@lugia/css/download/@lugia/css-1.0.19.tgz#e56fb183b43191f996dc8413d4ab6da5d293f409"
+  integrity sha1-5W+xg7QxkfmW3IQT1KttpdKT9Ak=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    decamelize "^3.2.0"
+
+"@lugia/dict@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/@lugia/dict/download/@lugia/dict-1.0.1.tgz#b7b0b44986b44a5ee9121dc4a7c3fca4c0edf41f"
+  integrity sha1-t7C0SYa0Sl7pEh3Ep8P8pMDt9B8=
+
+"@lugia/object-utils@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.npm.taobao.org/@lugia/object-utils/download/@lugia/object-utils-1.0.15.tgz#ac1dbf6fdaee696d2adb7069e75621dbaf808084"
+  integrity sha1-rB2/b9ruaW0q23Bp51Yh26+AgIQ=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    deepmerge "^3.2.0"
+    is-plain-object "^3.0.0"
+
+"@lugia/ramada@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@lugia/ramada/download/@lugia/ramada-1.0.3.tgz#387bdeb032dc79763a353d2be2044070380fe0d3"
+  integrity sha1-OHvesDLceXY6NT0r4gRAcDgP4NM=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+
+"@lugia/theme-core@^1.0.36":
+  version "1.0.36"
+  resolved "https://registry.npm.taobao.org/@lugia/theme-core/download/@lugia/theme-core-1.0.36.tgz#a6a3192c61b3a9133ac81a224ed93e94fe69fc15"
+  integrity sha1-pqMZLGGzqRM6yBoiTtk+lP5p/BU=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/object-utils" "^1.0.15"
+
+"@lugia/theme-utils@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.npm.taobao.org/@lugia/theme-utils/download/@lugia/theme-utils-1.0.8.tgz#31d1e50bef2e29b662452151e5d77e0b122efaca"
+  integrity sha1-MdHlC+8uKbZiRSFR5dd+CxIu+so=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/css" "^1.0.19"
+
 core-js@^2.6.5:
   version "2.6.9"
   resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
@@ -28,6 +73,23 @@ decamelize@^3.2.0:
   integrity sha1-hLjo9PjFefk4414sxwJJB+AJCFE=
   dependencies:
     xregexp "^4.2.4"
+
+deepmerge@^3.2.0:
+  version "3.3.0"
+  resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-3.3.0.tgz#d3c47fd6f3a93d517b14426b0628a17b0125f5f7"
+  integrity sha1-08R/1vOpPVF7FEJrBiihewEl9fc=
+
+is-plain-object@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/is-plain-object/download/is-plain-object-3.0.0.tgz#47bfc5da1b5d50d64110806c199359482e75a928"
+  integrity sha1-R7/F2htdUNZBEIBsGZNZSC51qSg=
+  dependencies:
+    isobject "^4.0.0"
+
+isobject@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/isobject/download/isobject-4.0.0.tgz#3f1c9155e73b192022a80819bacd0343711697b0"
+  integrity sha1-PxyRVec7GSAiqAgZus0DQ3EWl7A=
 
 regenerator-runtime@^0.13.2:
   version "0.13.2"

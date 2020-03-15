@@ -3,7 +3,7 @@
  * create by ligx
  *
  */
-import { createDict, getDict } from '../src';
+import { createDict, getDict, existDict } from '../src';
 
 describe('Dict', () => {
   let dict;
@@ -102,7 +102,10 @@ describe('Dict', () => {
 
   it('getDict', () => {
     const name = '@lugia/lugia-web';
+    expect(existDict(name)).toBeFalsy();
     const dict = getDict(name);
+    expect(existDict(name)).toBeTruthy();
+
     dict.load('production', { bgColor: 'red', borderColor: 'yellow' });
     dict.load('dev', { bgColor: 'yellow', borderColor: 'red' });
     expect(dict.get('bgColor')).toBe('red');

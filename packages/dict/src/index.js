@@ -57,6 +57,9 @@ class Dict {
 
 const name2Dict = {};
 
+export function existDict(name: string): boolean {
+  return name in name2Dict && name2Dict[name];
+}
 export function createDict(): Dict {
   return new Dict();
 }

@@ -1,6 +1,8 @@
 // @flow
 
+import { getDict } from '@lugia/dict';
 import {
+  getDictValue,
   getBorderRadius,
   getBorderStyleFromTheme,
   getFont,
@@ -16,7 +18,41 @@ import {
 
 const emptyObj = {};
 describe('theme-css-hoc/translate/css', () => {
+  const globalConfig = {
+    bgColor: 'red',
+    fontSize: 15,
+    secondFontSize: '50%',
+    threeFontSize: '25',
+    borderRadius: '20px',
+  };
+
+  beforeAll(() => {
+    let dict = getDict('lugia-web');
+    dict.load('default', globalConfig);
+  });
   it('getThemeByConfig', () => {});
+
+  it('getDictValue is normal', () => {
+    expect(getDictValue(1)).toBe(1);
+    expect(getDictValue('hello')).toBe('hello');
+    expect(getDictValue(false)).toBe(false);
+    expect(getDictValue(true)).toBe(true);
+    expect(getDictValue(null)).toBe(null);
+    expect(getDictValue(undefined)).toBe(undefined);
+  });
+
+  it('getDictValue is dict config', () => {
+    expect(getDictValue('$lugia-dict.aaa.bgColor')).toEqual(undefined);
+    expect(getDictValue('$lugia-dict.lugia-web.bgColor')).toBe('red');
+    expect(getDictValue('$lugia-dict.lugia-web.fontSize')).toBe(15);
+    expect(getDictValue('$lugia-dict.lugia-web.borderRadius')).toBe('20px');
+
+    let dict = getDict('agg');
+    dict.load('default', {
+      bgColor: 'ligx',
+    });
+    expect(getDictValue('$lugia-dict.agg.bgColor')).toBe('ligx');
+  });
 
   it('getSelectNameThemeMeta selectNames =[]', () => {
     expect(
@@ -143,6 +179,15 @@ describe('theme-css-hoc/translate/css', () => {
     expect(getSizeFromTheme(15)).toBe('1.5rem');
     expect(getSizeFromTheme('15')).toBe('1.5rem');
     expect(getSizeFromTheme('50%')).toBe('50%');
+    expect(getSizeFromTheme('$lugia-dict.lugia-web.fontSize')).toBe('1.5rem');
+    expect(getSizeFromTheme('$lugia-dict.lugia-web.secondFontSize')).toBe(
+      '50%',
+    );
+    expect(getSizeFromTheme('$lugia-dict.lugia-web.threeFontSize')).toBe(
+      '2.5rem',
+    );
+    expect(getSizeFromTheme('$lugia-dict.lugia-web.aa')).toBe(undefined);
+    expect(getSizeFromTheme('$lugia-dict.agg.aa')).toBe(undefined);
   });
 
   it('setObjectValueIfValueExist', () => {
@@ -366,12 +411,17 @@ describe('theme-css-hoc/translate/css', () => {
   it('getStringStyleFromTheme', () => {
     expect(getStringStyleFromTheme('')).toBe('');
     expect(getStringStyleFromTheme('abc')).toBe('abc');
+    expect(getStringStyleFromTheme('$lugia-dict.lugia-web.bgColor')).toBe(
+      'red',
+    );
     const val: any = 5;
     expect(getStringStyleFromTheme(val)).toBe('');
   });
 
   it('getNumberStyleFromTheme', () => {
+    expect(getNumberStyleFromTheme('$lugia-dict.dsfsadf.fontSize')).toBe(0);
     expect(getNumberStyleFromTheme(15)).toBe(15);
+    expect(getNumberStyleFromTheme('$lugia-dict.lugia-web.fontSize')).toBe(15);
     const val: any = 5;
     expect(getNumberStyleFromTheme(val)).toBe(5);
   });
