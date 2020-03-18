@@ -16,9 +16,9 @@ import type {
   GetBorderOption,
 } from '@lugia/theme-utils';
 import { units } from '@lugia/css';
+import { getDictValue } from '@lugia/theme-css-hoc';
 
 const { px2Number } = units;
-
 const allBorderDirections = ['l', 't', 'r', 'b'];
 
 const borderDirectionMap = {
@@ -29,7 +29,7 @@ const borderDirectionMap = {
 };
 
 export function getBorder(
-  border: BorderConfig,
+  border: BorderConfig | string,
   opt?: GetBorderOption = { directions: allBorderDirections },
 ): BorderType {
   const { directions = allBorderDirections } = opt;
@@ -37,23 +37,23 @@ export function getBorder(
   if (!directions || directions.length === 0) {
     return {};
   }
-
   const result = {};
+  const theBorder = getDictValue(border);
 
   return directions.reduce((result: Object, direction: string) => {
     direction = borderDirectionMap[direction];
     if (result[direction]) {
       return result;
     }
-    const { color, style, width } = border;
+    const { color, style, width } = theBorder;
     const borderConfig = {};
-    if ('color' in border) {
-      borderConfig.color = color;
+    if ('color' in theBorder) {
+      borderConfig.color = getDictValue(color);
     }
-    if ('style' in border) {
+    if ('style' in theBorder) {
       borderConfig.style = style;
     }
-    if ('width' in border) {
+    if ('width' in theBorder) {
       borderConfig.width = width;
     }
 
@@ -76,20 +76,23 @@ export function getBorderRadius(
   radius: string | number,
   directions?: BorderRadiusDirection[] = allBorderRadiusDirections,
 ): BorderRadiusType {
+  const theRadius = getDictValue(radius);
   return directions.reduce(
     (result: Object, direction: BorderRadiusDirection) => {
       const targetKey = borderRadiusDirectionMap[direction];
-      result[targetKey] = radius;
+      result[targetKey] = theRadius;
       return result;
     },
     {},
   );
 }
 
-export function getBoxShadow(shadow: string): Object {
-  if (!shadow) {
+export function getBoxShadow(shadowStr: string): Object {
+  if (!shadowStr) {
     return {};
   }
+
+  let shadow = getDictValue(shadowStr);
   let rgbIndex = shadow.toUpperCase().indexOf('RGB');
   let color = '';
 
