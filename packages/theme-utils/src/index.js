@@ -16,7 +16,7 @@ import type {
   GetBorderOption,
 } from '@lugia/theme-utils';
 import { units } from '@lugia/css';
-import { getDictValue } from '@lugia/theme-css-hoc';
+import { existDict, getDict } from '@lugia/dict';
 
 const { px2Number } = units;
 const allBorderDirections = ['l', 't', 'r', 'b'];
@@ -28,9 +28,28 @@ const borderDirectionMap = {
   b: 'bottom',
 };
 
+export function getDictValue(value: any) {
+  if (!value || typeof value !== 'string') {
+    return value;
+  }
+  if (value.startsWith('$lugia-dict')) {
+    const dictConfig = value.split('.');
+    if (dictConfig.length === 3) {
+      const dictName = dictConfig[1];
+      const keyValue = dictConfig[2];
+      if (!existDict(dictName)) {
+        return undefined;
+      }
+      const dict = getDict(dictName);
+      return dict.get(keyValue);
+    }
+  }
+  return value;
+}
+
 export function getBorder(
   border: BorderConfig | string,
-  opt?: GetBorderOption = { directions: allBorderDirections },
+  opt: ?GetBorderOption = { directions: allBorderDirections },
 ): BorderType {
   const { directions = allBorderDirections } = opt;
 
@@ -74,7 +93,7 @@ const borderRadiusDirectionMap: { [key: BorderRadiusDirection]: string } = {
 
 export function getBorderRadius(
   radius: string | number,
-  directions?: BorderRadiusDirection[] = allBorderRadiusDirections,
+  directions: ?(BorderRadiusDirection[]) = allBorderRadiusDirections,
 ): BorderRadiusType {
   const theRadius = getDictValue(radius);
   return directions.reduce(

@@ -4,8 +4,6 @@
  *
  * @flow
  */
-import { getDict, existDict } from '@lugia/dict';
-
 import type { ThemeMeta } from '@lugia/theme-core';
 import type { CSSConfig, StateType } from '@lugia/theme-css-hoc';
 import { always } from '@lugia/ramada';
@@ -17,7 +15,7 @@ import {
   packObject,
 } from '@lugia/object-utils';
 import { units } from '@lugia/css';
-import { getBoxShadowCSS } from '@lugia/theme-utils';
+import { getBoxShadowCSS, getDictValue } from '@lugia/theme-utils';
 
 import { Active, Disabled, Focus, Hover } from '../consts';
 
@@ -156,25 +154,6 @@ export function getStringStyleFromTheme(stringStyle: string) {
     return '';
   }
   return getDictValue(stringStyle);
-}
-
-export function getDictValue(value: any) {
-  if (!value || typeof value !== 'string') {
-    return value;
-  }
-  if (value.startsWith('$lugia-dict')) {
-    const dictConfig = value.split('.');
-    if (dictConfig.length === 3) {
-      const dictName = dictConfig[1];
-      const keyValue = dictConfig[2];
-      if (!existDict(dictName)) {
-        return undefined;
-      }
-      const dict = getDict(dictName);
-      return dict.get(keyValue);
-    }
-  }
-  return value;
 }
 
 export function getNumberStyleFromTheme(numberStyle: number) {

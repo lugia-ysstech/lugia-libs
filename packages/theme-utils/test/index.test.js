@@ -1,13 +1,27 @@
 // @flow
 
 import {
+  getDictValue,
   getBorder,
   getBorderRadius,
   getBoxShadow,
   getBoxShadowCSS,
 } from '../src/index';
+import { getDict } from '@lugia/dict';
 
 describe('theme-utils', () => {
+  const globalConfig = {
+    bgColor: 'red',
+    fontSize: 15,
+    secondFontSize: '50%',
+    threeFontSize: '25',
+    borderRadius: '20px',
+  };
+
+  beforeAll(() => {
+    let dict = getDict('lugia-web');
+    dict.load('default', globalConfig);
+  });
   it('getBorder only color', () => {
     expect(getBorder({ color: 'red' })).toEqual({
       top: {
@@ -39,6 +53,27 @@ describe('theme-utils', () => {
     });
   });
 
+  it('getDictValue is normal', () => {
+    expect(getDictValue(1)).toBe(1);
+    expect(getDictValue('hello')).toBe('hello');
+    expect(getDictValue(false)).toBe(false);
+    expect(getDictValue(true)).toBe(true);
+    expect(getDictValue(null)).toBe(null);
+    expect(getDictValue(undefined)).toBe(undefined);
+  });
+
+  it('getDictValue is dict config', () => {
+    expect(getDictValue('$lugia-dict.aaa.bgColor')).toEqual(undefined);
+    expect(getDictValue('$lugia-dict.lugia-web.bgColor')).toBe('red');
+    expect(getDictValue('$lugia-dict.lugia-web.fontSize')).toBe(15);
+    expect(getDictValue('$lugia-dict.lugia-web.borderRadius')).toBe('20px');
+
+    let dict = getDict('agg');
+    dict.load('default', {
+      bgColor: 'ligx',
+    });
+    expect(getDictValue('$lugia-dict.agg.bgColor')).toBe('ligx');
+  });
   it('getBorderRadius all', () => {
     expect(getBorderRadius('', [])).toEqual({});
     expect(getBorderRadius(10)).toEqual({

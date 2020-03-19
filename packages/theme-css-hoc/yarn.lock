@@ -25,10 +25,10 @@
     "@babel/runtime" "^7.4.5"
     decamelize "^3.2.0"
 
-"@lugia/dict@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/@lugia/dict/download/@lugia/dict-1.0.1.tgz#b7b0b44986b44a5ee9121dc4a7c3fca4c0edf41f"
-  integrity sha1-t7C0SYa0Sl7pEh3Ep8P8pMDt9B8=
+"@lugia/dict@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@lugia/dict/-/dict-1.0.2.tgz#b8bb19209e10ee3f2a143c5a9ba564c1a4333b32"
+  integrity sha512-pWQ8OdAIXJPFBaBfUw0AO24ycTTvlr/LGRYG6l0EiTOYTUb0G/9rNdoczQ4ta+AXHubKw/zMTCN5XWmaeImh/Q==
 
 "@lugia/object-utils@^1.0.15":
   version "1.0.15"
@@ -46,18 +46,18 @@
   dependencies:
     "@babel/runtime" "^7.4.5"
 
-"@lugia/theme-core@^1.0.36":
-  version "1.0.36"
-  resolved "https://registry.npm.taobao.org/@lugia/theme-core/download/@lugia/theme-core-1.0.36.tgz#a6a3192c61b3a9133ac81a224ed93e94fe69fc15"
-  integrity sha1-pqMZLGGzqRM6yBoiTtk+lP5p/BU=
+"@lugia/theme-core@^1.1.0-alpha.0":
+  version "1.1.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-core/-/theme-core-1.1.0-alpha.0.tgz#9ba825eb44769ac95195481676d94668bdd63b1a"
+  integrity sha512-1AL40x9fsKFes3/txr3lbbucwbR32z9r067h8saK70rDcobGTwc+QftruNCWLaeicwm0cDsvpKihKLYpjhKRyQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@lugia/object-utils" "^1.0.15"
 
-"@lugia/theme-utils@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.npm.taobao.org/@lugia/theme-utils/download/@lugia/theme-utils-1.0.8.tgz#31d1e50bef2e29b662452151e5d77e0b122efaca"
-  integrity sha1-MdHlC+8uKbZiRSFR5dd+CxIu+so=
+"@lugia/theme-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-utils/-/theme-utils-1.1.0.tgz#ccc9a3b99896b6eaa6197ca74b7053f292c28aa1"
+  integrity sha512-J4CTh1JDmHPTIg91QBjNgY4tStSVtvJzbd2YySjXlh9d19YDP0VQcZolWvBaVmuSEpgVf4CJxT+apiTRsJSt/A==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@lugia/css" "^1.0.19"

@@ -31,4 +31,5 @@ declare module '@lugia/theme-utils' {
   declare export function getBoxShadow(boxShadow: string): Object;
 
   declare export function getBoxShadowCSS(boxConfig: BoxShadowType): string;
+  declare export function getDictValue(value: any): any;
 }
