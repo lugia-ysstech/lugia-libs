@@ -34,9 +34,9 @@ export function getDictValue(value: any) {
   }
   if (value.startsWith('$lugia-dict')) {
     const dictConfig = value.split('.');
-    if (dictConfig.length === 3) {
+    if (dictConfig.length >= 3) {
       const dictName = dictConfig[1];
-      const keyValue = dictConfig[2];
+      const keyValue = dictConfig.slice(2).join('.');
       if (!existDict(dictName)) {
         return undefined;
       }

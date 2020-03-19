@@ -74,6 +74,33 @@ describe('theme-utils', () => {
     });
     expect(getDictValue('$lugia-dict.agg.bgColor')).toBe('ligx');
   });
+
+  it('getDictValue cycle value', () => {
+    let dict = getDict('agg');
+    dict.load('default', {
+      bgColor: 'ligx',
+      borderColor: {
+        width: 5,
+        color: 'red',
+        fontSize: {
+          size: '1',
+        },
+      },
+    });
+    expect(getDictValue('$lugia-dict.agg.borderColor')).toEqual({
+      width: 5,
+      color: 'red',
+      fontSize: {
+        size: '1',
+      },
+    });
+    expect(getDictValue('$lugia-dict.agg.borderColor.aaa.aaa')).toBeUndefined();
+    expect(getDictValue('$lugia-dict.agg.borderColor.width')).toBe(5);
+    expect(getDictValue('$lugia-dict.agg.borderColor.fontSize')).toEqual({
+      size: '1',
+    });
+    expect(getDictValue('$lugia-dict.agg.borderColor.fontSize.size')).toBe('1');
+  });
   it('getBorderRadius all', () => {
     expect(getBorderRadius('', [])).toEqual({});
     expect(getBorderRadius(10)).toEqual({

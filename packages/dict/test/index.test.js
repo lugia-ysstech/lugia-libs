@@ -13,6 +13,19 @@ describe('Dict', () => {
     dict.load('dev', { bgColor: 'yellow', borderColor: 'red' });
   });
 
+  it('dict.get for path', () => {
+    const dict = createDict('@lugia/lugia-web');
+    dict.load('lgx', {
+      bgColor: 'yellow',
+      borderColor: 'red',
+      lgx: { name: 1, score: { math: 100 } },
+    });
+    expect(dict.get('lgx')).toEqual({ name: 1, score: { math: 100 } });
+    expect(dict.get('lgx.name')).toEqual(1);
+    expect(dict.get('lgx.score.math')).toEqual(100);
+    expect(dict.get('lgx.a.a')).toBeUndefined();
+  });
+
   it('dict.load namespace empty string', () => {
     const dict = createDict('@lugia/lugia-web');
     dict.load('', { bgColor: 'yellow', borderColor: 'red' });
