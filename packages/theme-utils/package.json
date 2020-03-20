@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
+    "@lugia/dict": "^1.0.3",
     "@lugia/css": "^1.0.19"
   },
   "files": [
@@ -25,8 +26,5 @@
   "engines": {
     "node": ">=10",
     "npm": ">=5.2.0"
-  },
-  "devDependencies": {
-    "@lugia/dict": "^1.0.3"
   }
 }

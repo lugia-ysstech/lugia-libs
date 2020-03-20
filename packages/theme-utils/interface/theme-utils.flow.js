@@ -1,3 +1,4 @@
+import type { Dict } from '@lugia/dict';
 import type {
   BorderRadiusType,
   BorderType,
@@ -27,9 +28,13 @@ declare module '@lugia/theme-utils' {
     radius: string | number,
     directions?: BorderRadiusDirection[],
   ): BorderRadiusType;
-
   declare export function getBoxShadow(boxShadow: string): Object;
 
   declare export function getBoxShadowCSS(boxConfig: BoxShadowType): string;
+
   declare export function getDictValue(value: any): any;
+
+  declare export function createDict(): Dict;
+
+  declare export function getDict(dictName: string): Dict;
 }

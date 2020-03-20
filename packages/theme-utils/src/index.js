@@ -163,3 +163,4 @@ export function getBoxShadowCSS(boxConfig: BoxShadowType): string {
   }
   return `${type} ${x}px ${y}px ${blur}px ${spread}px ${color}`.trim();
 }
+export { existDict, getDict };
