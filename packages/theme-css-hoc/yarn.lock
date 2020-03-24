@@ -2,14 +2,6 @@
 # yarn lockfile v1
 
 
-"@babel/runtime-corejs2@^7.2.0":
-  version "7.4.5"
-  resolved "https://registry.npm.taobao.org/@babel/runtime-corejs2/download/@babel/runtime-corejs2-7.4.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime-corejs2%2Fdownload%2F%40babel%2Fruntime-corejs2-7.4.5.tgz#3d892f0560df21bafb384dd7727e33853e95d3c9"
-  integrity sha1-PYkvBWDfIbr7OE3Xcn4zhT6V08k=
-  dependencies:
-    core-js "^2.6.5"
-    regenerator-runtime "^0.13.2"
-
 "@babel/runtime@^7.4.5":
   version "7.4.5"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.4.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
@@ -17,18 +9,18 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@lugia/css@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.npm.taobao.org/@lugia/css/download/@lugia/css-1.0.19.tgz#e56fb183b43191f996dc8413d4ab6da5d293f409"
-  integrity sha1-5W+xg7QxkfmW3IQT1KttpdKT9Ak=
+"@lugia/css@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.npm.taobao.org/@lugia/css/download/@lugia/css-1.0.20.tgz#85ccfbf812e61eb90678ddc129fe51f43dfbf3d6"
+  integrity sha1-hcz7+BLmHrkGeN3BKf5R9D3789Y=
   dependencies:
     "@babel/runtime" "^7.4.5"
-    decamelize "^3.2.0"
+    decamelize "^4.0.0"
 
-"@lugia/dict@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@lugia/dict/-/dict-1.0.2.tgz#b8bb19209e10ee3f2a143c5a9ba564c1a4333b32"
-  integrity sha512-pWQ8OdAIXJPFBaBfUw0AO24ycTTvlr/LGRYG6l0EiTOYTUb0G/9rNdoczQ4ta+AXHubKw/zMTCN5XWmaeImh/Q==
+"@lugia/dict@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@lugia/dict/download/@lugia/dict-1.0.3.tgz#5143dbf47d89ba7cc3260f3c0921aeb3997e7336"
+  integrity sha1-UUPb9H2JunzDJg88CSGus5l+czY=
 
 "@lugia/object-utils@^1.0.15":
   version "1.0.15"
@@ -46,33 +38,27 @@
   dependencies:
     "@babel/runtime" "^7.4.5"
 
-"@lugia/theme-core@^1.1.0-alpha.0":
-  version "1.1.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@lugia/theme-core/-/theme-core-1.1.0-alpha.0.tgz#9ba825eb44769ac95195481676d94668bdd63b1a"
-  integrity sha512-1AL40x9fsKFes3/txr3lbbucwbR32z9r067h8saK70rDcobGTwc+QftruNCWLaeicwm0cDsvpKihKLYpjhKRyQ==
+"@lugia/theme-core@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.npm.taobao.org/@lugia/theme-core/download/@lugia/theme-core-1.1.1.tgz#2f371d2b85060c0da3f67a81073f47415c1a5936"
+  integrity sha1-LzcdK4UGDA2j9nqBBz9HQVwaWTY=
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@lugia/object-utils" "^1.0.15"
 
-"@lugia/theme-utils@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@lugia/theme-utils/-/theme-utils-1.1.0.tgz#ccc9a3b99896b6eaa6197ca74b7053f292c28aa1"
-  integrity sha512-J4CTh1JDmHPTIg91QBjNgY4tStSVtvJzbd2YySjXlh9d19YDP0VQcZolWvBaVmuSEpgVf4CJxT+apiTRsJSt/A==
+"@lugia/theme-utils@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npm.taobao.org/@lugia/theme-utils/download/@lugia/theme-utils-1.1.3.tgz#a5313bd71faefff0d613d86bddaa08fc7dff8902"
+  integrity sha1-pTE71x+u//DWE9hr3aoI/H3/iQI=
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/css" "^1.0.19"
+    "@lugia/css" "^1.0.20"
+    "@lugia/dict" "^1.0.3"
 
-core-js@^2.6.5:
-  version "2.6.9"
-  resolved "https://registry.npm.taobao.org/core-js/download/core-js-2.6.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
-  integrity sha1-a0shRiDINBUuF5Mjcn/Bl0GwhPI=
-
-decamelize@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.npm.taobao.org/decamelize/download/decamelize-3.2.0.tgz#84b8e8f4f8c579f938e35e2cc7024907e0090851"
-  integrity sha1-hLjo9PjFefk4414sxwJJB+AJCFE=
-  dependencies:
-    xregexp "^4.2.4"
+decamelize@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/decamelize/download/decamelize-4.0.0.tgz#aa472d7bf660eb15f3494efd531cab7f2a709837"
+  integrity sha1-qkcte/Zg6xXzSU79UxyrfypwmDc=
 
 deepmerge@^3.2.0:
   version "3.3.0"
@@ -95,10 +81,3 @@ regenerator-runtime@^0.13.2:
   version "0.13.2"
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
   integrity sha1-MuWcmm+5saSv8JtJMMotRHc0NEc=
-
-xregexp@^4.2.4:
-  version "4.2.4"
-  resolved "https://registry.npm.taobao.org/xregexp/download/xregexp-4.2.4.tgz#02a4aea056d65a42632c02f0233eab8e4d7e57ed"
-  integrity sha1-AqSuoFbWWkJjLALwIz6rjk1+V+0=
-  dependencies:
-    "@babel/runtime-corejs2" "^7.2.0"
