@@ -1,6 +1,6 @@
 {
   "name": "@lugia/css",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "css",
   "main": "./lib/index.js",
   "scripts": {
