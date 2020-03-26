@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/css": "^1.0.22-0",
+    "@lugia/css": "^1.0.22",
     "@lugia/object-utils": "^1.0.15",
     "@lugia/ramada": "^1.0.3",
-    "@lugia/theme-core": "^1.1.2-1.1.2-alpha.2.0",
-    "@lugia/theme-utils": "^1.1.5-0"
+    "@lugia/theme-core": "^1.1.2",
+    "@lugia/theme-utils": "^1.1.5"
   },
   "files": [
     "lib",
