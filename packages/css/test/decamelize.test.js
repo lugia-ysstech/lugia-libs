@@ -18,9 +18,6 @@ describe('decamelize.test.js', () => {
     expect(decamelize('thisIsATest', ' ')).toBe('this is a test');
     expect(decamelize('thisIsATest', '')).toBe('thisisatest');
     expect(decamelize('unicornRainbow', '|')).toBe('unicorn|rainbow');
-    expect(decamelize('thisHasSpecialCharactersLikeČandŠ', ' ')).toBe(
-      'this has special characters like čand š',
-    );
   });
 
   it('handles acronyms', () => {

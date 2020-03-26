@@ -2,25 +2,12 @@
 # yarn lockfile v1
 
 
-"@babel/runtime-corejs3@^7.8.3":
-  version "7.9.2"
-  resolved "https://registry.npm.taobao.org/@babel/runtime-corejs3/download/@babel/runtime-corejs3-7.9.2.tgz#26fe4aa77e9f1ecef9b776559bbb8e84d34284b7"
-  integrity sha1-Jv5Kp36fHs75t3ZVm7uOhNNChLc=
-  dependencies:
-    core-js-pure "^3.0.0"
-    regenerator-runtime "^0.13.4"
-
 "@babel/runtime@^7.4.5":
   version "7.4.5"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.4.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.4.5.tgz#582bb531f5f9dc67d2fcb682979894f75e253f12"
   integrity sha1-WCu1MfX53GfS/LaCl5iU914lPxI=
   dependencies:
     regenerator-runtime "^0.13.2"
-
-core-js-pure@^3.0.0:
-  version "3.6.4"
-  resolved "https://registry.npm.taobao.org/core-js-pure/download/core-js-pure-3.6.4.tgz#4bf1ba866e25814f149d4e9aaa08c36173506e3a"
-  integrity sha1-S/G6hm4lgU8UnU6aqgjDYXNQbjo=
 
 debug@^4.1.1:
   version "4.1.1"
@@ -38,15 +25,3 @@ regenerator-runtime@^0.13.2:
   version "0.13.2"
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
   integrity sha1-MuWcmm+5saSv8JtJMMotRHc0NEc=
-
-regenerator-runtime@^0.13.4:
-  version "0.13.5"
-  resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.5.tgz?cache=0&sync_timestamp=1584052392667&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.5.tgz#d878a1d094b4306d10b9096484b33ebd55e26697"
-  integrity sha1-2Hih0JS0MG0QuQlkhLM+vVXiZpc=
-
-xregexp@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.npm.taobao.org/xregexp/download/xregexp-4.3.0.tgz#7e92e73d9174a99a59743f67a4ce879a04b5ae50"
-  integrity sha1-fpLnPZF0qZpZdD9npM6HmgS1rlA=
-  dependencies:
-    "@babel/runtime-corejs3" "^7.8.3"
