@@ -19,7 +19,7 @@
     "lint": "eslint --ext .js packages scripts",
     "lint:fix": "eslint --fix --ext .js packages scripts",
     "publish": "node ./scripts/publish.js",
-    "alpha": "node ./scripts/publish.js"
+    "alpha": "node ./scripts/alpha.js"
   },
   "husky": {
     "hooks": {
