@@ -5,7 +5,7 @@
  * @flow
  */
 import type { Point, SizePos, SizeType, StylePos } from '@lugia/css';
-import Debug from 'debug';
+import Debug from 'debug/dist/debug';
 
 const debug = Debug('lugia-theme:font');
 let footerFontSize = 10;

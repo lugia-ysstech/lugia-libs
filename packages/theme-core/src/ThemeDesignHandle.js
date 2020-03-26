@@ -16,7 +16,7 @@ import {
   packPathObject,
   setAttributeValue,
 } from '@lugia/object-utils';
-import Debug from 'debug';
+import Debug from 'debug/dist/debug';
 
 const debug = Debug('lugia-theme:designhandle');
 const {
