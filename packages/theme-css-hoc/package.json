@@ -17,8 +17,7 @@
     "@lugia/object-utils": "^1.0.15",
     "@lugia/ramada": "^1.0.3",
     "@lugia/theme-core": "^1.1.1",
-    "@lugia/theme-utils": "^1.1.3",
-    "decamelize": "^4.0.0"
+    "@lugia/theme-utils": "^1.1.3"
   },
   "files": [
     "lib",

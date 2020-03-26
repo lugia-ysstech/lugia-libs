@@ -6,7 +6,7 @@
  */
 import * as units from './units';
 import getColor from './utilsColor';
-import decamelize from 'decamelize';
+import decamelize from './decamelize';
 
 export { units };
 export const color = {

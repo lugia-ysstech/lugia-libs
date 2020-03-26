@@ -14,7 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "decamelize": "^4.0.0"
+    "debug": "^4.1.1",
+    "xregexp": "^4.3.0"
   },
   "files": [
     "lib",
