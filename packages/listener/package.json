@@ -3,12 +3,14 @@
   "version": "1.0.4",
   "description": "listener",
   "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "start": "node ./lib"
   },
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {
+    "tslib": "^1.11.1",
     "@babel/runtime": "^7.4.5",
     "events": "^3.0.0",
     "rxjs": "^6.3.3"

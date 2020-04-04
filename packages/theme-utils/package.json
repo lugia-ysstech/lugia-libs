@@ -1,6 +1,7 @@
 {
   "name": "@lugia/theme-utils",
   "version": "1.1.5",
+  "types": "./lib/index.d.ts",
   "description": "An example of lerna package.",
   "main": "./lib/index.js",
   "scripts": {
@@ -17,7 +18,8 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "@lugia/css": "^1.0.22",
-    "@lugia/dict": "^1.0.3"
+    "@lugia/dict": "^1.0.3",
+    "tslib": "^1.11.1"
   },
   "files": [
     "lib",

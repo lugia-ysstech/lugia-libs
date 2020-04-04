@@ -14,7 +14,10 @@
       ]
     }
   },
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "npmClient": "yarn",
-  "version": "independent"
+  "version": "independent",
+  "lerna": "2.11.0"
 }

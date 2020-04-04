@@ -417,7 +417,7 @@ lineHeight: number | string 取值规则同宽高一致。
     leave?: ?Function, // 同上
     up?: Function, // 同上
     down?: Function, // 同上
-    after?: AddMouseEventOPtionAfterConfig, // 是否配置事件触发顺序滞后
+    after?: AddMouseEventOptionAfterConfig, // 是否配置事件触发顺序滞后
   };
 
   declare export type AddFocusBlurEventOptionAfterConfig = {

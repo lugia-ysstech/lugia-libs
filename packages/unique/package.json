@@ -2,6 +2,7 @@
   "name": "@lugia/unique",
   "version": "1.0.5",
   "description": "An example of lerna package.",
+  "types": "./lib/index.d.ts",
   "main": "./lib/index.js",
   "scripts": {
     "start": "node ./lib"
@@ -9,7 +10,8 @@
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.4.5"
+    "@babel/runtime": "^7.4.5",
+    "tslib": "^1.11.1"
   },
   "files": [
     "lib",
@@ -18,5 +20,8 @@
   "engines": {
     "node": ">=10",
     "npm": ">=5.2.0"
+  },
+  "devDependencies": {
+    "@lugia/jverify": "^1.0.10"
   }
 }

@@ -1,6 +1,9 @@
 # 说明
+
 字典表工具包
+
 # 使用方法
+
 ```$xslt
 declare module '@lugia/dict' {
   declare class Dict {

@@ -1,20 +1,17 @@
 module.exports = {
   collectCoverageFrom: [
-    'packages/**/src/**/*.{js,jsx}',
-    '!src/**/demo*.js',
-    '!src/*.js',
+    'packages/**/src/**/*.{ts,tsx}',
+    '!src/**/demo*.ts',
+    '!src/*.ts',
   ],
-  testMatch: [__dirname + '/packages/**/?(*.)(spec|test).js?(x)'],
+  testMatch: [__dirname + '/packages/**/?(*.)(spec|test).ts?(x)'],
   // testEnvironment: 'node',
   testURL: 'http://localhost',
-  transform: {
-    '.+\\.(js|jsx)$':
-      __dirname + '/node_modules/@lugia/mega-jest/lib/jsTransformer.js',
-  },
-  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
+  preset: 'ts-jest',
+  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$'],
   moduleNameMapper: {
     'react-native$': 'react-native-web',
     '\\.(css|less)$': 'identity-obj-proxy',
   },
-  moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx'],
+  moduleFileExtensions: ['web.js', 'js', 'jsx', 'ts', 'json', 'web.tsx', 'tsx'],
 };

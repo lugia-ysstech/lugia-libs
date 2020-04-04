@@ -1,6 +1,7 @@
 {
   "name": "@lugia/object-utils",
   "version": "1.0.15",
+  "types": "./lib/index.d.ts",
   "description": "object utils",
   "main": "./lib/index.js",
   "scripts": {
@@ -11,7 +12,8 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "deepmerge": "^3.2.0",
-    "is-plain-object": "^3.0.0"
+    "is-plain-object": "^3.0.0",
+    "tslib": "^1.11.1"
   },
   "files": [
     "lib",

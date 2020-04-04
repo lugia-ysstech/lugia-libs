@@ -1,6 +1,7 @@
 {
   "name": "@lugia/math",
   "version": "1.0.9",
+  "types": "./lib/index.d.ts",
   "description": "math utils",
   "main": "./lib/index.js",
   "scripts": {
@@ -9,7 +10,7 @@
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.4.5"
+    "tslib": "^1.11.1"
   },
   "files": [
     "lib",
