@@ -10,9 +10,8 @@ cache:
     - node_modules
 
 install:
+  - yarn add codecov --dev
   - yarn
-  - yarn add codecov
-
 #项目执行命令
 script:
    # 执行测试的命令
