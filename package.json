@@ -45,6 +45,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "chokidar": "^2.1.6",
+    "codecov": "^3.6.5",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "flow-bin": "^0.99.1",
