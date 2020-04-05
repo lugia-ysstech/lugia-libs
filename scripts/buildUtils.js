@@ -54,10 +54,9 @@ function buildPkg(pkg, minify = false) {
   }
   rimraf.sync(join(pkgPath, 'lib'));
   require('child_process')
-    .spawn('tsc', ['-p', join(cwd, packagesDirName, pkg, 'tsconfig.json')])
-    .on('close', () => {
-      console.log(chalk['green'](`[Build] ${pkg}`));
-    });
+    .spawnSync('tsc', ['-p', join(cwd, packagesDirName, pkg, 'tsconfig.json')]);
+    console.log(chalk['green'](`[Build] ${pkg}`));
+
 }
 
 function watch(pkg) {
