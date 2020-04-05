@@ -4,8 +4,6 @@ node_js:
 
 #指定分支，只有指定分支的提交才会运行脚本
 branches:
-  only:
-    - dev
 
 cache:
   directories:
