@@ -479,3 +479,5 @@ declare export type SimpleThemeMeta = {
 ```
 
   2. getBorder getBoxShadow getBorderRadius 移动到 新增的 @lugia/theme-utils模块里
+# 2020年4月5日
+项目迁移为TypeScript实现。
