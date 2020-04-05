@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ThemeConfig Theme 1`] = `
+<div>
+  {"config":{"hello":{"test":{}}},"svThemeConfigTree":{"hello":{"test":{}}}}
+  hello everyone
+</div>
+`;
