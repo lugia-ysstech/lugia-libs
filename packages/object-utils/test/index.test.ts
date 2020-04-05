@@ -31,7 +31,7 @@ const data = [
 describe('object-utils', () => {
   it('getAttributeValue', () => {
     expect(getAttributeValue({ a: 0 }, ['a'])).toBe(0);
-    expect(getAttributeValue(null, [])).toBeUndefined();
+    expect(getAttributeValue(getAny(null), [])).toBeUndefined();
     expect(getAttributeValue({}, [])).toBeUndefined();
     expect(getAttributeValue({ a: { b: 1 } }, ['a'])).toEqual({ b: 1 });
     expect(getAttributeValue({ a: { b: 1 } }, ['d'])).toBeUndefined();
@@ -173,7 +173,9 @@ describe('object-utils', () => {
       ),
     ).toEqual(JSON.stringify(result));
 
-    expect(deepMergeAnB(null, null, { beforeNames: [] })).toEqual({});
+    expect(deepMergeAnB(null as any, null as any, { beforeNames: [] })).toEqual(
+      {},
+    );
   });
   it('isEmptyObject', () => {
     expect(isEmptyObject(null)).toBeTruthy();
@@ -389,49 +391,49 @@ describe('object-utils', () => {
   });
 
   it('setAttributeValue', () => {
-    const obj = {};
-    setAttributeValue(obj, ['hello', 'name'], 'ligx');
-    expect(obj).toEqual({
+    const target = {};
+    setAttributeValue(target, ['hello', 'name'], 'ligx');
+    expect(target).toEqual({
       hello: {
         name: 'ligx',
       },
     });
 
-    setAttributeValue(obj, ['hello', 'age'], 15);
+    setAttributeValue(target, ['hello', 'age'], 15);
 
-    expect(obj).toEqual({
+    expect(target).toEqual({
       hello: {
         name: 'ligx',
         age: 15,
       },
     });
 
-    setAttributeValue(obj, ['hello', 'name'], { title: 'xiaoming' });
-    expect(obj).toEqual({
+    setAttributeValue(target, ['hello', 'name'], { title: 'xiaoming' });
+    expect(target).toEqual({
       hello: {
         name: { title: 'xiaoming' },
         age: 15,
       },
     });
 
-    setAttributeValue(obj, ['hello', 'name', 'age'], 155);
-    expect(obj).toEqual({
+    setAttributeValue(target, ['hello', 'name', 'age'], 155);
+    expect(target).toEqual({
       hello: {
         name: { title: 'xiaoming', age: 155 },
         age: 15,
       },
     });
 
-    setAttributeValue(obj, ['hello', 'name'], 155);
-    expect(obj).toEqual({
+    setAttributeValue(target, ['hello', 'name'], 155);
+    expect(target).toEqual({
       hello: {
         name: 155,
         age: 15,
       },
     });
 
-    setAttributeValue(obj, ['hello', 'name', 'age'], 155);
-    expect(obj).toEqual({
+    setAttributeValue(target, ['hello', 'name', 'age'], 155);
+    expect(target).toEqual({
       hello: {
         name: {
           age: 155,
@@ -440,26 +442,26 @@ describe('object-utils', () => {
       },
     });
 
-    setAttributeValue(obj, ['hello'], 155);
-    expect(obj).toEqual({
+    setAttributeValue(target, ['hello'], 155);
+    expect(target).toEqual({
       hello: 155,
     });
-    setAttributeValue(obj, ['hello', 'age'], 155);
-    expect(obj).toEqual({
+    setAttributeValue(target, ['hello', 'age'], 155);
+    expect(target).toEqual({
       hello: {
         age: 155,
       },
     });
-    setAttributeValue(obj, ['hello', 'age'], 155);
-    expect(obj).toEqual({
+    setAttributeValue(target, ['hello', 'age'], 155);
+    expect(target).toEqual({
       hello: {
         age: 155,
       },
     });
-    setAttributeValue(obj, ['hello', 'age', 'add', 'info'], {
+    setAttributeValue(target, ['hello', 'age', 'add', 'info'], {
       ip: '1987',
     });
-    expect(obj).toEqual({
+    expect(target).toEqual({
       hello: {
         age: {
           add: {

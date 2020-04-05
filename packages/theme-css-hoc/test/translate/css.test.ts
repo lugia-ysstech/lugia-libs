@@ -67,7 +67,7 @@ describe('theme-css-hoc/translate/css', () => {
       marginRight: '0rem',
       marginBottom: '0rem',
     });
-    const space: object = undefined;
+    const space: any = undefined;
     expect(getSpaceFromTheme('margin', space)).toEqual({});
     expect(
       getSpaceFromTheme('margin', {
@@ -117,7 +117,7 @@ describe('theme-css-hoc/translate/css', () => {
       paddingRight: '0rem',
       paddingBottom: '0rem',
     });
-    const space: object = undefined;
+    const space: any = undefined;
     expect(getSpaceFromTheme('padding', space)).toEqual({});
     expect(
       getSpaceFromTheme('padding', {

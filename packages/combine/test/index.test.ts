@@ -11,7 +11,7 @@ import {
 
 describe('combine', () => {
   it('combineMethodObject 1', () => {
-    const res = [];
+    const res: string[] = [];
     const eventA = {
       onChange() {
         res.push('changeA');
@@ -23,7 +23,7 @@ describe('combine', () => {
   });
 
   it('combineMethodObject 2', () => {
-    const res = [];
+    const res: string[] = [];
     const eventA = {
       onChange() {
         res.push('changeA');
@@ -41,7 +41,7 @@ describe('combine', () => {
   });
 
   it('combineMethodObject 3', () => {
-    const res = [];
+    const res: string[] = [];
     const eventA = {
       onChange() {
         res.push('changeA');
@@ -67,7 +67,7 @@ describe('combine', () => {
   });
 
   it('combineMethodObject 3 one different ', () => {
-    const res = [];
+    const res: string[] = [];
     const eventA = {
       onChange() {
         res.push('changeA');
@@ -93,7 +93,8 @@ describe('combine', () => {
   });
 
   it('combineMethodObject 3 all different ', () => {
-    const res = [];
+    const res: string[] = [];
+
     const eventA = {
       onInput() {
         res.push('changeA');
@@ -124,7 +125,7 @@ describe('combine', () => {
     expect(result).toEqual({});
   });
   it('combineMethodObject null or undefined ', () => {
-    const result = combineMethodObject(null, undefined);
+    const result = combineMethodObject(null as any, undefined as any);
     expect(result).toEqual({});
   });
 
@@ -149,12 +150,13 @@ describe('combine', () => {
   });
 
   it('tillMethodAttribute empty', () => {
-    expect(tillMethodAttribute(null)).toEqual({});
-    expect(tillMethodAttribute(undefined)).toEqual({});
+    expect(tillMethodAttribute(null as any)).toEqual({});
+    expect(tillMethodAttribute(undefined as any)).toEqual({});
   });
 
   it('combineFunction 3', () => {
-    const res = [];
+    const res: string[] = [];
+
     const eventA = {
       onChange(v) {
         res.push('changeA' + v);
@@ -177,8 +179,8 @@ describe('combine', () => {
     expect(res).toEqual(['changeAhello', 'changeBhello', 'changeChello']);
   });
   it('combineFunction 3', () => {
-    const changeRes = [];
-    const clickRes = [];
+    const changeRes: string[] = [];
+    const clickRes: string[] = [];
     const eventA = {
       onChange(v) {
         changeRes.push('changeA' + v);
@@ -204,8 +206,8 @@ describe('combine', () => {
   });
 
   it('combineFunction option return number', () => {
-    const changeRes = [];
-    const clickRes = [];
+    const changeRes: string[] = [];
+    const clickRes: string[] = [];
     const eventA = {
       onChange(v) {
         changeRes.push('changeA' + v);
@@ -235,8 +237,8 @@ describe('combine', () => {
   });
 
   it('combineFunction option returned promise', async () => {
-    const changeRes = [];
-    const clickRes = [];
+    const changeRes: string[] = [];
+    const clickRes: string[] = [];
     const eventA = {
       onChange(v) {
         changeRes.push('changeA' + v);
@@ -268,8 +270,8 @@ describe('combine', () => {
   });
 
   it('combineFunction option func is async', async () => {
-    const changeRes = [];
-    const clickRes = [];
+    const changeRes: string[] = [];
+    const clickRes: string[] = [];
     const eventA = {
       async onChange(v) {
         changeRes.push('changeA' + v);

@@ -29,7 +29,7 @@ describe('units', () => {
   beforeEach(() => {});
 
   it('getFontSize', () => {
-    const domNode: Element = null;
+    const domNode: any = null;
     expect(getFontSize(domNode, 0)).toBe(0);
     expect(getFontSize(domNode, 11)).toBe(11);
   });
@@ -96,7 +96,7 @@ describe('units', () => {
   });
 
   it('getSizeByStyle', () => {
-    const obj: object = null;
+    const obj: any = null;
     expect(getSizeByStyle(obj)).toEqual({ width: 0, height: 0 });
     expect(
       getSizeByStyle({
@@ -117,7 +117,7 @@ describe('units', () => {
 
   it('getPointByStyle', () => {
     expect(getPointByStyle({ left: '5px', top: '11px' })).toEqual([5, 11]);
-    const obj: object = null;
+    const obj: any = null;
     expect(getPointByStyle(obj)).toEqual([0, 0]);
   });
 

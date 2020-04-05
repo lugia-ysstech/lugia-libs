@@ -46,8 +46,11 @@ describe('ThemeEventChannelHandle.test.js', () => {
     const eventNames = ['hover', 'active'];
     const res = target.dispatchEvent(eventNames, 'c2f');
     const data = { type: 'hover', val: 11 };
-    expect(res.fatherEmit('hover', data)).toBeTruthy();
-    expect(res.fatherEmit('aaa', data)).toBeFalsy();
+    expect(res.fatherEmit).not.toBeUndefined();
+    if (res.fatherEmit !== undefined) {
+      expect(res.fatherEmit('hover', data)).toBeTruthy();
+      expect(res.fatherEmit('aaa', data)).toBeFalsy();
+    }
 
     order.verify(param => {
       const { handle } = param;
@@ -79,8 +82,12 @@ describe('ThemeEventChannelHandle.test.js', () => {
     const eventNames = ['hover', 'active'];
     const res = target.dispatchEvent(eventNames, 'f2c');
     const cb = () => 111;
-    expect(res.fatherOn('hover', cb)).toBe(unOn);
-    expect(res.fatherOn('aaa', cb)).toBeUndefined();
+
+    expect(res.fatherOn).not.toBeUndefined();
+    if (res.fatherOn) {
+      expect(res.fatherOn('hover', cb)).toBe(unOn);
+      expect(res.fatherOn('aaa', cb)).toBeUndefined();
+    }
 
     order.verify(param => {
       const { handle } = param;
@@ -125,9 +132,11 @@ describe('ThemeEventChannelHandle.test.js', () => {
     expect(target.createEventChannel(getAny(null))).toEqual({});
     expect(target.createEventChannel(getAny(undefined))).toEqual({});
   });
+
   function getAny(any: any): any {
     return any;
   }
+
   it('createEventChannel', () => {
     const themeState = {};
     const target = new ThemeEventChannelHandle(
@@ -160,12 +169,18 @@ describe('ThemeEventChannelHandle.test.js', () => {
     const eventNames = ['hover', 'active'];
     const { provider, consumer } = target.createEventChannel(eventNames);
     const data = { type: 'hover', val: 11 };
-    expect(provider.lugiaProvider('hover', data)).toBeTruthy();
-    expect(provider.lugiaProvider('sdfsafsa', data)).toBeFalsy();
+    expect(provider).not.toBeUndefined();
+    if (provider) {
+      expect(provider.lugiaProvider('hover', data)).toBeTruthy();
+      expect(provider.lugiaProvider('sdfsafsa', data)).toBeFalsy();
+    }
 
     const cb = () => 'hello';
-    expect(consumer.__consumer('hover', cb)).toBeTruthy();
-    expect(consumer.__consumer('sdfsafsa', cb)).toBeFalsy();
+    expect(consumer).not.toBeUndefined();
+    if (consumer) {
+      expect(consumer.__consumer('hover', cb)).toBeTruthy();
+      expect(consumer.__consumer('sdfsafsa', cb)).toBeFalsy();
+    }
 
     order.verify(param => {
       const { handle } = param;
@@ -186,14 +201,21 @@ describe('ThemeEventChannelHandle.test.js', () => {
     const eventNames = ['hover', 'active'];
     const { provider, consumer } = target.createEventChannel(eventNames);
     const data = { type: 'hover', val: 11 };
-    const params = [];
-    consumer.__consumer('hover', param => {
-      params.push(param);
-    });
-    consumer.__consumer('hover', param => {
-      params.push(param);
-    });
-    provider.lugiaProvider('hover', data);
+    const params: any[] = [];
+    expect(consumer).not.toBeUndefined();
+
+    if (consumer) {
+      consumer.__consumer('hover', param => {
+        params.push(param);
+      });
+      consumer.__consumer('hover', param => {
+        params.push(param);
+      });
+    }
+    expect(provider).not.toBeUndefined();
+    if (provider) {
+      provider.lugiaProvider('hover', data);
+    }
     expect(params).toEqual([data, data]);
   });
 });

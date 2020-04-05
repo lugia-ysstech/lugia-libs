@@ -30,8 +30,8 @@ describe('ThemeStateHandle.test.js', () => {
     const themeStateHandle = new ThemeStateHandle(props, 'Widget', themeState);
 
     const helloPromise = new Promise(res => {
-      themeStateHandle.on('hello', param => {
-        res(param);
+      themeStateHandle.on('hello', paramVal => {
+        res(paramVal);
       });
     });
 
@@ -41,19 +41,19 @@ describe('ThemeStateHandle.test.js', () => {
   });
   it('on & emit lugiaConsumers', async () => {
     const themeState = {};
-    const consumers = [];
+    const consumers: any[] = [];
     const props = {
       lugiaConsumers: [
         {
-          __consumer(name, cb) {
-            consumers.push(name);
-            consumers.push(cb);
+          __consumer(theName, func) {
+            consumers.push(theName);
+            consumers.push(func);
           },
         },
         {
-          __consumer(name, cb) {
-            consumers.push(name);
-            consumers.push(cb);
+          __consumer(theName, func) {
+            consumers.push(theName);
+            consumers.push(func);
           },
         },
       ],
@@ -62,8 +62,8 @@ describe('ThemeStateHandle.test.js', () => {
 
     let cb;
     const helloPromise = new Promise(res => {
-      cb = param => {
-        res(param);
+      cb = paramVal => {
+        res(paramVal);
       };
       themeStateHandle.on('hello', cb);
     });
@@ -75,12 +75,12 @@ describe('ThemeStateHandle.test.js', () => {
   });
   it('on & emit lugiaConsumers is object', async () => {
     const themeState = {};
-    const consumers = [];
+    const consumers: any[] = [];
     const props = {
       lugiaConsumers: {
-        __consumer(name, cb) {
-          consumers.push(name);
-          consumers.push(cb);
+        __consumer(theName, func) {
+          consumers.push(theName);
+          consumers.push(func);
         },
       },
     };
@@ -88,8 +88,8 @@ describe('ThemeStateHandle.test.js', () => {
 
     let cb;
     const helloPromise = new Promise(res => {
-      cb = param => {
-        res(param);
+      cb = paramVal => {
+        res(paramVal);
       };
       themeStateHandle.on('hello', cb);
     });
@@ -106,13 +106,13 @@ describe('ThemeStateHandle.test.js', () => {
     const themeStateHandle = new ThemeStateHandle(props, 'Widget', themeState);
 
     const helloPromise = new Promise(res => {
-      themeStateHandle.on('hello', param => {
-        res(param.type + 'a');
+      themeStateHandle.on('hello', paramVal => {
+        res(paramVal.type + 'a');
       });
     });
     const helloBPromise = new Promise(res => {
-      themeStateHandle.on('hello', param => {
-        res(param.i + 'b');
+      themeStateHandle.on('hello', paramVal => {
+        res(paramVal.i + 'b');
       });
     });
 
@@ -134,8 +134,8 @@ describe('ThemeStateHandle.test.js', () => {
     const themeStateHandle = new ThemeStateHandle(props, 'Widget', themeState);
 
     const helloPromise = new Promise(res => {
-      themeStateHandle.on('hello', param => {
-        res(param);
+      themeStateHandle.on('hello', paramVal => {
+        res(paramVal);
       });
     });
 
@@ -153,7 +153,7 @@ describe('ThemeStateHandle.test.js', () => {
     };
     const themeStateHandle = new ThemeStateHandle(props, 'Widget', themeState);
 
-    themeStateHandle.on('hello', param => {
+    themeStateHandle.on('hello', () => {
       throw new Error('不能触发事件');
     });
 
@@ -166,7 +166,7 @@ describe('ThemeStateHandle.test.js', () => {
     const props = {};
     const themeStateHandle = new ThemeStateHandle(props, 'Widget', themeState);
 
-    const event = themeStateHandle.on('hello', param => {
+    const event = themeStateHandle.on('hello', () => {
       throw new Error('不能触发事件');
     });
     event();
@@ -244,9 +244,9 @@ describe('ThemeStateHandle.test.js', () => {
     const rest = ['a', 111, 'b'];
     target.onMouseDown(...rest);
     order.verify(param => {
-      const { handle, props } = param;
+      const { handle, props: targetProps } = param;
       handle.toggleActiveState(true);
-      props.onMouseDown(...rest);
+      targetProps.onMouseDown(...rest);
     });
   });
 
@@ -299,9 +299,9 @@ describe('ThemeStateHandle.test.js', () => {
     const rest = ['a', 111, 'b'];
     target.onMouseUp(...rest);
     order.verify(param => {
-      const { handle, props } = param;
+      const { handle, props: targetProps } = param;
       handle.toggleActiveState(false);
-      props.onMouseUp(...rest);
+      targetProps.onMouseUp(...rest);
     });
   });
 
@@ -354,9 +354,9 @@ describe('ThemeStateHandle.test.js', () => {
     const rest = ['a', 111, 'b'];
     target.onMouseEnter(...rest);
     order.verify(param => {
-      const { handle, props } = param;
+      const { handle, props: targetProps } = param;
       handle.toggleHoverState(true);
-      props.onMouseEnter(...rest);
+      targetProps.onMouseEnter(...rest);
     });
   });
 
@@ -409,9 +409,9 @@ describe('ThemeStateHandle.test.js', () => {
     const rest = ['a', 111, 'b'];
     target.onMouseLeave(...rest);
     order.verify(param => {
-      const { handle, props } = param;
+      const { handle, props: targetProps } = param;
       handle.toggleHoverState(false);
-      props.onMouseLeave(...rest);
+      targetProps.onMouseLeave(...rest);
     });
   });
 
@@ -465,8 +465,8 @@ describe('ThemeStateHandle.test.js', () => {
     target.onFocus(...rest);
     await delay(1);
     order.verify(param => {
-      const { handle, props } = param;
-      props.onFocus(...rest);
+      const { handle, props: targetProps } = param;
+      targetProps.onFocus(...rest);
       handle.toggleFocusState(true);
     });
   });
@@ -521,9 +521,9 @@ describe('ThemeStateHandle.test.js', () => {
     target.onBlur(...rest);
     await delay(1);
     order.verify(param => {
-      const { handle, props } = param;
+      const { handle, props: targetProps } = param;
       handle.toggleFocusState(false);
-      props.onBlur(...rest);
+      targetProps.onBlur(...rest);
     });
   });
 

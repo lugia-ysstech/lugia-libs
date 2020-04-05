@@ -25,7 +25,7 @@ import {
   selectThemePart,
 } from '../src/utils';
 
-const emptyObject: object = null;
+const emptyObject: any = null;
 describe('theme-core-utils', () => {
   function getParam(param: any) {
     return { param };
@@ -350,7 +350,7 @@ describe('theme-core-utils', () => {
     });
     expect(addEventObject({ props: {} }, {})).toEqual({});
     expect(addEventObject(getAny(emptyObject), {})).toEqual({});
-    const callParams = [];
+    const callParams: any[] = [];
     const props = {
       onMouseUp(...rest) {
         callParams.push(rest);
@@ -374,7 +374,7 @@ describe('theme-core-utils', () => {
       onMouseUp: 'doUp',
       onMouseEnter: 'doEnter',
     });
-    const callParams = [];
+    const callParams: any[] = [];
     const props = {
       onMouseUp(...rest) {
         callParams.push('onMouseUp');
@@ -424,7 +424,7 @@ describe('theme-core-utils', () => {
       onMouseUp: 'doUp',
       onMouseEnter: 'doEnter',
     });
-    const callParams = [];
+    const callParams: any[] = [];
     const props = {
       onMouseUp(...rest) {
         callParams.push('onMouseUp');

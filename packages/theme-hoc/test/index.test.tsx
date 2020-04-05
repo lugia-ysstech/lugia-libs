@@ -15,37 +15,32 @@ import Adapter from 'enzyme-adapter-react-16';
 import { deepMerge } from '@lugia/object-utils';
 
 configure({ adapter: new Adapter() });
+class LugiaInput extends React.Component<any, any> {
+  static displayName = 'themeInput';
 
+  render() {
+    return (
+      <div>
+        <Input />
+      </div>
+    );
+  }
+}
 const Input = styled.div``;
 Input.displayName = 'input';
+const HelloMyButton = 'HelloMyButton';
+// tslint:disable-next-line:max-classes-per-file
+class ButtonA extends React.Component<any, any, any> {
+  static displayName = HelloMyButton;
 
+  render() {
+    return <div />;
+  }
+}
 describe('ThemeProvider', () => {
-  const HelloMyButton = 'HelloMyButton';
   const HelloMyButtonTheme = 'HelloMyButtonTheme';
-  const Button = ThemeProvider(
-    class ButtonA extends React.Component<any, any, any> {
-      static displayName = HelloMyButton;
-
-      render() {
-        return <div />;
-      }
-    },
-    HelloMyButtonTheme,
-  );
-  const ThemeInput = ThemeProvider(
-    class extends React.Component<any, any> {
-      static displayName = 'themeInput';
-
-      render() {
-        return (
-          <div>
-            <Input />
-          </div>
-        );
-      }
-    },
-    HelloMyButtonTheme,
-  );
+  const Button = ThemeProvider(ButtonA, HelloMyButtonTheme);
+  const ThemeInput = ThemeProvider(LugiaInput, HelloMyButtonTheme);
   const svThemeConfigTree = 'svThemeConfigTree';
 
   const getTheme = function(target: any, widgetDisplayName: string) {
@@ -134,7 +129,7 @@ describe('ThemeProvider', () => {
   function testTheme(level: number, type: TestCaseType) {
     const viewClass = 'viewClass';
 
-    function getConfig(i: number, type: TestCaseType) {
+    function getConfig(i: number, caseType: TestCaseType) {
       const viewClassName = `${viewClass}_${i}`;
       const btnCfgClassName = `${HelloMyButtonTheme}_${i}`;
 
@@ -148,7 +143,7 @@ describe('ThemeProvider', () => {
       const themeConfigVal = {
         [HelloMyButtonTheme]: btnCfg,
       };
-      switch (type) {
+      switch (caseType) {
         case 'viewClass':
           return viewConfigVal;
         case 'widgetName':
@@ -172,24 +167,27 @@ describe('ThemeProvider', () => {
 
       const target = mount(element);
 
-      function getRealyConfig(target: Object, type: TestCaseType) {
-        switch (type) {
+      function getRealyConfig(targetParam: object, caseType: TestCaseType) {
+        switch (caseType) {
           case 'viewClass':
-            return target[viewClass];
+            return targetParam[viewClass];
           case 'widgetName':
-            return target[HelloMyButtonTheme];
+            return targetParam[HelloMyButtonTheme];
           case 'all':
-            return { ...target[viewClass], ...target[HelloMyButtonTheme] };
+            return {
+              ...targetParam[viewClass],
+              ...targetParam[HelloMyButtonTheme],
+            };
           default:
         }
       }
 
-      function getExpectConfig(level: number, type: TestCaseType) {
-        const target = getConfig(0, type);
-        const realyConfig = getRealyConfig(target, type);
+      function getExpectConfig(levelValue: number, caseType: TestCaseType) {
+        const svThemeConfig = getConfig(0, caseType);
+        const realyConfig = getRealyConfig(svThemeConfig, caseType);
         return {
           ...realyConfig,
-          [svThemeConfigTree]: target,
+          [svThemeConfigTree]: svThemeConfig,
         };
       }
 
@@ -595,7 +593,7 @@ describe('ThemeProvider', () => {
   });
 
   it('addMouseEvent for mouseEnter', () => {
-    const call = [];
+    const call: any[] = [];
     const self = {
       props: {
         onMouseEnter(param) {
@@ -613,7 +611,7 @@ describe('ThemeProvider', () => {
   });
 
   it('addMouseEvent for only opt enter', () => {
-    const call = [];
+    const call: any[] = [];
     const self = {
       props: {},
     };
@@ -631,7 +629,7 @@ describe('ThemeProvider', () => {
   });
 
   it('addMouseEvent for all ', () => {
-    const call = [];
+    const call: any[] = [];
     const self = {
       props: {
         onMouseEnter(param) {
@@ -663,7 +661,7 @@ describe('ThemeProvider', () => {
     expect(call).toEqual(['a', 'b', 'c', 'd']);
   });
   it('addMouseEvent for all opt ', () => {
-    const call = [];
+    const call: any[] = [];
     const self = {
       props: {},
     };
@@ -696,7 +694,7 @@ describe('ThemeProvider', () => {
   });
 
   it('addMouseEvent for  all opt and props ', () => {
-    const call = [];
+    const call: any[] = [];
     const self = {
       props: {
         onMouseEnter(param) {
@@ -742,7 +740,7 @@ describe('ThemeProvider', () => {
   });
 
   it('addMouseEvent for  all opt and props  is after', () => {
-    const call = [];
+    const call: any[] = [];
     const self = {
       props: {
         onMouseEnter(param) {

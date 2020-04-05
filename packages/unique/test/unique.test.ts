@@ -42,10 +42,10 @@ describe('Unique', () => {
     const mockUnque = mockObject.create(exist);
     mockUnque.mockFunction('isExist').forever(true);
 
-    const params = [];
+    const params: any[] = [];
     let i = 0;
-    mock.mockFunction('generateId').mock((...param) => {
-      params.push(param);
+    mock.mockFunction('generateId').mock((...paramVal) => {
+      params.push(paramVal);
       i++;
     });
 
@@ -69,10 +69,10 @@ describe('Unique', () => {
     const mockUnque = mockObject.create(exist);
     mockUnque.mockFunction('isExist').forever(true);
 
-    const params = [];
+    const params: any[] = [];
     let i = 0;
-    mock.mockFunction('generateId').mock((...param) => {
-      params.push(param);
+    mock.mockFunction('generateId').mock((...paramVal) => {
+      params.push(paramVal);
       i++;
     });
     unique.getNext();
@@ -122,16 +122,16 @@ describe('Unique', () => {
     expect(unique.getNext()).toBe('hello1');
     expect(unique.getNext()).toBe('hello2');
     expect(unique.getLastIndex()).toBe(3);
-    order.verify(param => {
-      const { exist } = param;
-      exist.isExist('hello0');
-      exist.addExist('hello0');
+    order.verify(paramVal => {
+      const { exist: existVal } = paramVal;
+      existVal.isExist('hello0');
+      existVal.addExist('hello0');
 
-      exist.isExist('hello1');
-      exist.addExist('hello1');
+      existVal.isExist('hello1');
+      existVal.addExist('hello1');
 
-      exist.isExist('hello2');
-      exist.addExist('hello2');
+      existVal.isExist('hello2');
+      existVal.addExist('hello2');
     });
     mock.resetAll();
   });

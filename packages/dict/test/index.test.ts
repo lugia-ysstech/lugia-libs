@@ -48,8 +48,8 @@ describe('Dict', () => {
   }
   it('dict.load value  not object', () => {
     const target = createDict();
-    target.load('hello', null);
-    target.load('hello', undefined);
+    target.load('hello', getAny(null));
+    target.load('hello', getAny(undefined));
     target.load('hello', getAny(1));
     target.load('hello', getAny(true));
     target.load('hello', []);
