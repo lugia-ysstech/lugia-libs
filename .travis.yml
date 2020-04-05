@@ -15,6 +15,7 @@ before_script:
   - yarn run bootstrap
 script:
    # 执行测试的命令
+  - yarn build
   - yarn run coverage
   - codecov
 after_success:
