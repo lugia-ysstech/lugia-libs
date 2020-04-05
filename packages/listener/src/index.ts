@@ -6,8 +6,8 @@
  */
 import { fromEvent } from 'rxjs';
 import { bufferTime, first, take } from 'rxjs/operators';
-import { EventEmitter, Listener as EventListener } from 'events';
-
+import { EventEmitter } from 'events';
+type EventListener = (...args: any[]) => void;
 export default class Listener<T extends string> {
   events: EventEmitter;
 
