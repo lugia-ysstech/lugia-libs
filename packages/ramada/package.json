@@ -1,6 +1,6 @@
 {
   "name": "@lugia/ramada",
-  "version": "1.0.3",
+  "version": "1.0.4-alpha.0",
   "types": "./lib/index.d.ts",
   "description": "function utils",
   "main": "./lib/index.js",

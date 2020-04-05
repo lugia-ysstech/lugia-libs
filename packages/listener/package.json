@@ -1,6 +1,6 @@
 {
   "name": "@lugia/listener",
-  "version": "1.0.4",
+  "version": "1.0.5-alpha.0",
   "description": "listener",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -10,10 +10,10 @@
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {
-    "tslib": "^1.11.1",
     "@babel/runtime": "^7.4.5",
     "events": "^3.0.0",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "tslib": "^1.11.1"
   },
   "files": [
     "lib",

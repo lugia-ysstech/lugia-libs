@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-core",
-  "version": "1.1.2",
+  "version": "1.1.3-alpha.0",
   "types": "./lib/index.d.ts",
   "description": "Theme core",
   "main": "./lib/index.js",
@@ -11,15 +11,13 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/object-utils": "^1.0.15",
+    "@lugia/object-utils": "^1.0.16-alpha.0",
     "debug": "^4.1.1",
     "tslib": "^1.11.1"
   },
   "devDependencies": {
     "@lugia/jverify": "^1.0.10",
     "@lugia/react-test-utils": "^1.0.2"
-  },
-  "peerDependencies": {
   },
   "files": [
     "lib",
