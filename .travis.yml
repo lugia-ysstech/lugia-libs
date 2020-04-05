@@ -8,6 +8,21 @@ branches:
 cache:
   directories:
     - node_modules
+    - packages/combine/node_modules
+    - packages/css/node_modules
+    - packages/dict/node_modules
+    - packages/indexDB/node_modules
+    - packages/libs-example/node_modules
+    - packages/listener/node_modules
+    - packages/math/node_modules
+    - packages/object-utils/node_modules
+    - packages/ramada/node_modules
+    - packages/theme-config/node_modules
+    - packages/theme-core/node_modules
+    - packages/theme-css-hoc/node_modules
+    - packages/theme-hoc/node_modules
+    - packages/theme-utils/node_modules
+    - packages/unique/node_modules
 install:
   - yarn install
 #项目执行命令
