@@ -11,6 +11,8 @@ cache:
 install:
   - yarn install
 #项目执行命令
+before_script:
+  - yarn run lerna run prepublish
 script:
    # 执行测试的命令
   - yarn run coverage
