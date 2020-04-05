@@ -73,7 +73,7 @@ export default class Unique {
   ): string => {
     const { randCount = 1 } = opt;
 
-    const randStr = [];
+    const randStr: string[] = [];
     for (let i = 0; i < randCount; i++) {
       randStr.push(this.rand());
     }

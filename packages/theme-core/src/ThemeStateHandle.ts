@@ -16,6 +16,9 @@ export default class ThemeStateHandle {
 
   constructor(props: Props, widgetName: string, themeState: ThemeState) {
     this.event = {};
+    this.hover = false;
+    this.active = false;
+    this.focus = false;
     this.eventId = 0;
     this.props = props;
     this.themeState = themeState;

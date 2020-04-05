@@ -116,7 +116,7 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     };
   };
 
-  getThemeTarget = (): SvTarget => {
+  getThemeTarget = (): SvTarget | undefined => {
     let target = this.svtarget;
     while (target && target.svtarget && target.svtarget.current) {
       target = target.svtarget.current;
@@ -193,9 +193,9 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     result: { [key: string]: any },
     partName: string,
     fatherTheme: object = {},
-    themePartName: string,
+    themePartName: string | null | undefined,
   ): ThemePart {
-    const partNameResult = [];
+    const partNameResult: string[] = [];
     if (fatherTheme) {
       const father = fatherTheme[partName];
       if (father && father.__partName) {

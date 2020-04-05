@@ -152,7 +152,10 @@ export function getBorderRadius(borderRadius: BorderRadiusType): object {
   }
   const { topLeft, topRight, bottomLeft, bottomRight } = borderRadius;
 
-  function setBorderRadiusIfExist(key: string, target: number) {
+  function setBorderRadiusIfExist(key: string, target: number | undefined) {
+    if (!target && target !== 0) {
+      return;
+    }
     setObjectValueIfValueExist(style, key, target, getSizeFromTheme);
   }
 
@@ -231,11 +234,11 @@ export function themeMeta2Style(theme: ThemeMeta): object {
     style,
     getFont(font),
     getBackGround(background),
-    getBorderStyleFromTheme(border),
-    getBorderRadius(borderRadius),
-    getPosition(position),
-    getSpaceFromTheme('padding', padding),
-    getSpaceFromTheme('margin', margin),
+    border ? getBorderStyleFromTheme(border) : {},
+    borderRadius ? getBorderRadius(borderRadius) : {},
+    position ? getPosition(position) : {},
+    padding ? getSpaceFromTheme('padding', padding) : {},
+    margin ? getSpaceFromTheme('margin', margin) : {},
   );
   return style;
 }

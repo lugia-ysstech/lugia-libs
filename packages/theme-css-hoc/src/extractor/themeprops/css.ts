@@ -117,7 +117,9 @@ export function createGetStyleInCSSConfig(cssConfig: CSSConfig) {
  * @param cssConfig
  * @return {(function(CSSProps))|undefined}
  */
-export function createGetDefaultThemeInCSSConfig(cssConfig: CSSConfig) {
+export function createGetDefaultThemeInCSSConfig(
+  cssConfig: CSSConfig,
+): ((props: CSSProps) => StyleType) | void {
   const { normal = {}, active = {}, disabled = {} } = cssConfig;
 
   if (!normal.defaultTheme && !active.defaultTheme && !disabled.defaultTheme) {
@@ -166,7 +168,7 @@ export function createGetDefaultThemeInCSSConfig(cssConfig: CSSConfig) {
  * @return {(function(CSSProps): *)|undefined}
  */
 export function createGetCSSByStyleTranslate(
-  getStyle: (props: CSSProps) => object,
+  getStyle: ((props: CSSProps) => StyleType) | undefined,
 ) {
   if (!getStyle) {
     return undefined;

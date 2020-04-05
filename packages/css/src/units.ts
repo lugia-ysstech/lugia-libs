@@ -14,7 +14,9 @@ if (typeof document !== 'undefined') {
   const body: Element = document.body;
   if (body) {
     footerFontSize = getFontSize(body.parentElement, 10);
-    body.parentElement.style.fontSize = number2px(footerFontSize);
+    if (body && body.parentElement) {
+      body.parentElement.style.fontSize = number2px(footerFontSize);
+    }
     debug('footerFontSize %s', footerFontSize);
   }
 }
@@ -97,7 +99,7 @@ export function getSizeByStyle(style: SizeStyle): SizeType {
   if (!style) {
     return { width: 0, height: 0 };
   }
-  const { width, height } = style;
+  const { width = '0px', height = '0px' } = style;
   return { width: px2Number(width), height: px2Number(height) };
 }
 
@@ -116,7 +118,7 @@ export function getPointByStyle(style: PointStyle): Point {
   if (!style) {
     return [0, 0];
   }
-  const { left, top } = style;
+  const { left = '0px', top = '0px' } = style;
   return [px2Number(left), px2Number(top)];
 }
 

@@ -29,6 +29,8 @@ class Theme extends React.Component<Partial<ThemeConfigProps>, StateType> {
 
   constructor(props: ThemeConfigProps, context: ContextType) {
     super(props);
+    this.svThemeConfigTree = {};
+    this.context = { config: {}, svThemeConfigTree: {} };
     this.updateTreeConfig(props, context);
   }
 

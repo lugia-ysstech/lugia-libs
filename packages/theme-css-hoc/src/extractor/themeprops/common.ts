@@ -64,7 +64,7 @@ export function createGetStyleInThemeMeta(cssConfig: CSSConfig) {
   };
   return function(props: CSSProps) {
     const { themeProps } = props;
-    const { themeState, themeConfig } = themeProps;
+    const { themeState, themeConfig = {} } = themeProps;
     const stateTypes = getStateTypes(themeState);
 
     const themeMetaForDesign = { current: {} };

@@ -72,7 +72,7 @@ export function getMatchSelector(
   index: number,
   total: number,
 ): string[] {
-  const result = [];
+  const result: string[] = [];
   if (index < 0 || total < 0 || index >= total) {
     return result;
   }
@@ -200,7 +200,7 @@ export function createAddEventObject(optionNames: object) {
       const { [optName]: optCb } = eventMethods;
 
       if (cb || optCb) {
-        const cbs = [];
+        const cbs: AnyFunction[] = [];
         if (cb) {
           cbs.push(cb);
         }
@@ -235,7 +235,7 @@ type ThemeStateEvent = {
 
 export function injectThemeStateEvent(
   option: ThemeStateEventOptions,
-  handle: ThemeStateEvent,
+  handle?: ThemeStateEvent,
 ) {
   const themeStateEventConfig: ThemeStateEvent = {};
 

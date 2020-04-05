@@ -6,6 +6,8 @@
     "jsx": "react",
     "target": "es5",
     "outDir": "lib",
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
     "importHelpers": true,
     "esModuleInterop": true,
     "moduleResolution": "node",

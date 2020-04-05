@@ -13,7 +13,7 @@ import isPlainObject from 'is-plain-object';
 export function getAttributeFromObject(
   object: object,
   attribute: string,
-  defaultValue: any,
+  defaultValue?: any,
 ) {
   return object && object[attribute] !== undefined
     ? object[attribute]

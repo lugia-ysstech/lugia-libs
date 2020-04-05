@@ -44,7 +44,7 @@ const Button = ThemeHoc(
 const Block = CSSComponent({
   tag: 'span',
   className: 'selector_block',
-  css: 'display: inline-block',
+  css: 'display: inline-block;',
   normal: {
     getThemeMeta(themeMeta, themeProps) {
       const { propsConfig } = themeProps;
@@ -60,11 +60,11 @@ const Block = CSSComponent({
     },
 
     defaultTheme: {
-      width: 20,
+      width: 55,
       margin: {
         right: 20,
       },
-      height: 20,
+      height: 55,
       background: { color: '$lugia-dict.lugia-web.bgColor' },
     },
   },
@@ -81,7 +81,7 @@ const SelectorWeb = ThemeHoc(
       console.info('partOfThemeProps', partOfThemeProps);
       return (
         <Block {...addMouseEvent(this)} themeProps={partOfThemeProps}>
-          1
+          block
         </Block>
       );
     }

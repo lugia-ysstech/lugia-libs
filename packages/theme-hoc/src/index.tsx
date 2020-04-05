@@ -50,7 +50,7 @@ function useInitHandle(
   const [themeState, setThemeState] = useState({});
   const svTarget = useRef({});
 
-  const handle: MutableRefObject<ThemeHandle> = useRef(null);
+  const handle: MutableRefObject<ThemeHandle | null> = useRef(null);
 
   if (!handle.current) {
     const initHandleObject: ThemeHandle = new ThemeHandle(

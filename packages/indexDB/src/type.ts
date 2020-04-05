@@ -5,7 +5,7 @@ export interface QueryInstance {
 
   getAllKeys(tableName: string): Promise<string[]>;
 
-  filter(tableName: string, cb: (item: any) => boolean): Promise<object[]>;
+  filter(tableName: string, cb: (item: any) => boolean): Promise<string[]>;
 
   filterKeys(tableName: string, cb: (key: any) => boolean): Promise<string[]>;
 

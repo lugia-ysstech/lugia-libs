@@ -25,7 +25,10 @@ export default class IndexDB extends Listener<any> implements Store {
 
   constructor(indexedDB: any, option: IndexDBOption) {
     super();
-
+    this.indexOption = {};
+    this.version = 1;
+    this.dataBaseName = '';
+    this.tableNames = [];
     this.tableExist = {};
     this.tableName2Unique = {};
 
@@ -435,7 +438,7 @@ export default class IndexDB extends Listener<any> implements Store {
     }
     const { valueField, funcName } = option;
     const request = store[funcName]();
-    const result = [];
+    const result: any[] = [];
     return new Promise(res => {
       request.onsuccess = event => {
         const cursor = event.target.result;

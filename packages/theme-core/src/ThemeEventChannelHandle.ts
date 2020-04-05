@@ -7,7 +7,7 @@ import ThemeStateHandle from './ThemeStateHandle';
 import { ThemeState } from './type';
 
 type DispatchHandle = {
-  fatherOn?: (name: string, cb: CallBack) => VoidFunction;
+  fatherOn?: (name: string, cb: CallBack) => VoidFunction | undefined;
   fatherEmit?: (name: string, data: object) => void;
 };
 type EventProvider = { lugiaProvider: (name: string, data: object) => void };

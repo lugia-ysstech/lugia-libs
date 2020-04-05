@@ -71,7 +71,7 @@ function useInitHandle(
   widgetName: string,
   isHasThemeStateEvent: boolean,
 ): InitHandle {
-  const handle: MutableRefObject<ThemeStateHandle> = useRef(null);
+  const handle: { current?: ThemeStateHandle } = useRef(undefined);
 
   const [themeState, setThemeState] = useState<ThemeState>({
     hover: false,
@@ -220,26 +220,33 @@ export default function CSSComponent(cssConfig: CSSConfig) {
       if (isHasThemeStateEvent && handle) {
         onLugia = handle.on;
       }
-      const unsubscribeHover =
+      const { themeConfig } = themeProps;
+      const unsubscribeHover: any =
         onLugia &&
         onLugia('hover', data => {
-          if (hasStaticHover || !isEmptyObject(themeProps.themeConfig.hover)) {
+          if (
+            hasStaticHover ||
+            (themeConfig && !isEmptyObject(themeConfig.hover))
+          ) {
             setThemeState({ ...themeState, ...data });
           }
         });
-      const unsubscribeFocus =
+      const unsubscribeFocus: any =
         onLugia &&
         onLugia('focus', data => {
-          if (hasStaticFocus || !isEmptyObject(themeProps.themeConfig.focus)) {
+          if (
+            hasStaticFocus ||
+            (themeConfig && !isEmptyObject(themeConfig.focus))
+          ) {
             setThemeState({ ...themeState, ...data });
           }
         });
-      const unsubscribeActive =
+      const unsubscribeActive: any =
         onLugia &&
         onLugia('active', data => {
           if (
             hasStaticActive ||
-            !isEmptyObject(themeProps.themeConfig.active)
+            (themeConfig && !isEmptyObject(themeConfig.active))
           ) {
             setThemeState({ ...themeState, ...data });
           }
@@ -252,7 +259,7 @@ export default function CSSComponent(cssConfig: CSSConfig) {
         unsubscribeFocus && unsubscribeFocus();
         unsubscribeActive && unsubscribeActive();
       };
-    }, [handle.on, props, setThemeState, themeState]);
+    }, [handle ? handle.on : undefined, props, setThemeState, themeState]);
 
     const targetStyle = deepMerge(
       normal,
@@ -288,7 +295,7 @@ function createGetRenderTargetByGetCSSInThemeMeta() {
     const { themeProps } = cssProps;
 
     const { themeConfig = {} } = themeProps;
-    const cssArray = [];
+    const cssArray: string[] = [];
     const { themeState } = themeProps;
 
     getStateTypes(themeState).map(stateType => {

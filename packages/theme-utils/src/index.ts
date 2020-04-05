@@ -87,12 +87,12 @@ const allBorderRadiusDirections: BorderRadiusDirection[] = [
   'bl',
   'br',
 ];
-type BorderRadiusDirectionMap = {
+interface BorderRadiusDirectionMap {
   tl: string;
   tr: string;
   bl: string;
   br: string;
-};
+}
 const borderRadiusDirectionMap: BorderRadiusDirectionMap = {
   tl: 'topLeft',
   tr: 'topRight',
