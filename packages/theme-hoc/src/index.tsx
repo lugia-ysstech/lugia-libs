@@ -9,7 +9,6 @@ import React, {
   ForwardRefExoticComponent,
   MutableRefObject,
   Ref,
-  RefCallback,
   SetStateAction,
   useContext,
   useEffect,
@@ -90,7 +89,10 @@ const ThemeProvider = (
 
   const ThemeWrapWidgetForward = (
     props: ThemeHocProps,
-    ref: MutableRefObject<ThemeHandle> | RefCallback<ThemeHandle>,
+    ref:
+      | ((instance: ThemeHandle | null) => void)
+      | MutableRefObject<ThemeHandle | null>
+      | null,
   ) => {
     const { handle, svTarget, themeState } = useInitHandle(
       props,

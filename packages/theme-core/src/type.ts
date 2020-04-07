@@ -108,12 +108,13 @@ export type DynamicThemeMega = {
   getCSS?: (theme: ThemeMeta, themeProps: CSSThemeProps) => string;
   getThemeMeta?: (theme: ThemeMeta, themeProps: CSSThemeProps) => ThemeMeta;
 };
-export type ThemeMeta = SimpleThemeMeta & {
+type SelectorConfig = {
   first?: SimpleThemeMeta;
   last?: SimpleThemeMeta;
   odd?: SimpleThemeMeta;
   even?: SimpleThemeMeta;
-} & DynamicThemeMega;
+};
+export type ThemeMeta = SimpleThemeMeta & SelectorConfig & DynamicThemeMega;
 
 export type ThemePart = {
   normal?: ThemeMeta;
@@ -121,12 +122,17 @@ export type ThemePart = {
   active?: ThemeMeta;
   hover?: ThemeMeta;
   focus?: ThemeMeta;
+  __partName?: string;
+  __index?: number;
+  __count?: number;
+};
+
+export type ThemeComponentConfig = {
+  [viewClassOrWidgetName: string]: ThemeConfig;
 };
 
 export type ThemeConfig = {
   __partName?: string;
-  __index?: number;
-  __count?: number;
 } & {
   [partName: string]: ThemePart;
 };
@@ -161,7 +167,7 @@ export type CSSThemeProps = {
 };
 export type ThemeProps = {
   themeState?: ThemeState;
-  themeConfig?: ThemeConfig;
+  themeConfig?: ThemePart;
   propsConfig?: object;
 };
 export type AddFocusBlurEventOption = {

@@ -137,7 +137,9 @@ function extendCSSComponent(cssConfig: CSSConfig) {
 /**
  * @return {undefined}
  */
-export default function CSSComponent(cssConfig: CSSConfig) {
+export default function CSSComponent(
+  cssConfig: CSSConfig,
+): FunctionComponent<any> {
   const { className } = cssConfig;
   if (!className) {
     console.trace('className is empty!');

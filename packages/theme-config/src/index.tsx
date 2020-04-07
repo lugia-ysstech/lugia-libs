@@ -4,7 +4,7 @@
  *
  * @flow
  */
-import { ThemeConfig } from '@lugia/theme-core/lib/type';
+import { ThemeComponentConfig } from '@lugia/theme-core/lib/type';
 import { getConfig, ThemeContext } from '@lugia/theme-core';
 
 import { ThemeConfigProps } from './type';
@@ -14,8 +14,8 @@ import * as React from 'react';
 type StateType = {};
 
 export type ContextType = {
-  config: ThemeConfig;
-  svThemeConfigTree: ThemeConfig;
+  config: ThemeComponentConfig;
+  svThemeConfigTree: ThemeComponentConfig;
 };
 
 class Theme extends React.Component<Partial<ThemeConfigProps>, StateType> {

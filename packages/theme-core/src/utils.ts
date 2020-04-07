@@ -4,31 +4,39 @@
  *
  * @flow
  */
-import { AnyFunction, ThemeConfig, ThemeStateEventOptions } from './type';
+import {
+  AnyFunction,
+  ThemeComponentConfig,
+  ThemeConfig,
+  ThemeMeta,
+  ThemePart,
+  ThemeStateEventOptions,
+} from './type';
 
 import { deepMerge } from '@lugia/object-utils';
+type StateType = 'normal' | 'active' | 'hover' | 'disabled' | 'focus';
 
 export function getKeys(obj: object): string[] {
   return obj ? Object.keys(obj) : [];
 }
-
-export function getObject(obj: object, key: string): object {
+type AnyObject = { [key: string]: any };
+export function getObject(obj: AnyObject, key: string): object {
   return obj && key ? obj[key] : {};
 }
 
 // eslint-disable-next-line max-len
 export function getConfig(
-  svThemeConfigTree: object,
-  contextConfig: object,
-  propsConfig: object,
-): object {
+  svThemeConfigTree: ThemeComponentConfig,
+  contextConfig: ThemeComponentConfig,
+  propsConfig: ThemeComponentConfig,
+): ThemeComponentConfig {
   const allKeys = new Set([
     ...getKeys(svThemeConfigTree),
     ...getKeys(contextConfig),
     ...getKeys(propsConfig),
   ]);
 
-  const result = {};
+  const result: AnyObject = {};
   allKeys.forEach(key => {
     result[key] = deepMerge(
       {},
@@ -103,7 +111,7 @@ export function getMatchSelector(
 }
 
 export function selectThemeMeta(
-  themePart: object,
+  themePart: ThemeMeta | undefined,
   index: number,
   total: number,
 ): object {
@@ -113,7 +121,7 @@ export function selectThemeMeta(
   const selectors = filterSelector(themePart);
   const matchSelectors = getMatchSelector(selectors, index, total);
 
-  let res = { ...themePart };
+  let res: AnyObject = { ...themePart };
   selectors.forEach(key => {
     const matchResult = res[key];
     if (matchSelectors.includes(key)) {
@@ -124,16 +132,16 @@ export function selectThemeMeta(
 }
 
 export function selectThemePart(
-  themePart: object,
+  themePart: ThemePart,
   index: number,
   total: number,
-): ThemeConfig {
+): ThemePart {
   if (!themePart) {
     return {};
   }
-  const result: ThemeConfig = { ...themePart };
+  const result: ThemePart = { ...themePart };
 
-  function selectorIfExistState(stateType: string) {
+  function selectorIfExistState(stateType: StateType) {
     if (stateType in themePart) {
       result[stateType] = selectThemeMeta(result[stateType], index, total);
     }
@@ -177,13 +185,13 @@ type CompoentInstance = {
 type EventMethod = {
   [methoName: string]: AnyFunction;
 };
-export function createAddEventObject(optionNames: object) {
+export function createAddEventObject(optionNames: { [key: string]: any }) {
   const resultFunction = function(
     self: CompoentInstance,
     eventMethods: EventMethod = {},
     option: AddEventObject = { after: {} },
   ): EventObject {
-    const result = {};
+    const result: { [key: string]: AnyFunction } = {};
 
     if (!self) {
       return result;
@@ -201,10 +209,10 @@ export function createAddEventObject(optionNames: object) {
 
       if (cb || optCb) {
         const cbs: AnyFunction[] = [];
-        if (cb) {
+        if (cb && typeof cb === 'function') {
           cbs.push(cb);
         }
-        if (optCb) {
+        if (optCb && typeof optCb === 'function') {
           const { [optName]: isAfter } = after;
           if (isAfter) {
             cbs.push(optCb);

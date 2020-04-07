@@ -73,7 +73,7 @@ describe('theme-core-utils', () => {
               },
             },
           },
-        },
+        } as any,
         {
           a: {
             normal: {
@@ -89,7 +89,7 @@ describe('theme-core-utils', () => {
               },
             },
           },
-        },
+        } as any,
         {
           b: {
             hover: {
@@ -103,7 +103,7 @@ describe('theme-core-utils', () => {
               background: 'ylll',
             },
           },
-        },
+        } as any,
       ),
     ).toEqual(result);
   });
@@ -305,21 +305,21 @@ describe('theme-core-utils', () => {
         },
       },
     };
-    expect(selectThemePart(themePart, index, total)).toEqual({
+    expect(selectThemePart(themePart as any, index, total)).toEqual({
       hover: {
         ...selectThemeMeta(themePart.hover, index, total),
       },
       focus: {
-        ...selectThemeMeta(themePart.focus, index, total),
+        ...selectThemeMeta(themePart.focus as any, index, total),
       },
       disabled: {
-        ...selectThemeMeta(themePart.disabled, index, total),
+        ...selectThemeMeta(themePart.disabled as any, index, total),
       },
       normal: {
-        ...selectThemeMeta(themePart.normal, index, total),
+        ...selectThemeMeta(themePart.normal as any, index, total),
       },
       active: {
-        ...selectThemeMeta(themePart.active, index, total),
+        ...selectThemeMeta(themePart.active as any, index, total),
       },
       __index: index,
       __count: total,
@@ -352,10 +352,10 @@ describe('theme-core-utils', () => {
     expect(addEventObject(getAny(emptyObject), {})).toEqual({});
     const callParams: any[] = [];
     const props = {
-      onMouseUp(...rest) {
+      onMouseUp(...rest: any[]) {
         callParams.push(rest);
       },
-      onMouseEnter(...rest) {
+      onMouseEnter(...rest: any[]) {
         callParams.push(rest);
       },
     };
@@ -376,11 +376,11 @@ describe('theme-core-utils', () => {
     });
     const callParams: any[] = [];
     const props = {
-      onMouseUp(...rest) {
+      onMouseUp(...rest: any[]) {
         callParams.push('onMouseUp');
         callParams.push(rest);
       },
-      onMouseEnter(...rest) {
+      onMouseEnter(...rest: any[]) {
         callParams.push('onMouseEnter');
         callParams.push(rest);
       },
@@ -426,11 +426,11 @@ describe('theme-core-utils', () => {
     });
     const callParams: any[] = [];
     const props = {
-      onMouseUp(...rest) {
+      onMouseUp(...rest: any[]) {
         callParams.push('onMouseUp');
         callParams.push(rest);
       },
-      onMouseEnter(...rest) {
+      onMouseEnter(...rest: any[]) {
         callParams.push('onMouseEnter');
         callParams.push(rest);
       },

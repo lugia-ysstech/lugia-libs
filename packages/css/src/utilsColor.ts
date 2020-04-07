@@ -12,7 +12,7 @@ import colors from './colorTable';
 const hexColorRegExp = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
 const regWord = /^[a-zA-Z]*$/;
 
-function colorIsWord(sHex) {
+function colorIsWord(sHex: string) {
   const newHex = sHex.toLowerCase();
   const item = colors.find(
     ({ englishName }) => newHex === englishName.toLowerCase(),

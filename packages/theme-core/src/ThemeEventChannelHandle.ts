@@ -81,7 +81,7 @@ export default class ThemeEventChannelHandle extends ThemeStateHandle {
         __consumer: (name: string, cb: CallBack) => {
           const exist = hasEvent[name];
           if (exist) {
-            return this.on(parse(name), data => {
+            return this.on(parse(name), (data: any) => {
               cb(data);
             });
           }
@@ -101,7 +101,7 @@ export default class ThemeEventChannelHandle extends ThemeStateHandle {
     if (!eventNames || !eventNames.length) {
       return {};
     }
-    return eventNames.reduce((exist, name) => {
+    return eventNames.reduce((exist: { [key: string]: boolean }, name) => {
       exist[name] = true;
       return exist;
     }, {});

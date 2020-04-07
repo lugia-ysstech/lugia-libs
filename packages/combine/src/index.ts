@@ -4,43 +4,49 @@
  *
  * @flow
  */
-
-export function tillMethodAttribute(
-  paramA: object,
-): { [key: string]: object[] } {
-  const events = {};
-  paramA &&
-    Object.keys(paramA).reduce((pre, current) => {
-      if (typeof paramA[current] === 'function') {
-        let config = pre[current];
+type MethodObject = {
+  [attribute: string]: any;
+};
+type AnyFunction = (...rest: any[]) => any;
+type MethodConfig = {
+  [attribute: string]: AnyFunction[];
+};
+export function tillMethodAttribute(target: MethodObject): MethodConfig {
+  const events: MethodObject = {};
+  target &&
+    Object.keys(target).reduce((pre: MethodObject, current: string) => {
+      if (typeof target[current] === 'function') {
+        let config: AnyFunction[] = pre[current];
         if (!config) {
           pre[current] = config = [];
         }
-        config.push(paramA[current]);
+        config.push(target[current]);
       }
       return pre;
     }, events);
   return events;
 }
 
-export function combineMethodObject(...rest: object[]): object {
-  const res = {};
+export function combineMethodObject(...rest: object[]): MethodConfig {
+  const res: MethodObject = {};
   if (!rest) {
     return res;
   }
 
-  const valuesObjects = rest.map(param => tillMethodAttribute(param));
+  const valuesObjects: MethodConfig[] = rest.map(param =>
+    tillMethodAttribute(param),
+  );
 
-  const keyObj = {};
+  const keyObj: { [key: string]: boolean } = {};
 
   valuesObjects.forEach(obj => {
     Object.keys(obj).forEach(key => (keyObj[key] = true));
   });
 
   Object.keys(keyObj).forEach(key => {
-    const values = [];
-    valuesObjects.forEach(obj => {
-      const value = obj[key];
+    const values: AnyFunction[] = [];
+    valuesObjects.forEach((methodConfig: MethodConfig) => {
+      const value = methodConfig[key];
       if (value) {
         Array.prototype.push.apply(values, value);
       }
@@ -51,20 +57,20 @@ export function combineMethodObject(...rest: object[]): object {
 }
 
 export function combineFunction(param: {
-  targets: object[];
-  option?: { returned?: object };
-}): any {
+  targets: MethodObject[];
+  option?: { returned?: { [attribute: string]: AnyFunction } };
+}): MethodObject {
   const { targets, option = {} } = param;
 
   const { returned } = option;
   const combineObj = combineMethodObject(...targets);
-  const res = {};
+  const res: MethodObject = {};
   Object.keys(combineObj).forEach(key => {
     const method = combineObj[key];
-    res[key] = (...rest) => {
+    res[key] = (...rest: any[]) => {
       let result;
       method &&
-        method.forEach(call => {
+        method.forEach((call: AnyFunction) => {
           const callResult = call(...rest);
           if (returned && returned[key] === call) {
             result = callResult;

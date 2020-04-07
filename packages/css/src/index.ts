@@ -13,7 +13,7 @@ export const color = {
   getColor,
 };
 
-export function style2css(style: object = {}): string {
+export function style2css(style: { [key: string]: any } = {}): string {
   if (!style) {
     return '';
   }

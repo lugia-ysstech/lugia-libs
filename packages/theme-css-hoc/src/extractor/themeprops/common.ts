@@ -7,13 +7,20 @@
 
 import {
   CSSConfig,
+  CSSMeta,
   CSSProps,
   StateType,
+  StateType2Getter,
   StyleType,
+  ThemeObject,
   TranslateCSSFunction,
   TranslateFunction,
 } from '../../type';
-import { ThemeMeta, ThemeProps, ThemeState } from '@lugia/theme-core/lib/type';
+import {
+  CSSThemeProps,
+  ThemeMeta,
+  ThemeState,
+} from '@lugia/theme-core/lib/type';
 import { filterSelector } from '@lugia/theme-core';
 
 import { Active, Disabled, Focus, Hover, Normal } from '../../consts';
@@ -46,14 +53,40 @@ export function getStateTypes(themeState: ThemeState = {}): StateType[] {
 }
 
 const allState = [Normal, Hover, Active, Disabled];
-type ThemeMetaGetter = (themeMeta: ThemeMeta) => object;
-type StateType2Getter = {
-  normal: ThemeMetaGetter;
-  active: ThemeMetaGetter;
-  hover: ThemeMetaGetter;
-  disabled: ThemeMetaGetter;
-  focus: ThemeMetaGetter;
-};
+
+function getTargetThemeMeta(
+  cssConfig: CSSConfig,
+  themeProps: CSSThemeProps,
+  stateType: StateType,
+): ThemeMeta {
+  const { themeConfig = {} } = themeProps;
+  let { [stateType]: themeMeta = {} } = themeConfig;
+
+  const { [stateType]: cssConfigThemeMeta = {} } = cssConfig;
+  const { getThemeMeta } = cssConfigThemeMeta;
+  if (getThemeMeta) {
+    const getThemeMetaRes = getThemeMeta(themeMeta, themeProps) || {};
+    themeMeta = deepMerge(getThemeMetaRes, themeMeta);
+  }
+  const { getThemeMeta: getThemeMetaByUserDef } = themeMeta;
+  if (getThemeMetaByUserDef) {
+    themeMeta = deepMerge(
+      themeMeta,
+      getThemeMetaByUserDef(themeMeta, themeProps),
+    );
+  }
+  return themeMeta;
+}
+
+function getDefaultTheme(
+  defaultCSSConfig: CSSConfig,
+  stateType: StateType,
+): CSSMeta {
+  const { [stateType]: config = {} } = defaultCSSConfig;
+  const { defaultTheme = {} } = config;
+  return defaultTheme;
+}
+
 export function createGetStyleInThemeMeta(cssConfig: CSSConfig) {
   const stateType2Getter: StateType2Getter = {
     normal: translateToCSStyle(cssConfig, Normal),
@@ -62,78 +95,53 @@ export function createGetStyleInThemeMeta(cssConfig: CSSConfig) {
     focus: translateToCSStyle(cssConfig, Focus),
     disabled: translateToCSStyle(cssConfig, Disabled),
   };
-  return function(props: CSSProps) {
+  return function(props: CSSProps): ThemeObject {
     const { themeProps } = props;
     const { themeState, themeConfig = {} } = themeProps;
     const stateTypes = getStateTypes(themeState);
 
-    const themeMetaForDesign = { current: {} };
-
-    function getDefaultTheme(
-      defaultCSSConfig: CSSConfig,
-      stateType: StateType,
-    ): object {
-      const { [stateType]: config = {} } = defaultCSSConfig;
-      const { defaultTheme = {} } = config;
-      return defaultTheme;
-    }
-
-    function getTargetThemeMeta(stateType: StateType) {
-      let { [stateType]: themeMeta = {} } = themeConfig;
-
-      const { [stateType]: cssConfigThemeMeta = {} } = cssConfig;
-      const { getThemeMeta } = cssConfigThemeMeta;
-      if (getThemeMeta) {
-        const getThemeMetaRes = getThemeMeta(themeMeta, themeProps) || {};
-        themeMeta = deepMerge(getThemeMetaRes, themeMeta);
-      }
-      const { getThemeMeta: getThemeMetaByUserDef } = themeMeta;
-      if (getThemeMetaByUserDef) {
-        themeMeta = deepMerge(
+    const themeMetaForDesign: ThemeObject = allState.reduce(
+      (result: ThemeObject, stateType: StateType): ThemeObject => {
+        const themeMeta = getTargetThemeMeta(cssConfig, themeProps, stateType);
+        const defaultTheme = getDefaultTheme(cssConfig, stateType);
+        const curThemeMeta = (result[stateType] = deepMerge(
+          defaultTheme,
           themeMeta,
-          getThemeMetaByUserDef(themeMeta, themeProps),
-        );
-      }
-      return themeMeta;
-    }
+        ));
+        const selectors = filterSelector(themeMeta);
 
-    allState.reduce((result: object, stateType: StateType) => {
-      const themeMeta = getTargetThemeMeta(stateType);
-      const defaultTheme = getDefaultTheme(cssConfig, stateType);
-      const curThemeMeta = (result[stateType] = deepMerge(
-        defaultTheme,
-        themeMeta,
-      ));
-      const selectors = filterSelector(themeMeta);
-
-      if (selectors.length > 0) {
-        const excludeSelectorMeta = selectors.reduce(
-          (res: object, selector: string) => {
-            delete res[selector];
-            return res;
-          },
-          deepMerge({}, curThemeMeta),
-        );
-        selectors.forEach((selector: string) => {
-          curThemeMeta[selector] = deepMerge(
-            excludeSelectorMeta,
-            curThemeMeta[selector],
+        if (selectors.length > 0) {
+          const excludeSelectorMeta = selectors.reduce(
+            (res: any, selector: string) => {
+              delete res[selector];
+              return res;
+            },
+            deepMerge({}, curThemeMeta),
           );
-        });
-      }
-      return result;
-    }, themeMetaForDesign);
+          selectors.forEach((selector: string) => {
+            curThemeMeta[selector] = deepMerge(
+              excludeSelectorMeta,
+              curThemeMeta[selector],
+            );
+          });
+        }
+        return result;
+      },
+      { current: {} },
+    );
 
     return stateTypes.reduce(
-      (result: any, stateType: StateType): object => {
+      (result: ThemeObject, stateType: StateType): ThemeObject => {
         const getter = stateType2Getter[stateType];
-        const themeMeta = getTargetThemeMeta(stateType);
+        const themeMeta = getTargetThemeMeta(cssConfig, themeProps, stateType);
         result[stateType] = getter(themeMeta);
-        result.themeMeta.current = deepMerge(
-          getDefaultTheme(cssConfig, stateType),
-          result.themeMeta.current,
-          themeMeta,
-        );
+        if (result.themeMeta) {
+          result.themeMeta.current = deepMerge(
+            getDefaultTheme(cssConfig, stateType),
+            result.themeMeta.current,
+            themeMeta,
+          );
+        }
         return result;
       },
       {

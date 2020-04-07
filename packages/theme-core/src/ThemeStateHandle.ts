@@ -2,11 +2,11 @@
  * 组件样式处理增强
  * @flow
  */
-import { ThemeState } from './type';
+import { AnyFunction, ThemeState } from './type';
 
 type Props = { [key: string]: any };
 export default class ThemeStateHandle {
-  event: object;
+  event: { [key: string]: { [key: string]: any } };
   eventId: number;
   hover: boolean;
   active: boolean;
@@ -104,7 +104,7 @@ export default class ThemeStateHandle {
       lugiaConsumers = [lugiaConsumers];
     }
     lugiaConsumers &&
-      lugiaConsumers.forEach(({ __consumer }) => {
+      lugiaConsumers.forEach(({ __consumer }: { __consumer: AnyFunction }) => {
         __consumer && __consumer(name, cb);
       });
 

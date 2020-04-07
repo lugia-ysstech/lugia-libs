@@ -31,7 +31,7 @@ describe('combine', () => {
     };
 
     const eventB = {
-      onChange(v) {
+      onChange(v: any) {
         res.push('changeB' + v);
       },
     };
@@ -50,12 +50,12 @@ describe('combine', () => {
     };
 
     const eventB = {
-      onChange(v) {
+      onChange(v: any) {
         res.push('changeB' + v);
       },
     };
     const eventC = {
-      onChange(v) {
+      onChange(v: any) {
         res.push('changeB' + v);
       },
     };
@@ -75,12 +75,12 @@ describe('combine', () => {
     };
 
     const eventB = {
-      onClick(v) {
+      onClick(v: any) {
         res.push('changeB' + v);
       },
     };
     const eventC = {
-      onChange(v) {
+      onChange(v: any) {
         res.push('changeB' + v);
       },
     };
@@ -102,12 +102,12 @@ describe('combine', () => {
     };
 
     const eventB = {
-      onClick(v) {
+      onClick(v: any) {
         res.push('changeB' + v);
       },
     };
     const eventC = {
-      onChange(v) {
+      onChange(v: any) {
         res.push('changeB' + v);
       },
     };
@@ -158,18 +158,18 @@ describe('combine', () => {
     const res: string[] = [];
 
     const eventA = {
-      onChange(v) {
+      onChange(v: any) {
         res.push('changeA' + v);
       },
     };
 
     const eventB = {
-      onChange(v) {
+      onChange(v: any) {
         res.push('changeB' + v);
       },
     };
     const eventC = {
-      onChange(v) {
+      onChange(v: any) {
         res.push('changeC' + v);
       },
     };
@@ -182,18 +182,18 @@ describe('combine', () => {
     const changeRes: string[] = [];
     const clickRes: string[] = [];
     const eventA = {
-      onChange(v) {
+      onChange(v: any) {
         changeRes.push('changeA' + v);
       },
     };
 
     const eventB = {
-      onClick(v) {
+      onClick(v: any) {
         clickRes.push('onClick' + v);
       },
     };
     const eventC = {
-      onChange(v) {
+      onChange(v: any) {
         changeRes.push('changeC' + v);
       },
     };
@@ -209,18 +209,18 @@ describe('combine', () => {
     const changeRes: string[] = [];
     const clickRes: string[] = [];
     const eventA = {
-      onChange(v) {
+      onChange(v: any) {
         changeRes.push('changeA' + v);
       },
     };
 
     const eventB = {
-      onClick(v) {
+      onClick(v: any) {
         clickRes.push('onClick' + v);
       },
     };
     const eventC = {
-      onChange(v) {
+      onChange(v: any) {
         changeRes.push('changeC' + v);
         return 5;
       },
@@ -240,20 +240,20 @@ describe('combine', () => {
     const changeRes: string[] = [];
     const clickRes: string[] = [];
     const eventA = {
-      onChange(v) {
+      onChange(v: any) {
         changeRes.push('changeA' + v);
         return Promise.resolve(1);
       },
     };
 
     const eventB = {
-      onClick(v) {
+      onClick(v: any) {
         clickRes.push('onClick' + v);
         return 3;
       },
     };
     const eventC = {
-      onChange(v) {
+      onChange(v: any) {
         changeRes.push('changeC' + v);
         return 5;
       },
@@ -273,20 +273,20 @@ describe('combine', () => {
     const changeRes: string[] = [];
     const clickRes: string[] = [];
     const eventA = {
-      async onChange(v) {
+      async onChange(v: any) {
         changeRes.push('changeA' + v);
         return 1;
       },
     };
 
     const eventB = {
-      onClick(v) {
+      onClick(v: any) {
         clickRes.push('onClick' + v);
         return 3;
       },
     };
     const eventC = {
-      async onChange(v) {
+      async onChange(v: any) {
         changeRes.push('changeC' + v);
         return 5;
       },

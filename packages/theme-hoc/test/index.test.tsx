@@ -167,7 +167,10 @@ describe('ThemeProvider', () => {
 
       const target = mount(element);
 
-      function getRealyConfig(targetParam: object, caseType: TestCaseType) {
+      function getRealyConfig(
+        targetParam: { [key: string]: any },
+        caseType: TestCaseType,
+      ) {
         switch (caseType) {
           case 'viewClass':
             return targetParam[viewClass];
@@ -596,7 +599,7 @@ describe('ThemeProvider', () => {
     const call: any[] = [];
     const self = {
       props: {
-        onMouseEnter(param) {
+        onMouseEnter(param: any) {
           call.push(param);
         },
       },
@@ -616,7 +619,7 @@ describe('ThemeProvider', () => {
       props: {},
     };
     const result = addMouseEvent(self, {
-      enter(param) {
+      enter(param: any) {
         call.push(param);
       },
     });
@@ -632,16 +635,16 @@ describe('ThemeProvider', () => {
     const call: any[] = [];
     const self = {
       props: {
-        onMouseEnter(param) {
+        onMouseEnter(param: any) {
           call.push(param);
         },
-        onMouseUp(param) {
+        onMouseUp(param: any) {
           call.push(param);
         },
-        onMouseLeave(param) {
+        onMouseLeave(param: any) {
           call.push(param);
         },
-        onMouseDown(param) {
+        onMouseDown(param: any) {
           call.push(param);
         },
       },
@@ -666,16 +669,16 @@ describe('ThemeProvider', () => {
       props: {},
     };
     const result = addMouseEvent(self, {
-      enter(param) {
+      enter(param: any) {
         call.push(param);
       },
-      up(param) {
+      up(param: any) {
         call.push(param);
       },
-      leave(param) {
+      leave(param: any) {
         call.push(param);
       },
-      down(param) {
+      down(param: any) {
         call.push(param);
       },
     });
@@ -697,31 +700,31 @@ describe('ThemeProvider', () => {
     const call: any[] = [];
     const self = {
       props: {
-        onMouseEnter(param) {
+        onMouseEnter(param: any) {
           call.push('p_' + param);
         },
-        onMouseUp(param) {
+        onMouseUp(param: any) {
           call.push('p_' + param);
         },
-        onMouseLeave(param) {
+        onMouseLeave(param: any) {
           call.push('p_' + param);
         },
-        onMouseDown(param) {
+        onMouseDown(param: any) {
           call.push('p_' + param);
         },
       },
     };
     const result = addMouseEvent(self, {
-      enter(param) {
+      enter(param: any) {
         call.push(param);
       },
-      up(param) {
+      up(param: any) {
         call.push(param);
       },
-      leave(param) {
+      leave(param: any) {
         call.push(param);
       },
-      down(param) {
+      down(param: any) {
         call.push(param);
       },
     });
@@ -743,16 +746,16 @@ describe('ThemeProvider', () => {
     const call: any[] = [];
     const self = {
       props: {
-        onMouseEnter(param) {
+        onMouseEnter(param: any) {
           call.push('p_' + param);
         },
-        onMouseUp(param) {
+        onMouseUp(param: any) {
           call.push('p_' + param);
         },
-        onMouseLeave(param) {
+        onMouseLeave(param: any) {
           call.push('p_' + param);
         },
-        onMouseDown(param) {
+        onMouseDown(param: any) {
           call.push('p_' + param);
         },
       },
@@ -760,16 +763,16 @@ describe('ThemeProvider', () => {
     const result = addMouseEvent(
       self,
       {
-        enter(param) {
+        enter(param: any) {
           call.push(param);
         },
-        up(param) {
+        up(param: any) {
           call.push(param);
         },
-        leave(param) {
+        leave(param: any) {
           call.push(param);
         },
-        down(param) {
+        down(param: any) {
           call.push(param);
         },
       },

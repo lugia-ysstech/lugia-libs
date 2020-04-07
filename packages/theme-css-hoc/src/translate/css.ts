@@ -367,7 +367,7 @@ export function getPosition(position: PositionType): StyleType {
 }
 
 export function setObjectValueIfValueExist(
-  style: object,
+  style: { [key: string]: any },
   name: string,
   value: any,
   cb?: (...rest: any[]) => void,

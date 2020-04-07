@@ -8,7 +8,7 @@ import { useContext } from 'react';
 
 describe('ThemeConfig', () => {
   it('Theme', () => {
-    const Test = props => {
+    const Test = (props: any) => {
       const context = useContext(ThemeContext);
       return (
         <div>

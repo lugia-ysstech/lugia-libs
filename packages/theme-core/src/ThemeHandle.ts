@@ -2,7 +2,13 @@
  * 组件样式处理增强
  * @flow
  */
-import { AnyFunction, OnLugia, ThemeConfig, ThemePart } from './type';
+import {
+  AnyFunction,
+  OnLugia,
+  ThemeComponentConfig,
+  ThemeConfig,
+  ThemePart,
+} from './type';
 import { getConfig, selectThemePart, ThemeComponentPrefix } from './utils';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
 import ThemeEventChannelHandle from './ThemeEventChannelHandle';
@@ -46,16 +52,16 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     defaultValue?: any,
   ) => any;
   getConfig: (
-    svThemeConfigTree: object,
-    contextConfig: object,
-    propsConfig: object,
-  ) => object;
+    svThemeConfigTree: ThemeComponentConfig,
+    contextConfig: ThemeComponentConfig,
+    propsConfig: ThemeComponentConfig,
+  ) => ThemeComponentConfig;
   deepMerge: (...objects: any[]) => any;
   selectThemePart: (
-    themePart: object,
+    themePart: ThemePart,
     index: number,
     total: number,
-  ) => ThemeConfig;
+  ) => ThemePart;
 
   constructor(
     props: object,
@@ -168,7 +174,7 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
   getPartOfThemeConfig = (
     partName: string,
     sign: boolean = false,
-  ): ThemeConfig => {
+  ): ThemePart => {
     function fillSign(result: any) {
       if (sign) {
         result.__sign = true;
@@ -192,7 +198,7 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
   packPartName(
     result: { [key: string]: any },
     partName: string,
-    fatherTheme: object = {},
+    fatherTheme: ThemeConfig = {},
     themePartName: string | null | undefined,
   ): ThemePart {
     const partNameResult: string[] = [];

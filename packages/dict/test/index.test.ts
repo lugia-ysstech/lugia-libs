@@ -6,7 +6,7 @@
 import { createDict, getDict, existDict } from '../src';
 
 describe('Dict', () => {
-  let dict;
+  let dict: any;
   beforeEach(() => {
     dict = createDict();
     dict.load('production', { bgColor: 'red', borderColor: 'yellow' });

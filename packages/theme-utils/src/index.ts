@@ -7,7 +7,9 @@
 import {
   BorderConfig,
   BorderDirection,
+  BorderDirectionWord,
   BorderRadiusDirection,
+  BorderRadiusDirectionWord,
   BorderRadiusType,
   BorderType,
   BoxShadowType,
@@ -20,7 +22,7 @@ import { existDict, getDict } from '@lugia/dict';
 const { px2Number } = units;
 const allBorderDirections: BorderDirection[] = ['l', 't', 'r', 'b'];
 
-const borderDirectionMap = {
+const borderDirectionMap: { [key in BorderDirection]: BorderDirectionWord } = {
   l: 'left',
   r: 'right',
   t: 'top',
@@ -55,30 +57,31 @@ export function getBorder(
   if (!directions || directions.length === 0) {
     return {};
   }
-  const result = {};
+  const result: BorderType = {};
   const theBorder = getDictValue(border);
 
-  return directions.reduce((outResult: object, direction: string) => {
-    direction = borderDirectionMap[direction];
-    if (outResult[direction]) {
+  return directions.reduce(
+    (outResult: BorderType, direction: BorderDirection) => {
+      const directionWord: BorderDirectionWord = borderDirectionMap[direction];
+      if (outResult[directionWord]) {
+        return outResult;
+      }
+      const { color, style, width } = theBorder;
+      const borderConfig: BorderConfig = {};
+      if ('color' in theBorder) {
+        borderConfig.color = getDictValue(color);
+      }
+      if ('style' in theBorder) {
+        borderConfig.style = style;
+      }
+      if ('width' in theBorder) {
+        borderConfig.width = width;
+      }
+      outResult[directionWord] = borderConfig;
       return outResult;
-    }
-    const { color, style, width } = theBorder;
-    const borderConfig: BorderConfig = {};
-    if ('color' in theBorder) {
-      borderConfig.color = getDictValue(color);
-    }
-    if ('style' in theBorder) {
-      borderConfig.style = style;
-    }
-    if ('width' in theBorder) {
-      borderConfig.width = width;
-    }
-
-    outResult[direction] = borderConfig;
-
-    return outResult;
-  }, result);
+    },
+    result,
+  );
 }
 
 const allBorderRadiusDirections: BorderRadiusDirection[] = [
@@ -88,10 +91,10 @@ const allBorderRadiusDirections: BorderRadiusDirection[] = [
   'br',
 ];
 interface BorderRadiusDirectionMap {
-  tl: string;
-  tr: string;
-  bl: string;
-  br: string;
+  tl: BorderRadiusDirectionWord;
+  tr: BorderRadiusDirectionWord;
+  bl: BorderRadiusDirectionWord;
+  br: BorderRadiusDirectionWord;
 }
 const borderRadiusDirectionMap: BorderRadiusDirectionMap = {
   tl: 'topLeft',
@@ -106,12 +109,12 @@ export function getBorderRadius(
 ): BorderRadiusType {
   const theRadius = getDictValue(radius);
   return directions.reduce(
-    (result: object, direction: BorderRadiusDirection) => {
+    (result: BorderRadiusType, direction: BorderRadiusDirection) => {
       const targetKey = borderRadiusDirectionMap[direction];
       result[targetKey] = theRadius;
       return result;
     },
-    {},
+    {} as BorderRadiusType,
   );
 }
 
@@ -129,7 +132,7 @@ export function getBoxShadow(shadowStr: string): object {
     shadow = shadow.substr(0, rgbIndex);
   }
 
-  const config = shadow.split(' ').filter(str => str !== '');
+  const config = shadow.split(' ').filter((str: string) => str !== '');
   let type = 'outset';
   if (config[0].toUpperCase() === 'INSET') {
     type = 'inset';

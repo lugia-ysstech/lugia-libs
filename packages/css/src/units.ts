@@ -5,6 +5,7 @@
  * @flow
  */
 import { Point, SizeStyle, SizeType, PointStyle } from './type';
+// @ts-ignore
 import Debug from 'debug/dist/debug';
 
 const debug = Debug('lugia-theme:font');
@@ -25,7 +26,7 @@ export function getFontSize(domNode: any, defaultFontSize: number): number {
   if (!domNode) {
     return defaultFontSize;
   }
-  return px2Number(getComputedStyle(domNode)['font-size']) || defaultFontSize;
+  return px2Number(getComputedStyle(domNode).fontSize) || defaultFontSize;
 }
 
 export function px2rem(px: number): number {

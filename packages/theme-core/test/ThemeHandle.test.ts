@@ -11,6 +11,7 @@ import ThemeHandle, {
 } from '../src/ThemeHandle';
 import { getConfig } from '../src';
 import { deepMerge, getAttributeFromObject } from '@lugia/object-utils';
+// @ts-ignore
 import { mockObject, VerifyOrder, VerifyOrderConfig } from '@lugia/jverify';
 
 describe('ThemeHandle.test.js', () => {
@@ -91,17 +92,19 @@ describe('ThemeHandle.test.js', () => {
     };
     getTheme.returned(theme);
 
-    const getAttributeFromObject = mock.mockFunction('getAttributeFromObject');
+    const getAttributeFromObjectMockFunction = mock.mockFunction(
+      'getAttributeFromObject',
+    );
     const svThree = {
       a: 1,
     };
-    getAttributeFromObject.returned(svThree);
-    getAttributeFromObject.returned(name);
+    getAttributeFromObjectMockFunction.returned(svThree);
+    getAttributeFromObjectMockFunction.returned(name);
 
     const displayName = 'displayName11';
     expect(target.getThemeByDisplayName(displayName)).toBe(name);
 
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.getTheme();
       handle.getAttributeFromObject(theme, 'svThemeConfigTree', {});
@@ -139,7 +142,7 @@ describe('ThemeHandle.test.js', () => {
       VerifyOrderConfig.create('handle', order),
     );
 
-    const getConfig = mock.mockFunction('getConfig');
+    const getConfigMockFunction = mock.mockFunction('getConfig');
     const getConfigResult = {
       [viewClass]: {
         a: 11,
@@ -151,7 +154,7 @@ describe('ThemeHandle.test.js', () => {
         c: 2,
       },
     };
-    getConfig.returned(getConfigResult);
+    getConfigMockFunction.returned(getConfigResult);
 
     expect(target.getTheme()).toEqual({
       a: 11,
@@ -160,7 +163,7 @@ describe('ThemeHandle.test.js', () => {
       svThemeConfigTree,
     });
 
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.getConfig(svThemeConfigTree, config, propsTheme);
     });
@@ -207,7 +210,7 @@ describe('ThemeHandle.test.js', () => {
       themeConfig: theme,
       ...internalThemeProps,
     });
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.getThemeState();
       handle.getTheme();
@@ -251,7 +254,7 @@ describe('ThemeHandle.test.js', () => {
     expect(target.getPartOfThemeConfig('lgx')).toEqual({
       __partName: 'lgx',
     });
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.getTheme();
       handle.getTheme();
@@ -287,7 +290,7 @@ describe('ThemeHandle.test.js', () => {
     expect(target.getPartOfThemeHocProps(partName)).toEqual(result);
     expect(result.__partName).toBe(partName);
 
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.getPartOfThemeConfig(partName);
       handle.createThemeHocProps(displayName + '_' + partName, targetTheme);
@@ -350,7 +353,7 @@ describe('ThemeHandle.test.js', () => {
 
     const selectThemePart = mock.mockFunction('selectThemePart');
     const selectThemePartRes = { selectThemePart: 'a' };
-    selectThemePart.mock((config, idx, count) => {
+    selectThemePart.mock((config: any, idx: number, count: number) => {
       expect(idx).toBe(5);
       expect(count).toBe(20);
       return selectThemePartRes;
@@ -366,7 +369,7 @@ describe('ThemeHandle.test.js', () => {
       ...intervalProps,
     });
 
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.getPartOfThemeConfig(partName);
       handle.getThemeState();
@@ -410,7 +413,7 @@ describe('ThemeHandle.test.js', () => {
     };
     const selectThemePart = mock.mockFunction('selectThemePart');
     const selectThemePartRes = { selectThemePart: 'a' };
-    selectThemePart.mock((config, idx, count) => {
+    selectThemePart.mock((config: any, idx: number, count: number) => {
       expect(config).toEqual(deepMerge(themeConfig, mergeConfig));
       expect(idx).toBe(5);
       expect(count).toBe(20);

@@ -29,14 +29,13 @@ export function limit(val: number, range: number[]) {
 
 export function limitToSet(val: number[], range: number[]): number[] {
   const { min, max } = getMinAndMax(range);
-  const obj = {};
-  const newVal = val.sort(sortable).filter(i => {
+  const obj: { [key: string]: number } = {};
+  return val.sort(sortable).filter(i => {
     if (!(i in obj)) {
       obj[i] = i;
       return i >= min && i <= max;
     }
   });
-  return newVal;
 }
 
 export function valueInRange(val: number, range: number[]): boolean {

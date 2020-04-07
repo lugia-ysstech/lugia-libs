@@ -13,7 +13,7 @@ function isNotEmptyString(nameSpace: any): boolean {
   return !nameSpace || typeof nameSpace !== 'string';
 }
 class Dict {
-  namespace2value: object;
+  namespace2value: { [namseSpaceName: string]: { [path: string]: any } };
   currentNameSpace: string;
 
   constructor() {
@@ -68,11 +68,12 @@ class Dict {
   }
 }
 
-const name2Dict = {};
+const name2Dict: { [dictName: string]: Dict } = {};
 
 export function existDict(name: string): boolean {
-  return name in name2Dict && name2Dict[name];
+  return name in name2Dict && !!name2Dict[name];
 }
+
 export function createDict(): Dict {
   return new Dict();
 }

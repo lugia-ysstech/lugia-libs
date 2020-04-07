@@ -5,8 +5,9 @@
  * @flow
  */
 import ThemeStateHandle from '../src/ThemeStateHandle';
-
+// @ts-ignore
 import { mockObject, VerifyOrder, VerifyOrderConfig } from '@lugia/jverify';
+import { AnyFunction } from '../src/type';
 
 async function delay(time: number) {
   return new Promise(res => {
@@ -30,7 +31,7 @@ describe('ThemeStateHandle.test.js', () => {
     const themeStateHandle = new ThemeStateHandle(props, 'Widget', themeState);
 
     const helloPromise = new Promise(res => {
-      themeStateHandle.on('hello', paramVal => {
+      themeStateHandle.on('hello', (paramVal: any) => {
         res(paramVal);
       });
     });
@@ -45,13 +46,13 @@ describe('ThemeStateHandle.test.js', () => {
     const props = {
       lugiaConsumers: [
         {
-          __consumer(theName, func) {
+          __consumer(theName: string, func: AnyFunction) {
             consumers.push(theName);
             consumers.push(func);
           },
         },
         {
-          __consumer(theName, func) {
+          __consumer(theName: string, func: AnyFunction) {
             consumers.push(theName);
             consumers.push(func);
           },
@@ -62,7 +63,7 @@ describe('ThemeStateHandle.test.js', () => {
 
     let cb;
     const helloPromise = new Promise(res => {
-      cb = paramVal => {
+      cb = (paramVal: any) => {
         res(paramVal);
       };
       themeStateHandle.on('hello', cb);
@@ -78,7 +79,7 @@ describe('ThemeStateHandle.test.js', () => {
     const consumers: any[] = [];
     const props = {
       lugiaConsumers: {
-        __consumer(theName, func) {
+        __consumer(theName: string, func: AnyFunction) {
           consumers.push(theName);
           consumers.push(func);
         },
@@ -88,7 +89,7 @@ describe('ThemeStateHandle.test.js', () => {
 
     let cb;
     const helloPromise = new Promise(res => {
-      cb = paramVal => {
+      cb = (paramVal: any) => {
         res(paramVal);
       };
       themeStateHandle.on('hello', cb);
@@ -106,12 +107,12 @@ describe('ThemeStateHandle.test.js', () => {
     const themeStateHandle = new ThemeStateHandle(props, 'Widget', themeState);
 
     const helloPromise = new Promise(res => {
-      themeStateHandle.on('hello', paramVal => {
+      themeStateHandle.on('hello', (paramVal: any) => {
         res(paramVal.type + 'a');
       });
     });
     const helloBPromise = new Promise(res => {
-      themeStateHandle.on('hello', paramVal => {
+      themeStateHandle.on('hello', (paramVal: any) => {
         res(paramVal.i + 'b');
       });
     });
@@ -134,7 +135,7 @@ describe('ThemeStateHandle.test.js', () => {
     const themeStateHandle = new ThemeStateHandle(props, 'Widget', themeState);
 
     const helloPromise = new Promise(res => {
-      themeStateHandle.on('hello', paramVal => {
+      themeStateHandle.on('hello', (paramVal: any) => {
         res(paramVal);
       });
     });
@@ -211,7 +212,7 @@ describe('ThemeStateHandle.test.js', () => {
     toggleActiveState.returned(true);
     const rest = ['a', 111, 'b'];
     target.onMouseDown(...rest);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.toggleActiveState(true);
     });
@@ -243,7 +244,7 @@ describe('ThemeStateHandle.test.js', () => {
     toggleActiveState.returned(true);
     const rest = ['a', 111, 'b'];
     target.onMouseDown(...rest);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle, props: targetProps } = param;
       handle.toggleActiveState(true);
       targetProps.onMouseDown(...rest);
@@ -266,7 +267,7 @@ describe('ThemeStateHandle.test.js', () => {
     toggleActiveState.returned(true);
     const rest = ['a', 111, 'b'];
     target.onMouseUp(...rest);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.toggleActiveState(false);
     });
@@ -298,7 +299,7 @@ describe('ThemeStateHandle.test.js', () => {
     toggleActiveState.returned(true);
     const rest = ['a', 111, 'b'];
     target.onMouseUp(...rest);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle, props: targetProps } = param;
       handle.toggleActiveState(false);
       targetProps.onMouseUp(...rest);
@@ -321,7 +322,7 @@ describe('ThemeStateHandle.test.js', () => {
     toggleHoverState.returned(true);
     const rest = ['a', 111, 'b'];
     target.onMouseEnter(...rest);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.toggleHoverState(true);
     });
@@ -353,7 +354,7 @@ describe('ThemeStateHandle.test.js', () => {
     toggleHoverState.returned(true);
     const rest = ['a', 111, 'b'];
     target.onMouseEnter(...rest);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle, props: targetProps } = param;
       handle.toggleHoverState(true);
       targetProps.onMouseEnter(...rest);
@@ -376,7 +377,7 @@ describe('ThemeStateHandle.test.js', () => {
     toggleHoverState.returned(true);
     const rest = ['a', 111, 'b'];
     target.onMouseLeave(...rest);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.toggleHoverState(false);
     });
@@ -408,7 +409,7 @@ describe('ThemeStateHandle.test.js', () => {
     toggleHoverState.returned(true);
     const rest = ['a', 111, 'b'];
     target.onMouseLeave(...rest);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle, props: targetProps } = param;
       handle.toggleHoverState(false);
       targetProps.onMouseLeave(...rest);
@@ -432,7 +433,7 @@ describe('ThemeStateHandle.test.js', () => {
     const rest = ['a', 111, 'b'];
     target.onFocus(...rest);
     await delay(1);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.toggleFocusState(true);
     });
@@ -464,7 +465,7 @@ describe('ThemeStateHandle.test.js', () => {
     const rest = ['a', 111, 'b'];
     target.onFocus(...rest);
     await delay(1);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle, props: targetProps } = param;
       targetProps.onFocus(...rest);
       handle.toggleFocusState(true);
@@ -488,7 +489,7 @@ describe('ThemeStateHandle.test.js', () => {
     const rest = ['a', 111, 'b'];
     target.onBlur(...rest);
     await delay(1);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.toggleFocusState(false);
     });
@@ -520,7 +521,7 @@ describe('ThemeStateHandle.test.js', () => {
     const rest = ['a', 111, 'b'];
     target.onBlur(...rest);
     await delay(1);
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle, props: targetProps } = param;
       handle.toggleFocusState(false);
       targetProps.onBlur(...rest);
@@ -545,7 +546,7 @@ describe('ThemeStateHandle.test.js', () => {
     expect(target.focus).toBeTruthy();
     target.toggleFocusState(false);
     expect(target.focus).toBeFalsy();
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.emit('focus', { focus: true });
       handle.emit('focus', { focus: false });
@@ -570,7 +571,7 @@ describe('ThemeStateHandle.test.js', () => {
     target.toggleFocusState(true);
     target.focus = false;
     target.toggleFocusState(false);
-    order.verify(param => {});
+    order.verify((param: any) => {});
   });
 
   it('toggleFocusState disabled is true', () => {
@@ -595,7 +596,7 @@ describe('ThemeStateHandle.test.js', () => {
     target.toggleFocusState(false);
     target.toggleFocusState(false);
     target.toggleFocusState(false);
-    order.verify(param => {});
+    order.verify((param: any) => {});
   });
 
   it('toggleActiveState', () => {
@@ -616,7 +617,7 @@ describe('ThemeStateHandle.test.js', () => {
     expect(target.active).toBeTruthy();
     target.toggleActiveState(false);
     expect(target.active).toBeFalsy();
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.emit('active', { active: true });
       handle.emit('active', { active: false });
@@ -641,7 +642,7 @@ describe('ThemeStateHandle.test.js', () => {
     target.toggleActiveState(true);
     target.active = false;
     target.toggleActiveState(false);
-    order.verify(param => {});
+    order.verify((param: any) => {});
   });
 
   it('toggleActiveState disabled is true', () => {
@@ -666,7 +667,7 @@ describe('ThemeStateHandle.test.js', () => {
     target.toggleActiveState(false);
     target.toggleActiveState(false);
     target.toggleActiveState(false);
-    order.verify(param => {});
+    order.verify((param: any) => {});
   });
 
   it('toggleHoverState', () => {
@@ -687,7 +688,7 @@ describe('ThemeStateHandle.test.js', () => {
     expect(target.hover).toBeTruthy();
     target.toggleHoverState(false);
     expect(target.hover).toBeFalsy();
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.emit('hover', { hover: true });
       handle.emit('hover', { hover: false });
@@ -712,7 +713,7 @@ describe('ThemeStateHandle.test.js', () => {
     target.toggleHoverState(true);
     target.hover = false;
     target.toggleHoverState(false);
-    order.verify(param => {});
+    order.verify((param: any) => {});
   });
 
   it('toggleHoverState disabled is true', () => {
@@ -737,6 +738,6 @@ describe('ThemeStateHandle.test.js', () => {
     target.toggleHoverState(false);
     target.toggleHoverState(false);
     target.toggleHoverState(false);
-    order.verify(param => {});
+    order.verify((param: any) => {});
   });
 });

@@ -22,7 +22,7 @@ import {
 } from './utils';
 import ThemeHandle, { packDisplayName } from './ThemeHandle';
 import ThemeStateHandle from './ThemeStateHandle';
-import * as React from 'react';
+import React from 'react';
 
 export const ThemeContext: any = React.createContext({});
 export {

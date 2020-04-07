@@ -41,10 +41,10 @@ describe('Listener', () => {
   });
 
   it('on hello', async () => {
-    let cb = data => {};
+    let cb = (data: any) => {};
 
     const callPromise = new Promise(res => {
-      cb = data => {
+      cb = (data: any) => {
         res(data);
       };
     });
@@ -59,10 +59,10 @@ describe('Listener', () => {
   });
 
   it('on click', async () => {
-    let cb = data => {};
+    let cb = (data: any) => {};
 
     const callPromise = new Promise(res => {
-      cb = data => {
+      cb = (data: any) => {
         res(data);
       };
     });
@@ -77,11 +77,11 @@ describe('Listener', () => {
   });
 
   it('delegate', async () => {
-    let cb = data => {};
+    let cb = (data: any) => {};
 
-    const callPromise = new Promise(res => {
-      cb = data => {
-        res(data);
+    const callPromise = new Promise((resolve: (data: any) => void) => {
+      cb = (data: any) => {
+        resolve(data);
       };
     });
     const mouseEventObj = {

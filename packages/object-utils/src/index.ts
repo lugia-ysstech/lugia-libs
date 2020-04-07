@@ -10,8 +10,10 @@ import { DeepMergeOption } from './type';
 
 import isPlainObject from 'is-plain-object';
 
+type AnyObject = { [key: string]: any };
+
 export function getAttributeFromObject(
-  object: object,
+  object: AnyObject,
   attribute: string,
   defaultValue?: any,
 ) {
@@ -26,21 +28,23 @@ export function getKeyfromIndex(
   expKey: string,
 ): string {
   let newKey = '';
-  data.forEach((v, i) => {
+  data.forEach((item: AnyObject, i) => {
     if (i === index) {
       newKey =
-        v[expKey] !== null && v[expKey] !== undefined ? v[expKey] : '_key_' + i;
+        item[expKey] !== null && item[expKey] !== undefined
+          ? item[expKey]
+          : '_key_' + i;
     }
   });
   return newKey;
 }
 
 export function getIndexfromKey(
-  data: object[],
+  data: AnyObject[],
   keyName: string,
   keyValue: string,
 ): number {
-  return data.findIndex(v => v[keyName] === keyValue);
+  return data.findIndex((v: AnyObject) => v[keyName] === keyValue);
 }
 
 const overwriteMerge = (
@@ -65,16 +69,19 @@ export function deepMergeForArrayMerge<T>(...objects: T[]): Partial<T> {
     return {};
   }
 
-  return objects.reduce((pre: T, next: Partial<T>) => {
-    next = next || {};
-    return merge(pre, next);
-  }, {});
+  return objects.reduce(
+    (pre: T, next: Partial<T>) => {
+      next = next || {};
+      return merge(pre, next);
+    },
+    {} as T,
+  );
 }
 
 export function moveToTargetIfKeyIsInSource(
   key: string,
-  source: object,
-  target: object,
+  source: AnyObject,
+  target: AnyObject,
 ) {
   if (key in source) {
     target[key] = source[key];
@@ -145,7 +152,7 @@ export function getAttributeValue(obj: object, path: string[]): any {
 }
 
 export function setAttributeValue(
-  outResult: object,
+  outResult: AnyObject,
   paths: string[],
   val: any,
 ): void {
@@ -187,7 +194,7 @@ export function setAttributeValue(
   father[valKey] = val;
 }
 
-export function packPathObject(object: object): object {
+export function packPathObject(object: AnyObject): object {
   const keys = Object.keys(object).sort((a, b) => a.length - b.length);
   const outResult = {};
   keys.forEach(key => {
@@ -203,7 +210,7 @@ export function packObject(path: string[], value: any): object {
     return {};
   }
 
-  const result = {};
+  const result: AnyObject = {};
   let current = result;
 
   const lastIndex = path.length - 1;
@@ -218,16 +225,16 @@ export function packObject(path: string[], value: any): object {
   return result;
 }
 
-export function object2pathObject(obj: object): object {
+export function object2pathObject(obj: object): AnyObject {
   return object2pathObjectHelper(obj, '');
 }
 
-function object2pathObjectHelper(obj: object, father: string): object {
+function object2pathObjectHelper(obj: AnyObject, father: string): AnyObject {
   if (!isPlainObject(obj)) {
     return obj;
   }
 
-  let res = {};
+  let res: AnyObject = {};
 
   Object.keys(obj).forEach(key => {
     const val = obj[key];
@@ -242,7 +249,7 @@ function object2pathObjectHelper(obj: object, father: string): object {
 }
 
 export function diffABWhenAttrIfExist(objA: object, objB: object): string[] {
-  const res = [];
+  const res: string[] = [];
   if (!objA || !objB) {
     return res;
   }
@@ -253,14 +260,14 @@ export function diffABWhenAttrIfExist(objA: object, objB: object): string[] {
   const pathsB = Object.keys(pathObjectsB);
   const minPath = pathsA.length > pathsB.length ? pathsA : pathsB;
 
-  function isNotEqualSimple(key) {
+  function isNotEqualSimple(key: string) {
     const path = key.split('.');
     const valA = pathObjectsA[key] || getAttributeValue(objA, path);
     const valB = pathObjectsB[key] || getAttributeValue(objB, path);
     return valA !== undefined && valB !== undefined && valA !== valB;
   }
 
-  const resObj = {};
+  const resObj: AnyObject = {};
   minPath.forEach(key => {
     if (isNotEqualSimple(key)) {
       resObj[key] = true;

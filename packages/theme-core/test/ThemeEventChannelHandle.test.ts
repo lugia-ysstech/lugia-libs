@@ -5,7 +5,7 @@
  * @flow
  */
 import ThemeEventChannelHandle from '../src/ThemeEventChannelHandle';
-
+// @ts-ignore
 import { mockObject, VerifyOrder, VerifyOrderConfig } from '@lugia/jverify';
 
 describe('ThemeEventChannelHandle.test.js', () => {
@@ -52,7 +52,7 @@ describe('ThemeEventChannelHandle.test.js', () => {
       expect(res.fatherEmit('aaa', data)).toBeFalsy();
     }
 
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.getExistEvent(eventNames);
       handle.emit('hover', data);
@@ -89,7 +89,7 @@ describe('ThemeEventChannelHandle.test.js', () => {
       expect(res.fatherOn('aaa', cb)).toBeUndefined();
     }
 
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.getExistEvent(eventNames);
       handle.on('hover', cb);
@@ -162,7 +162,7 @@ describe('ThemeEventChannelHandle.test.js', () => {
     on.returned(true);
 
     const createParseEventName = mock.mockFunction('createParseEventName');
-    createParseEventName.forever(name => {
+    createParseEventName.forever((name: string) => {
       return 'abc' + name;
     });
 
@@ -182,7 +182,7 @@ describe('ThemeEventChannelHandle.test.js', () => {
       expect(consumer.__consumer('sdfsafsa', cb)).toBeFalsy();
     }
 
-    order.verify(param => {
+    order.verify((param: any) => {
       const { handle } = param;
       handle.getExistEvent(eventNames);
       handle.createParseEventName();
@@ -205,10 +205,10 @@ describe('ThemeEventChannelHandle.test.js', () => {
     expect(consumer).not.toBeUndefined();
 
     if (consumer) {
-      consumer.__consumer('hover', param => {
+      consumer.__consumer('hover', (param: any) => {
         params.push(param);
       });
-      consumer.__consumer('hover', param => {
+      consumer.__consumer('hover', (param: any) => {
         params.push(param);
       });
     }

@@ -6,7 +6,7 @@
  */
 
 import { CSSConfig, CSSMeta } from '../type';
-import styled from 'styled-components';
+import styled, { ThemedStyledFunction } from 'styled-components';
 
 export function filterRepeatCSSConfigSelectNames(outCSSConfig: CSSConfig) {
   if (!outCSSConfig) {
@@ -34,7 +34,7 @@ export function filterRepeatSelectNames(selNames: Names[]): Names[] {
   if (!selNames) {
     return selNames;
   }
-  const exist = {};
+  const exist: { [key: string]: boolean } = {};
   return selNames.filter(path => {
     const key = typeof path === 'string' ? path : path.join('.');
     const isExist = !exist[key];
@@ -43,9 +43,14 @@ export function filterRepeatSelectNames(selNames: Names[]): Names[] {
   });
 }
 
-export function getStyledComponent(cssConfig: CSSConfig): any {
+export function getStyledComponent(
+  cssConfig: CSSConfig,
+): ThemedStyledFunction<any, any> {
   const { tag = 'span', extend } = cssConfig;
-  const styledElement = extend ? styled(extend) : styled[tag];
+  if (extend) {
+    return styled(extend);
+  }
+  const styledElement = styled[tag];
   if (!styledElement) {
     throw new Error(`Not support tag: ${tag}`);
   }

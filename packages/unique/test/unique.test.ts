@@ -6,6 +6,7 @@
  */
 
 import Unique, { now, switchProduction } from '../src';
+// @ts-ignore
 import { mockObject, VerifyOrder, VerifyOrderConfig } from '@lugia/jverify';
 
 class Exist {
@@ -44,7 +45,7 @@ describe('Unique', () => {
 
     const params: any[] = [];
     let i = 0;
-    mock.mockFunction('generateId').mock((...paramVal) => {
+    mock.mockFunction('generateId').mock((...paramVal: any[]) => {
       params.push(paramVal);
       i++;
     });
@@ -71,7 +72,7 @@ describe('Unique', () => {
 
     const params: any[] = [];
     let i = 0;
-    mock.mockFunction('generateId').mock((...paramVal) => {
+    mock.mockFunction('generateId').mock((...paramVal: any[]) => {
       params.push(paramVal);
       i++;
     });
@@ -106,7 +107,7 @@ describe('Unique', () => {
     expect(unique.getNext()).toBe('hello1');
     expect(unique.getNext()).toBe('hello2');
     expect(unique.getLastIndex()).toBe(3);
-    order.verify(param => {});
+    order.verify(() => {});
     mock.resetAll();
   });
   it('getNext existCheck is Open', () => {
@@ -122,7 +123,7 @@ describe('Unique', () => {
     expect(unique.getNext()).toBe('hello1');
     expect(unique.getNext()).toBe('hello2');
     expect(unique.getLastIndex()).toBe(3);
-    order.verify(paramVal => {
+    order.verify((paramVal: any) => {
       const { exist: existVal } = paramVal;
       existVal.isExist('hello0');
       existVal.addExist('hello0');

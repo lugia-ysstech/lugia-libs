@@ -20,7 +20,7 @@ export default class IndexDB extends Listener<any> implements Store {
   indexOption: IndexDBIndexOption;
   version: number;
   dataBaseName: string;
-  tableExist: object;
+  tableExist: { [tableName: string]: boolean };
   tableNames: string[];
 
   constructor(indexedDB: any, option: IndexDBOption) {
@@ -68,7 +68,7 @@ export default class IndexDB extends Listener<any> implements Store {
       console.error(`打开数据库报错 [${dataBaseName}@${version}]`);
     };
 
-    request.onsuccess = event => {
+    request.onsuccess = (event: any) => {
       this.updateDb(event);
       const { resetDataAfterConnect = {} } = option;
 
@@ -85,7 +85,7 @@ export default class IndexDB extends Listener<any> implements Store {
       });
     };
 
-    request.onupgradeneeded = event => {
+    request.onupgradeneeded = (event: any) => {
       this.updateDb(event);
       tableNames.forEach((tableName: string) => {
         this.createTable(tableName);
@@ -428,7 +428,7 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async filterByStore(
-    store: object,
+    store: any,
     tableName: string,
     cb: (item: any) => boolean,
     option: { valueField: string; funcName: string },
@@ -440,7 +440,7 @@ export default class IndexDB extends Listener<any> implements Store {
     const request = store[funcName]();
     const result: any[] = [];
     return new Promise(res => {
-      request.onsuccess = event => {
+      request.onsuccess = (event: any) => {
         const cursor = event.target.result;
         if (cursor) {
           const { [valueField]: value } = cursor;

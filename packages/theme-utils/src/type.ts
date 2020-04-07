@@ -14,6 +14,12 @@ export type BorderRadiusType = {
   bottomLeft?: number;
   bottomRight?: number;
 };
+export type BorderDirectionWord = 'left' | 'right' | 'top' | 'bottom';
+export type BorderRadiusDirectionWord =
+  | 'topLeft'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomRight';
 
 export type BorderType = {
   top?: BorderInnerType;

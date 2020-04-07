@@ -97,7 +97,7 @@ describe('theme-css-hoc/extractor/cssconfig', () => {
 
     expect(() => {
       getStyledComponent({
-        tag: 'lgx',
+        tag: 'lgx' as any,
         className: 'hello',
       });
     }).toThrowError('Not support tag: lgx');
