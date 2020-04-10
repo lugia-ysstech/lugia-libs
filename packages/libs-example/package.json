@@ -1,13 +1,13 @@
 {
   "name": "@lugia/libs-example",
-  "version": "1.0.93-alpha.1",
+  "version": "1.0.93",
   "dependencies": {
-    "@lugia/dict": "^1.0.4-alpha.0",
-    "@lugia/indexdb": "^1.0.17-alpha.1",
-    "@lugia/theme-config": "^1.1.3-alpha.1",
-    "@lugia/theme-css-hoc": "^1.1.8-alpha.1",
-    "@lugia/theme-hoc": "^1.1.3-alpha.1",
-    "@lugia/theme-utils": "^1.1.6-alpha.1",
+    "@lugia/dict": "^1.0.4",
+    "@lugia/indexdb": "^1.0.17",
+    "@lugia/theme-config": "^1.1.3",
+    "@lugia/theme-css-hoc": "^1.1.8",
+    "@lugia/theme-hoc": "^1.1.3",
+    "@lugia/theme-utils": "^1.1.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
