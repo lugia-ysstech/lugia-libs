@@ -53,10 +53,22 @@ function buildPkg(pkg, minify = false) {
     return;
   }
   rimraf.sync(join(pkgPath, 'lib'));
-  require('child_process')
-    .spawnSync('tsc', ['-p', join(cwd, packagesDirName, pkg, 'tsconfig.json')]);
-    console.log(chalk['green'](`[Build] ${pkg}`));
-
+  try {
+    const work = require('child_process')
+      .spawn(process.platform === 'win32' ? 'tsc.cmd' : 'tsc', [
+        '-p',
+        join(cwd, packagesDirName, pkg, 'tsconfig.json'),
+      ])
+      .on('error', e => {
+        console.log(chalk.red('Compiled failed.'));
+        console.log(chalk['red'](`[BuildError] ${pkg}`));
+      })
+      .on('close', () => {
+        console.log(chalk['green'](`[ReBuild] ${pkg}`));
+      });
+  } catch (e) {
+    console.log(chalk.red('Compiled failed.'));
+  }
 }
 
 function watch(pkg) {
@@ -72,7 +84,10 @@ function watch(pkg) {
     );
     try {
       require('child_process')
-        .spawn('tsc', ['-p', join(cwd, packagesDirName, pkg, 'tsconfig.json')])
+        .spawn(process.platform === 'win32' ? 'tsc.cmd' : 'tsc', [
+          '-p',
+          join(cwd, packagesDirName, pkg, 'tsconfig.json'),
+        ])
         .on('close', () => {
           console.log(chalk['green'](`[ReBuild] ${pkg}`));
         });
