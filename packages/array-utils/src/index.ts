@@ -61,3 +61,37 @@ export function findIndex<T>(
   }
   return index;
 }
+
+type AnyObject = { [key: string]: any };
+
+export function mapValue2ArrayByField(
+  target: AnyObject,
+  fieldName: string,
+): AnyObject {
+  if (!target) {
+    return target;
+  }
+  if (fieldName === null || fieldName === undefined) {
+    return target;
+  }
+  const result = { ...target };
+  const targetItem = result[fieldName];
+  if (targetItem) {
+    result[fieldName] = mapValue2Array(targetItem);
+  }
+  return result;
+}
+
+export function mapValue2Array(target: AnyObject): AnyObject {
+  if (!target || typeof target !== 'object') {
+    return target;
+  }
+  const result = { ...target };
+  Object.keys(target).forEach((key: string) => {
+    const value = target[key];
+    if (!Array.isArray(value)) {
+      result[key] = [value];
+    }
+  });
+  return result;
+}

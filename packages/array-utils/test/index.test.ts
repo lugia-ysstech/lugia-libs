@@ -4,7 +4,13 @@
  * create by zenjava@lugia  2020.04.24
  */
 
-import { findIndex, sliceLeft, sliceRight } from '../src';
+import {
+  findIndex,
+  mapValue2Array,
+  mapValue2ArrayByField,
+  sliceLeft,
+  sliceRight,
+} from '../src';
 
 type AnyObject = { [key: string]: any };
 
@@ -74,5 +80,69 @@ describe('array-utils', () => {
     expect(sliceRight(objects, { id: 2 })).toEqual([]);
     expect(sliceRight(objects, objects[1])).toEqual([objects[2]]);
     expect(sliceRight(objects, objects[1])[0]).toBe(objects[2]);
+  });
+
+  it('mapValue2Array', () => {
+    expect(mapValue2Array({ name: 'hello', age: 15 })).toEqual({
+      name: ['hello'],
+      age: [15],
+    });
+    const obj = {
+      name: ['hello'],
+      age: [15],
+    };
+    expect(mapValue2Array(obj)).toEqual(obj);
+
+    expect(
+      mapValue2Array({ name: 'hello', age: 15, id: null, bo: true }),
+    ).toEqual({
+      name: ['hello'],
+      id: [null],
+      age: [15],
+      bo: [true],
+    });
+
+    expect(mapValue2Array(null as any)).toEqual(null);
+  });
+
+  it('mapValue2ArrayByField', () => {
+    expect(mapValue2ArrayByField(null as any, '')).toEqual(null);
+
+    const data = {
+      name: ['hello'],
+      age: [15],
+    };
+    const param = { obj: 'hello', data };
+    expect(mapValue2ArrayByField(param, null as any)).toBe(param);
+    expect(mapValue2ArrayByField({ obj: 'hello', data }, '')).toEqual({
+      obj: 'hello',
+      data,
+    });
+
+    expect(
+      mapValue2ArrayByField(
+        { obj: 'hello', data: { name: 'hello', age: 15 } },
+        'data',
+      ),
+    ).toEqual({
+      obj: 'hello',
+      data: {
+        name: ['hello'],
+        age: [15],
+      },
+    });
+
+    expect(
+      mapValue2ArrayByField(
+        { obj: 'hello', data: { name: 'hello', age: 15 } },
+        'obj',
+      ),
+    ).toEqual({
+      obj: 'hello',
+      data: {
+        name: 'hello',
+        age: 15,
+      },
+    });
   });
 });
