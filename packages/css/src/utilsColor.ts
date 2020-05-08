@@ -55,7 +55,7 @@ export function colorRgb(sHex: string): number[] {
   return [255, 255, 255];
 }
 
-function rgb2hsb(
+export function rgb2hsb(
   rgbR: number = 0,
   rgbG: number = 0,
   rgbB: number = 0,
@@ -67,7 +67,9 @@ function rgb2hsb(
   const hsbB = max / 255.0 - reduceB;
   const hsbS = (max === 0 ? 0 : (max - min) / max) - reduceS;
   let hsbH = 0;
-  const publicFormula = ((rgbG - rgbB) * 60) / (max - min);
+  const molecular = (rgbG - rgbB) * 60;
+  const denominator = max - min; // 分母不能为0
+  const publicFormula = denominator === 0 ? 0 : molecular / denominator;
   if (max === rgbR) {
     hsbH = rgbG >= rgbB ? publicFormula : publicFormula + 360;
   } else if (max === rgbG) {
@@ -75,7 +77,6 @@ function rgb2hsb(
   } else if (max === rgbB) {
     hsbH = ((rgbR - rgbG) * 60) / (max - min) + 240;
   }
-
   return [hsbH, hsbS, hsbB];
 }
 
