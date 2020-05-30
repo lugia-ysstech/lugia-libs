@@ -18,8 +18,10 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "@lugia/css": "^1.0.24",
-    "@lugia/dict": "^1.0.4",
     "tslib": "^1.11.1"
+  },
+  "devDependencies": {
+    "@lugia/dict": "^1.0.4"
   },
   "files": [
     "lib",
