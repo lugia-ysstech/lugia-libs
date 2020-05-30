@@ -89,9 +89,17 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     const { config = {}, svThemeConfigTree = {} } = this.context;
     const { viewClass, theme } = this.props;
     const result = this.getConfig(svThemeConfigTree, config, theme);
-    const viewClassResult = result[viewClass];
+    const clazzNames = viewClass ? viewClass.split(' ') : [];
+    let viewClassResult = {};
+
+    for (const clazzName of clazzNames) {
+      const viewConfig = result[clazzName];
+      if (viewConfig) {
+        viewClassResult = deepMerge(viewClassResult, viewConfig);
+      }
+    }
     const widgetNameResult = result[this.widgetName];
-    const currConfig = { ...widgetNameResult, ...viewClassResult };
+    const currConfig = deepMerge(widgetNameResult, viewClassResult);
     return Object.assign({}, { ...currConfig }, { svThemeConfigTree });
   };
 

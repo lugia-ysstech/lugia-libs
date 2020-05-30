@@ -368,10 +368,125 @@ describe('ThemeProvider', () => {
     );
 
     expect(getTheme(target, HelloMyButton)).toEqual({
-      ...viewClassConfig,
-      [svThemeConfigTree]: {
-        [HelloMyButtonTheme]: btnConfig,
-        [viewClass]: viewClassConfig,
+      Container: {
+        normal: {
+          color: 'viewClass',
+          opacity: 1,
+        },
+      },
+      svThemeConfigTree: {
+        HelloMyButtonTheme: {
+          Container: {
+            normal: {
+              opacity: 1,
+            },
+          },
+        },
+        ligx: {
+          Container: {
+            normal: {
+              color: 'viewClass',
+            },
+          },
+        },
+      },
+    });
+  });
+
+  it('config: { HelloMyButton : {}, viewClass : {}} has two viewClass', () => {
+    const viewClass = 'ligx';
+    const viewClassB = 'kxy';
+    const viewClassC = 'rbh';
+
+    const viewClassConfig = { Container: { normal: { color: 'viewClass' } } };
+    const btnConfig = { Container: { normal: { opacity: 1 } } };
+
+    const config = {
+      [viewClass]: viewClassConfig,
+      [viewClassB]: {
+        Go: {
+          normal: {
+            width: 15,
+            height: 50,
+          },
+        },
+      },
+      [viewClassC]: {
+        Container: { normal: { opacity: 15 } },
+        Go: {
+          normal: {
+            height: 150,
+          },
+        },
+        To: {
+          normal: {
+            height: 20,
+          },
+        },
+      },
+      [HelloMyButtonTheme]: btnConfig,
+    };
+
+    const target = mount(
+      <Theme config={config}>
+        <Button viewClass={`${viewClass} ${viewClassB} ${viewClassC}`} />
+      </Theme>,
+    );
+
+    expect(getTheme(target, HelloMyButton)).toEqual({
+      Container: {
+        normal: {
+          color: 'viewClass',
+          opacity: 15,
+        },
+      },
+      Go: {
+        normal: {
+          width: 15,
+          height: 150,
+        },
+      },
+      To: {
+        normal: {
+          height: 20,
+        },
+      },
+      svThemeConfigTree: {
+        HelloMyButtonTheme: {
+          Container: {
+            normal: {
+              opacity: 1,
+            },
+          },
+        },
+        kxy: {
+          Go: {
+            normal: {
+              width: 15,
+              height: 50,
+            },
+          },
+        },
+        rbh: {
+          Container: { normal: { opacity: 15 } },
+          Go: {
+            normal: {
+              height: 150,
+            },
+          },
+          To: {
+            normal: {
+              height: 20,
+            },
+          },
+        },
+        ligx: {
+          Container: {
+            normal: {
+              color: 'viewClass',
+            },
+          },
+        },
       },
     });
   });

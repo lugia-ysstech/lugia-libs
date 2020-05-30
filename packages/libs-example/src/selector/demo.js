@@ -62,8 +62,7 @@ const config = {
         lineHeight: 50,
         fontSize: 22,
         margin: {
-          left: 15,
-          right: 'a',
+          left: 5,
         },
         padding: 5,
         background: {
@@ -88,6 +87,25 @@ const config = {
           background: {
             color: 'yellow',
           },
+        },
+      },
+    },
+  },
+  viewClass: {
+    Block: {
+      normal: {
+        margin: {
+          right: 15,
+        },
+      },
+    },
+  },
+  viewClassB: {
+    Block: {
+      normal: {
+        margin: {
+          top: 100,
+          right: 32,
         },
       },
     },
@@ -140,6 +158,7 @@ export default () => {
     installState ? (
       <Theme config={theme}>
         <Selector
+          viewClass={'viewClass viewClassB'}
           widgetId={'select'}
           innerRefForDesign={design}
           innerRef={current => {
