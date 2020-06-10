@@ -198,6 +198,10 @@ export function themeMeta2Style(theme: ThemeMeta): object {
     lineHeight,
     borderRadius,
     overflow,
+    maxWidth,
+    minWidth,
+    minHeight,
+    maxHeight,
   } = theme;
   const { background } = theme;
   const style = {};
@@ -206,6 +210,11 @@ export function themeMeta2Style(theme: ThemeMeta): object {
 
   setObjectValueIfValueExist(style, 'width', width, getSizeFromTheme);
   setObjectValueIfValueExist(style, 'height', height, getSizeFromTheme);
+
+  setObjectValueIfValueExist(style, 'minWidth', minWidth, getSizeFromTheme);
+  setObjectValueIfValueExist(style, 'maxWidth', maxWidth, getSizeFromTheme);
+  setObjectValueIfValueExist(style, 'minHeight', minHeight, getSizeFromTheme);
+  setObjectValueIfValueExist(style, 'maxHeight', maxHeight, getSizeFromTheme);
 
   setObjectValueIfValueExist(style, 'color', color, getStringStyleFromTheme);
   setObjectValueIfValueExist(

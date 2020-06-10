@@ -103,6 +103,10 @@ export type SimpleThemeMeta = {
   visibility?: VisibilityType;
   cursor?: CursorType;
   overflow?: OverFlowType;
+  maxWidth?: number | string;
+  minWidth?: number | string;
+  maxHeight?: number | string;
+  minHeight?: number | string;
 };
 export type DynamicThemeMega = {
   getCSS?: (theme: ThemeMeta, themeProps: CSSThemeProps) => string;
