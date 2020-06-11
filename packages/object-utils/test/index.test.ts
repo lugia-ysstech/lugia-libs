@@ -3,6 +3,7 @@ import {
   deepMerge,
   deepMergeAnB,
   deepMergeForArrayMerge,
+  deepMergeOption,
   diffABWhenAttrIfExist,
   getAttributeFromObject,
   getAttributeValue,
@@ -111,6 +112,24 @@ describe('object-utils', () => {
     ).toEqual({
       title: 'world',
       card: { sex: 'man', score: { yw: 15, sx: 13, hx: 100 }, id: 181 },
+    });
+  });
+  it('deepMergeOption', () => {
+    expect(
+      deepMergeOption([{ a: [1, 2] }, { a: [3, 4], name: 'hello' }]),
+    ).toEqual({
+      a: [3, 4],
+      name: 'hello',
+    });
+    expect(
+      deepMergeOption([{ a: [1, 2] }, { a: [3, 4], name: 'hello' }], {
+        arrayMerge: (source: any[], dest: any[]): any[] => {
+          return [...source, ...dest];
+        },
+      }),
+    ).toEqual({
+      a: [1, 2, 3, 4],
+      name: 'hello',
     });
   });
 

@@ -47,20 +47,26 @@ export function getIndexfromKey(
   return data.findIndex((v: AnyObject) => v[keyName] === keyValue);
 }
 
-const overwriteMerge = (
-  destinationArray: any[],
-  sourceArray: any[],
-  options: Options,
-) => sourceArray;
+const overwriteMerge = (destinationArray: any[], sourceArray: any[]) =>
+  sourceArray;
 
 export function deepMerge(...objects: any[]): any {
+  return deepMergeOption([...objects], { arrayMerge: overwriteMerge });
+}
+
+type MergeOption = {
+  arrayMerge?: (destinationArray: any[], sourceArray: any[]) => any[];
+};
+
+export function deepMergeOption(objects: any[], option: MergeOption = {}): any {
   if (!objects || objects.length === 0) {
     return {};
   }
 
+  const { arrayMerge = overwriteMerge } = option;
   return objects.reduce((pre: any, next: any) => {
     next = next || {};
-    return merge(pre, next, { arrayMerge: overwriteMerge });
+    return merge(pre, next, { arrayMerge });
   }, {});
 }
 
