@@ -31,12 +31,14 @@ type ThemeHocProps = {
   lugiaHidden?: boolean;
   widgetId?: string;
   viewClass?: string;
+  theme?: any;
 };
 
 type ThemeHocHandle = {
-  themeConfig: object;
+  themeConfig: any;
   themeState: [object, Dispatch<SetStateAction<object>>];
   handle: ThemeHandle;
+  oldInfo: any;
   svTarget: Ref<any>;
 };
 
@@ -45,11 +47,12 @@ function useInitHandle(
   widgetName: string,
   opt: ThemeHocOption,
 ): ThemeHocHandle {
-  const themeConfig: object = useContext(ThemeContext);
+  const themeConfig: any = useContext(ThemeContext);
   const [themeState, setThemeState] = useState({});
   const svTarget = useRef({});
 
   const handle: MutableRefObject<ThemeHandle | null> = useRef(null);
+  const oldInfo: any = useRef({});
 
   if (!handle.current) {
     const initHandleObject: ThemeHandle = new ThemeHandle(
@@ -66,16 +69,31 @@ function useInitHandle(
       initHandleObject.focus = false;
     }
     handle.current = initHandleObject;
+    const { viewClass, theme } = props;
+    const { config, svThemeConfigTree } = themeConfig;
+    oldInfo.current = {
+      viewClass,
+      theme,
+      config,
+      svThemeConfigTree,
+    };
   }
   handle.current.setProps(props);
   handle.current.setContext(themeConfig);
 
   return {
+    oldInfo: oldInfo.current,
     themeConfig,
     themeState: [themeState, setThemeState],
     handle: handle.current,
     svTarget,
   };
+}
+export function notEqualDeep(objA: any, objB: any): boolean {
+  if (!objA || !objB || typeof objA !== 'object' || typeof objB !== 'object') {
+    return objA != null && objB != null && objA !== objB;
+  }
+  return JSON.stringify(objA) !== JSON.stringify(objB);
 }
 
 const ThemeProvider = (
@@ -94,11 +112,13 @@ const ThemeProvider = (
       | MutableRefObject<ThemeHandle | null>
       | null,
   ) => {
-    const { handle, svTarget, themeState } = useInitHandle(
-      props,
-      widgetName,
-      opt,
-    );
+    const {
+      handle,
+      svTarget,
+      themeState,
+      themeConfig,
+      oldInfo,
+    } = useInitHandle(props, widgetName, opt);
     if (ref) {
       if (typeof ref === 'object') {
         ref.current = handle;
@@ -119,6 +139,24 @@ const ThemeProvider = (
         document.removeEventListener('mouseup', mouseupHandler);
       };
     });
+    if (oldInfo) {
+      const { viewClass, theme, config, svThemeConfigTree } = oldInfo;
+      const { viewClass: newViewClass, theme: newTheme } = props;
+      const { config: oldConfig, svThemeConfigTree: oldTree } = themeConfig;
+      if (
+        viewClass !== newViewClass ||
+        theme !== newTheme ||
+        config !== oldConfig ||
+        svThemeConfigTree !== oldTree ||
+        notEqualDeep(theme, newTheme) ||
+        notEqualDeep(config, oldConfig) ||
+        notEqualDeep(svThemeConfigTree, oldTree)
+      ) {
+        if (handle) {
+          handle.updateTheme();
+        }
+      }
+    }
 
     if ('themeState' in props) {
       const [, setThemeState] = themeState;

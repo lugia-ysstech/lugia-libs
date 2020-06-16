@@ -62,6 +62,7 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     index: number,
     total: number,
   ) => ThemePart;
+  cacheTheme: any;
 
   constructor(
     props: object,
@@ -86,6 +87,14 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
   }
 
   getTheme = (): ThemeConfig => {
+    if (!this.cacheTheme) {
+      this.updateTheme();
+      return this.cacheTheme;
+    }
+    return this.cacheTheme;
+  };
+
+  updateTheme() {
     const { config = {}, svThemeConfigTree = {} } = this.context;
     const { viewClass, theme } = this.props;
     const result = this.getConfig(svThemeConfigTree, config, theme);
@@ -100,8 +109,12 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     }
     const widgetNameResult = result[this.widgetName];
     const currConfig = deepMerge(widgetNameResult, viewClassResult);
-    return Object.assign({}, { ...currConfig }, { svThemeConfigTree });
-  };
+    this.cacheTheme = Object.assign(
+      {},
+      { ...currConfig },
+      { svThemeConfigTree },
+    );
+  }
 
   getThemeByDisplayName = (displayName: string) => {
     return this.getAttributeFromObject(

@@ -9,7 +9,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import Theme from '@lugia/theme-config';
 import { configure, mount } from 'enzyme';
-import ThemeProvider, { addMouseEvent } from '../src';
+import ThemeProvider, { addMouseEvent, notEqualDeep } from '../src';
 // @ts-ignore
 import Adapter from 'enzyme-adapter-react-16';
 import { deepMerge } from '@lugia/object-utils';
@@ -910,5 +910,25 @@ describe('ThemeProvider', () => {
     result.onMouseDown('d');
 
     expect(call).toEqual(['a', 'p_a', 'b', 'p_b', 'p_c', 'c', 'p_d', 'd']);
+  });
+
+  it('notEqualDeep', () => {
+    expect(notEqualDeep(null, undefined)).toBe(false);
+    expect(notEqualDeep(undefined, null)).toBe(false);
+    expect(notEqualDeep(null, null)).toBe(false);
+    expect(notEqualDeep(undefined, undefined)).toBe(false);
+    expect(notEqualDeep(1, 1)).toBe(false);
+    expect(notEqualDeep(0, 0)).toBe(false);
+    expect(notEqualDeep(true, true)).toBe(false);
+    expect(notEqualDeep(false, false)).toBe(false);
+    expect(notEqualDeep(true, false)).toBe(true);
+    expect(notEqualDeep('a', 'b')).toBe(true);
+    expect(notEqualDeep('a', 1)).toBe(true);
+    expect(notEqualDeep([], [])).toBe(false);
+    expect(notEqualDeep(0, true)).toBe(true);
+    expect(notEqualDeep(true, 0)).toBe(true);
+    expect(notEqualDeep({}, {})).toBe(false);
+    expect(notEqualDeep({ age: 1 }, { age: 1 })).toBe(false);
+    expect(notEqualDeep({ age: 1 }, { age: 2 })).toBe(true);
   });
 });
