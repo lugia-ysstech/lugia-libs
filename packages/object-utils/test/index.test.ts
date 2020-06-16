@@ -131,6 +131,20 @@ describe('object-utils', () => {
       a: [1, 2, 3, 4],
       name: 'hello',
     });
+
+    expect(
+      deepMergeOption(
+        [{ data: { a: [1, 2] } }, { data: { a: [3, 4] }, name: 'hello' }],
+        {
+          arrayMerge: (source: any[], dest: any[]): any[] => {
+            return [...source, ...dest];
+          },
+        },
+      ),
+    ).toEqual({
+      data: { a: [1, 2, 3, 4] },
+      name: 'hello',
+    });
   });
 
   it('deepMerge three obj', () => {
