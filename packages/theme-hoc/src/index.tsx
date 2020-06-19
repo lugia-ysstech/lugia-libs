@@ -143,16 +143,17 @@ const ThemeProvider = (
       const { viewClass, theme, config, svThemeConfigTree } = oldInfo;
       const { viewClass: newViewClass, theme: newTheme } = props;
       const { config: oldConfig, svThemeConfigTree: oldTree } = themeConfig;
-      if (
-        viewClass !== newViewClass ||
-        theme !== newTheme ||
-        config !== oldConfig ||
-        svThemeConfigTree !== oldTree ||
-        notEqualDeep(theme, newTheme) ||
-        notEqualDeep(config, oldConfig) ||
-        notEqualDeep(svThemeConfigTree, oldTree)
-      ) {
-        if (handle) {
+      if (handle) {
+        if (
+          !handle.cacheTheme ||
+          viewClass !== newViewClass ||
+          theme !== newTheme ||
+          config !== oldConfig ||
+          svThemeConfigTree !== oldTree ||
+          notEqualDeep(theme, newTheme) ||
+          notEqualDeep(config, oldConfig) ||
+          notEqualDeep(svThemeConfigTree, oldTree)
+        ) {
           handle.updateTheme();
         }
       }
