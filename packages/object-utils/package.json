@@ -1,6 +1,6 @@
 {
   "name": "@lugia/object-utils",
-  "version": "1.0.18-alpha.0",
+  "version": "1.0.18",
   "types": "./lib/index.d.ts",
   "description": "object utils",
   "main": "./lib/index.js",
