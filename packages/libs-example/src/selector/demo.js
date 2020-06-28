@@ -12,6 +12,9 @@ import { getBorderRadius } from '@lugia/theme-utils/src';
 
 const config = {
   Selector: {
+    InjectProps: {
+      readOnly: true,
+    },
     SelectWeb: {
       Block: {
         normal: {

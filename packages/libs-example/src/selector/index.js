@@ -133,6 +133,7 @@ export default ThemeHoc(
           <Button
             {...server1.provider}
             {...this.props.getPartOfThemeHocProps('Button')}
+            disabled={this.props.readOnly}
           >
             A
           </Button>{' '}

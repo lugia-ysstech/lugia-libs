@@ -165,11 +165,12 @@ const ThemeProvider = (
       setThemeState(propsThemeState);
     }
     const { lugiaHidden = false } = props;
-
+    const InjectProps = handle.getPartOfThemeConfig('InjectProps', false);
     return lugiaHidden ? null : (
       <Target
         dispatchEvent={handle.dispatchEvent}
         createEventChannel={handle.createEventChannel}
+        {...InjectProps}
         {...props}
         {...injectThemeStateEvent(opt, handle)}
         themeProps={handle.getThemeProps()}
