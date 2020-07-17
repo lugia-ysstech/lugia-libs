@@ -202,6 +202,9 @@ export function themeMeta2Style(theme: ThemeMeta): object {
     minWidth,
     minHeight,
     maxHeight,
+    whiteSpace,
+    wordBreak,
+    textOverflow,
   } = theme;
   const { background } = theme;
   const style = {};
@@ -237,6 +240,24 @@ export function themeMeta2Style(theme: ThemeMeta): object {
     getStringStyleFromTheme,
   );
   setObjectValueIfValueExist(style, 'cursor', cursor, getStringStyleFromTheme);
+  setObjectValueIfValueExist(
+    style,
+    'whiteSpace',
+    whiteSpace,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'wordBreak',
+    wordBreak,
+    getStringStyleFromTheme,
+  );
+  setObjectValueIfValueExist(
+    style,
+    'textOverflow',
+    textOverflow,
+    getStringStyleFromTheme,
+  );
 
   const { position } = theme;
   Object.assign(

@@ -107,6 +107,9 @@ export type SimpleThemeMeta = {
   minWidth?: number | string;
   maxHeight?: number | string;
   minHeight?: number | string;
+  wordBreak?: string;
+  whiteSpace?: string;
+  textOverflow?: string;
 };
 export type DynamicThemeMega = {
   getCSS?: (theme: ThemeMeta, themeProps: CSSThemeProps) => string;
