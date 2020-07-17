@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-core",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "types": "./lib/index.d.ts",
   "description": "Theme core",
   "main": "./lib/index.js",
