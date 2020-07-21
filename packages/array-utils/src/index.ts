@@ -95,3 +95,15 @@ export function mapValue2Array(target: AnyObject): AnyObject {
   });
   return result;
 }
+
+/**
+ * 获取目标的数组长度，如果不是数组则返回-1
+ * @param target
+ * @return -1不是数组  n为数组的长度
+ */
+export function getArrayLen(target: any): number {
+  if (!Array.isArray(target)) {
+    return -1;
+  }
+  return target.length;
+}

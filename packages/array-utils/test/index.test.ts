@@ -6,6 +6,7 @@
 
 import {
   findIndex,
+  getArrayLen,
   mapValue2Array,
   mapValue2ArrayByField,
   sliceLeft,
@@ -144,5 +145,15 @@ describe('array-utils', () => {
         age: 15,
       },
     });
+  });
+
+  it('getArrayLen', () => {
+    expect(getArrayLen(undefined)).toBe(-1);
+    expect(getArrayLen(null)).toBe(-1);
+    expect(getArrayLen(1)).toBe(-1);
+    expect(getArrayLen({ length: 100 })).toBe(-1);
+    expect(getArrayLen([])).toBe(0);
+    expect(getArrayLen([1])).toBe(1);
+    expect(getArrayLen([1, 2])).toBe(2);
   });
 });
