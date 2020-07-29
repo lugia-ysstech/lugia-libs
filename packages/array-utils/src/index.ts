@@ -107,3 +107,59 @@ export function getArrayLen(target: any): number {
   }
   return target.length;
 }
+
+/**
+ * 升序排序方法 s
+ * @param dataA
+ * @param dataB
+ * @return
+ *    小于 0 ，那么 a 会被排列到 b 之前；
+ *    等于 0 ， a 和 b 的相对位置不变
+ *    大于 0 ， b 会被排列到 a 之前。
+ */
+export function sortNumberArrayAsc(dataA: any, dataB: any): number {
+  return sortNumberArray(dataA, dataB, (a, b) => a - b);
+}
+
+/**
+ * 降序排序方法
+ * @param dataA
+ * @param dataB
+ * @return
+ *    小于 0 ，那么 a 会被排列到 b 之前；
+ *    等于 0 ， a 和 b 的相对位置不变
+ *    大于 0 ， b 会被排列到 a 之前。
+ */
+
+export function sortNumberArrayDesc(dataA: any, dataB: any): number {
+  return sortNumberArray(dataA, dataB, (a, b) => b - a);
+}
+
+function sortNumberArray(
+  dataA: any,
+  dataB: any,
+  cb: (a: number, b: number) => number,
+): number {
+  const lenA = getArrayLen(dataA);
+  const lenB = getArrayLen(dataB);
+
+  if (lenA === -1 || lenB === -1) {
+    return 0;
+  }
+  if (lenA === lenB && lenA === 0) {
+    return 0;
+  }
+
+  const needCompareLen = Math.min(lenA, lenB);
+
+  for (let i = 0; i < needCompareLen; i++) {
+    const valA = dataA[i];
+    const valB = dataB[i];
+    const sortVal = cb(valA, valB);
+    if (sortVal === 0) {
+      continue;
+    }
+    return sortVal;
+  }
+  return cb(lenA, lenB);
+}

@@ -11,6 +11,8 @@ import {
   mapValue2ArrayByField,
   sliceLeft,
   sliceRight,
+  sortNumberArrayAsc,
+  sortNumberArrayDesc,
 } from '../src';
 
 type AnyObject = { [key: string]: any };
@@ -155,5 +157,58 @@ describe('array-utils', () => {
     expect(getArrayLen([])).toBe(0);
     expect(getArrayLen([1])).toBe(1);
     expect(getArrayLen([1, 2])).toBe(2);
+  });
+
+  it('sortNumberArrayAsc', () => {
+    expect(sortNumberArrayAsc(null, undefined)).toEqual(0);
+    expect(sortNumberArrayAsc([1, 2, 3], 0)).toEqual(0);
+    expect(sortNumberArrayAsc([], [])).toEqual(0);
+
+    expect([[1, 2, 3], [4], [3]].sort(sortNumberArrayAsc)).toEqual([
+      [1, 2, 3],
+      [3],
+      [4],
+    ]);
+
+    expect([[3], [1, 2, 3], [4]].sort(sortNumberArrayAsc)).toEqual([
+      [1, 2, 3],
+      [3],
+      [4],
+    ]);
+
+    expect(
+      [[3], [1, 2, 3], [4, 2], [4], [4, 1]].sort(sortNumberArrayAsc),
+    ).toEqual([[1, 2, 3], [3], [4], [4, 1], [4, 2]]);
+
+    expect([[1, 2, 3], [1, 2, 3]].sort(sortNumberArrayAsc)).toEqual([
+      [1, 2, 3],
+      [1, 2, 3],
+    ]);
+  });
+  it('sortNumberArrayDesc', () => {
+    expect(sortNumberArrayDesc(null, undefined)).toEqual(0);
+    expect(sortNumberArrayDesc([1, 2, 3], 0)).toEqual(0);
+    expect(sortNumberArrayDesc([], [])).toEqual(0);
+
+    expect([[1, 2, 3], [4], [3]].sort(sortNumberArrayDesc)).toEqual([
+      [4],
+      [3],
+      [1, 2, 3],
+    ]);
+
+    expect([[3], [1, 2, 3], [4]].sort(sortNumberArrayDesc)).toEqual([
+      [4],
+      [3],
+      [1, 2, 3],
+    ]);
+
+    expect(
+      [[3], [1, 2, 3], [4, 2], [4], [4, 1]].sort(sortNumberArrayDesc),
+    ).toEqual([[4, 2], [4, 1], [4], [3], [1, 2, 3]]);
+
+    expect([[1, 2, 3], [1, 2, 3]].sort(sortNumberArrayDesc)).toEqual([
+      [1, 2, 3],
+      [1, 2, 3],
+    ]);
   });
 });
