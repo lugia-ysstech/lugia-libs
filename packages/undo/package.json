@@ -1,0 +1,35 @@
+{
+  "name": "@lugia/undo",
+  "version": "1.0.0",
+  "description": "undo redo history",
+  "types": "./lib/index.d.ts",
+  "main": "./lib/index.js",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "bugs": {},
+  "author": "#lugia#",
+  "license": "MIT",
+  "dependencies": {
+    "@lugia/indexdb": "^1.0.17",
+    "@lugia/math": "^1.0.10",
+    "@lugia/unique": "^1.0.6",
+    "debug": "^4.1.1",
+    "tslib": "^1.11.1"
+  },
+  "files": [
+    "lib",
+    "interface"
+  ],
+  "engines": {
+    "node": ">=10",
+    "npm": ">=5.2.0"
+  },
+  "devDependencies": {
+    "@lugia/jverify": "^1.0.12",
+    "@types/debug": "^4.1.5"
+  }
+}
