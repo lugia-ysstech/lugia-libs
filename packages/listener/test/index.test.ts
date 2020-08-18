@@ -58,6 +58,125 @@ describe('Listener', () => {
     expect(await callPromise).toBe(mouseEventObj);
   });
 
+  it('on hello outSilence', async () => {
+    let cb = (data: any) => {};
+
+    const callPromise = new Promise(res => {
+      cb = (data: any) => {
+        res(data);
+      };
+    });
+    const mouseEventObj = {
+      buttons: 1,
+    };
+    const listener = new Listener();
+    const eventName = 'hello';
+    listener.on(eventName, cb);
+    listener.once('abc', (data: any) => {
+      if (data === 'silence') {
+        throw new Error('静默失败');
+      }
+    });
+
+    listener.silenceBlock('abc', () => {
+      listener.emit('abc', 'silence');
+      listener.emit(eventName, mouseEventObj);
+    });
+    let abcCall = (data: any) => {};
+
+    const abcCallPromise = new Promise(res => {
+      abcCall = (data: any) => {
+        res(data);
+      };
+    });
+    listener.on('abc', abcCall);
+
+    listener.emit('abc', mouseEventObj);
+
+    expect(await callPromise).toBe(mouseEventObj);
+    expect(await abcCallPromise).toBe(mouseEventObj);
+  });
+
+  it('on hello outSilence cb error', async () => {
+    const mouseEventObj = {
+      buttons: 1,
+    };
+    const listener = new Listener();
+    listener.once('abc', (data: any) => {
+      if (data === 'silence') {
+        throw new Error('静默失败');
+      }
+    });
+
+    try {
+      listener.silenceBlock('abc', () => {
+        listener.emit('abc', 'silence');
+        throw new Error('313131');
+      });
+    } catch (err) {
+      expect(err.message).toBe('313131');
+    }
+
+    let abcCall = (data: any) => {};
+
+    const abcCallPromise = new Promise(res => {
+      abcCall = (data: any) => {
+        res(data);
+      };
+    });
+    listener.on('abc', abcCall);
+
+    listener.emit('abc', mouseEventObj);
+
+    expect(await abcCallPromise).toBe(mouseEventObj);
+  });
+
+  it('on hello outSilence array params', async () => {
+    const listener = new Listener();
+    const eventName = 'hello';
+    listener.on(eventName, (data: any) => {
+      if (data === 'silence') {
+        throw new Error('静默失败');
+      }
+    });
+    listener.on('abc', (data: any) => {
+      if (data === 'silence') {
+        throw new Error('静默失败');
+      }
+    });
+
+    listener.silenceBlock(['abc', 'hello'], () => {
+      listener.emit('abc', 'silence');
+      listener.emit(eventName, 'silence');
+    });
+    let abcCall = (data: any) => {};
+
+    const abcCallPromise = new Promise(res => {
+      abcCall = (data: any) => {
+        res(data);
+      };
+    });
+    let cb = (data: any) => {};
+
+    const callPromise = new Promise(res => {
+      cb = (data: any) => {
+        res(data);
+      };
+    });
+    const mouseEventObj = {
+      buttons: 1,
+    };
+    listener.on(eventName, cb);
+
+    listener.on('abc', abcCall);
+
+    listener.emit('abc', mouseEventObj);
+    listener.emit(eventName, mouseEventObj);
+
+    expect(await callPromise).toBe(mouseEventObj);
+    expect(await abcCallPromise).toBe(mouseEventObj);
+  });
+
   it('on click', async () => {
     let cb = (data: any) => {};
 

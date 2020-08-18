@@ -10,11 +10,43 @@ import { EventEmitter } from 'events';
 type EventListener = (...args: any[]) => void;
 export default class Listener<T extends string> {
   events: EventEmitter;
+  silenceEvent: { [eventName: string]: boolean };
 
   constructor() {
+    this.silenceEvent = {};
     this.events = new EventEmitter();
     this.events.setMaxListeners(5000);
   }
+
+  private toSilence = (eventName: string): void => {
+    this.silenceEvent[eventName] = true;
+  };
+
+  silenceBlock = (eventName: string | string[], cb: () => void) => {
+    try {
+      for (const event of this.toArray(eventName)) {
+        this.toSilence(event);
+      }
+      if (cb) {
+        cb();
+      }
+    } finally {
+      for (const event of this.toArray(eventName)) {
+        this.outSilence(event);
+      }
+    }
+  };
+
+  private toArray(eventName: string | string[]): string[] {
+    if (Array.isArray(eventName)) {
+      return eventName;
+    }
+    return [eventName];
+  }
+
+  private outSilence = (eventName: string): void => {
+    delete this.silenceEvent[eventName];
+  };
 
   on(eventName: T, cb: EventListener) {
     this.events.on(eventName, cb);
@@ -37,6 +69,9 @@ export default class Listener<T extends string> {
   }
 
   emit(eventName: T, param: any) {
+    if (this.silenceEvent[eventName]) {
+      return;
+    }
     this.events.emit(eventName, param);
   }
 
