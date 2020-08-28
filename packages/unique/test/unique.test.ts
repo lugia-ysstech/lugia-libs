@@ -5,7 +5,12 @@
  * @flow
  */
 
-import Unique, { now, switchProduction } from '../src';
+import Unique, {
+  incrementString,
+  now,
+  readSeparatorWithNumber,
+  switchProduction,
+} from '../src';
 // @ts-ignore
 import { mockObject, VerifyOrder, VerifyOrderConfig } from '@lugia/jverify';
 
@@ -178,5 +183,59 @@ describe('Unique', () => {
     val.setSeconds(second);
     val.setMilliseconds(millSeconde);
     expect(now(val)).toBe('20171122123231_555');
+  });
+
+  it('incrementString', () => {
+    expect(incrementString('a', [])).toBe('a');
+    expect(incrementString('a', ['a', 'b'])).toBe('a_1');
+    expect(incrementString('a', ['a', 'b', 'a_1'])).toBe('a_2');
+    expect(incrementString('a', ['a', 'b', 'a_1', 'a_2'])).toBe('a_3');
+    expect(incrementString('a', ['a', 'b', 'a_1', 'a_24'])).toBe('a_2');
+    expect(incrementString('a', ['a_adfaf', 'b', 'a_aaaaa', 'a_24'])).toBe('a');
+    expect(incrementString('a', ['a_adfaf', 'b', 'a_aaaaa', 'a_24', 'a'])).toBe(
+      'a_1',
+    );
+    expect(incrementString('a', ['a', 'b'], { separator: '的副本' })).toBe(
+      'a的副本1',
+    );
+    expect(
+      incrementString('a', ['a', 'b', 'a的副本1'], { separator: '的副本' }),
+    ).toBe('a的副本2');
+    expect(incrementString('page', ['a', 'b'])).toBe('page');
+    expect(incrementString('page', ['a', 'b', 'page_1'])).toBe('page');
+    expect(incrementString('page', ['a', 'b', 'page_1', 'page'])).toBe(
+      'page_2',
+    );
+  });
+
+  it('readSeparatorWithNumber', () => {
+    expect(readSeparatorWithNumber('lgx', '-')).toEqual({
+      suffix: 0,
+      preStr: 'lgx',
+    });
+    expect(readSeparatorWithNumber('lgx-131312', '-')).toEqual({
+      suffix: 131312,
+      preStr: 'lgx',
+    });
+    expect(readSeparatorWithNumber('lgx-5-6', '-')).toEqual({
+      suffix: 6,
+      preStr: 'lgx-5',
+    });
+    expect(readSeparatorWithNumber('lgx-5#', '#')).toEqual({
+      suffix: 0,
+      preStr: 'lgx-5',
+    });
+    expect(readSeparatorWithNumber('lgx-5#66', '#')).toEqual({
+      suffix: 66,
+      preStr: 'lgx-5',
+    });
+    expect(readSeparatorWithNumber('lgx-5#66a', '#')).toEqual({
+      suffix: 0,
+      preStr: 'lgx-5',
+    });
+    expect(readSeparatorWithNumber('a的副本1', '的副本')).toEqual({
+      suffix: 1,
+      preStr: 'a',
+    });
   });
 });
