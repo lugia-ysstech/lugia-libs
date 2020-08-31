@@ -226,6 +226,60 @@ describe('History', () => {
       id: 1,
     });
   });
+
+  it('toSleep breakDoBusiness', async () => {
+    const config = {
+      stackCount: 15,
+      tableName,
+    };
+    const db: any = new LocalStore({});
+    const history = new History(config, db);
+    await history.add({ id: 1 });
+    await history.doInSleep(
+      async () => {
+        await history.add({ id: 2 });
+        await history.add({ id: 3 });
+        await history.add({ id: 4 });
+      },
+      async () => {
+        await history.add({ id: 2 });
+      },
+      {
+        breakDoBusiness: true,
+      },
+    );
+
+    expect(await history.undo()).toBeUndefined();
+  });
+
+  it('toSleep breakDoBusiness', async () => {
+    const config = {
+      stackCount: 15,
+      tableName,
+    };
+    const db: any = new LocalStore({});
+    const history = new History(config, db);
+    await history.add({ id: 1 });
+    await history.doInSleep(
+      async () => {
+        await history.add({ id: 2 });
+        await history.add({ id: 3 });
+        await history.add({ id: 4 });
+        return true;
+      },
+      async () => {
+        await history.add({ id: 2 });
+      },
+      {
+        breakDoBusiness: true,
+      },
+    );
+
+    expect(await history.undo()).toEqual({
+      id: 1,
+    });
+  });
+
   it('toSleep for not doSave', async () => {
     const config = {
       stackCount: 15,

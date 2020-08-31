@@ -13,6 +13,7 @@ import { AnyObject, HistoryConfig, Store } from './type';
 
 const debug = Debug('lugiax:history ');
 
+type SleepOption = { breakDoBusiness?: boolean };
 export default class History {
   store: Store;
   queue: HistoryQueue<string>;
@@ -45,6 +46,7 @@ export default class History {
       time ? time : 100,
     );
   }
+
   private toSleep() {
     this.sleep = true;
   }
@@ -55,12 +57,17 @@ export default class History {
 
   async doInSleep(
     doBusiness: () => Promise<any>,
-    success?: () => Promise<any>,
+    success: () => Promise<any>,
+    option: SleepOption = {},
   ) {
     try {
       this.toSleep();
+      const { breakDoBusiness } = option;
       if (doBusiness) {
-        await doBusiness();
+        const res = await doBusiness();
+        if (breakDoBusiness && !res) {
+          return;
+        }
       }
       this.toRaise();
       if (success) {
