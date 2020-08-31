@@ -108,12 +108,30 @@ export default class History {
       return;
     }
     const res = await this.store.get(this.tableName, id);
+    return this.getData(res, id);
+  }
+
+  private getData = (res: AnyObject | undefined, id: string) => {
     if (!res) {
       return;
     }
     const { data } = res;
     debug('reload id: %s, file = %o', id, data);
     return data;
+  };
+
+  async removeLast() {
+    const id = this.queue.removeLast();
+    debug('undo for id:  %s', id);
+    return this.getAndDel(id);
+  }
+
+  private async getAndDel(id: string | undefined) {
+    if (!id) {
+      return;
+    }
+    const res = await this.store.getAndDel(this.tableName, id);
+    return this.getData(res, id);
   }
 
   clean() {

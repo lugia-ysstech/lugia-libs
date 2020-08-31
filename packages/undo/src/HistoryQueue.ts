@@ -38,9 +38,17 @@ export default class HistoryQueue<SaveType> {
     this.splice(this.limitIndex(this.getCurrentIndex() + 1));
   }
 
+  removeLast(): SaveType {
+    return this.remove(this.stack.length - 1);
+  }
+
   removeFirst(): SaveType {
-    const delTarget = this.stack[0];
-    this.splice(0, 1);
+    return this.remove(0);
+  }
+
+  remove(index: number): SaveType {
+    const delTarget = this.stack[index];
+    this.splice(index, 1);
     this.changeCurrentIndex(this.getCurrentIndex() - 1);
     return delTarget;
   }

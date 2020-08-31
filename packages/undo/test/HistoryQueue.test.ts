@@ -552,4 +552,21 @@ describe('History', () => {
       history.limitByConfig(targetIndex, { min: 0, max: maxIndex });
     });
   });
+
+  it('undo [a ab abc] [a ab e]', () => {
+    const history = new HistoryQueue({
+      stackCount: 10,
+      tableName,
+    });
+
+    history.add('a'); // a
+    history.add('b'); // ab
+    history.add('c'); // abc
+    history.removeLast();
+
+    expect(history.undo()).toEqual('a');
+    expect(history.redo()).toEqual('b');
+    expect(history.undo()).toEqual('a');
+    expect(history.redo()).toEqual('b');
+  });
 });

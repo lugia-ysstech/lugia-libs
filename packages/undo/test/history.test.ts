@@ -290,4 +290,37 @@ describe('History', () => {
       id: 1,
     });
   });
+
+  it('removeLast', async () => {
+    const config = {
+      stackCount: 15,
+      tableName,
+    };
+    const db: any = new LocalStore({});
+    const history = new History(config, db);
+    await history.add({ id: 1 });
+    await history.add({ id: 2 });
+    await history.add({ id: 3 });
+    await history.removeLast();
+    expect(await history.undo()).toEqual({ id: 1 });
+    expect(await history.redo()).toEqual({ id: 2 });
+    expect(await history.undo()).toEqual({ id: 1 });
+    expect(await history.redo()).toEqual({ id: 2 });
+  });
+
+  it('undo redo', async () => {
+    const config = {
+      stackCount: 15,
+      tableName,
+    };
+    const db: any = new LocalStore({});
+    const history = new History(config, db);
+    await history.add({ id: 1 });
+    await history.add({ id: 2 });
+    await history.add({ id: 3 });
+    expect(await history.undo()).toEqual({ id: 2 });
+    expect(await history.redo()).toEqual({ id: 3 });
+    expect(await history.undo()).toEqual({ id: 2 });
+    expect(await history.redo()).toEqual({ id: 3 });
+  });
 });
