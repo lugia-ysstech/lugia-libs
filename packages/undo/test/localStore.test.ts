@@ -5,10 +5,11 @@
  * @flow
  */
 import { now } from '@lugia/unique';
-import LocalStore from '../src/LocalStore';
+import LocalStore from './LocalStore';
 import { AnyObject } from '../src/type';
 
 describe('LocalStore', () => {
+  const tableName = 'ligx';
   it('init', () => {
     const obj = {};
     const store = new LocalStore(obj);
@@ -17,43 +18,43 @@ describe('LocalStore', () => {
     expect(store.isSameDB(obj)).toBeTruthy();
   });
 
-  it('unique', () => {
+  it('unique', async () => {
     const obj = {};
     const store: AnyObject = new LocalStore(obj);
     expect(store.unique.rand).toBe(now);
   });
 
-  it('save get del', () => {
+  it('save get del', async () => {
     const obj: AnyObject = {};
     const store = new LocalStore(obj);
     const data = { a: 'hello', b: 'world' };
-    const id: string = store.save(data);
+    const id: string = await store.save(tableName, data);
     expect(obj[id]).toBe(JSON.stringify(data));
-    expect(store.get(id)).toEqual(data);
+    expect(await store.get(tableName, id)).toEqual(data);
     expect(store.existId[id]).toBeTruthy();
-    expect(store.del(id)).toBeTruthy();
+    expect(await store.del(tableName, id)).toBeTruthy();
     expect(store.existId[id]).toBeUndefined();
-    expect(store.get(id)).toBeUndefined();
+    expect(await store.get(tableName, id)).toBeUndefined();
   });
-  it('save getAnddel', () => {
+  it('save getAnddel', async () => {
     const obj: AnyObject = {};
     const store = new LocalStore(obj);
     const data = { a: 'hello', b: 'world' };
-    const id = store.save(data);
+    const id = await store.save(tableName, data);
     expect(obj[id]).toBe(JSON.stringify(data));
-    expect(store.getAndDel(id)).toEqual(data);
-    expect(store.get(id)).toBeUndefined();
+    expect(await store.getAndDel(tableName, id)).toEqual(data);
+    expect(await store.get(tableName, id)).toBeUndefined();
   });
 
-  it('clean', () => {
+  it('clean', async () => {
     const obj: AnyObject = {};
     const store = new LocalStore(obj);
     const a = { a: 'hello', b: 'world' };
     const b = { a: 'hello', b: 'world' };
     const c = { a: 'hello', b: 'world' };
-    const idA = store.save(a);
-    const idB = store.save(b);
-    const idC = store.save(c);
+    const idA = await store.save(tableName, a);
+    const idB = await store.save(tableName, b);
+    const idC = await store.save(tableName, c);
 
     expect(obj).toEqual({
       [idA]: JSON.stringify(a),
@@ -65,7 +66,7 @@ describe('LocalStore', () => {
     expect(store.existId[idC]).toBeTruthy();
 
     expect(obj).toBe(store.db);
-    store.clean();
+    await store.clean();
     expect(obj).toBe(store.db);
     expect(obj).toEqual({});
   });

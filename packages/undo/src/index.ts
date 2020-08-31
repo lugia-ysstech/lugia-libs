@@ -19,14 +19,20 @@ export default class History {
 
   throttle: number;
   tableName: string;
+  sleep: boolean;
+
   constructor(config: HistoryConfig, store: IndexDB) {
     this.store = store;
     this.queue = new HistoryQueue(config);
+    this.sleep = false;
     this.tableName = config.tableName;
     this.throttle = 0;
   }
 
   addThrottle(data: AnyObject, time: number = 100) {
+    if (this.sleep) {
+      return;
+    }
     if (this.throttle) {
       clearTimeout(this.throttle);
       this.throttle = 0;
@@ -39,6 +45,31 @@ export default class History {
       time ? time : 100,
     );
   }
+  private toSleep() {
+    this.sleep = true;
+  }
+
+  private toRaise() {
+    this.sleep = false;
+  }
+
+  async doInSleep(
+    doBusiness: () => Promise<any>,
+    success?: () => Promise<any>,
+  ) {
+    try {
+      this.toSleep();
+      if (doBusiness) {
+        await doBusiness();
+      }
+      this.toRaise();
+      if (success) {
+        await success();
+      }
+    } finally {
+      this.toRaise();
+    }
+  }
 
   equalTo(history: History) {
     if (!history) {
@@ -48,6 +79,10 @@ export default class History {
   }
 
   async add(data: AnyObject) {
+    if (this.sleep) {
+      return;
+    }
+
     const id = await this.store.save(this.tableName, { data });
     const delTarget = this.queue.add(id);
     if (delTarget) {
@@ -72,7 +107,11 @@ export default class History {
     if (!id) {
       return;
     }
-    const { data } = await this.store.get(this.tableName, id);
+    const res = await this.store.get(this.tableName, id);
+    if (!res) {
+      return;
+    }
+    const { data } = res;
     debug('reload id: %s, file = %o', id, data);
     return data;
   }

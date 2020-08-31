@@ -5,9 +5,9 @@
  * @flow
  */
 import Unique, { now } from '@lugia/unique';
-import { AnyObject } from './type';
+import { AnyObject, Store } from '../src/type';
 
-export default class LocalStore {
+export default class LocalStore implements Store {
   db: AnyObject;
   unique: Unique;
   existId: { [id: string]: boolean };
@@ -20,14 +20,14 @@ export default class LocalStore {
     this.existId = {};
   }
 
-  save(target: AnyObject): string {
+  async save(tableName: string, target: AnyObject): Promise<string> {
     const id = this.unique.getNext();
     this.db[id] = JSON.stringify(target);
     this.existId[id] = true;
     return id;
   }
 
-  get(id: string): AnyObject | undefined {
+  async get(tableName: string, id: string): Promise<AnyObject | undefined> {
     const val = this.db[id];
     if (val === undefined) {
       return undefined;
@@ -35,20 +35,23 @@ export default class LocalStore {
     return JSON.parse(val);
   }
 
-  getAndDel(id: string): AnyObject | undefined {
-    const res = this.get(id);
-    this.del(id);
+  async getAndDel(
+    tableName: string,
+    id: string,
+  ): Promise<AnyObject | undefined> {
+    const res = this.get(tableName, id);
+    await this.del(tableName, id);
     return res;
   }
 
-  del(id: string): boolean {
+  async del(tableName: string, id: string): Promise<boolean> {
     delete this.existId[id];
     return delete this.db[id];
   }
 
   clean(): void {
     const ids = Object.keys(this.existId);
-    const doDel = (id: string) => this.del(id);
+    const doDel = (id: string) => this.del(this.tableName, id);
     ids.forEach(doDel);
     Object.keys(this.db)
       .filter((id: string) => id && id.startsWith(this.tableName))

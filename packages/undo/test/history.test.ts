@@ -11,6 +11,7 @@ const tableName = 'history';
 
 // @ts-ignore
 import { mockObject, VerifyOrder, VerifyOrderConfig } from '@lugia/jverify';
+import LocalStore from './LocalStore';
 export function getIndexDB(): any {
   return {
     clean() {},
@@ -199,6 +200,94 @@ describe('History', () => {
     order.verify((param: AnyObject) => {
       const { store, queue } = param;
       store.get('history', id);
+    });
+  });
+
+  it('toSleep', async () => {
+    const config = {
+      stackCount: 15,
+      tableName,
+    };
+    const db: any = new LocalStore({});
+    const history = new History(config, db);
+    await history.add({ id: 1 });
+    await history.doInSleep(
+      async () => {
+        await history.add({ id: 2 });
+        await history.add({ id: 3 });
+        await history.add({ id: 4 });
+      },
+      async () => {
+        await history.add({ id: 2 });
+      },
+    );
+
+    expect(await history.undo()).toEqual({
+      id: 1,
+    });
+  });
+  it('toSleep for not doSave', async () => {
+    const config = {
+      stackCount: 15,
+      tableName,
+    };
+    const db: any = new LocalStore({});
+    const history = new History(config, db);
+    await history.add({ id: 1 });
+    await history.doInSleep(
+      async () => {
+        await history.add({ id: 2 });
+        await history.add({ id: 3 });
+        await history.add({ id: 4 });
+      },
+      async () => {},
+    );
+
+    expect(await history.undo()).toBeUndefined();
+  });
+  it('Not toSleep', async () => {
+    const config = {
+      stackCount: 15,
+      tableName,
+    };
+    const db: any = new LocalStore({});
+    const history = new History(config, db);
+    await history.add({ id: 1 });
+    await history.add({ id: 2 });
+    await history.add({ id: 3 });
+    await history.add({ id: 4 });
+
+    expect(await history.undo()).toEqual({
+      id: 3,
+    });
+  });
+
+  it('toSleep has exception', async () => {
+    const config = {
+      stackCount: 15,
+      tableName,
+    };
+    const db: any = new LocalStore({});
+    const history = new History(config, db);
+    await history.add({ id: 1 });
+    try {
+      await history.doInSleep(
+        async () => {
+          await history.add({ id: 2 });
+          await history.add({ id: 3 });
+          await history.add({ id: 4 });
+          throw new Error('Is a error');
+        },
+        async () => {
+          await history.add({ id: 2 });
+        },
+      );
+    } catch (err) {}
+
+    await history.add({ id: 2 });
+
+    expect(await history.undo()).toEqual({
+      id: 1,
     });
   });
 });
