@@ -1,6 +1,6 @@
 {
   "name": "@lugia/undo",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "undo redo history",
   "types": "./lib/index.d.ts",
   "main": "./lib/index.js",
