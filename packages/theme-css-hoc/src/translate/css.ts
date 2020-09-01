@@ -128,7 +128,7 @@ export function getBorderStyleFromTheme(border: object | string) {
       always(borderTopStyle),
     );
 
-    const borderColor = getAttributeFromObject(target, 'color');
+    const borderColor = getDictValue(getAttributeFromObject(target, 'color'));
     setObjectValueIfValueExist(
       style,
       `${name}Color`,
