@@ -32,6 +32,9 @@ class Dict {
     const path = name.split('.');
     if (path.length > 1) {
       let target = namespace[path[0]];
+      if (!target) {
+        return;
+      }
       for (let i = 1; i < path.length; i++) {
         const attr = path[i];
         target = target[attr];

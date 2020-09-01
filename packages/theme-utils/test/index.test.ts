@@ -73,6 +73,7 @@ describe('theme-utils', () => {
       bgColor: 'ligx',
     });
     expect(getDictValue('$lugia-dict.agg.bgColor')).toBe('ligx');
+    expect(getDictValue('$lugia-dict.agg.a.color')).toBe(undefined);
   });
 
   it('getDictValue cycle value', () => {
