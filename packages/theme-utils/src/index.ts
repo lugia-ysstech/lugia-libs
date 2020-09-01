@@ -176,7 +176,9 @@ export function getBoxShadowCSS(boxConfig: BoxShadowType): string {
   if (type !== 'inset') {
     type = '';
   }
-  return `${type} ${x}px ${y}px ${blur}px ${spread}px ${color}`.trim();
+  return `${type} ${x}px ${y}px ${blur}px ${spread}px ${getDictValue(
+    color,
+  )}`.trim();
 }
 
 export { existDict, getDict };
