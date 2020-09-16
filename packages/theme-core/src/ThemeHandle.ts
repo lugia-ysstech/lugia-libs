@@ -112,7 +112,6 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
       }
     }
 
-    console.info('viewClassResult', viewClassResult);
     const widgetNameResult = result[this.widgetName];
     const currConfig = deepMerge(widgetNameResult, viewClassResult);
     this.cacheTheme = Object.assign(
