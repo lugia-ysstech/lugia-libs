@@ -70,12 +70,13 @@ function useInitHandle(
     }
     handle.current = initHandleObject;
     const { viewClass, theme } = props;
-    const { config, svThemeConfigTree } = themeConfig;
+    const { config, svThemeConfigTree, globalConfig } = themeConfig;
     oldInfo.current = {
       viewClass,
       theme,
       config,
       svThemeConfigTree,
+      globalConfig,
     };
   }
   handle.current.setProps(props);
@@ -140,15 +141,26 @@ const ThemeProvider = (
       };
     });
     if (oldInfo) {
-      const { viewClass, theme, config, svThemeConfigTree } = oldInfo;
+      const {
+        viewClass,
+        theme,
+        config,
+        svThemeConfigTree,
+        globalConfig,
+      } = oldInfo;
       const { viewClass: newViewClass, theme: newTheme } = props;
-      const { config: newConfig, svThemeConfigTree: newTree } = themeConfig;
+      const {
+        config: newConfig,
+        svThemeConfigTree: newTree,
+        globalConfig: newGlobalConfig,
+      } = themeConfig;
       if (handle) {
         if (
           !handle.cacheTheme ||
           viewClass !== newViewClass ||
           theme !== newTheme ||
           config !== newConfig ||
+          globalConfig !== newGlobalConfig ||
           svThemeConfigTree !== newTree ||
           notEqualDeep(theme, newTheme) ||
           notEqualDeep(config, newConfig) ||
