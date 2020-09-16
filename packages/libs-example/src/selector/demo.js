@@ -157,7 +157,7 @@ export default () => {
     installState ? (
       <Theme
         config={theme}
-        globalTheme={{
+        globalConfig={{
           DisabledViewClass: {
             Block: {
               disabled: {

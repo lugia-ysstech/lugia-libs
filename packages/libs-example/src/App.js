@@ -5,7 +5,7 @@ import Theme from '@lugia/theme-config';
 class App extends Component {
   render() {
     return (
-      <Theme globalTheme={{
+      <Theme globalConfig={{
         DisabledViewClass:{
           disabled: {
             background: {

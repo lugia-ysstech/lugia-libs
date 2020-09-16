@@ -103,7 +103,7 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     const clazzNames = viewClass ? viewClass.split(' ') : [];
     const result = this.getConfig(svThemeConfigTree, config, theme);
 
-    let viewClassResult = this.getGlobalTheme(clazzNames);
+    let viewClassResult = this.getGlobalConfig(clazzNames);
 
     for (const clazzName of clazzNames) {
       const viewConfig = result[clazzName];
@@ -122,19 +122,16 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
     );
   }
 
-  getGlobalTheme(viewClasses: string[]): AnyObject {
-    const { globalTheme = {} } = this.context;
+  getGlobalConfig(viewClasses: string[]): AnyObject {
+    const { globalConfig = {} } = this.context;
 
     let result = {};
     for (const viewClass of viewClasses) {
-      const globalValue = globalTheme[viewClass];
-      if (globalTheme) {
+      const globalValue = globalConfig[viewClass];
+      if (globalConfig) {
         result = Object.assign(result, globalValue);
       }
     }
-    console.info('globalTheme', globalTheme);
-    console.info('viewClasses', viewClasses);
-    console.info('result', result);
     return result;
   }
 
