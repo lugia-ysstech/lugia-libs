@@ -529,4 +529,97 @@ describe('object-utils', () => {
       },
     });
   });
+
+  it('deepMerge', () => {
+    const a = {
+      Container: {
+        normal: {
+          background: {
+            color: '#f70a0a',
+          },
+          border: {
+            top: {
+              width: 2,
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+              style: 'solid',
+            },
+            right: {
+              width: 2,
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+              style: 'solid',
+            },
+            bottom: {
+              width: 2,
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+              style: 'solid',
+            },
+            left: {
+              width: 2,
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+              style: 'solid',
+            },
+            all: {
+              width: 2,
+              style: 'solid',
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+            },
+          },
+          borderRadius: {
+            topLeft: 7.43,
+            topRight: 7.43,
+            bottomRight: 7.43,
+            bottomLeft: 7.43,
+          },
+        },
+      },
+    };
+    const b = {
+      Container: {
+        normal: {
+          background: {
+            color: 'yellow',
+          },
+          border: {
+            top: {
+              width: 2,
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+              style: 'solid',
+            },
+            right: {
+              width: 2,
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+              style: 'solid',
+            },
+            bottom: {
+              width: 2,
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+              style: 'solid',
+            },
+            left: {
+              width: 2,
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+              style: 'solid',
+            },
+            all: {
+              width: 2,
+              style: 'solid',
+              color: '$lugia-dict.@lugia/lugia-web.themeFocusColor',
+            },
+          },
+          borderRadius: {
+            topLeft: 7.43,
+            topRight: 7.43,
+            bottomRight: 7.43,
+            bottomLeft: 7.43,
+          },
+        },
+      },
+    };
+    for (let i = 0; i < 5 * 1000; i++) {
+      deepMerge(a, b);
+      // Object.assign({}, a, b)
+    }
+    console.timeEnd('hello');
+    console.info(JSON.stringify(deepMerge(a, b)));
+  });
 });

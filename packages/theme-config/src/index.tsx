@@ -15,6 +15,7 @@ type StateType = {};
 
 export type ContextType = {
   config: ThemeComponentConfig;
+  globalTheme: ThemeComponentConfig;
   svThemeConfigTree: ThemeComponentConfig;
 };
 
@@ -25,12 +26,14 @@ class Theme extends React.Component<Partial<ThemeConfigProps>, StateType> {
   static contextType = ThemeContext;
   static displayName = 'lugia_theme_wrap';
   svThemeConfigTree: object;
+  globalTheme: object;
   context: ContextType;
 
   constructor(props: ThemeConfigProps, context: ContextType) {
     super(props);
     this.svThemeConfigTree = {};
-    this.context = { config: {}, svThemeConfigTree: {} };
+    this.globalTheme = {};
+    this.context = { config: {}, svThemeConfigTree: {}, globalTheme: {} };
     this.updateTreeConfig(props, context);
   }
 
@@ -46,8 +49,10 @@ class Theme extends React.Component<Partial<ThemeConfigProps>, StateType> {
   }
 
   updateTreeConfig(props: ThemeConfigProps, context: ContextType) {
-    const { config, svThemeConfigTree } = context;
+    const { globalTheme: propsGlobal } = props;
+    const { config, svThemeConfigTree, globalTheme } = context;
     this.svThemeConfigTree = getConfig(svThemeConfigTree, config, props.config);
+    this.globalTheme = globalTheme || propsGlobal;
   }
 
   getContextValue(): object {
@@ -55,6 +60,7 @@ class Theme extends React.Component<Partial<ThemeConfigProps>, StateType> {
     const { config } = props;
     return {
       config,
+      globalTheme: this.globalTheme,
       svThemeConfigTree: this.svThemeConfigTree,
     };
   }

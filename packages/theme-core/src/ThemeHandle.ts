@@ -41,6 +41,9 @@ export type SvTarget = {
   current?: SvTarget;
   setPopupVisible?: AnyFunction;
 };
+
+type AnyObject = { [key: string]: any };
+
 export default class ThemeHandle extends ThemeEventChannelHandle {
   context: { [key: string]: any };
   widgetName: string;
@@ -97,9 +100,10 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
   updateTheme() {
     const { config = {}, svThemeConfigTree = {} } = this.context;
     const { viewClass, theme } = this.props;
-    const result = this.getConfig(svThemeConfigTree, config, theme);
     const clazzNames = viewClass ? viewClass.split(' ') : [];
-    let viewClassResult = {};
+    const result = this.getConfig(svThemeConfigTree, config, theme);
+
+    let viewClassResult = this.getGlobalTheme(clazzNames);
 
     for (const clazzName of clazzNames) {
       const viewConfig = result[clazzName];
@@ -107,6 +111,8 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
         viewClassResult = deepMerge(viewClassResult, viewConfig);
       }
     }
+
+    console.info('viewClassResult', viewClassResult);
     const widgetNameResult = result[this.widgetName];
     const currConfig = deepMerge(widgetNameResult, viewClassResult);
     this.cacheTheme = Object.assign(
@@ -114,6 +120,22 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
       { ...currConfig },
       { svThemeConfigTree },
     );
+  }
+
+  getGlobalTheme(viewClasses: string[]): AnyObject {
+    const { globalTheme = {} } = this.context;
+
+    let result = {};
+    for (const viewClass of viewClasses) {
+      const globalValue = globalTheme[viewClass];
+      if (globalTheme) {
+        result = Object.assign(result, globalValue);
+      }
+    }
+    console.info('globalTheme', globalTheme);
+    console.info('viewClasses', viewClasses);
+    console.info('result', result);
+    return result;
   }
 
   getThemeByDisplayName = (displayName: string) => {

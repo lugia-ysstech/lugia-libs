@@ -56,11 +56,7 @@ const config = {
           color: 'blue',
         },
       },
-      disabled: {
-        background: {
-          color: 'black',
-        },
-      },
+
       normal: {
         lineHeight: 50,
         fontSize: 22,
@@ -159,9 +155,22 @@ export default () => {
   });
   return [
     installState ? (
-      <Theme config={theme}>
+      <Theme
+        config={theme}
+        globalTheme={{
+          DisabledViewClass: {
+            Block: {
+              disabled: {
+                background: {
+                  color: 'black',
+                },
+              },
+            },
+          },
+        }}
+      >
         <Selector
-          viewClass={'viewClass viewClassB'}
+          viewClass={'viewClass viewClassB DisabledViewClass'}
           widgetId={'select'}
           innerRefForDesign={design}
           innerRef={current => {
