@@ -41,6 +41,7 @@ class Theme extends React.Component<Partial<ThemeConfigProps>, StateType> {
     const nowContext = this.context;
     if (
       nextProps.config !== this.props.config ||
+      nextProps.globalConfig !== this.props.globalConfig ||
       nowContext.config !== context.config ||
       nowContext.svThemeConfigTree !== context.svThemeConfigTree
     ) {
