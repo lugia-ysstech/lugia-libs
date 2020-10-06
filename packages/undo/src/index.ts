@@ -78,6 +78,29 @@ export default class History {
     }
   }
 
+  doInSleepSync(
+    doBusiness: () => any,
+    success: () => any,
+    option: SleepOption = {},
+  ) {
+    try {
+      this.toSleep();
+      const { breakDoBusiness } = option;
+      if (doBusiness) {
+        const res = doBusiness();
+        if (breakDoBusiness && !res) {
+          return;
+        }
+      }
+      this.toRaise();
+      if (success) {
+        success();
+      }
+    } finally {
+      this.toRaise();
+    }
+  }
+
   equalTo(history: History) {
     if (!history) {
       return false;

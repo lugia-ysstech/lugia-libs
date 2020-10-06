@@ -226,6 +226,35 @@ describe('History', () => {
       id: 1,
     });
   });
+  it('doInSleepSync', async () => {
+    const config = {
+      stackCount: 15,
+      tableName,
+    };
+    const db: any = new LocalStore({});
+    const history = new History(config, db);
+    await history.add({ id: 1 });
+    history.doInSleepSync(
+      () => {
+        history.add({ id: 2 });
+        history.add({ id: 3 });
+        history.add({ id: 4 });
+      },
+      () => {
+        history.add({ id: 2 });
+      },
+    );
+
+    const wait2Second = new Promise(res => {
+      setTimeout(() => {
+        res(100);
+      }, 2000);
+    });
+    await wait2Second;
+    expect(await history.undo()).toEqual({
+      id: 1,
+    });
+  });
 
   it('toSleep breakDoBusiness', async () => {
     const config = {
