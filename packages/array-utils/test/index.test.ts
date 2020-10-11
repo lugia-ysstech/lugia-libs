@@ -13,6 +13,7 @@ import {
   sliceRight,
   sortNumberArrayAsc,
   sortNumberArrayDesc,
+  row2colMatrix,
 } from '../src';
 
 type AnyObject = { [key: string]: any };
@@ -210,5 +211,28 @@ describe('array-utils', () => {
       [1, 2, 3],
       [1, 2, 3],
     ]);
+  });
+
+  it('tillCols', () => {
+    expect(row2colMatrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])).toEqual([
+      [1, 4, 7],
+      [2, 5, 8],
+      [3, 6, 9],
+    ]);
+    expect(row2colMatrix([[1, 2, 3], [4, 5, 6]])).toEqual([
+      [1, 4],
+      [2, 5],
+      [3, 6],
+    ]);
+    expect(row2colMatrix([[1, 2], [4, 5, 6]])).toEqual([
+      [1, 4],
+      [2, 5],
+      [undefined, 6],
+    ]);
+    expect(row2colMatrix([])).toEqual([]);
+    expect(row2colMatrix(undefined as any)).toEqual([]);
+    expect(row2colMatrix([[], [], []])).toEqual([]);
+    expect(row2colMatrix([[], [], [3]])).toEqual([[undefined, undefined, 3]]);
+    expect(row2colMatrix([[1], [], [3]])).toEqual([[1, undefined, 3]]);
   });
 });

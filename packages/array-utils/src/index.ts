@@ -163,3 +163,27 @@ function sortNumberArray(
   }
   return cb(lenA, lenB);
 }
+
+export function row2colMatrix<T>(rows: T[][]): T[][] {
+  const cols: T[][] = [];
+
+  if (getArrayLen(rows) <= 0) {
+    return cols;
+  }
+
+  const rowCount = rows.length;
+  let maxColCount = 0;
+
+  for (let row = 0; row < rowCount; row++) {
+    maxColCount = Math.max(maxColCount, rows[row].length);
+  }
+
+  for (let col = 0; col < maxColCount; col++) {
+    const oneCols: T[] = [];
+    cols.push(oneCols);
+    for (let row = 0; row < rowCount; row++) {
+      oneCols.push(rows[row][col]);
+    }
+  }
+  return cols;
+}
