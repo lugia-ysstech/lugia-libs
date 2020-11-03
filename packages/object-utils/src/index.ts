@@ -5,7 +5,7 @@
  * @flow
  */
 
-import merge, { Options } from 'deepmerge';
+import merge from 'deepmerge';
 import { DeepMergeOption } from './type';
 
 import isPlainObject from 'is-plain-object';
@@ -281,4 +281,45 @@ export function diffABWhenAttrIfExist(objA: object, objB: object): string[] {
   });
 
   return Object.keys(resObj);
+}
+
+/**
+ * 获取目标对象中的某个属性列的引用值，外部可以直接修改该引用。
+ * 并且，如果不存在该属性列将会根据目标属性名定义添加一个值为空对象。
+ * @param target 目标对象
+ * @param attribute 目标属性名
+ */
+export function getObjectAttributeRef(
+  target: AnyObject,
+  attribute: string,
+): AnyObject {
+  let result = target[attribute];
+  if (!result) {
+    result = target[attribute] = {};
+  }
+
+  if (typeof result !== 'object') {
+    console.warn(`${attribute} is not Object`);
+  }
+  return result;
+}
+
+/**
+ * 获取目标对象中的某个属性列的引用值，外部可以直接修改该引用。
+ * 并且，如果不存在该属性列将会根据目标属性名定义添加一个值为数组。
+ * @param target 目标对象
+ * @param attribute 目标属性名
+ */
+export function getArrayAttributeRef(
+  target: AnyObject,
+  attribute: string,
+): any[] {
+  let result = target[attribute];
+  if (!result) {
+    result = target[attribute] = [];
+  }
+  if (!Array.isArray(result)) {
+    console.warn(`${attribute} is not Array`);
+  }
+  return result;
 }

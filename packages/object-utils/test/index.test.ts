@@ -5,10 +5,12 @@ import {
   deepMergeForArrayMerge,
   deepMergeOption,
   diffABWhenAttrIfExist,
+  getArrayAttributeRef,
   getAttributeFromObject,
   getAttributeValue,
   getIndexfromKey,
   getKeyfromIndex,
+  getObjectAttributeRef,
   isEmptyObject,
   moveToTargetIfKeyIsInSource,
   object2pathObject,
@@ -621,5 +623,27 @@ describe('object-utils', () => {
     }
     console.timeEnd('hello');
     console.info(JSON.stringify(deepMerge(a, b)));
+  });
+
+  it('getArrayAttributeRef if exist', () => {
+    const target = { data: [1, 2], name: 'hello' };
+    expect(getArrayAttributeRef(target, 'data')).toBe(target.data);
+    expect(getArrayAttributeRef(target, 'name')).toBe('hello');
+  });
+
+  it('getArrayAttributeRef if not exist', () => {
+    const target: any = { data: [1, 2] };
+    expect(getArrayAttributeRef(target, 'name')).toEqual([]);
+    expect(getArrayAttributeRef(target, 'name')).toBe(target.name);
+  });
+  it('getObjectAttributeRef if exist', () => {
+    const target = { data: {} };
+    expect(getObjectAttributeRef(target, 'data')).toBe(target.data);
+  });
+
+  it('getObjectAttributeRef if not exist', () => {
+    const target: any = { data: [1, 2] };
+    expect(getObjectAttributeRef(target, 'name')).toEqual({});
+    expect(getObjectAttributeRef(target, 'name')).toBe(target.name);
   });
 });
