@@ -14,6 +14,8 @@ import {
   sortNumberArrayAsc,
   sortNumberArrayDesc,
   row2colMatrix,
+  sortStringDesc,
+  sortStringAsc,
 } from '../src';
 
 type AnyObject = { [key: string]: any };
@@ -234,5 +236,14 @@ describe('array-utils', () => {
     expect(row2colMatrix([[], [], []])).toEqual([]);
     expect(row2colMatrix([[], [], [3]])).toEqual([[undefined, undefined, 3]]);
     expect(row2colMatrix([[1], [], [3]])).toEqual([[1, undefined, 3]]);
+  });
+
+  it('sortStringDesc', () => {
+    expect(['a', 'b', 'c'].sort(sortStringDesc)).toEqual(['c', 'b', 'a']);
+    expect(['a', 'b', 'c'].sort(sortStringDesc)).toEqual(['c', 'b', 'a']);
+  });
+  it('sortStringAsc', () => {
+    expect(['a', 'b', 'c'].sort(sortStringAsc)).toEqual(['a', 'b', 'c']);
+    expect(['c', 'b', 'a'].sort(sortStringAsc)).toEqual(['a', 'b', 'c']);
   });
 });

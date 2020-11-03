@@ -187,3 +187,22 @@ export function row2colMatrix<T>(rows: T[][]): T[][] {
   }
   return cols;
 }
+
+export function sortStringDesc(a: string, b: string): number {
+  if (a === b) {
+    return 0;
+  } else if (a > b) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+export function sortStringAsc(a: string, b: string): number {
+  if (a === b) {
+    return 0;
+  } else if (a > b) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
