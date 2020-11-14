@@ -13,6 +13,9 @@ import {
 
 import Unique, { now } from '@lugia/unique';
 import Listener from '@lugia/listener';
+import { sortStringAsc } from '@lugia/array-utils';
+
+const Connected = 'connected';
 
 export default class IndexDB extends Listener<any> implements Store {
   db: any;
@@ -25,8 +28,8 @@ export default class IndexDB extends Listener<any> implements Store {
 
   constructor(indexedDB: any, option: IndexDBOption) {
     super();
-    this.indexOption = {};
     this.version = 1;
+    this.indexOption = {};
     this.dataBaseName = '';
     this.tableNames = [];
     this.tableExist = {};
@@ -58,19 +61,56 @@ export default class IndexDB extends Listener<any> implements Store {
     tableNames.forEach((tableName: string) => {
       this.tableName2Unique[tableName] = new Unique(0, tableName, generateId);
     });
+    this.openDataBase(indexedDB, option);
+  }
 
-    const { version = 1 } = option;
-    const request = indexedDB.open(dataBaseName, version);
+  getDataBaseTag = (): string => {
+    const { dataBaseName, version } = this;
+    return `[${dataBaseName}@${version}]`;
+  };
+
+  openDataBase = (indexedDB: any, option: IndexDBOption) => {
+    const { dataBaseName, tableNames, version } = option;
     this.dataBaseName = dataBaseName;
-
-    this.version = version;
-    request.onerror = () => {
-      console.error(`打开数据库报错 [${dataBaseName}@${version}]`);
+    const request = indexedDB.open(dataBaseName, version);
+    const dataBaseTag = this.getDataBaseTag();
+    request.onerror = async () => {
+      console.error(`打开数据库报错 ${dataBaseTag}`);
     };
 
+    request.onupgradeneeded = (event: any) => {
+      this.updateDb(event);
+
+      const existTableNames: string[] = this.getExistTableNames();
+      const existTableMap: { [tableName: string]: boolean } = {};
+      for (const item of existTableNames) {
+        existTableMap[item] = true;
+      }
+
+      tableNames.forEach((tableName: string) => {
+        this.createTable(tableName);
+        delete existTableMap[tableName];
+      });
+
+      for (const needDelTableName of Object.keys(existTableMap)) {
+        const db = this.getDb();
+        db.deleteObjectStore(needDelTableName);
+      }
+    };
     request.onsuccess = (event: any) => {
       this.updateDb(event);
       const { resetDataAfterConnect = {} } = option;
+      const existTables: string[] = this.getExistTableNames();
+      existTables.sort(sortStringAsc);
+      tableNames.sort(sortStringAsc);
+      const separator = '|';
+      if (existTables.join(separator) !== tableNames.join(separator)) {
+        const { version: oldVersion } = this.getDb();
+        console.info(`待创建的表里包含未创建的表 ${this.getDataBaseTag()}`);
+        this.getDb().close();
+        this.openDataBase(indexedDB, { ...option, version: oldVersion + 1 });
+        return;
+      }
 
       tableNames.forEach(async (tableName: string) => {
         const isExist = this.existTable(tableName);
@@ -84,14 +124,22 @@ export default class IndexDB extends Listener<any> implements Store {
         }
       });
     };
+  };
 
-    request.onupgradeneeded = (event: any) => {
-      this.updateDb(event);
-      tableNames.forEach((tableName: string) => {
-        this.createTable(tableName);
-      });
-    };
-  }
+  getExistTableNames = (): string[] => {
+    const db = this.getDb();
+    if (!db) {
+      console.error(
+        `getExistTableNames执行错误获取不到db对象 ${this.getDataBaseTag()}`,
+      );
+      return [];
+    }
+    const existTables: string[] = [];
+    for (const existTable of db.objectStoreNames) {
+      existTables.push(existTable);
+    }
+    return existTables;
+  };
 
   createTable(tableName: string) {
     if (!this.existTable(tableName)) {
@@ -231,9 +279,11 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   updateDb(event: any) {
-    console.log(`打开数据库成功 [${this.dataBaseName}@${this.version}]`);
     this.db = event.target.result;
-    this.emit('connected', { db: this.db });
+    const { version } = this.db;
+    this.version = version;
+    console.log(`打开数据库成功 [${this.dataBaseName}@${this.version}]`);
+    this.emit(Connected, { db: this.db });
   }
 
   getDb() {
@@ -282,11 +332,20 @@ export default class IndexDB extends Listener<any> implements Store {
     if (db && this.tableExist[tableName]) {
       return Promise.resolve(db);
     }
-    return new Promise(res => {
-      const handler = this.once(tableName, data => {
-        const { db: resDB } = data;
-        this.tableExist[tableName] = true;
-        res(resDB);
+    const data = await this.waitEvent(tableName);
+    const { db: resDB } = data;
+    this.tableExist[tableName] = true;
+    return resDB;
+  }
+
+  async waitEvent(eventName: string): Promise<any> {
+    const WaitTimeOut = 5000;
+    return new Promise((res, reject) => {
+      setTimeout(() => {
+        reject('获取连接失败');
+      }, WaitTimeOut);
+      const handler = this.once(eventName, data => {
+        res(data);
         handler.removeListener();
       });
     });
