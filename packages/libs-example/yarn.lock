@@ -965,6 +965,13 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@lugia/array-utils@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@lugia/array-utils/-/array-utils-1.0.6.tgz#3826cd11dfcea435f36ac5cd598fc558f9dc80ae"
+  integrity sha512-Dxm5rD9pQeN/rN3ei1dkEMb0DvSzAdOj0Tg1GZ+xf20AW5k1VdfjyBBeRX5AcwIUGrAARmHoVugem3pahK1DUw==
+  dependencies:
+    tslib "^1.11.1"
+
 "@lugia/babel-preset-mega@^1.1.2":
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/@lugia/babel-preset-mega/download/@lugia/babel-preset-mega-1.1.2.tgz#07b5a7527181c5ae7cef5eea8a0670dfa9441297"
@@ -1039,12 +1046,13 @@
   dependencies:
     tslib "^1.11.1"
 
-"@lugia/indexdb@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@lugia/indexdb/-/indexdb-1.0.19.tgz#960519ea73de748d1508bad1b1a74dbf38b75513"
-  integrity sha512-QOUzhTnflS5MrItDowxgnxnbo7FdYSiSQY9gEAaN0ZJMWcWZq18cFG8M69TnCqoXlOFRzclhUeRiH/MB7mCZfw==
+"@lugia/indexdb@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@lugia/indexdb/-/indexdb-1.1.0.tgz#23fb78937db07ecb3b891d517bbbc4f5f8051b2e"
+  integrity sha512-HepRorYeZRPoGb05ZpZpBOV2kmAPwSYj6CH7oXQmf48tvPW+WYRHZWZbzLp6gcc1It18siU459Qe0O6C8tOsJw==
   dependencies:
     "@babel/runtime" "^7.4.5"
+    "@lugia/array-utils" "^1.0.6"
     "@lugia/listener" "^1.1.1"
     "@lugia/unique" "^1.0.7"
     tslib "^1.11.1"
@@ -10929,9 +10937,9 @@ websocket-driver@>=0.5.1:
     websocket-extensions ">=0.1.1"
 
 websocket-extensions@>=0.1.1:
-  version "0.1.3"
-  resolved "https://registry.npm.taobao.org/websocket-extensions/download/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
-  integrity sha1-XS/yKXcAPsaHpLhwc9+7rBRszyk=
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
+  integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
 whatwg-fetch@^3.0.0:
   version "3.0.0"
