@@ -30,6 +30,21 @@ export default class History {
     this.throttle = 0;
   }
 
+  async readQueueFromStore(param: AnyObject) {
+    if (!this.tableName) {
+      return;
+    }
+    const tasks = await this.store.getAll(this.tableName);
+    if (tasks.length === 0) {
+      await this.add(param);
+    } else {
+      for (const task of tasks) {
+        const { id } = task;
+        this.queue.add(id);
+      }
+    }
+  }
+
   addThrottle(data: AnyObject, time: number = 100) {
     if (this.sleep) {
       return;

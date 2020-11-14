@@ -18,4 +18,5 @@ export interface Store {
   clean(): void;
 
   isSameDB(target: AnyObject): boolean;
+  getAll(tableName: string): Promise<AnyObject[]>;
 }

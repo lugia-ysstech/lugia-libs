@@ -20,6 +20,10 @@ export default class LocalStore implements Store {
     this.existId = {};
   }
 
+  async getAll(tableName: string): Promise<AnyObject[]> {
+    return Object.values(this.db);
+  }
+
   async save(tableName: string, target: AnyObject): Promise<string> {
     const id = this.unique.getNext();
     this.db[id] = JSON.stringify(target);
