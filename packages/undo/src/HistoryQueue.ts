@@ -7,13 +7,15 @@
 import { limitByConfig } from '@lugia/math';
 import { LimitRange } from '@lugia/math/lib/type';
 import { HistoryConfig } from './type';
+import Listener from '@lugia/listener';
 
-export default class HistoryQueue<SaveType> {
+export default class HistoryQueue<SaveType> extends Listener<'delete'> {
   stack: SaveType[];
   stackCount: number;
   currentIndex: number;
   limitByConfig: (val: number, opt: LimitRange) => number;
   constructor(config: HistoryConfig) {
+    super();
     const { stackCount } = config;
     this.stack = [];
     this.stackCount = stackCount;
@@ -70,7 +72,10 @@ export default class HistoryQueue<SaveType> {
   }
 
   splice(start: number, delCount: number = Infinity): void {
-    this.stack.splice(start, delCount);
+    const data: SaveType[] = this.stack.splice(start, delCount);
+    this.emit('delete', {
+      data,
+    });
   }
 
   isUndoing(): boolean {

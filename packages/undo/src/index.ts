@@ -25,6 +25,14 @@ export default class History {
   constructor(config: HistoryConfig, store: IndexDB) {
     this.store = store;
     this.queue = new HistoryQueue(config);
+    this.queue.on('delete', ({ data }) => {
+      if (!Array.isArray(data)) {
+        return;
+      }
+      for (const id of data) {
+        this.deleteInStore(id);
+      }
+    });
     this.sleep = false;
     this.tableName = config.tableName;
     this.throttle = 0;
@@ -131,9 +139,13 @@ export default class History {
     const id = await this.store.save(this.tableName, { data });
     const delTarget = this.queue.add(id);
     if (delTarget) {
-      await this.store.del(this.tableName, delTarget);
+      await this.deleteInStore(delTarget);
     }
     debug('id: %s, delTarget: %s, file = %o ', id, delTarget, data);
+  }
+
+  async deleteInStore(id: string) {
+    await this.store.del(this.tableName, id);
   }
 
   async undo() {
