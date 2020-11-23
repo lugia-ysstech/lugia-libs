@@ -9,6 +9,7 @@ import React, {
   ForwardRefExoticComponent,
   MutableRefObject,
   Ref,
+  RefAttributes,
   SetStateAction,
   useContext,
   useEffect,
@@ -97,11 +98,11 @@ export function notEqualDeep(objA: any, objB: any): boolean {
   return JSON.stringify(objA) !== JSON.stringify(objB);
 }
 
-const ThemeProvider = (
+function ThemeProvider<WidgetProps>(
   Target: ProviderComponent,
   widgetName: string,
   opt: ThemeHocOption = { hover: false, active: false, focus: false },
-): ForwardRefExoticComponent<ThemeHocProps> => {
+): ForwardRefExoticComponent<ThemeHocProps & WidgetProps & RefAttributes<any>> {
   if (Target.displayName === CSSComponentContainerDisplayName) {
     console.warn('CSSComponent不推荐直接包括ThemeHoc');
   }
@@ -203,12 +204,10 @@ const ThemeProvider = (
       />
     );
   };
-  const ThemeWrapWidget: ForwardRefExoticComponent<
-    ThemeHocProps
-  > = React.forwardRef(ThemeWrapWidgetForward);
+  const ThemeWrapWidget: any = React.forwardRef(ThemeWrapWidgetForward);
   // @ts-ignore
   ThemeWrapWidget.__OrginalWidget__ = Target;
   ThemeWrapWidget.displayName = packDisplayName(widgetName);
   return ThemeWrapWidget;
-};
+}
 export default ThemeProvider;
