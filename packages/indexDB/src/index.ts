@@ -291,13 +291,20 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async save(tableName: string, target: object): Promise<string> {
+    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    return this.saveByStore(tableName, target, store);
+  }
+
+  async saveByStore(
+    tableName: string,
+    target: object,
+    store: any,
+  ): Promise<string> {
     const unique = this.getUnique(tableName);
     if (!unique) {
       return '';
     }
     const id = unique.getNext();
-    const store = await this.getDBObjectStore(tableName, 'readwrite');
-
     const request = store.add({ id, ...target });
     return this.requestPromise(request, {
       success: `${tableName} ${id} ${JSON.stringify(target)} 新增记录`,
@@ -306,16 +313,36 @@ export default class IndexDB extends Listener<any> implements Store {
   }
 
   async update(tableName: string, id: string, target: object): Promise<string> {
+    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    return this.updateByStore(tableName, id, target, store);
+  }
+
+  async updateByStore(
+    tableName: string,
+    id: string,
+    target: object,
+    store: any,
+  ): Promise<string> {
     if (!this.getUnique(tableName)) {
       return '';
     }
-    const store = await this.getDBObjectStore(tableName, 'readwrite');
     const request = store.put({ id, ...target });
     const msg = `${tableName} ${target} 更新记录 id =${id}`;
     return this.requestPromise(request, {
       success: msg,
       error: msg,
     });
+  }
+
+  async saveOrUpdate(tableName: string, target: any): Promise<any> {
+    const store = await this.getDBObjectStore(tableName, 'readwrite');
+    const { id } = target;
+    if (id) {
+      if (await this.getByStore(tableName, id, store)) {
+        return this.updateByStore(tableName, id, target, store);
+      }
+    }
+    return this.saveByStore(tableName, target, store);
   }
 
   async getDBObjectStore(
@@ -395,8 +422,10 @@ export default class IndexDB extends Listener<any> implements Store {
       return '';
     }
     const store = await this.getDBObjectStore(tableName, 'readonly');
+    return this.getByStore(tableName, id, store);
+  }
+  async getByStore(tableName: string, id: string, store: any): Promise<any> {
     const request = store.get(id);
-
     const msg = `${tableName} ${id} 数据获取`;
     return this.requestPromise(request, {
       success: msg,

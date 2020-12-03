@@ -14,6 +14,7 @@ export interface QueryInstance {
 
 export interface Store extends QueryInstance {
   save(tableName: string, target: object): Promise<string>;
+  saveOrUpdate(tableName: string, target: object): Promise<string>;
 
   getAndDel(tableName: string, id: string): Promise<object>;
 
