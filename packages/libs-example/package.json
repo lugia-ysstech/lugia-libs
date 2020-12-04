@@ -1,13 +1,13 @@
 {
   "name": "@lugia/libs-example",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "dependencies": {
     "@lugia/dict": "^1.0.5",
     "@lugia/indexdb": "^1.2.0",
     "@lugia/theme-config": "^1.1.7",
-    "@lugia/theme-css-hoc": "^1.1.20",
+    "@lugia/theme-css-hoc": "^1.1.21",
     "@lugia/theme-hoc": "^1.1.15",
-    "@lugia/theme-utils": "^1.1.9",
+    "@lugia/theme-utils": "^1.1.10",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
