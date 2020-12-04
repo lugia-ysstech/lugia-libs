@@ -5,8 +5,7 @@
  * @flow
  */
 import { Point, SizeStyle, SizeType, PointStyle } from './type';
-// @ts-ignore
-import Debug from 'debug/dist/debug';
+import Debug from 'debug';
 
 const debug = Debug('lugia-theme:font');
 let footerFontSize = 10;
