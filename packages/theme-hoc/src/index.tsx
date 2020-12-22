@@ -181,8 +181,20 @@ function ThemeProvider<WidgetProps>(
       const { themeState: propsThemeState = {} } = props;
       setThemeState(propsThemeState);
     }
-    const { lugiaHidden = false } = props;
+    const {
+      lugiaHidden = false,
+      widgetId: componentId,
+      viewClass = '',
+    } = props;
     const InjectProps = handle.getPartOfThemeConfig('InjectProps', false);
+    const widgetId = componentId ? componentId : viewClass.split(' ')[1];
+    const widgetBox = document.getElementById(widgetId);
+    if (widgetBox) {
+      lugiaHidden
+        ? (widgetBox.style.display = 'none')
+        : (widgetBox.style.display = 'block');
+    }
+
     return lugiaHidden ? null : (
       <Target
         dispatchEvent={handle.dispatchEvent}
