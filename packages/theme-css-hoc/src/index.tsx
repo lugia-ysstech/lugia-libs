@@ -48,6 +48,9 @@ function getClassName(
   cssConfigClassName: string,
   props: ComponentProps,
 ): string {
+  if (typeof window === 'undefined') {
+    return '';
+  }
   const { className } = props;
   // @ts-ignore
   cssConfigClassName = !window.__lugia__enabledClassNameBool__

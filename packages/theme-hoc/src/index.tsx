@@ -188,7 +188,10 @@ function ThemeProvider<WidgetProps>(
     } = props;
     const InjectProps = handle.getPartOfThemeConfig('InjectProps', false);
     const widgetId = componentId ? componentId : viewClass.split(' ')[1];
-    const widgetBox = document.getElementById(widgetId);
+    let widgetBox = null;
+    if (typeof document !== 'undefined') {
+      widgetBox = document.getElementById(widgetId);
+    }
     if (widgetBox) {
       lugiaHidden
         ? (widgetBox.style.display = 'none')
