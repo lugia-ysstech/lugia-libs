@@ -107,4 +107,8 @@ export default class Listener<T extends string> {
       });
     });
   }
+
+  removeAllListeners() {
+    this.events.removeAllListeners();
+  }
 }
