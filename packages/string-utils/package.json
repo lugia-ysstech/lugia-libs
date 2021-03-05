@@ -1,0 +1,21 @@
+{
+  "name": "@lugia/string-utils",
+  "version": "1.0.0",
+  "types": "./lib/index.d.ts",
+  "description": "string utils",
+  "main": "./lib/index.js",
+  "scripts": {
+    "start": "node ./lib"
+  },
+  "author": "#lugia#",
+  "license": "MIT",
+  "dependencies": {},
+  "files": [
+    "lib",
+    "interface"
+  ],
+  "engines": {
+    "node": ">=10",
+    "npm": ">=5.2.0"
+  }
+}
