@@ -1,6 +1,6 @@
 {
   "name": "@lugia/promise-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "types": "./lib/index.d.ts",
   "description": "object utils",
   "main": "./lib/index.js",
