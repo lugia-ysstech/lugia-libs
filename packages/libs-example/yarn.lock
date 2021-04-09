@@ -965,6 +965,13 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@lugia/array-utils@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@lugia/array-utils/-/array-utils-1.0.6.tgz#3826cd11dfcea435f36ac5cd598fc558f9dc80ae"
+  integrity sha512-Dxm5rD9pQeN/rN3ei1dkEMb0DvSzAdOj0Tg1GZ+xf20AW5k1VdfjyBBeRX5AcwIUGrAARmHoVugem3pahK1DUw==
+  dependencies:
+    tslib "^1.11.1"
+
 "@lugia/babel-preset-mega@^1.1.2":
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/@lugia/babel-preset-mega/download/@lugia/babel-preset-mega-1.1.2.tgz#07b5a7527181c5ae7cef5eea8a0670dfa9441297"
@@ -995,10 +1002,10 @@
     babel-plugin-transform-react-remove-prop-types "0.4.24"
     core-js "^3.1.4"
 
-"@lugia/css@^1.0.24":
-  version "1.0.24"
-  resolved "https://registry.yarnpkg.com/@lugia/css/-/css-1.0.24.tgz#1716bcf1fa9fbb1255d8c08c43a4d9738d629454"
-  integrity sha512-Vl9zZNFvz55OHz6l5Nu5/xkz9V2NFsxEVcRSjZBRUDLbJEtgRrcQ4bK5z5J68khYvXme60EcbgksoK9eliZ58g==
+"@lugia/css@^1.0.25":
+  version "1.0.25"
+  resolved "https://registry.yarnpkg.com/@lugia/css/-/css-1.0.25.tgz#ef710d2c6d8df19c9ceaafb9da219455e95ac874"
+  integrity sha512-mYlTdWkFvWIzUtb+ngGhgLyzgsFInXL5o4NWo5EhWfdr81zKHMkettFfPDtBlXsHi9Z1E/Set2V98QIeJ6tw2g==
   dependencies:
     "@types/debug" "^4.1.5"
     debug "^4.1.1"
@@ -1039,20 +1046,21 @@
   dependencies:
     tslib "^1.11.1"
 
-"@lugia/indexdb@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@lugia/indexdb/-/indexdb-1.0.19.tgz#960519ea73de748d1508bad1b1a74dbf38b75513"
-  integrity sha512-QOUzhTnflS5MrItDowxgnxnbo7FdYSiSQY9gEAaN0ZJMWcWZq18cFG8M69TnCqoXlOFRzclhUeRiH/MB7mCZfw==
+"@lugia/indexdb@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@lugia/indexdb/-/indexdb-1.2.2.tgz#d1f86da530af924b5f43ac0c6ef151555de11903"
+  integrity sha512-lJDm9tPL2AJkJCGMJHBzg6f+RGEzrL5kMpH824xMRknVRLNkWcM79SnMxTObCJnuCUAuUqexD3kW54AelVQfPA==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/listener" "^1.1.1"
+    "@lugia/array-utils" "^1.0.6"
+    "@lugia/listener" "^1.1.4"
     "@lugia/unique" "^1.0.7"
     tslib "^1.11.1"
 
-"@lugia/listener@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@lugia/listener/-/listener-1.1.1.tgz#5bae2cd4f3b8e0dc32f2681b6a8ea0fbbac83418"
-  integrity sha512-S+001AfSLE9q40xEoH6MbIVQJsAqJRvOpHRI4jTxe+jah8/8NihozJJCaDYiGG113k3Pw4rMjJwRhige/1u0zA==
+"@lugia/listener@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@lugia/listener/-/listener-1.1.4.tgz#f59a1873b304c1775cd014907bf6029520bf99a0"
+  integrity sha512-hyjssPY6ovlW6B4zZmSaP1aeFY++4RjM00RJ9NkgKogCC+os24adNdyNg8OhyU6bh0XKafICqK/+VaBf8EE3fg==
   dependencies:
     "@babel/runtime" "^7.4.5"
     events "^3.0.0"
@@ -1250,24 +1258,24 @@
     "@types/react-test-renderer" "^16.9.2"
     prop-types "^15.7.2"
 
-"@lugia/theme-css-hoc@^1.1.20":
-  version "1.1.20"
-  resolved "https://registry.yarnpkg.com/@lugia/theme-css-hoc/-/theme-css-hoc-1.1.20.tgz#1aabe4493d07d763284a211842f1fac510c614e5"
-  integrity sha512-5htMmFICLZpwCj3C2EILtRgzUtqg8sAoJ/0fpBi1C2uYh1DhgJnxwAJdkU7o9sQSpKteVOOeuys4yFPL33ukeg==
+"@lugia/theme-css-hoc@^1.1.22":
+  version "1.1.22"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-css-hoc/-/theme-css-hoc-1.1.22.tgz#dd9e69d1e7a25217d409176f61b0c9c9fab9e3c3"
+  integrity sha512-q175tOqabTNF7rwRmBQOBlG8FtFKtMYEFGnMsCG4J/5vTbFa56xZpBZuk8U1NtU640Gz4NrGtD+8oNbHrDY7Eg==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/css" "^1.0.24"
+    "@lugia/css" "^1.0.25"
     "@lugia/object-utils" "^1.1.0"
     "@lugia/ramada" "^1.0.5"
-    "@lugia/theme-utils" "^1.1.9"
+    "@lugia/theme-utils" "^1.1.10"
     "@types/react" "^16.9.32"
     "@types/styled-components" "^4.4.3"
     tslib "^1.11.1"
 
-"@lugia/theme-hoc@^1.1.14":
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/@lugia/theme-hoc/-/theme-hoc-1.1.14.tgz#1ba99d36258b3ecc737a18db003d7d3505636b66"
-  integrity sha512-PJmXOILk9uyCAHw5U+BrD+GHoHx+DBU7rndcRutdr5TEFWKv6Dggu3LWpiof278hBnFeBRL4mE3PFQKnC5lbKQ==
+"@lugia/theme-hoc@^1.1.17":
+  version "1.1.17"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-hoc/-/theme-hoc-1.1.17.tgz#03b98973b9b1e2ab5fc366c2edc5e09156827e13"
+  integrity sha512-43CfWQx3s+vvJcQc1lAhM1MtWZ+C9lD2iGdSzG6wLonnvT2Wcw4HXcs0uq2FIzJwVTFsJIB5cxvQeOkftbdTjA==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@lugia/object-utils" "^1.1.0"
@@ -1275,13 +1283,13 @@
     "@types/styled-components" "^5.0.1"
     tslib "^1.11.1"
 
-"@lugia/theme-utils@^1.1.9":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@lugia/theme-utils/-/theme-utils-1.1.9.tgz#987b794894ecbf661f6da1de0703ec1683f99713"
-  integrity sha512-wdktPzonXm4Dx4pP8AS0lZ3FYqWw9XCh0I/HXL1/NnX2MhW1KCI63QsjR9qKERyzVFEedtdjmOIWksNjbYJ/Aw==
+"@lugia/theme-utils@^1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-utils/-/theme-utils-1.1.10.tgz#ead454b54ec40a7816579629ac8e95327638d6f5"
+  integrity sha512-TREmvDIcqPrHytMgLrqlTfpD6zb3bA4XyCq8ZzDWxYCxsDeBISfCviaM72Z7N9fpiVB02bM+YBHcuMCGRDnvEA==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/css" "^1.0.24"
+    "@lugia/css" "^1.0.25"
     tslib "^1.11.1"
 
 "@lugia/unique@^1.0.7":
@@ -2061,10 +2069,10 @@ bluebird@^3.5.1:
   resolved "https://registry.npm.taobao.org/bluebird/download/bluebird-3.7.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbluebird%2Fdownload%2Fbluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha1-nyKcFb4nJFT/qXOs4NvueaGww28=
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
-  version "4.11.8"
-  resolved "https://registry.npm.taobao.org/bn.js/download/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
-  integrity sha1-LN4J617jQfSEdGuwMJsyU7GxRC8=
+bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.11.9:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
+  integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
 
 body-parser@1.19.0, body-parser@^1.18.3:
   version "1.19.0"
@@ -2136,9 +2144,9 @@ braces@^2.3.1, braces@^2.3.2:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-brorand@^1.0.1:
+brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.npm.taobao.org/brorand/download/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
+  resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
 
 browser-sync-client@^2.26.6:
@@ -3845,17 +3853,17 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.390, electron-to-chromium
   integrity sha1-22QMLmewjVkKUEwgtWkEU3qiuvo=
 
 elliptic@^6.0.0:
-  version "6.5.2"
-  resolved "https://registry.npm.taobao.org/elliptic/download/elliptic-6.5.2.tgz#05c5678d7173c049d8ca433552224a495d0e3762"
-  integrity sha1-BcVnjXFzwEnYykM1UiJKSV0ON2I=
+  version "6.5.4"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
+  integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
   dependencies:
-    bn.js "^4.4.0"
-    brorand "^1.0.1"
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
     hash.js "^1.0.0"
-    hmac-drbg "^1.0.0"
-    inherits "^2.0.1"
-    minimalistic-assert "^1.0.0"
-    minimalistic-crypto-utils "^1.0.0"
+    hmac-drbg "^1.0.1"
+    inherits "^2.0.4"
+    minimalistic-assert "^1.0.1"
+    minimalistic-crypto-utils "^1.0.1"
 
 emoji-regex@^6.1.0:
   version "6.5.1"
@@ -5403,8 +5411,8 @@ hash-base@^3.0.0:
 
 hash.js@^1.0.0, hash.js@^1.0.3:
   version "1.1.7"
-  resolved "https://registry.npm.taobao.org/hash.js/download/hash.js-1.1.7.tgz#0babca538e8d4ee4a0f8988d68866537a003cf42"
-  integrity sha1-C6vKU46NTuSg+JiNaIZlN6ADz0I=
+  resolved "https://registry.yarnpkg.com/hash.js/-/hash.js-1.1.7.tgz#0babca538e8d4ee4a0f8988d68866537a003cf42"
+  integrity sha512-taOaskGt4z4SOANNseOviYDvjEJinIkRgmp7LbKP2YTTmVxWBl87s/uzK9r+44BclBSp2X7K1hqeNfz9JbBeXA==
   dependencies:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
@@ -5414,9 +5422,9 @@ he@1.2.x:
   resolved "https://registry.npm.taobao.org/he/download/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha1-hK5l+n6vsWX922FWauFLrwVmTw8=
 
-hmac-drbg@^1.0.0:
+hmac-drbg@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.npm.taobao.org/hmac-drbg/download/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
+  resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
   integrity sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
   dependencies:
     hash.js "^1.0.3"
@@ -5716,10 +5724,10 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.1, inherits@~2.0.3:
+inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3:
   version "2.0.4"
-  resolved "https://registry.npm.taobao.org/inherits/download/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
-  integrity sha1-D6LGT5MpF8NDOg3tVTY6rjdBa3w=
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
+  integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
 inherits@2.0.1:
   version "2.0.1"
@@ -6921,12 +6929,12 @@ mimic-response@^1.0.0, mimic-response@^1.0.1:
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.npm.taobao.org/minimalistic-assert/download/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
-  integrity sha1-LhlN4ERibUoQ5/f7wAznPoPk1cc=
+  resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
+  integrity sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==
 
-minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
+minimalistic-crypto-utils@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.npm.taobao.org/minimalistic-crypto-utils/download/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
+  resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
   integrity sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo=
 
 minimatch@3.0.3:
