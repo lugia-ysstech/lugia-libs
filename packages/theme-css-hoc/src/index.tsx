@@ -40,7 +40,7 @@ import {
   createGetDefaultThemeInCSSConfig,
   createGetStyleInCSSConfig,
 } from './extractor/themeprops/css';
-import { ThemeState } from '../../theme-core/lib/type';
+import { ThemeState } from '@lugia/theme-core/lib/type';
 
 type ComponentProps = { [propsName: string]: any };
 
