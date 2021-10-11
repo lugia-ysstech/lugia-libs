@@ -241,7 +241,6 @@ describe('ThemeHandle.test.js', () => {
       hover: {
         bg: 'blue',
       },
-      __partName: '',
     };
     const theme = {
       lgx,
@@ -250,10 +249,6 @@ describe('ThemeHandle.test.js', () => {
     getTheme.returned(undefined);
 
     expect(target.getPartOfThemeConfig('lgx')).toEqual(lgx);
-    expect(lgx.__partName).toBe('lgx');
-    expect(target.getPartOfThemeConfig('lgx')).toEqual({
-      __partName: 'lgx',
-    });
     order.verify((param: any) => {
       const { handle } = param;
       handle.getTheme();
@@ -281,14 +276,13 @@ describe('ThemeHandle.test.js', () => {
     const targetTheme = { targetTheme: 1 };
     getPartOfThemeConfig.returned(targetTheme);
 
-    const result = { type: 'createThemeHocPropsResult', __partName: '' };
+    const result = { type: 'createThemeHocPropsResult' };
     const createThemeHocProps = mock.mockFunction('createThemeHocProps');
     createThemeHocProps.returned(result);
     const displayName = packDisplayName(widgetName);
 
     const partName = 'lgx';
     expect(target.getPartOfThemeHocProps(partName)).toEqual(result);
-    expect(result.__partName).toBe(partName);
 
     order.verify((param: any) => {
       const { handle } = param;
