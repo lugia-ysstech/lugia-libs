@@ -29,10 +29,6 @@ export function unPackDisplayName(widgetName: string): string {
 export function packDisplayName(widgetName: string): string {
   return `${ThemeComponentPrefix}${widgetName}`;
 }
-type ThemeContext = {
-  config: object;
-  svThemeConfigTree: object;
-};
 export type SvTarget = {
   svtarget?: {
     current?: SvTarget;
@@ -186,15 +182,13 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
   getPartOfThemeHocProps = (partName: string): object => {
     const viewClass = `${this.displayName}_${partName}`;
     const targetTheme = this.getPartOfThemeConfig(partName);
-    const result = this.createThemeHocProps(viewClass, targetTheme);
-    result.__partName = partName;
-    return result;
+    return this.createThemeHocProps(viewClass, targetTheme);
   };
 
   createThemeHocProps = (
     viewClass: string,
     targetTheme: object,
-  ): { viewClass?: string; theme?: object; __partName?: string } => {
+  ): { viewClass?: string; theme?: object } => {
     if (!viewClass) {
       console.error('viewClass can not be empty!');
       return {};
@@ -221,39 +215,15 @@ export default class ThemeHandle extends ThemeEventChannelHandle {
       return result;
     }
     if (!partName) {
-      return fillSign(this.packPartName({}, partName, {}, null));
+      return fillSign({});
     }
     const theme = this.getTheme() || {};
     const { [partName]: targetTheme } = theme;
-    const themePartName = theme.__partName;
     if (!targetTheme) {
-      return fillSign(this.packPartName({}, partName, theme, themePartName));
+      return fillSign({});
     }
-    return fillSign(
-      this.packPartName(targetTheme, partName, theme, themePartName),
-    );
+    return fillSign(targetTheme);
   };
-
-  packPartName(
-    result: { [key: string]: any },
-    partName: string,
-    fatherTheme: ThemeConfig = {},
-    themePartName: string | null | undefined,
-  ): ThemePart {
-    const partNameResult: string[] = [];
-    if (fatherTheme) {
-      const father = fatherTheme[partName];
-      if (father && father.__partName) {
-        partNameResult.push(father.__partName);
-      }
-    }
-    if (themePartName) {
-      partNameResult.push(themePartName);
-    }
-    partNameResult.push(partName);
-    result.__partName = partNameResult.join('.');
-    return result;
-  }
 
   getPartOfThemeProps = (
     childWidgetName: string,

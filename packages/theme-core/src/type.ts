@@ -129,7 +129,6 @@ export type ThemePart = {
   active?: ThemeMeta;
   hover?: ThemeMeta;
   focus?: ThemeMeta;
-  __partName?: string;
   __index?: number;
   __count?: number;
 };
@@ -139,8 +138,6 @@ export type ThemeComponentConfig = {
 };
 
 export type ThemeConfig = {
-  __partName?: string;
-} & {
   [partName: string]: ThemePart;
 };
 
