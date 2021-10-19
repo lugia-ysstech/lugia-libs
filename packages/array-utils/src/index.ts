@@ -197,6 +197,7 @@ export function sortStringDesc(a: string, b: string): number {
     return 1;
   }
 }
+
 export function sortStringAsc(a: string, b: string): number {
   if (a === b) {
     return 0;
@@ -205,4 +206,18 @@ export function sortStringAsc(a: string, b: string): number {
   } else {
     return -1;
   }
+}
+
+export function ensureDataIsArray(data: any) {
+  if (!Array.isArray(data)) {
+    return [];
+  }
+  return data;
+}
+
+export function isNotEmptyArray(data: any): boolean {
+  if (!Array.isArray(data)) {
+    return false;
+  }
+  return data.length > 0;
 }
