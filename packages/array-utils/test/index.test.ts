@@ -16,6 +16,8 @@ import {
   row2colMatrix,
   sortStringDesc,
   sortStringAsc,
+  ensureDataIsArray,
+  isNotEmptyArray,
 } from '../src';
 
 type AnyObject = { [key: string]: any };
@@ -245,5 +247,26 @@ describe('array-utils', () => {
   it('sortStringAsc', () => {
     expect(['a', 'b', 'c'].sort(sortStringAsc)).toEqual(['a', 'b', 'c']);
     expect(['c', 'b', 'a'].sort(sortStringAsc)).toEqual(['a', 'b', 'c']);
+  });
+
+  it('isNotEmptyArray', () => {
+    expect(isNotEmptyArray([1, 2, 3])).toEqual(true);
+    expect(isNotEmptyArray(['1', '2', '3'])).toEqual(true);
+    expect(isNotEmptyArray([{ a: 1 }])).toEqual(true);
+    expect(isNotEmptyArray(undefined)).toEqual(false);
+    expect(isNotEmptyArray(null)).toEqual(false);
+    expect(isNotEmptyArray(1)).toEqual(false);
+    expect(isNotEmptyArray('1')).toEqual(false);
+    expect(isNotEmptyArray({ a: 1 })).toEqual(false);
+  });
+  it('ensureDataIsArray', () => {
+    expect(ensureDataIsArray(null)).toEqual([]);
+    expect(ensureDataIsArray(undefined)).toEqual([]);
+    expect(ensureDataIsArray(NaN)).toEqual([]);
+    expect(ensureDataIsArray(1)).toEqual([]);
+    expect(ensureDataIsArray('1')).toEqual([]);
+    expect(ensureDataIsArray({ a: 1 })).toEqual([]);
+    expect(ensureDataIsArray([{ a: 1 }])).toEqual([{ a: 1 }]);
+    expect(ensureDataIsArray([1])).toEqual([1]);
   });
 });
