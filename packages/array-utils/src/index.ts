@@ -209,7 +209,7 @@ export function sortStringAsc(a: string, b: string): number {
 }
 
 export function ensureDataIsArray(data: any) {
-  if (!data || !Array.isArray(data)) {
+  if (!Array.isArray(data)) {
     return [];
   }
   return data;
