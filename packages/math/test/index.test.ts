@@ -8,8 +8,10 @@ import {
   accAdd,
   checkNumber,
   fixed,
+  floorNumber,
   getMinAndMax,
   isInLimit,
+  isNumber,
   limit,
   limitByConfig,
   limitToSet,
@@ -124,4 +126,29 @@ describe('Math', () => {
   testCheckNumber('qwqeqwe', '');
   testCheckNumber(',.`1234!@$`', '.1234');
   testCheckNumber('12345.qwer!@#$', '12345.');
+
+  function testFloorNumber(value: number, count: number, target: number) {
+    it(`floorNumber ${value} ${count} to ${target}`, () => {
+      expect(floorNumber(value, count)).toBe(target);
+    });
+  }
+
+  testFloorNumber(0.34523, 100, 0.34);
+  testFloorNumber(12.43124, 10, 12.4);
+  testFloorNumber(3.45412, 1000, 3.454);
+
+  function testIsNumber(value: any, target: boolean) {
+    it(`testIsNumber ${value} isNumber: ${target}`, () => {
+      expect(isNumber(value)).toBe(target);
+    });
+  }
+
+  testIsNumber(1, true);
+  testIsNumber(0, true);
+  testIsNumber(undefined, false);
+  testIsNumber({}, false);
+  testIsNumber([], false);
+  testIsNumber(NaN, false);
+  testIsNumber(null, false);
+  testIsNumber('string', false);
 });

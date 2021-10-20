@@ -1,5 +1,7 @@
 // @flow
 import {
+  checkObjectNotEqual,
+  cloneTarget,
   deepMerge,
   deepMergeAnB,
   deepMergeForArrayMerge,
@@ -12,12 +14,14 @@ import {
   getKeyfromIndex,
   getObjectAttributeRef,
   isEmptyObject,
+  isObject,
   moveToTargetIfKeyIsInSource,
   object2pathObject,
   packObject,
   packPathObject,
   setAttributeValue,
 } from '../src';
+import { isNumber } from '../../math/src';
 
 const obj = {
   top: 1,
@@ -646,4 +650,48 @@ describe('object-utils', () => {
     expect(getObjectAttributeRef(target, 'name')).toEqual({});
     expect(getObjectAttributeRef(target, 'name')).toBe(target.name);
   });
+
+  function testIsObject(value: any, target: boolean) {
+    it(`testIsObject ${value} isObject: ${target}`, () => {
+      expect(isObject(value)).toBe(target);
+    });
+  }
+
+  testIsObject({}, true);
+  testIsObject([], false);
+  testIsObject(null, false);
+  testIsObject(undefined, false);
+  testIsObject(() => {}, false);
+  testIsObject(100, false);
+  testIsObject(0, false);
+  testIsObject(NaN, false);
+  testIsObject('string', false);
+
+  function testCloneTarget(target: object, result: object) {
+    it(`testCloneTarget ${target} cloneTarget: ${result}`, () => {
+      expect(cloneTarget(target)).toEqual(result);
+    });
+  }
+
+  testCloneTarget(['1', '2'], ['1', '2']);
+  testCloneTarget([{ id: '1' }, { id: '2' }], [{ id: '1' }, { id: '2' }]);
+  testCloneTarget({}, {});
+  testCloneTarget({ id: '1' }, { id: '1' });
+
+  function testCheckObjectNotEqual(
+    preObj: object,
+    nextObj: object,
+    result: boolean,
+  ) {
+    it(`testCheckObjectNotEqual ${preObj} ${nextObj} checkObjectNotEqual: ${result}`, () => {
+      expect(checkObjectNotEqual(preObj, nextObj)).toEqual(result);
+    });
+  }
+
+  testCheckObjectNotEqual([], [], false);
+  testCheckObjectNotEqual({}, {}, false);
+  testCheckObjectNotEqual({ id: '1' }, { id: '2' }, true);
+  testCheckObjectNotEqual({ id: '1' }, { id: '1' }, false);
+  testCheckObjectNotEqual(['1'], ['2'], true);
+  testCheckObjectNotEqual(['1'], [1], true);
 });
