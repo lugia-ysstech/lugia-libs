@@ -79,3 +79,11 @@ export function checkNumber(value: string): string {
     .replace('$#$', '.')
     .replace('$%$', '-');
 }
+
+export function floorNumber(value: number, count: number): number {
+  return Math.floor(value * count) / count;
+}
+
+export function isNumber(value: any): boolean {
+  return typeof value === 'number' && !isNaN(value);
+}
