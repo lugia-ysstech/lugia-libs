@@ -1,6 +1,6 @@
 {
   "name": "@lugia/theme-core",
-  "version": "1.1.15",
+  "version": "1.1.16",
   "types": "./lib/index.d.ts",
   "description": "Theme core",
   "main": "./lib/index.js",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/object-utils": "^1.1.0",
+    "@lugia/object-utils": "^1.1.1",
     "@types/react": "^16.9.32",
     "debug": "^4.1.1",
     "tslib": "^1.11.1"
