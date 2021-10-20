@@ -30,3 +30,7 @@ export function style2css(style: { [key: string]: any } = {}): string {
     })
     .join('');
 }
+
+export function numberToPx(value: number): string {
+  return `${value}px`;
+}
