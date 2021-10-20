@@ -323,3 +323,18 @@ export function getArrayAttributeRef(
   }
   return result;
 }
+
+export function isObject(target: any) {
+  return Object.prototype.toString.call(target) === '[object Object]';
+}
+
+export function cloneTarget(target: object) {
+  return JSON.parse(JSON.stringify(target));
+}
+
+export function checkObjectNotEqual(
+  preObject: AnyObject,
+  nextObject: AnyObject,
+): boolean {
+  return JSON.stringify(preObject) !== JSON.stringify(nextObject);
+}
