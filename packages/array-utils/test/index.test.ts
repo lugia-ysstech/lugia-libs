@@ -18,6 +18,7 @@ import {
   sortStringAsc,
   ensureDataIsArray,
   isNotEmptyArray,
+  equalNumbers,
 } from '../src';
 
 type AnyObject = { [key: string]: any };
@@ -268,5 +269,13 @@ describe('array-utils', () => {
     expect(ensureDataIsArray({ a: 1 })).toEqual([]);
     expect(ensureDataIsArray([{ a: 1 }])).toEqual([{ a: 1 }]);
     expect(ensureDataIsArray([1])).toEqual([1]);
+  });
+
+  it('equalNumbers', () => {
+    expect(equalNumbers(null as any, [] as any)).toBeFalsy();
+    expect(equalNumbers([1, 3], [4])).toBeFalsy();
+    expect(equalNumbers([1, 3], [1, 4])).toBeFalsy();
+    expect(equalNumbers([1, 3], [1, 34])).toBeFalsy();
+    expect(equalNumbers([1, 3, 5], [1, 3, 5])).toBeTruthy();
   });
 });

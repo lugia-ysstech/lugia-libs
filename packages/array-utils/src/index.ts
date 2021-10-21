@@ -221,3 +221,22 @@ export function isNotEmptyArray(data: any): boolean {
   }
   return data.length > 0;
 }
+
+export function equalNumbers(numsA: number[], numsB: number[]): boolean {
+  if (!Array.isArray(numsA) || !Array.isArray(numsB)) {
+    return false;
+  }
+
+  if (numsA.length !== numsB.length) {
+    return false;
+  }
+
+  let i = 0;
+  for (const num of numsA) {
+    if (num !== numsB[i]) {
+      return false;
+    }
+    i++;
+  }
+  return true;
+}
