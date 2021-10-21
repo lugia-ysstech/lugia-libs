@@ -1,6 +1,6 @@
 {
   "name": "@lugia/indexdb",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "An example of lerna package.",
   "types": "./lib/index.d.ts",
   "main": "./lib/index.js",
@@ -15,7 +15,7 @@
   "license": "Apache License 2.0",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@lugia/array-utils": "^1.0.7",
+    "@lugia/array-utils": "^1.0.8",
     "@lugia/listener": "^1.1.4",
     "@lugia/unique": "^1.0.7",
     "tslib": "^1.11.1"
