@@ -104,10 +104,11 @@ export default <PropsType extends HocPropsType>(
     };
 
     useEffect(() => {
-      window.addEventListener('resize', onWindowResize);
+      const listenerName = 'resize';
+      window.addEventListener(listenerName, onWindowResize);
 
       return () => {
-        window.removeEventListener('resize', onWindowResize);
+        window.removeEventListener(listenerName, onWindowResize);
       };
     }, []);
 
