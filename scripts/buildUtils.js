@@ -7,7 +7,7 @@ const { readdirSync, existsSync } = require('fs');
 const { join, basename } = require('path');
 const chokidar = require('chokidar');
 const slash = require('slash');
-const { packagesDirName, igronPkgs } = require('./config.json');
+const { packagesDirName, ignoreModules } = require('./config.json');
 process.env.NODE_ENV = 'production';
 const cwd = process.cwd();
 
@@ -48,7 +48,7 @@ function buildPkg(pkg, minify = false) {
     chalk.yellow(`[${pkg}] was not found`);
     return;
   }
-  if (~igronPkgs.indexOf(pkg)) {
+  if (~ignoreModules.indexOf(pkg)) {
     chalk.green(`[${pkg}] is igrone.`);
     return;
   }
@@ -105,7 +105,7 @@ function build() {
   const minify = argv.includes('-m') || argv.includes('--minify');
   dirs
     .filter(pkg => {
-      return igronPkgs.indexOf(pkg) === -1;
+      return ignoreModules.indexOf(pkg) === -1;
     })
     .forEach(pkg => {
       if (pkg.charAt(0) === '.') return;
@@ -120,7 +120,7 @@ function tsLint() {
   const fix = argv.includes('--fix');
   dirs
     .filter(pkg => {
-      return igronPkgs.indexOf(pkg) === -1;
+      return ignoreModules.indexOf(pkg) === -1;
     })
     .forEach(pkg => {
       if (pkg.charAt(0) === '.') return;
