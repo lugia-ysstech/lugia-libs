@@ -7,7 +7,7 @@ const { readdirSync, existsSync } = require('fs');
 const { join, basename } = require('path');
 const chokidar = require('chokidar');
 const slash = require('slash');
-const { packagesDirName, ignoreModules } = require('./config.json');
+const { packagesDirName, ignoreModules = [] } = require('./config.json');
 process.env.NODE_ENV = 'production';
 const cwd = process.cwd();
 

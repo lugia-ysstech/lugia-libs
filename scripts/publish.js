@@ -3,7 +3,7 @@
 const shell = require('shelljs');
 const { join } = require('path');
 const { fork } = require('child_process');
-const { packagesDirName, scope, igronPkgs } = require('./config.json');
+const { packagesDirName, scope, ignoreModules = [] } = require('./config.json');
 
 const cwd = process.cwd();
 const updatedRepos = shell
@@ -45,7 +45,7 @@ function publishToNpm() {
   console.log(`repos to publish: ${updatedRepos.join(', ')}`);
   updatedRepos
     .map(repo => repo.replace(`${scope}/`, ''))
-    .filter(repo => !igronPkgs.includes(repo))
+    .filter(repo => !ignoreModules.includes(repo))
     .forEach(repo => {
       shell.cd(join(cwd, packagesDirName, repo));
       console.log(`[${repo}] npm publish`);
