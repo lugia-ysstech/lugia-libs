@@ -144,7 +144,7 @@
 
 "@lugia/css@^1.0.26":
   version "1.0.26"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2fcss/-/css-1.0.26.tgz#f4d45d32bac4e5089688c54f6b5a167a377d1740"
+  resolved "https://registry.npmmirror.com/@lugia/css/download/@lugia/css-1.0.26.tgz#f4d45d32bac4e5089688c54f6b5a167a377d1740"
   integrity sha1-9NRdMrrE5QiWiMVPa1oWejd9F0A=
   dependencies:
     "@types/debug" "^4.1.5"
@@ -153,14 +153,14 @@
 
 "@lugia/dict@^1.0.5":
   version "1.0.5"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2fdict/-/dict-1.0.5.tgz#5dda42992f3e66f0d55a6a55d74891e78373caa2"
+  resolved "https://registry.npmmirror.com/@lugia/dict/download/@lugia/dict-1.0.5.tgz#5dda42992f3e66f0d55a6a55d74891e78373caa2"
   integrity sha1-XdpCmS8+ZvDVWmpV10iR54NzyqI=
   dependencies:
     tslib "^1.11.1"
 
 "@lugia/object-utils@^1.1.1":
   version "1.1.1"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2fobject-utils/-/object-utils-1.1.1.tgz#f18e97f5bfb62bb54c74d62180627a03beaf69dc"
+  resolved "https://registry.npmmirror.com/@lugia/object-utils/download/@lugia/object-utils-1.1.1.tgz#f18e97f5bfb62bb54c74d62180627a03beaf69dc"
   integrity sha1-8Y6X9b+2K7VMdNYhgGJ6A76vadw=
   dependencies:
     "@babel/runtime" "^7.4.5"
@@ -170,14 +170,14 @@
 
 "@lugia/ramada@^1.0.5":
   version "1.0.5"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2framada/-/ramada-1.0.5.tgz#e760646adcd3a9b00e4b8200359e03483c344779"
+  resolved "https://registry.npmmirror.com/@lugia/ramada/download/@lugia/ramada-1.0.5.tgz#e760646adcd3a9b00e4b8200359e03483c344779"
   integrity sha1-52BkatzTqbAOS4IANZ4DSDw0R3k=
   dependencies:
     "@babel/runtime" "^7.4.5"
 
 "@lugia/theme-core@^1.1.16":
   version "1.1.16"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2ftheme-core/-/theme-core-1.1.16.tgz#63811830104bd29f8324058ddc6a85ab6390f062"
+  resolved "https://registry.npmmirror.com/@lugia/theme-core/download/@lugia/theme-core-1.1.16.tgz#63811830104bd29f8324058ddc6a85ab6390f062"
   integrity sha1-Y4EYMBBL0p+DJAWN3GqFq2OQ8GI=
   dependencies:
     "@babel/runtime" "^7.4.5"
@@ -188,7 +188,7 @@
 
 "@lugia/theme-css-hoc@^1.1.25":
   version "1.1.25"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2ftheme-css-hoc/-/theme-css-hoc-1.1.25.tgz#2935188a57a7ca7c7459a834990507adf60ad72f"
+  resolved "https://registry.npmmirror.com/@lugia/theme-css-hoc/download/@lugia/theme-css-hoc-1.1.25.tgz#2935188a57a7ca7c7459a834990507adf60ad72f"
   integrity sha1-KTUYilenynx0Wag0mQUHrfYK1y8=
   dependencies:
     "@babel/runtime" "^7.4.5"
@@ -202,7 +202,7 @@
 
 "@lugia/theme-utils@^1.1.11":
   version "1.1.11"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2ftheme-utils/-/theme-utils-1.1.11.tgz#5559694010b7b49c41daf8d1316dea404c7c5f21"
+  resolved "https://registry.npmmirror.com/@lugia/theme-utils/download/@lugia/theme-utils-1.1.11.tgz#5559694010b7b49c41daf8d1316dea404c7c5f21"
   integrity sha1-VVlpQBC3tJxB2vjRMW3qQEx8XyE=
   dependencies:
     "@babel/runtime" "^7.4.5"
@@ -211,8 +211,8 @@
 
 "@types/debug@^4.1.5":
   version "4.1.7"
-  resolved "http://192.168.102.79/verdaccio/@types%2fdebug/-/debug-4.1.7.tgz#7cc0ea761509124709b8b2d1090d8f6c17aadb82"
-  integrity sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==
+  resolved "https://registry.nlark.com/@types/debug/download/@types/debug-4.1.7.tgz?cache=0&sync_timestamp=1629707621172&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fdebug%2Fdownload%2F%40types%2Fdebug-4.1.7.tgz#7cc0ea761509124709b8b2d1090d8f6c17aadb82"
+  integrity sha1-fMDqdhUJEkcJuLLRCQ2PbBeq24I=
   dependencies:
     "@types/ms" "*"
 
@@ -226,7 +226,7 @@
 
 "@types/ms@*":
   version "0.7.31"
-  resolved "http://192.168.102.79/verdaccio/@types%2fms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
+  resolved "https://registry.nlark.com/@types/ms/download/@types/ms-0.7.31.tgz?cache=0&sync_timestamp=1629708377201&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fms%2Fdownload%2F%40types%2Fms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha1-MbfKZAcSij0rvCf+LSGzRTl/YZc=
 
 "@types/prop-types@*":
@@ -348,14 +348,14 @@ csstype@^3.0.2:
 
 debug@^4.1.0, debug@^4.1.1:
   version "4.3.2"
-  resolved "http://192.168.102.79/verdaccio/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
+  resolved "https://registry.nlark.com/debug/download/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
   integrity sha1-8KScGKyHeeMdSgxgKd+3aHPHQos=
   dependencies:
     ms "2.1.2"
 
 deepmerge@^3.2.0:
   version "3.3.0"
-  resolved "http://192.168.102.79/verdaccio/deepmerge/-/deepmerge-3.3.0.tgz#d3c47fd6f3a93d517b14426b0628a17b0125f5f7"
+  resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-3.3.0.tgz?cache=0&sync_timestamp=1606805746825&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdeepmerge%2Fdownload%2Fdeepmerge-3.3.0.tgz#d3c47fd6f3a93d517b14426b0628a17b0125f5f7"
   integrity sha1-08R/1vOpPVF7FEJrBiihewEl9fc=
 
 escape-string-regexp@^1.0.5:
@@ -382,7 +382,7 @@ hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.3.0:
 
 is-plain-object@^3.0.0:
   version "3.0.1"
-  resolved "http://192.168.102.79/verdaccio/is-plain-object/-/is-plain-object-3.0.1.tgz#662d92d24c0aa4302407b0d45d21f2251c85f85b"
+  resolved "https://registry.nlark.com/is-plain-object/download/is-plain-object-3.0.1.tgz#662d92d24c0aa4302407b0d45d21f2251c85f85b"
   integrity sha1-Zi2S0kwKpDAkB7DUXSHyJRyF+Fs=
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
@@ -452,7 +452,7 @@ regenerator-runtime@^0.13.4:
 
 resize-observer-polyfill@^1.5.1:
   version "1.5.1"
-  resolved "http://192.168.102.79/verdaccio/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  resolved "https://registry.nlark.com/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
   integrity sha1-DpAg3T0hAkRY1OvSfiPkAmmBBGQ=
 
 shallowequal@^1.1.0:

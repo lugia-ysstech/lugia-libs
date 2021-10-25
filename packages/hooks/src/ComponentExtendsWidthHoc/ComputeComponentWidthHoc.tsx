@@ -12,6 +12,7 @@ export type HocPropsType = {
   needComputeSize?: boolean;
 };
 
+const containerId = '__tableExtendsWidthHoc';
 export default <PropsType extends HocPropsType>(
   Element: (props: PropsType) => React.FunctionComponentElement<PropsType>,
 ) => {
@@ -23,7 +24,7 @@ export default <PropsType extends HocPropsType>(
     } = props;
     const [parentNodeWidth, setBoxWidth] = useState<number>(0);
 
-    const ContainerTheme = getPartOfThemeProps('Container', {
+    const containerTheme = getPartOfThemeProps('Container', {
       props: { parentWidth: parentNodeWidth },
     });
 
@@ -34,14 +35,15 @@ export default <PropsType extends HocPropsType>(
     const parentWidthRef = useRef(0);
 
     const setStateBoxWidth = (width: number) => {
+      if (!parentWidthRef) {
+        return;
+      }
       parentWidthRef.current = width;
       setBoxWidth(width);
     };
 
     const updateParentNodeWidth = () => {
-      const boxNode: Element | null = document.getElementById(
-        '__tableExtendsWidthHoc',
-      );
+      const boxNode: Element | null = document.getElementById(containerId);
       const parentWidth = getParentWidth(boxNode);
       setStateBoxWidth(parentWidth);
     };
@@ -56,18 +58,19 @@ export default <PropsType extends HocPropsType>(
         return resizeObserverNode;
       }
       const { clientWidth } = resizeObserverNode;
-      preObserverNodeRef.current = clientWidth;
-
-      return resizeObserverNode;
+      preObserverNodeWidthRef.current = clientWidth;
     };
 
-    const sizeRuleRef = useRef(1);
+    const nodeWidthRuleRef = useRef(1);
 
     const initRule = (observerNodeWidth?: number) => {
+      if (!nodeWidthRuleRef) {
+        return;
+      }
       const bodyWidth = getBodyWidth();
       const { current: currentWidth } = parentWidthRef;
       const observerWidth = observerNodeWidth || 0;
-      sizeRuleRef.current = (currentWidth + observerWidth) / bodyWidth;
+      nodeWidthRuleRef.current = (currentWidth + observerWidth) / bodyWidth;
     };
 
     useEffect(() => {
@@ -78,7 +81,7 @@ export default <PropsType extends HocPropsType>(
         initRule();
       } else {
         updateObserverNodeWidth();
-        const { current: observerNodeWidth } = preObserverNodeRef;
+        const { current: observerNodeWidth } = preObserverNodeWidthRef;
         initRule(observerNodeWidth);
       }
     }, []);
@@ -89,26 +92,26 @@ export default <PropsType extends HocPropsType>(
     };
 
     const getCurrentNodeWidth = (observerNodeWidth?: number) => {
-      const { current: totalSizeRule } = sizeRuleRef;
+      const { current: totalSizeRule } = nodeWidthRuleRef;
       const bodyWidth = getBodyWidth();
       const observerWidth = observerNodeWidth || 0;
       const currentRule = totalSizeRule - observerWidth / bodyWidth;
       return bodyWidth * currentRule;
     };
 
-    const windowResize = () => {
+    const onWindowResize = () => {
       setStateBoxWidth(getCurrentNodeWidth());
     };
 
     useEffect(() => {
-      window.addEventListener('resize', windowResize);
+      window.addEventListener('resize', onWindowResize);
 
       return () => {
-        window.removeEventListener('resize', windowResize);
+        window.removeEventListener('resize', onWindowResize);
       };
     }, []);
 
-    const preObserverNodeRef = useRef(0);
+    const preObserverNodeWidthRef = useRef(0);
 
     useEffect(() => {
       const resizeObserverNode = getResizeObserverNode();
@@ -116,33 +119,37 @@ export default <PropsType extends HocPropsType>(
         return;
       }
 
-      const ro = new ResizeObserver((resizeParent, c) => {
+      const resizeObserver = new ResizeObserver((resizeParent, c) => {
         const { contentRect } = resizeParent[0];
         const { width } = contentRect;
-        const { current: currentParentWidth } = parentWidthRef;
-        const { current: preObserverNodeWidth } = preObserverNodeRef;
-
-        if (!currentParentWidth || !preObserverNodeWidth) {
-          preObserverNodeRef.current = width;
+        if (!parentWidthRef || !preObserverNodeWidthRef) {
           return;
         }
 
-        preObserverNodeRef.current = width;
+        const { current: currentParentWidth } = parentWidthRef;
+        const { current: preObserverNodeWidth } = preObserverNodeWidthRef;
+
+        if (!currentParentWidth || !preObserverNodeWidth) {
+          preObserverNodeWidthRef.current = width;
+          return;
+        }
+
+        preObserverNodeWidthRef.current = width;
         setStateBoxWidth(getCurrentNodeWidth(width));
       });
 
-      ro.observe(resizeObserverNode);
+      resizeObserver.observe(resizeObserverNode);
       return () => {
-        ro.unobserve(resizeObserverNode);
+        resizeObserver.unobserve(resizeObserverNode);
       };
     }, []);
 
     return parentNodeWidth > 0 ? (
-      <Container id="__tableExtendsWidthHoc" themeProps={ContainerTheme}>
+      <Container id={containerId} themeProps={containerTheme}>
         <Element {...props} />
       </Container>
     ) : (
-      <div id="__tableExtendsWidthHoc" />
+      <div id={containerId} />
     );
   };
 };
