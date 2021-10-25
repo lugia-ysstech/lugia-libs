@@ -17,11 +17,6 @@
     "styled-components": "4.2.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
-    "@lugia/css": "^1.0.26",
-    "@lugia/object-utils": "^1.1.1",
-    "@lugia/ramada": "^1.0.5",
-    "@lugia/theme-utils": "^1.1.11",
     "@types/react": "^16.9.32",
     "@types/styled-components": "^4.4.3",
     "resize-observer-polyfill": "^1.5.1",
