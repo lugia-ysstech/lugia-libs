@@ -175,6 +175,31 @@
   dependencies:
     "@babel/runtime" "^7.4.5"
 
+"@lugia/theme-core@^1.1.16":
+  version "1.1.16"
+  resolved "https://registry.npmmirror.com/@lugia/theme-core/download/@lugia/theme-core-1.1.16.tgz#63811830104bd29f8324058ddc6a85ab6390f062"
+  integrity sha1-Y4EYMBBL0p+DJAWN3GqFq2OQ8GI=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/object-utils" "^1.1.1"
+    "@types/react" "^16.9.32"
+    debug "^4.1.1"
+    tslib "^1.11.1"
+
+"@lugia/theme-css-hoc@^1.1.25":
+  version "1.1.25"
+  resolved "https://registry.npmmirror.com/@lugia/theme-css-hoc/download/@lugia/theme-css-hoc-1.1.25.tgz#2935188a57a7ca7c7459a834990507adf60ad72f"
+  integrity sha1-KTUYilenynx0Wag0mQUHrfYK1y8=
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@lugia/css" "^1.0.26"
+    "@lugia/object-utils" "^1.1.1"
+    "@lugia/ramada" "^1.0.5"
+    "@lugia/theme-utils" "^1.1.11"
+    "@types/react" "^16.9.32"
+    "@types/styled-components" "^4.4.3"
+    tslib "^1.11.1"
+
 "@lugia/theme-utils@^1.1.11":
   version "1.1.11"
   resolved "https://registry.npmmirror.com/@lugia/theme-utils/download/@lugia/theme-utils-1.1.11.tgz#5559694010b7b49c41daf8d1316dea404c7c5f21"
@@ -424,6 +449,11 @@ regenerator-runtime@^0.13.4:
   version "0.13.9"
   resolved "https://registry.nlark.com/regenerator-runtime/download/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
   integrity sha1-iSV0Kpj/2QgUmI11Zq0wyjsmO1I=
+
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.nlark.com/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha1-DpAg3T0hAkRY1OvSfiPkAmmBBGQ=
 
 shallowequal@^1.1.0:
   version "1.1.0"
