@@ -12,7 +12,8 @@ export type HocPropsType = {
   needComputeSize?: boolean;
 };
 
-const containerId = '__tableExtendsWidthHoc';
+const ContainerId = '__tableExtendsWidthHoc';
+
 export default <PropsType extends HocPropsType>(
   Element: (props: PropsType) => React.FunctionComponentElement<PropsType>,
 ) => {
@@ -43,7 +44,7 @@ export default <PropsType extends HocPropsType>(
     };
 
     const updateParentNodeWidth = () => {
-      const boxNode: Element | null = document.getElementById(containerId);
+      const boxNode: Element | null = document.getElementById(ContainerId);
       const parentWidth = getParentWidth(boxNode);
       setStateBoxWidth(parentWidth);
     };
@@ -52,10 +53,10 @@ export default <PropsType extends HocPropsType>(
       return document.getElementById(resizeObserverId);
     };
 
-    const updateObserverNodeWidth = () => {
+    const updateObserverNodeWidth = (): void => {
       const resizeObserverNode = getResizeObserverNode();
       if (!resizeObserverNode) {
-        return resizeObserverNode;
+        return;
       }
       const { clientWidth } = resizeObserverNode;
       preObserverNodeWidthRef.current = clientWidth;
@@ -120,7 +121,7 @@ export default <PropsType extends HocPropsType>(
         return;
       }
 
-      const resizeObserver = new ResizeObserver((resizeParent, c) => {
+      const resizeObserver = new ResizeObserver(resizeParent => {
         const { contentRect } = resizeParent[0];
         const { width } = contentRect;
         if (!parentWidthRef || !preObserverNodeWidthRef) {
@@ -146,11 +147,11 @@ export default <PropsType extends HocPropsType>(
     }, []);
 
     return parentNodeWidth > 0 ? (
-      <Container id={containerId} themeProps={containerTheme}>
+      <Container id={ContainerId} themeProps={containerTheme}>
         <Element {...props} />
       </Container>
     ) : (
-      <div id={containerId} />
+      <div id={ContainerId} />
     );
   };
 };
