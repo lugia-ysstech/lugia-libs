@@ -63,20 +63,23 @@ export default <PropsType extends HocPropsType>(
 
     const sizeRuleRef = useRef(1);
 
-    useEffect(() => {
-      updateParentNodeWidth();
-
-      const resizeObserverNode = getResizeObserverNode();
+    const initRule = (observerNodeWidth?: number) => {
       const bodyWidth = getBodyWidth();
       const { current: currentWidth } = parentWidthRef;
+      const observerWidth = observerNodeWidth || 0;
+      sizeRuleRef.current = (currentWidth + observerWidth) / bodyWidth;
+    };
+
+    useEffect(() => {
+      updateParentNodeWidth();
+      const resizeObserverNode = getResizeObserverNode();
 
       if (!resizeObserverNode) {
-        sizeRuleRef.current = currentWidth / bodyWidth;
+        initRule();
       } else {
         updateObserverNodeWidth();
         const { current: observerNodeWidth } = preObserverNodeRef;
-        const totalRule = (currentWidth + observerNodeWidth) / bodyWidth;
-        sizeRuleRef.current = totalRule;
+        initRule(observerNodeWidth);
       }
     }, []);
 
@@ -85,10 +88,16 @@ export default <PropsType extends HocPropsType>(
       return clientWidth;
     };
 
-    const windowResize = () => {
+    const getCurrentNodeWidth = (observerNodeWidth?: number) => {
+      const { current: totalSizeRule } = sizeRuleRef;
       const bodyWidth = getBodyWidth();
-      const { current: rule } = sizeRuleRef;
-      setStateBoxWidth(bodyWidth * rule);
+      const observerWidth = observerNodeWidth || 0;
+      const currentRule = totalSizeRule - observerWidth / bodyWidth;
+      return bodyWidth * currentRule;
+    };
+
+    const windowResize = () => {
+      setStateBoxWidth(getCurrentNodeWidth());
     };
 
     useEffect(() => {
@@ -100,28 +109,26 @@ export default <PropsType extends HocPropsType>(
     }, []);
 
     const preObserverNodeRef = useRef(0);
+
     useEffect(() => {
       const resizeObserverNode = getResizeObserverNode();
-
       if (!resizeObserverNode) {
         return;
       }
+
       const ro = new ResizeObserver((resizeParent, c) => {
         const { contentRect } = resizeParent[0];
         const { width } = contentRect;
         const { current: currentParentWidth } = parentWidthRef;
+        const { current: preObserverNodeWidth } = preObserverNodeRef;
 
-        if (!currentParentWidth || !preObserverNodeRef.current) {
+        if (!currentParentWidth || !preObserverNodeWidth) {
           preObserverNodeRef.current = width;
           return;
         }
-        const { current: totalSizeRule } = sizeRuleRef;
-        const bodyWidth = getBodyWidth();
-        const currentRule = totalSizeRule - width / bodyWidth;
-        const newCurrentNodeWidth = bodyWidth * currentRule;
 
         preObserverNodeRef.current = width;
-        setStateBoxWidth(newCurrentNodeWidth);
+        setStateBoxWidth(getCurrentNodeWidth(width));
       });
 
       ro.observe(resizeObserverNode);
