@@ -965,6 +965,13 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@lugia/array-utils@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@lugia/array-utils/-/array-utils-1.0.8.tgz#c1325aa8dc24124dd5903bc037b61518df487d1d"
+  integrity sha512-a4RoYl1g6tHN2AjXJvk64vvoSn8U4gPp9G6xg52t6JPhhIIFDPy0smQJReZFTJQYhBUdQE1KMuU4zF0mpXH5ug==
+  dependencies:
+    tslib "^1.11.1"
+
 "@lugia/babel-preset-mega@^1.1.2":
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/@lugia/babel-preset-mega/download/@lugia/babel-preset-mega-1.1.2.tgz#07b5a7527181c5ae7cef5eea8a0670dfa9441297"
@@ -995,10 +1002,10 @@
     babel-plugin-transform-react-remove-prop-types "0.4.24"
     core-js "^3.1.4"
 
-"@lugia/css@^1.0.24":
-  version "1.0.24"
-  resolved "https://registry.yarnpkg.com/@lugia/css/-/css-1.0.24.tgz#1716bcf1fa9fbb1255d8c08c43a4d9738d629454"
-  integrity sha512-Vl9zZNFvz55OHz6l5Nu5/xkz9V2NFsxEVcRSjZBRUDLbJEtgRrcQ4bK5z5J68khYvXme60EcbgksoK9eliZ58g==
+"@lugia/css@^1.0.26":
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/@lugia/css/-/css-1.0.26.tgz#f4d45d32bac4e5089688c54f6b5a167a377d1740"
+  integrity sha512-zdX5stxCRyLZs3zSuuxVH3VrAmUiQ8gUBj79RZuFoYdv/Pw1ABVR87syxDNkZ8GWtQwcxS4KPEiuguJOiG6Wkw==
   dependencies:
     "@types/debug" "^4.1.5"
     debug "^4.1.1"
@@ -1039,20 +1046,21 @@
   dependencies:
     tslib "^1.11.1"
 
-"@lugia/indexdb@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@lugia/indexdb/-/indexdb-1.0.19.tgz#960519ea73de748d1508bad1b1a74dbf38b75513"
-  integrity sha512-QOUzhTnflS5MrItDowxgnxnbo7FdYSiSQY9gEAaN0ZJMWcWZq18cFG8M69TnCqoXlOFRzclhUeRiH/MB7mCZfw==
+"@lugia/indexdb@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@lugia/indexdb/-/indexdb-1.2.4.tgz#ff6df0fe4c71c16fb0df815250a2e9b84be43a11"
+  integrity sha512-+ToFb0Fn+j2z/aKUmINSAG1G8EYu+RkfDiIkCMg7b3aaWpwHp/aiHJx1vH+bVpRdprJOE9T4gsGuAOrZMb3f0g==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/listener" "^1.1.1"
+    "@lugia/array-utils" "^1.0.8"
+    "@lugia/listener" "^1.1.4"
     "@lugia/unique" "^1.0.7"
     tslib "^1.11.1"
 
-"@lugia/listener@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@lugia/listener/-/listener-1.1.1.tgz#5bae2cd4f3b8e0dc32f2681b6a8ea0fbbac83418"
-  integrity sha512-S+001AfSLE9q40xEoH6MbIVQJsAqJRvOpHRI4jTxe+jah8/8NihozJJCaDYiGG113k3Pw4rMjJwRhige/1u0zA==
+"@lugia/listener@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@lugia/listener/-/listener-1.1.4.tgz#f59a1873b304c1775cd014907bf6029520bf99a0"
+  integrity sha512-hyjssPY6ovlW6B4zZmSaP1aeFY++4RjM00RJ9NkgKogCC+os24adNdyNg8OhyU6bh0XKafICqK/+VaBf8EE3fg==
   dependencies:
     "@babel/runtime" "^7.4.5"
     events "^3.0.0"
@@ -1223,10 +1231,10 @@
     webpack-merge "^4.2.1"
     webpack-parallel-uglify-plugin "^1.1.0"
 
-"@lugia/object-utils@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@lugia/object-utils/-/object-utils-1.1.0.tgz#52364be605e4a4ff9465c21bdc22dfae6f25f22c"
-  integrity sha512-/5a2wN1PaNOwL0YBN/GmIg8UdFtqNroYUFDXEIhYzb3kvHIe67NGO5nkB1eHqT+coEUCtC3danoRgl0zPXET6Q==
+"@lugia/object-utils@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@lugia/object-utils/-/object-utils-1.1.1.tgz#f18e97f5bfb62bb54c74d62180627a03beaf69dc"
+  integrity sha512-M0eomCeT6ZYtCZt5oaM6D3vhYPOd9C3VeqZRPqzh0nb0EtYxzTT+D+HPxQpjEH8YIlCi62AzLN7sh8w5dJHURQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
     deepmerge "^3.2.0"
@@ -1250,38 +1258,38 @@
     "@types/react-test-renderer" "^16.9.2"
     prop-types "^15.7.2"
 
-"@lugia/theme-css-hoc@^1.1.20":
-  version "1.1.20"
-  resolved "https://registry.yarnpkg.com/@lugia/theme-css-hoc/-/theme-css-hoc-1.1.20.tgz#1aabe4493d07d763284a211842f1fac510c614e5"
-  integrity sha512-5htMmFICLZpwCj3C2EILtRgzUtqg8sAoJ/0fpBi1C2uYh1DhgJnxwAJdkU7o9sQSpKteVOOeuys4yFPL33ukeg==
+"@lugia/theme-css-hoc@^1.1.25":
+  version "1.1.25"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-css-hoc/-/theme-css-hoc-1.1.25.tgz#2935188a57a7ca7c7459a834990507adf60ad72f"
+  integrity sha512-R5N2ju8b6hOh9nXbx6KYByrlPLJ9jOYSBSYpgVaEh278cOVIpQQYzy/qi+29WwoOgUUtloCxAe21FfnqghMdhg==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/css" "^1.0.24"
-    "@lugia/object-utils" "^1.1.0"
+    "@lugia/css" "^1.0.26"
+    "@lugia/object-utils" "^1.1.1"
     "@lugia/ramada" "^1.0.5"
-    "@lugia/theme-utils" "^1.1.9"
+    "@lugia/theme-utils" "^1.1.11"
     "@types/react" "^16.9.32"
     "@types/styled-components" "^4.4.3"
     tslib "^1.11.1"
 
-"@lugia/theme-hoc@^1.1.14":
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/@lugia/theme-hoc/-/theme-hoc-1.1.14.tgz#1ba99d36258b3ecc737a18db003d7d3505636b66"
-  integrity sha512-PJmXOILk9uyCAHw5U+BrD+GHoHx+DBU7rndcRutdr5TEFWKv6Dggu3LWpiof278hBnFeBRL4mE3PFQKnC5lbKQ==
+"@lugia/theme-hoc@^1.1.18":
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-hoc/-/theme-hoc-1.1.18.tgz#75c1f627f95084f96c8e98d991100b5bd7a75a77"
+  integrity sha512-tqsWmCd1132b61solMi0vSrNcKjta2r5kVjOX5PK7/Etz+4P3lQVlkOKJ1N9+4rfiKesCLSNg9H7hWu/DmKDmA==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/object-utils" "^1.1.0"
+    "@lugia/object-utils" "^1.1.1"
     "@types/react" "^16.9.32"
     "@types/styled-components" "^5.0.1"
     tslib "^1.11.1"
 
-"@lugia/theme-utils@^1.1.9":
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/@lugia/theme-utils/-/theme-utils-1.1.9.tgz#987b794894ecbf661f6da1de0703ec1683f99713"
-  integrity sha512-wdktPzonXm4Dx4pP8AS0lZ3FYqWw9XCh0I/HXL1/NnX2MhW1KCI63QsjR9qKERyzVFEedtdjmOIWksNjbYJ/Aw==
+"@lugia/theme-utils@^1.1.11":
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@lugia/theme-utils/-/theme-utils-1.1.11.tgz#5559694010b7b49c41daf8d1316dea404c7c5f21"
+  integrity sha512-u9faqHwJyLnWbQ3Q2MtKiE1y7fOuzkQEhe8Pyc3Xm6VB21J13X0VL1UCaLq/9dhR2yO4FLkjmlZa02MtqGYvXA==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/css" "^1.0.24"
+    "@lugia/css" "^1.0.26"
     tslib "^1.11.1"
 
 "@lugia/unique@^1.0.7":
@@ -10560,9 +10568,9 @@ uri-js@^4.2.2:
     punycode "^2.1.0"
 
 urijs@^1.16.1:
-  version "1.19.2"
-  resolved "https://registry.npm.taobao.org/urijs/download/urijs-1.19.2.tgz#f9be09f00c4c5134b7cb3cf475c1dd394526265a"
-  integrity sha1-+b4J8AxMUTS3yzz0dcHdOUUmJlo=
+  version "1.19.7"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.7.tgz#4f594e59113928fea63c00ce688fb395b1168ab9"
+  integrity sha512-Id+IKjdU0Hx+7Zx717jwLPsPeUqz7rAtuVBRLLs+qn+J2nf9NGITWVCxcijgYxBqe83C7sqsQPs6H1pyz3x9gA==
 
 urix@^0.1.0:
   version "0.1.0"
