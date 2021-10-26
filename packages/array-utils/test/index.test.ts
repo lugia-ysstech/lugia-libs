@@ -19,6 +19,7 @@ import {
   ensureDataIsArray,
   isNotEmptyArray,
   equalNumbers,
+  getFlatArray,
 } from '../src';
 
 type AnyObject = { [key: string]: any };
@@ -277,5 +278,64 @@ describe('array-utils', () => {
     expect(equalNumbers([1, 3], [1, 4])).toBeFalsy();
     expect(equalNumbers([1, 3], [1, 34])).toBeFalsy();
     expect(equalNumbers([1, 3, 5], [1, 3, 5])).toBeTruthy();
+  });
+  it('getFlatArray', () => {
+    expect(getFlatArray({ a: 1 }, 'children')).toEqual({ a: 1 });
+    expect(getFlatArray('sdfsf', 'children')).toEqual('sdfsf');
+    expect(getFlatArray(undefined, 'children')).toEqual(undefined);
+    expect(getFlatArray([], 'children')).toEqual([]);
+    expect(
+      getFlatArray([{ a: 1, b: 2, children: [{ a: 3, b: 4 }] }], 'children'),
+    ).toEqual([{ a: 1, b: 2, children: [{ a: 3, b: 4 }] }, { a: 3, b: 4 }]);
+    expect(
+      getFlatArray(
+        [
+          {
+            a: 1,
+            b: 2,
+            children: [{ a: 3, b: 4, children: [{ a: 5, b: 6 }] }],
+          },
+        ],
+        'children',
+      ),
+    ).toEqual([
+      { a: 1, b: 2, children: [{ a: 3, b: 4, children: [{ a: 5, b: 6 }] }] },
+      { a: 3, b: 4, children: [{ a: 5, b: 6 }] },
+      { a: 5, b: 6 },
+    ]);
+    expect(
+      getFlatArray(
+        [
+          {
+            a: 1,
+            b: 2,
+            c: [{ a: 3, b: 4, c: [{ a: 5, b: 6 }] }],
+          },
+        ],
+        'c',
+      ),
+    ).toEqual([
+      { a: 1, b: 2, c: [{ a: 3, b: 4, c: [{ a: 5, b: 6 }] }] },
+      { a: 3, b: 4, c: [{ a: 5, b: 6 }] },
+      { a: 5, b: 6 },
+    ]);
+    expect(
+      getFlatArray(
+        [
+          {
+            a: 1,
+            b: 2,
+            c: [{ a: 3, b: 4, c: [{ a: 5, b: 6 }] }],
+          },
+        ],
+        'children',
+      ),
+    ).toEqual([
+      {
+        a: 1,
+        b: 2,
+        c: [{ a: 3, b: 4, c: [{ a: 5, b: 6 }] }],
+      },
+    ]);
   });
 });
