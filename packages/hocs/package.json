@@ -1,7 +1,7 @@
 {
   "name": "@lugia/hocs",
   "types": "./lib/index.d.ts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "lugia生态的公共高阶组件库",
   "main": "./lib/index.js",
   "scripts": {
