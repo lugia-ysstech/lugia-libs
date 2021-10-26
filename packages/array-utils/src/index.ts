@@ -240,3 +240,18 @@ export function equalNumbers(numsA: number[], numsB: number[]): boolean {
   }
   return true;
 }
+
+export const getFlatArray = (data: any, key: string) => {
+  if (!isNotEmptyArray(data)) {
+    return data;
+  }
+  const result: any[] = [];
+  data.forEach((item: AnyObject) => {
+    const children = item[key];
+    result.push(item);
+    if (children) {
+      result.push(...getFlatArray(children, key));
+    }
+  });
+  return result;
+};
