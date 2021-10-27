@@ -18,3 +18,7 @@ export function upperCaseLetter2EnDash(str: string) {
     return index === 0 ? lowerCase : `-${lowerCase}`;
   });
 }
+
+export function replaceString2Number(str: string) {
+  return str.replace(/[^0-9.]/g, '');
+}

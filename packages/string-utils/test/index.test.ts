@@ -1,5 +1,9 @@
 // @flow
-import { enDash2UpperCaseLetter, upperCaseLetter2EnDash } from '../src';
+import {
+  enDash2UpperCaseLetter,
+  replaceString2Number,
+  upperCaseLetter2EnDash,
+} from '../src';
 
 describe('string-utils', () => {
   it('enDash2UpperCaseLetter', () => {
@@ -22,5 +26,13 @@ describe('string-utils', () => {
     expect(upperCaseLetter2EnDash('AmountInput')).toEqual('amount-input');
     expect(upperCaseLetter2EnDash('Button')).toEqual('button');
     expect(upperCaseLetter2EnDash('TreeSelect')).toEqual('tree-select');
+  });
+
+  it('replaceString2Number', () => {
+    expect(replaceString2Number('a')).toEqual('');
+    expect(replaceString2Number('123')).toEqual('123');
+    expect(replaceString2Number('0')).toEqual('0');
+    expect(replaceString2Number('01')).toEqual('01');
+    expect(replaceString2Number('a1a')).toEqual('1');
   });
 });
