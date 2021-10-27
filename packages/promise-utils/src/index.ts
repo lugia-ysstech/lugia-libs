@@ -24,3 +24,35 @@ export function createAsyncPromise<PromiseResultType>(
     }
   });
 }
+
+export interface TimeOutOption {
+  timeout?: number;
+  title?: string;
+}
+
+export function delayResult<T>(val: T, timeout: number): Promise<T> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(val);
+    }, timeout);
+  });
+}
+
+const DefaultTimeOut = 30 * 1000;
+
+export async function execTimeout<T>(
+  cb: () => Promise<T>,
+  option: TimeOutOption = { timeout: DefaultTimeOut },
+): Promise<T | undefined> {
+  const { timeout = DefaultTimeOut } = option;
+
+  const timeoutPromise: Promise<any> = new Promise((_, reject) => {
+    setTimeout(() => {
+      const { title = '方法执行超时' } = option;
+      reject(title);
+    }, timeout);
+  });
+
+  const cbPromise = cb();
+  return Promise.race([cbPromise, timeoutPromise]);
+}
