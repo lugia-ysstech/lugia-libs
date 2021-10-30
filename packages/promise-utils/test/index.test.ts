@@ -4,7 +4,12 @@
  * @emails lugia@ysstech.com
  * @author zenjava
  */
-import { createAsyncPromise, delayResult, execTimeout } from '../src';
+import {
+  createAsyncPromise,
+  delayResult,
+  errorFirst2Async,
+  execTimeout,
+} from '../src';
 
 describe('Promise', () => {
   it('createAsyncPromise resolve ', async () => {
@@ -62,5 +67,36 @@ describe('Promise', () => {
       return;
     }
     throw new Error('未捕获超时异常');
+  });
+
+  it('errorFirst2Async two args', async () => {
+    function hello(
+      valA: number,
+      valB: number,
+      cb: (error: Error | null, val: number) => void,
+    ) {
+      setTimeout(() => {
+        cb(null, valA + valB);
+      }, 0);
+    }
+
+    const asyncHello = errorFirst2Async(hello);
+    expect(await asyncHello(5, 6)).toEqual(11);
+  });
+
+  it('errorFirst2Async three args', async () => {
+    function hello(
+      valA: number,
+      valB: number,
+      valC: number,
+      cb: (error: Error | null, val: number) => void,
+    ) {
+      setTimeout(() => {
+        cb(null, valA + valB + valC);
+      }, 0);
+    }
+
+    const asyncHello = errorFirst2Async(hello);
+    expect(await asyncHello(5, 6, 100)).toEqual(111);
   });
 });

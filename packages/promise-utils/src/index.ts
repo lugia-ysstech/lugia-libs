@@ -56,3 +56,21 @@ export async function execTimeout<T>(
   const cbPromise = cb();
   return Promise.race([cbPromise, timeoutPromise]);
 }
+
+export type ErrorFirstCallback = (...rest: any[]) => void;
+
+export function errorFirst2Async<ResultType>(
+  doFunction: ErrorFirstCallback,
+): (...rest: any[]) => Promise<ResultType> {
+  return (...rest: any[]) => {
+    return new Promise((resolve, reject) => {
+      doFunction(...rest, (error: Error | null, value: ResultType) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve(value);
+      });
+    });
+  };
+}
