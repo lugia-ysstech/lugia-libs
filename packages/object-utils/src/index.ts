@@ -338,3 +338,17 @@ export function checkObjectNotEqual(
 ): boolean {
   return JSON.stringify(preObject) !== JSON.stringify(nextObject);
 }
+
+export function flatObject(data: AnyObject, childrenKey: string): AnyObject {
+  let result: AnyObject = {};
+  Object.keys(data).forEach(keyName => {
+    const current = data[keyName];
+    result[keyName] = current;
+    const children = current[childrenKey];
+    if (children) {
+      const childResult = flatObject(children, childrenKey);
+      result = { ...result, ...childResult };
+    }
+  });
+  return result;
+}

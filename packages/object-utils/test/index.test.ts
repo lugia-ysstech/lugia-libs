@@ -20,6 +20,7 @@ import {
   packObject,
   packPathObject,
   setAttributeValue,
+  flatObject,
 } from '../src';
 import { isNumber } from '../../math/src';
 
@@ -694,4 +695,46 @@ describe('object-utils', () => {
   testCheckObjectNotEqual({ id: '1' }, { id: '1' }, false);
   testCheckObjectNotEqual(['1'], ['2'], true);
   testCheckObjectNotEqual(['1'], [1], true);
+
+  it('flatObject', () => {
+    const target: any = {
+      A: {
+        id: 1,
+        data: [1, 2],
+        children: { C: { id: 2, data: [3, 4] } },
+      },
+      B: {
+        name: 'itemB',
+      },
+    };
+    expect(flatObject(target, 'children')).toEqual({
+      A: { id: 1, data: [1, 2], children: { C: { id: 2, data: [3, 4] } } },
+      C: { id: 2, data: [3, 4] },
+      B: { name: 'itemB' },
+    });
+
+    const target1: any = {
+      id: 1,
+      data: [1, 2],
+      children: { id: 2, data: [3, 4] },
+    };
+    expect(flatObject(target1, 'children')).toEqual({
+      id: 1,
+      data: [1, 2],
+      children: { id: 2, data: [3, 4] },
+    });
+
+    const target2: any = {
+      id: 1,
+      data: [1, 2],
+      children: { theme: { a: { theme: { c: 'ddd' } } } },
+    };
+    expect(flatObject(target2, 'theme')).toEqual({
+      id: 1,
+      data: [1, 2],
+      children: { theme: { a: { theme: { c: 'ddd' } } } },
+      a: { theme: { c: 'ddd' } },
+      c: 'ddd',
+    });
+  });
 });
