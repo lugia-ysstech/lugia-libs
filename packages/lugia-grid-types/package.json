@@ -1,0 +1,9 @@
+{
+  "name": "@lugia/lugia-grid-types",
+  "version": "1.0.0",
+  "private": false,
+  "files": [
+    "types"
+  ],
+  "main": "dist/types/index.ts"
+}

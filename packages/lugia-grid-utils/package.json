@@ -1,0 +1,30 @@
+{
+  "name": "@lugia/lugia-grid-utils",
+  "version": "1.0.0",
+  "author": "ysstech-yjy",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lugia-ysstech/lugia-devtools"
+  },
+  "homepage": "http://lugia.tech",
+  "license": "Apache License 2.0",
+  "files": [
+    "lib",
+    "interface",
+    "package.json"
+  ],
+  "types": "./lib/index.d.ts",
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=8.0.0",
+    "npm": ">=5.2.0"
+  },
+  "dependencies": {
+    "@lugia/array-utils": "^1.0.9",
+    "@lugia/math": "^1.0.11"
+  },
+  "devDependencies": {
+    "@lugia/lugia-grid-types": "^1.0.0"
+  }
+}

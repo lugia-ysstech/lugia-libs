@@ -1,0 +1,26 @@
+{
+  "extends": "../../tsconfig.json",
+
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "lib": ["esnext"],
+    "types": ["jest", "node"],
+    "outDir": "lib",
+    "typeRoots": [
+      "./node_modules/@types/",
+      "./src/@types/",
+      "../../node_modules/@types"
+    ],
+    "baseUrl": "."
+  },
+
+  "include": ["src"]
+}
