@@ -1,4 +1,4 @@
-import { GridInfo, GridType } from '@lugia/ide-grid-types/types';
+import { GridInfo, GridType } from '@lugia/lugia-grid-types/types';
 import { isNumber } from '@lugia/math';
 import { isNotEmptyArray } from '@lugia/array-utils';
 
