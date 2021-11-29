@@ -1,6 +1,8 @@
 // @flow
 import {
   enDash2UpperCaseLetter,
+  isLowerCaseLetter,
+  isUpCaseLetter,
   replaceString2Number,
   upperCaseLetter2EnDash,
 } from '../src';
@@ -34,5 +36,26 @@ describe('string-utils', () => {
     expect(replaceString2Number('0')).toEqual('0');
     expect(replaceString2Number('01')).toEqual('01');
     expect(replaceString2Number('a1a')).toEqual('1');
+  });
+
+  it('isUpCaseLetter', () => {
+    expect(isUpCaseLetter('AB')).toBeFalsy();
+    expect(isUpCaseLetter('a')).toBeFalsy();
+    expect(isUpCaseLetter('.')).toBeFalsy();
+    expect(isUpCaseLetter('0')).toBeFalsy();
+    expect(isUpCaseLetter('0>')).toBeFalsy();
+    expect(isUpCaseLetter('A')).toBeTruthy();
+    expect(isUpCaseLetter('C')).toBeTruthy();
+    expect(isUpCaseLetter('D')).toBeTruthy();
+  });
+  it('isLowerCaseLetter', () => {
+    expect(isLowerCaseLetter('ab')).toBeFalsy();
+    expect(isLowerCaseLetter('A')).toBeFalsy();
+    expect(isLowerCaseLetter('.')).toBeFalsy();
+    expect(isLowerCaseLetter('0')).toBeFalsy();
+    expect(isLowerCaseLetter('0>')).toBeFalsy();
+    expect(isLowerCaseLetter('a')).toBeTruthy();
+    expect(isLowerCaseLetter('c')).toBeTruthy();
+    expect(isLowerCaseLetter('f')).toBeTruthy();
   });
 });

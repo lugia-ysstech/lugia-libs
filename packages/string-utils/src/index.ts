@@ -22,3 +22,21 @@ export function upperCaseLetter2EnDash(str: string) {
 export function replaceString2Number(str: string) {
   return str.replace(/[^0-9.]/g, '');
 }
+
+const LowerCaseLetterRegExp = new RegExp('[a-z]');
+
+export function isLowerCaseLetter(letter: string): boolean {
+  return oneLetterTest(letter, LowerCaseLetterRegExp);
+}
+
+const UpCaseLetterRegExp = new RegExp('[A-Z]');
+export function isUpCaseLetter(letter: string): boolean {
+  return oneLetterTest(letter, UpCaseLetterRegExp);
+}
+
+function oneLetterTest(letter: string, regExp: RegExp) {
+  if (letter.length !== 1) {
+    return false;
+  }
+  return regExp.test(letter);
+}
