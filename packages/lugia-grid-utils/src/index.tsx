@@ -152,3 +152,277 @@ export const getAllItemInfo = (inData: GridInfo[]): AllItemInfoType => {
   createAllItemInfo(inData, allItemInfo);
   return allItemInfo;
 };
+
+const getGapItem = (id: string, size: number) => {
+  return {
+    id: `${id}-gap0`,
+    size,
+    text: '间距',
+    reactive: false,
+    autoHeight: false,
+  };
+};
+
+const getLayout2TopAndLeftRight = (inWidth: number, gapSize: number) => {
+  const leftSize = 300;
+  const rightSize = inWidth - leftSize - gapSize;
+
+  return [
+    { id: 'row0', size: 200 },
+    getGapItem('row0', gapSize),
+    {
+      id: 'row1',
+      size: 600,
+      children: [
+        { id: 'row1-col0', size: leftSize },
+        getGapItem('row1-col0', gapSize),
+        { id: 'row1-col1', size: rightSize },
+      ],
+    },
+  ];
+};
+
+const getLayout2LeftRight = (inWidth: number, gapSize: number) => {
+  const leftSize = 300;
+  const rightSize = inWidth - leftSize - gapSize;
+  return [
+    {
+      id: 'row0',
+      size: 800,
+      children: [
+        { id: 'row0-col0', size: leftSize },
+        getGapItem('row0-col0', gapSize),
+        { id: 'row0-col1', size: rightSize },
+      ],
+    },
+  ];
+};
+
+const getLayout2TopAndLeftRightAndBottom = (
+  inWidth: number,
+  gapSize: number,
+) => {
+  const leftSize = 300;
+  const rightSize = inWidth - leftSize - gapSize;
+
+  return [
+    { id: 'row0', size: 100 },
+    getGapItem('row0', gapSize),
+    {
+      id: 'row1',
+      size: 600,
+      children: [
+        { id: 'row1-col0', size: leftSize },
+        getGapItem('row1-col0', gapSize),
+        { id: 'row1-col1', size: rightSize },
+      ],
+    },
+    getGapItem('row1', gapSize),
+    { id: 'row2', size: 100 },
+  ];
+};
+
+const getLayout2TopAndContent = (inWidth: number, gapSize: number) => {
+  const percentSize = (inWidth - gapSize) / 2;
+  return [
+    { id: 'row0', size: 100 },
+    getGapItem('row0', gapSize),
+    {
+      id: 'row1',
+      size: 300,
+      children: [
+        { id: 'row1-col0', size: percentSize },
+        getGapItem('row1-col0', gapSize),
+        { id: 'row1-col1', size: percentSize },
+      ],
+    },
+    getGapItem('row1', gapSize),
+    {
+      id: 'row2',
+      size: 300,
+      children: [
+        { id: 'row2-col0', size: percentSize },
+        getGapItem('row2-col0', gapSize),
+        { id: 'row2-col1', size: percentSize },
+      ],
+    },
+  ];
+};
+
+const getLayout2TopAndLeftContent = (inWidth: number, gapSize: number) => {
+  const topSize = 100;
+  const contentSize = 680;
+  const leftSize = 300;
+  const rightSize = inWidth - leftSize - gapSize;
+  const percentSize = (contentSize - gapSize) / 2;
+  const contentPercentSize = (rightSize - gapSize) / 2;
+  return [
+    { id: 'row0', size: topSize },
+    getGapItem('row0', gapSize),
+    {
+      id: 'row1',
+      size: contentSize,
+      children: [
+        { id: 'row1-col0', size: leftSize },
+        getGapItem('row1-col0', gapSize),
+        {
+          id: 'row1-col1',
+          size: rightSize,
+          children: [
+            {
+              id: 'row1-col1-row0',
+              size: percentSize,
+              children: [
+                { id: 'row1-col1-row0-col0', size: contentPercentSize },
+                getGapItem('row1-col1-row0-col0', gapSize),
+                { id: 'row1-col1-row0-col1', size: contentPercentSize },
+              ],
+            },
+            getGapItem('row1-col1-row0', gapSize),
+            {
+              id: 'row1-col1-row1',
+              size: percentSize,
+              children: [
+                { id: 'row1-col1-row1-col0', size: contentPercentSize },
+                getGapItem('row1-col1-row1-col0', gapSize),
+                { id: 'row1-col1-row1-col1', size: contentPercentSize },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ];
+};
+const getLayout2LeftContent = (inWidth: number, gapSize: number) => {
+  const totalSize = 800;
+
+  const leftSize = 200;
+  const contentSize = inWidth - leftSize - gapSize;
+  const percentSize = (totalSize - gapSize) / 2;
+
+  const contentPercentSize = (contentSize - gapSize) / 2;
+
+  return [
+    {
+      id: 'row0',
+      size: totalSize,
+      children: [
+        { id: 'row0-col0', size: leftSize },
+        getGapItem('row0-col0', gapSize),
+        {
+          id: 'row0-col1',
+          size: contentSize,
+          children: [
+            {
+              id: 'row0-col1-row0',
+              size: percentSize,
+              children: [
+                { id: 'row1-col1-row0-col0', size: contentPercentSize },
+                getGapItem('row1-col1-row1-col0', gapSize),
+                { id: 'row1-col1-row0-col1', size: contentPercentSize },
+              ],
+            },
+            getGapItem('row0-col1-row0', gapSize),
+            {
+              id: 'row0-col1-row1',
+              size: percentSize,
+              children: [
+                { id: 'row0-col1-row1-col0', size: contentPercentSize },
+                getGapItem('row0-col1-row1-col0', gapSize),
+                { id: 'row0-col1-row1-col1', size: contentPercentSize },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ];
+};
+
+const getLayout2Content = (inWidth: number, gapSize: number) => {
+  const percentSize = (inWidth - gapSize) / 2;
+  return [
+    {
+      id: 'row0',
+      size: 400,
+      children: [
+        {
+          id: 'row0-col0',
+          size: percentSize,
+        },
+        getGapItem('row0-col0', gapSize),
+        {
+          id: 'row0-col1',
+          size: percentSize,
+        },
+      ],
+    },
+    getGapItem('row0', gapSize),
+    {
+      id: 'row1',
+      size: 400,
+      children: [
+        {
+          id: 'row1-col0',
+          size: percentSize,
+        },
+        getGapItem('row1-col0', gapSize),
+        {
+          id: 'row1-col1',
+          size: percentSize,
+        },
+      ],
+    },
+  ];
+};
+
+const getLayout2TopInLeftRightAndCenterAndBottom = (
+  inWidth: number,
+  gapSize: number,
+) => {
+  const leftSize = 200;
+  const rightSize = inWidth - gapSize - leftSize;
+  return [
+    {
+      id: 'row0',
+      size: 250,
+      children: [
+        { id: 'row0-col0', size: leftSize },
+        getGapItem('row0-col0', gapSize),
+        { id: 'row0-col1', size: rightSize },
+      ],
+    },
+    getGapItem('row0', gapSize),
+    { id: 'row1', size: 250 },
+    getGapItem('row1', gapSize),
+    { id: 'row0', size: 250 },
+  ];
+};
+
+export const getGridLayoutData = (
+  layoutId: string,
+  initWidth?: number,
+  initGap?: number,
+): GridInfo[] => {
+  const pageWidth = initWidth || 1920;
+  const gapSize = initGap || 20;
+
+  const layoutTarget = {
+    topAndLeftRight: getLayout2TopAndLeftRight(pageWidth, gapSize),
+    leftRight: getLayout2LeftRight(pageWidth, gapSize),
+    topAndLeftRightAndBottom: getLayout2TopAndLeftRightAndBottom(
+      pageWidth,
+      gapSize,
+    ),
+    topAndContent: getLayout2TopAndContent(pageWidth, gapSize),
+    topAndLeftContent: getLayout2TopAndLeftContent(pageWidth, gapSize),
+    leftContent: getLayout2LeftContent(pageWidth, gapSize),
+    content: getLayout2Content(pageWidth, gapSize),
+    topInLeftRightAndCenterAndBottom: getLayout2TopInLeftRightAndCenterAndBottom(
+      pageWidth,
+      gapSize,
+    ),
+  };
+  return layoutTarget[layoutId] || [];
+};
