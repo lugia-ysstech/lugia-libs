@@ -396,7 +396,7 @@ const getLayout2TopInLeftRightAndCenterAndBottom = (
     getGapItem('row0', gapSize),
     { id: 'row1', size: 250 },
     getGapItem('row1', gapSize),
-    { id: 'row0', size: 250 },
+    { id: 'row2', size: 250 },
   ];
 };
 
