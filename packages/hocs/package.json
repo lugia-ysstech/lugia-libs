@@ -1,7 +1,7 @@
 {
   "name": "@lugia/hocs",
   "types": "./lib/index.d.ts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "lugia生态的公共高阶组件库",
   "main": "./lib/index.js",
   "scripts": {
@@ -32,8 +32,8 @@
   },
   "devDependencies": {
     "@lugia/dict": "^1.0.5",
-    "@lugia/theme-core": "^1.1.16",
-    "@lugia/theme-css-hoc": "^1.1.25",
+    "@lugia/theme-core": "^1.1.17",
+    "@lugia/theme-css-hoc": "^1.1.26",
     "react": "^16.13.1",
     "styled-components": "^5.0.1"
   }
