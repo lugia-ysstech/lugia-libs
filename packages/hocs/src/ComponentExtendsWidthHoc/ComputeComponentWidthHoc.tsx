@@ -110,7 +110,9 @@ export default <PropsType extends HocPropsType>(
     };
 
     const onWindowResize = () => {
-      setStateBoxWidth(getCurrentNodeWidth());
+      updateParentNodeWidth();
+      initRule(preObserverNodeWidthRef.current);
+      setStateBoxWidth(getCurrentNodeWidth(preObserverNodeWidthRef.current));
     };
 
     useEffect(() => {
