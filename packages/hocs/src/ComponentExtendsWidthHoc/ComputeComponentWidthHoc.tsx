@@ -131,7 +131,10 @@ export default <PropsType extends HocPropsType>(
         const { current: currentParentWidth } = parentWidthRef;
         const { current: preObserverNodeWidth } = preObserverNodeWidthRef;
 
-        if (!currentParentWidth || !preObserverNodeWidth) {
+        if (
+          !currentParentWidth ||
+          typeof preObserverNodeWidth === 'undefined'
+        ) {
           preObserverNodeWidthRef.current = width;
           return;
         }
