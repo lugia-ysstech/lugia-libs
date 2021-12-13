@@ -10,6 +10,7 @@ export type HocPropsType = {
   getPartOfThemeProps: (name: string, option?: { [key: string]: any }) => {};
   resizeObserverId?: string;
   needComputeSize?: boolean;
+  observerFailureWidth?: number;
 };
 
 const ContainerId = '__tableExtendsWidthHoc';
@@ -22,6 +23,7 @@ export default <PropsType extends HocPropsType>(
       getPartOfThemeProps,
       resizeObserverId = '',
       needComputeSize = true,
+      observerFailureWidth,
     } = props;
     const [parentNodeWidth, setBoxWidth] = useState<number>(0);
 
@@ -89,6 +91,13 @@ export default <PropsType extends HocPropsType>(
 
     const getBodyWidth = () => {
       const { clientWidth } = document.documentElement;
+
+      if (observerFailureWidth) {
+        return clientWidth > observerFailureWidth
+          ? clientWidth
+          : observerFailureWidth;
+      }
+
       return clientWidth;
     };
 
@@ -101,7 +110,9 @@ export default <PropsType extends HocPropsType>(
     };
 
     const onWindowResize = () => {
-      setStateBoxWidth(getCurrentNodeWidth());
+      updateParentNodeWidth();
+      initRule(preObserverNodeWidthRef.current);
+      setStateBoxWidth(getCurrentNodeWidth(preObserverNodeWidthRef.current));
     };
 
     useEffect(() => {
