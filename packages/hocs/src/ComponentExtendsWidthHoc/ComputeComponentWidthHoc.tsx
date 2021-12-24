@@ -164,14 +164,6 @@ export default <PropsType extends HocPropsType>(
         if (!targetId || !parentWidthRef) {
           return;
         }
-        const currentObserverNode = observerNodesWidthRef.current[targetId];
-
-        const { current: currentParentWidth } = parentWidthRef;
-
-        if (!currentParentWidth || typeof currentObserverNode === 'undefined') {
-          observerNodesWidthRef.current[targetId] = width;
-          return;
-        }
 
         observerNodesWidthRef.current[targetId] = width;
         updateObserverNodesTotalWidth();
