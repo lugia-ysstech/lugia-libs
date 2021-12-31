@@ -369,7 +369,7 @@ export default class IndexDB extends Listener<any> implements Store {
     const WaitTimeOut = 5000;
     return new Promise((res, reject) => {
       setTimeout(() => {
-        reject('获取连接失败');
+        reject(`indexDb 获取连接失败: ${eventName}`);
       }, WaitTimeOut);
       const handler = this.once(eventName, data => {
         res(data);
