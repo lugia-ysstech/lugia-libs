@@ -13,6 +13,9 @@ export interface QueryInstance {
 }
 
 export interface Store extends QueryInstance {
+  createTable(newTableName: string): Promise<boolean>;
+  deleteTable(newTableName: string): Promise<boolean>;
+
   save(tableName: string, target: object): Promise<string>;
   saveOrUpdate(tableName: string, target: object): Promise<string>;
 
@@ -46,7 +49,9 @@ export type IndexDBOption = {
   dataBaseName: string; // 连接的目标数据库名称
   tableNames: string[]; // 要操作的表名集合
   version?: number; // 操作的数据库版本 默认版本为1
+  dynamicDb?: boolean; // true : 支持动态创建表以及删除表的功能  默认值false, 动态创建开启后，不会自动同步不存在的表，一切以当前DataBasew为准
   resetDataAfterConnect?: { [tableName: string]: boolean }; // 是否在每次连接后清空所有表的数据
   indexOption?: IndexDBIndexOption;
   generateId?: () => string;
+  deleteTableNames?: string[];
 };

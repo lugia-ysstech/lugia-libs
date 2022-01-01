@@ -26,6 +26,10 @@ export default class IndexDB extends Listener<any> implements Store {
   tableExist: { [tableName: string]: boolean };
   tableNames: string[];
 
+  private option: IndexDBOption;
+  private readonly dynamicDb: boolean;
+  private indexedDB: any;
+
   constructor(indexedDB: any, option: IndexDBOption) {
     super();
     this.version = 1;
@@ -34,6 +38,9 @@ export default class IndexDB extends Listener<any> implements Store {
     this.tableNames = [];
     this.tableExist = {};
     this.tableName2Unique = {};
+    this.option = option;
+    const { dynamicDb = false } = option;
+    this.dynamicDb = dynamicDb;
 
     if (!indexedDB) {
       console.error('indexDB不能为空！');
@@ -52,16 +59,13 @@ export default class IndexDB extends Listener<any> implements Store {
     this.tableNames = [...tableNames];
     const { indexOption = {} } = option;
     this.indexOption = indexOption;
-    if (!Array.isArray(tableNames) || tableNames.length === 0) {
-      console.warn('为存在要操作的表!');
-      return;
-    }
 
-    const { generateId = now } = option;
-    tableNames.forEach((tableName: string) => {
-      this.tableName2Unique[tableName] = new Unique(0, tableName, generateId);
-    });
     this.openDataBase(indexedDB, option);
+  }
+
+  private createTableIdUnique(tableName: string) {
+    const { generateId = now } = this.option;
+    this.tableName2Unique[tableName] = new Unique(0, tableName, generateId);
   }
 
   getDataBaseTag = (): string => {
@@ -69,62 +73,148 @@ export default class IndexDB extends Listener<any> implements Store {
     return `[${dataBaseName}@${version}]`;
   };
 
-  openDataBase = (indexedDB: any, option: IndexDBOption) => {
+  async createTable(newTableName: string): Promise<boolean> {
+    const message = `新建表 ${newTableName} @ ${this.dataBaseName}-v${
+      this.version
+    }`;
+    console.info(message);
+    if (!this.option) {
+      console.error(`数据库未就绪: ${message}`);
+      return false;
+    }
+    if (!this.dynamicDb) {
+      console.error(`未开启动态化库表结构功能: ${message}`);
+      return false;
+    }
+    if (this.existTable(newTableName)) {
+      console.error(`该表已存在: ${message}`);
+      return false;
+    }
+
+    this.db.close();
+    const { tableNames = [] } = this.option;
+    return this.openDataBase(this.indexedDB, {
+      ...this.option,
+      version: this.version + 1,
+      tableNames: [...tableNames, newTableName],
+    });
+  }
+
+  async deleteTable(delTableName: string): Promise<boolean> {
+    const message = `删除表 ${delTableName} @ ${this.dataBaseName}-v${
+      this.version
+    }`;
+    console.info(message);
+    if (!this.option) {
+      console.error(`数据库未就绪: ${message}`);
+      return false;
+    }
+    if (!this.dynamicDb) {
+      console.error(`未开启动态化库表结构功能: ${message}`);
+      return false;
+    }
+    if (!this.existTable(delTableName)) {
+      console.error(`该表未存在存在: ${message}`);
+      return false;
+    }
+
+    this.db.close();
+
+    return this.openDataBase(this.indexedDB, {
+      ...this.option,
+      version: this.version + 1,
+      deleteTableNames: [delTableName],
+    });
+  }
+
+  async openDataBase(indexedDB: any, option: IndexDBOption): Promise<boolean> {
     const { dataBaseName, tableNames, version } = option;
+    this.option = option;
     this.dataBaseName = dataBaseName;
+    this.indexedDB = indexedDB;
     const request = indexedDB.open(dataBaseName, version);
     const dataBaseTag = this.getDataBaseTag();
-    request.onerror = async () => {
-      console.error(`打开数据库报错 ${dataBaseTag}`);
-    };
 
-    request.onupgradeneeded = (event: any) => {
-      this.updateDb(event);
+    return new Promise((resolve, reject) => {
+      request.onerror = async () => {
+        console.error(`打开数据库报错 ${dataBaseTag}`);
+        reject(`打开数据库报错 ${dataBaseTag}`);
+      };
 
-      const existTableNames: string[] = this.getExistTableNames();
-      const existTableMap: { [tableName: string]: boolean } = {};
-      for (const item of existTableNames) {
-        existTableMap[item] = true;
-      }
-
-      tableNames.forEach((tableName: string) => {
-        this.createTable(tableName);
-        delete existTableMap[tableName];
-      });
-
-      for (const needDelTableName of Object.keys(existTableMap)) {
-        const db = this.getDb();
-        db.deleteObjectStore(needDelTableName);
-      }
-    };
-    request.onsuccess = (event: any) => {
-      this.updateDb(event);
-      const { resetDataAfterConnect = {} } = option;
-      const existTables: string[] = this.getExistTableNames();
-      existTables.sort(sortStringAsc);
-      tableNames.sort(sortStringAsc);
-      const separator = '|';
-      if (existTables.join(separator) !== tableNames.join(separator)) {
-        const { version: oldVersion } = this.getDb();
-        console.info(`待创建的表里包含未创建的表 ${this.getDataBaseTag()}`);
-        this.getDb().close();
-        this.openDataBase(indexedDB, { ...option, version: oldVersion + 1 });
-        return;
-      }
-
-      tableNames.forEach(async (tableName: string) => {
-        const isExist = this.existTable(tableName);
-        if (isExist) {
-          const { db } = this;
-          this.tableExist[tableName] = true;
-          if (resetDataAfterConnect[tableName]) {
-            await this.truncateTable(tableName);
-          }
-          this.emit(tableName, { db });
+      const delTables = (targetTables: string[]) => {
+        for (const delTable of targetTables) {
+          const db = this.getDb();
+          db.deleteObjectStore(delTable);
+          delete this.tableExist[delTable];
+          delete this.tableName2Unique[delTable];
         }
-      });
-    };
-  };
+      };
+      request.onupgradeneeded = (event: any) => {
+        this.updateDb(event);
+
+        const existTableNames: string[] = this.getExistTableNames();
+        const existTableMap: { [tableName: string]: boolean } = {};
+        for (const item of existTableNames) {
+          existTableMap[item] = true;
+        }
+
+        tableNames.forEach((tableName: string) => {
+          this.createTableInner(tableName);
+          delete existTableMap[tableName];
+        });
+
+        if (!this.dynamicDb) {
+          console.info('同步数据删除表', Object.keys(existTableMap));
+          delTables(Object.keys(existTableMap));
+        }
+        const { deleteTableNames = [] } = this.option;
+        console.info('待删除表', deleteTableNames);
+        delTables(deleteTableNames);
+        this.option.deleteTableNames = [];
+        resolve(true);
+      };
+
+      request.onsuccess = async (event: any) => {
+        this.updateDb(event);
+        const { resetDataAfterConnect = {} } = option;
+        const existTables: string[] = this.getExistTableNames();
+        existTables.sort(sortStringAsc);
+        tableNames.sort(sortStringAsc);
+        const separator = '|';
+
+        if (
+          !this.dynamicDb &&
+          existTables.join(separator) !== tableNames.join(separator)
+        ) {
+          const { version: oldVersion } = this.getDb();
+          console.info(`待创建的表里包含未创建的表 ${this.getDataBaseTag()}`);
+          this.getDb().close();
+          resolve(
+            await this.openDataBase(indexedDB, {
+              ...option,
+              version: oldVersion + 1,
+            }),
+          );
+          return;
+        }
+
+        for (const tableName of existTables) {
+          const isExist = this.existTable(tableName);
+          if (isExist) {
+            this.createTableIdUnique(tableName);
+            this.tableExist[tableName] = true;
+            if (resetDataAfterConnect[tableName]) {
+              await this.truncateTable(tableName);
+            }
+            const { db } = this;
+            this.emit(tableName, { db });
+          }
+        }
+
+        resolve(true);
+      };
+    });
+  }
 
   getExistTableNames = (): string[] => {
     const db = this.getDb();
@@ -141,15 +231,10 @@ export default class IndexDB extends Listener<any> implements Store {
     return existTables;
   };
 
-  createTable(tableName: string) {
+  private createTableInner(tableName: string) {
     if (!this.existTable(tableName)) {
       this.createObjectStore(tableName);
     }
-  }
-
-  existTable(tableName: string) {
-    const db = this.getDb();
-    return db.objectStoreNames.contains(tableName);
   }
 
   async truncateTable(tableName: string) {
@@ -162,6 +247,11 @@ export default class IndexDB extends Listener<any> implements Store {
       success: `清空${tableName}表成功`,
       error: `清空${tableName}表失败`,
     });
+  }
+
+  existTable(tableName: string) {
+    const db = this.getDb();
+    return db.objectStoreNames.contains(tableName);
   }
 
   createObjectStore(tableName: string) {
@@ -349,6 +439,12 @@ export default class IndexDB extends Listener<any> implements Store {
     tableName: string,
     mode: 'readonly' | 'readwrite' | 'versionchange',
   ): Promise<any> {
+    const existTable = await this.existTable(tableName);
+    if (!existTable) {
+      if (!(await this.createTable(tableName))) {
+        throw new Error('写入数据的表不存在，动态创建失败');
+      }
+    }
     const db = await this.getDbWaitTable(tableName);
     const transaction = db.transaction([tableName], mode);
     return transaction.objectStore(tableName);
