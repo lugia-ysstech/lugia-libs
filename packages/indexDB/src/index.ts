@@ -34,23 +34,23 @@ export default class IndexDB extends Listener<any> implements Store {
     super();
     this.version = 1;
     this.indexOption = {};
-    this.dataBaseName = '';
     this.tableNames = [];
     this.tableExist = {};
     this.tableName2Unique = {};
     this.option = option;
-    const { dynamicDb = false } = option;
+    const { dynamicDb = false, dataBaseName } = option;
     this.dynamicDb = dynamicDb;
+    this.dataBaseName = dataBaseName;
 
     if (!indexedDB) {
-      console.error('indexDB不能为空！');
+      console.error('indexDB不能为空！', this.dataBaseName);
       return;
     }
     if (!option) {
-      console.error('option不能为空！');
+      console.error('option不能为空！', this.dataBaseName);
       return;
     }
-    const { tableNames = [], dataBaseName } = option;
+    const { tableNames = [] } = option;
     if (!dataBaseName) {
       console.error('数据库实例名称不能为空！');
       return;
@@ -575,7 +575,7 @@ export default class IndexDB extends Listener<any> implements Store {
   getUnique(tableName: string): Unique | undefined {
     const has = this.tableName2Unique[tableName];
     if (!has) {
-      console.error(`不存在的表名:${tableName}`);
+      console.error(`不存在的表名:${tableName}@${this.dataBaseName}`);
     }
     return has;
   }
