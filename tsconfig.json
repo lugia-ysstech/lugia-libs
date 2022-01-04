@@ -2,9 +2,9 @@
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "jsx": "react",
-    "target": "es5",
+    "target": "es6",
     "outDir": "lib",
     "importHelpers": true,
     "esModuleInterop": true,
