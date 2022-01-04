@@ -486,7 +486,7 @@ export default class IndexDB extends Listener<any> implements Store {
     });
   }
 
-  async getAll(tableName: string): Promise<object[]> {
+  async getAll<T = any>(tableName: string): Promise<T[]> {
     if (!this.getUnique(tableName)) {
       return [];
     }
@@ -525,9 +525,9 @@ export default class IndexDB extends Listener<any> implements Store {
     });
   }
 
-  async get(tableName: string, id: string): Promise<any> {
+  async get<T = any>(tableName: string, id: string): Promise<T | undefined> {
     if (!this.getUnique(tableName)) {
-      return '';
+      return;
     }
     const store = await this.getDBObjectStore(tableName, 'readonly');
     return this.getByStore(tableName, id, store);

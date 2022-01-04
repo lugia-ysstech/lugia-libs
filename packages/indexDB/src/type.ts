@@ -1,6 +1,5 @@
 export interface QueryInstance {
-  get(tableName: string, id: string): Promise<object>;
-
+  get<T = any>(tableName: string, id: string): Promise<T | undefined>;
   count(tableName: string): Promise<number>;
 
   getAllKeys(tableName: string): Promise<string[]>;
@@ -9,7 +8,7 @@ export interface QueryInstance {
 
   filterKeys(tableName: string, cb: (key: any) => boolean): Promise<string[]>;
 
-  getAll(tableName: string): Promise<object[]>;
+  getAll<T = any>(tableName: string): Promise<T[]>;
 }
 
 export interface Store extends QueryInstance {
