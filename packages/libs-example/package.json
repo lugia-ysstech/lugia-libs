@@ -1,9 +1,9 @@
 {
   "name": "@lugia/libs-example",
-  "version": "1.2.15",
+  "version": "1.2.16",
   "dependencies": {
     "@lugia/dict": "^1.0.5",
-    "@lugia/indexdb": "^1.2.8",
+    "@lugia/indexdb": "^1.2.9",
     "@lugia/theme-config": "^1.1.7",
     "@lugia/theme-css-hoc": "^1.1.26",
     "@lugia/theme-hoc": "^1.1.19",
