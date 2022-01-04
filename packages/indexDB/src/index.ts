@@ -445,10 +445,12 @@ export default class IndexDB extends Listener<any> implements Store {
       return '';
     }
     const id = unique.getNext();
-    const request = store.add({ id, ...target });
+    const newRecord = { id, ...target };
+    const request = store.add(newRecord);
+    const { id: lastId } = newRecord;
     return this.requestPromise(request, {
-      success: `${tableName} ${id} ${JSON.stringify(target)} 新增记录`,
-      error: `${tableName} ${target} 新增记录`,
+      success: `${tableName} ${lastId} ${JSON.stringify(target)} 新增记录`,
+      error: `${tableName} ${lastId} 新增记录`,
     });
   }
 
