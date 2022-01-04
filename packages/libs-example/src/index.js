@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './selector/demo';
+import App from './indexDB';
 import * as serviceWorker from './serviceWorker';
 import { getDict } from '@lugia/dict';
 

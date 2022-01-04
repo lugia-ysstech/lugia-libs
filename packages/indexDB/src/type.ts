@@ -1,3 +1,13 @@
+import { number2px } from '../../../lib/units';
+
+export type Direction = 'next' | 'prev';
+
+export interface GetRencordsOption {
+  start?: number; // 下标从0开始起算,默认值为
+  count: number; // 截取几条记录
+  query?: IDBKeyRange; // 根据游标进行筛选
+  cb?: (item: any) => boolean;
+}
 export interface QueryInstance {
   get<T = any>(tableName: string, id: string): Promise<T | undefined>;
   count(tableName: string): Promise<number>;
@@ -9,6 +19,12 @@ export interface QueryInstance {
   filterKeys(tableName: string, cb: (key: any) => boolean): Promise<string[]>;
 
   getAll<T = any>(tableName: string): Promise<T[]>;
+
+  getRecords<T>(
+    tableName: string,
+    direction: Direction,
+    range: GetRencordsOption,
+  ): Promise<T[]>;
 }
 
 export interface Store extends QueryInstance {

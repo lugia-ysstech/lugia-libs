@@ -160,7 +160,7 @@
 
 "@lugia/object-utils@^1.1.2":
   version "1.1.2"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2fobject-utils/-/object-utils-1.1.2.tgz#d173dbd0d89979965842b205cabcac93854c3053"
+  resolved "http://registry.npmjs.org/verdaccio/@lugia%2fobject-utils/-/object-utils-1.1.2.tgz#d173dbd0d89979965842b205cabcac93854c3053"
   integrity sha512-e+9n6ArrRYLw0q6G2kYwvgu7ulfNILWR7nyDrfphe5Lo11vvskBXDQf65/hO8BBlJLf+5aNhxTqxMhpkdS5LBg==
   dependencies:
     "@babel/runtime" "^7.4.5"
@@ -177,7 +177,7 @@
 
 "@lugia/theme-core@^1.1.17":
   version "1.1.17"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2ftheme-core/-/theme-core-1.1.17.tgz#301815e5d908dd4e728c33ed33425b70bb4e1864"
+  resolved "http://registry.npmjs.org/verdaccio/@lugia%2ftheme-core/-/theme-core-1.1.17.tgz#301815e5d908dd4e728c33ed33425b70bb4e1864"
   integrity sha512-tadkjiVDGw2vPomFlDqnB6SM7cjxKa3BwpWDAmajkyXBWvYUMFEZXeQHk/Spr86L/IS2gmCEGPeeXnM2AuFMSw==
   dependencies:
     "@babel/runtime" "^7.4.5"
@@ -188,7 +188,7 @@
 
 "@lugia/theme-css-hoc@^1.1.26":
   version "1.1.26"
-  resolved "http://192.168.102.79/verdaccio/@lugia%2ftheme-css-hoc/-/theme-css-hoc-1.1.26.tgz#8cc5caaa462952c2ed4f65c4eb3d8613f888c2d9"
+  resolved "http://registry.npmjs.org/verdaccio/@lugia%2ftheme-css-hoc/-/theme-css-hoc-1.1.26.tgz#8cc5caaa462952c2ed4f65c4eb3d8613f888c2d9"
   integrity sha512-9RreLY1SJyM9GPhLACzTD2muctitF1wikjiH7oZmwyBk3hLbvEGnVXy8FS37a11fbtqb81cYmWbomfpbAINkMA==
   dependencies:
     "@babel/runtime" "^7.4.5"
@@ -266,7 +266,7 @@
 
 "@types/shortid@^0.0.29":
   version "0.0.29"
-  resolved "http://192.168.102.79/verdaccio/@types%2fshortid/-/shortid-0.0.29.tgz#8093ee0416a6e2bf2aa6338109114b3fbffa0e9b"
+  resolved "http://registry.npmjs.org/verdaccio/@types%2fshortid/-/shortid-0.0.29.tgz#8093ee0416a6e2bf2aa6338109114b3fbffa0e9b"
   integrity sha1-gJPuBBam4r8qpjOBCRFLP7/6Dps=
 
 "@types/styled-components@^4.4.3":
@@ -419,7 +419,7 @@ ms@2.1.2:
 
 nanoid@^2.1.0:
   version "2.1.11"
-  resolved "http://192.168.102.79/verdaccio/nanoid/-/nanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
+  resolved "http://registry.npmjs.org/verdaccio/nanoid/-/nanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
   integrity sha1-7CS4p1jVkVYVMbQXagHjq08PAoA=
 
 object-assign@^4.1.1:
@@ -472,7 +472,7 @@ shallowequal@^1.1.0:
 
 shortid@^2.2.16:
   version "2.2.16"
-  resolved "http://192.168.102.79/verdaccio/shortid/-/shortid-2.2.16.tgz#b742b8f0cb96406fd391c76bfc18a67a57fe5608"
+  resolved "http://registry.npmjs.org/verdaccio/shortid/-/shortid-2.2.16.tgz#b742b8f0cb96406fd391c76bfc18a67a57fe5608"
   integrity sha1-t0K48MuWQG/Tkcdr/Bimelf+Vgg=
   dependencies:
     nanoid "^2.1.0"

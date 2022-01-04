@@ -5,9 +5,11 @@
  * @flow
  */
 import {
+  Direction,
   IndexDBIndexOption,
   IndexDBIndexOptionItem,
   IndexDBOption,
+  GetRencordsOption,
   Store,
 } from './type';
 
@@ -690,7 +692,7 @@ export default class IndexDB extends Listener<any> implements Store {
     }
     const { valueField, funcName } = option;
     const request = store[funcName]();
-    const result: any[] = [];
+    const result: string[] = [];
     return new Promise(res => {
       request.onsuccess = (event: any) => {
         const cursor = event.target.result;
@@ -709,5 +711,54 @@ export default class IndexDB extends Listener<any> implements Store {
 
   isSameDB(target: object): boolean {
     return target === this.db;
+  }
+  async getRecords<T>(
+    tableName: string,
+    direction: Direction,
+    option: GetRencordsOption,
+  ): Promise<T[]> {
+    if (!this.getUnique(tableName)) {
+      return [];
+    }
+
+    const { start = 0, count = 0, query = null } = option;
+
+    if (!count) {
+      return [];
+    }
+
+    const realStart = Math.max(0, start);
+
+    const store = await this.getDBObjectStore(tableName, 'readonly');
+    const request = store.openCursor(query, direction);
+    const result: any[] = [];
+
+    let index = 0;
+    const { cb } = option;
+    return new Promise(resolve => {
+      request.onsuccess = (event: any) => {
+        const cursor = event.target.result;
+        if (cursor) {
+          const { value: record } = cursor;
+          console.info(index, record, result.length, count);
+          if (index >= realStart) {
+            if (result.length < count) {
+              const match = !cb || cb(record);
+              if (match) {
+                result.push(record);
+              }
+            } else {
+              resolve(result);
+              return;
+            }
+          }
+          index++;
+          cursor.continue();
+        } else {
+          resolve(result);
+          return;
+        }
+      };
+    });
   }
 }

@@ -69,7 +69,7 @@
     "ts-jest": "^24.1.0",
     "tslint": "^6.1.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.5.4",
+    "typescript": "3.9.6",
     "vinyl-fs": "^3.0.3"
   },
   "engines": {

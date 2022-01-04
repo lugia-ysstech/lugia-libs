@@ -10,14 +10,7 @@ export default class Modal extends React.Component {
   }
 
   componentDidMount() {
-    indexDB.save('links', { name: 'hello', port: 9090, psw: 'aaa' });
     window.indexedDB_m = indexDB;
-    setTimeout(() => {
-      console.log(indexDB.getIndex('links', 'name'));
-      console.log('indexOption', indexDB.indexOption);
-      console.log('tableName2Field2Index', indexDB.tableName2Field2Index);
-      // console.log('name', indexDB.tableName2Field2Index.links.name);
-    }, 3000);
   }
 
   render() {
@@ -31,7 +24,13 @@ export default class Modal extends React.Component {
           : '暂无数据'}
       </ul>,
       <input type="text" />,
-      <button>add link</button>,
+      <button
+        onClick={() => {
+          indexDB.save('links', { name: 'hello', port: 9090, psw: 'aaa' });
+        }}
+      >
+        add link
+      </button>,
     ];
   }
 }
