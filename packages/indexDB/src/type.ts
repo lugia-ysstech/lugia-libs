@@ -52,6 +52,7 @@ export type IndexDBOption = {
   dynamicDb?: boolean; // true : 支持动态创建表以及删除表的功能  默认值false, 动态创建开启后，不会自动同步不存在的表，一切以当前DataBasew为准
   resetDataAfterConnect?: { [tableName: string]: boolean }; // 是否在每次连接后清空所有表的数据
   indexOption?: IndexDBIndexOption;
+  getIndexDBIndexOption?: (tableName: string) => IndexDBIndexOptionItem[];
   generateId?: () => string;
   deleteTableNames?: string[];
 };
