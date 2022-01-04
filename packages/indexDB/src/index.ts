@@ -163,7 +163,7 @@ export default class IndexDB extends Listener<any> implements Store {
         }
       };
       request.onupgradeneeded = (event: any) => {
-        console.error(`onupgradeneeded ${dataBaseTag}`);
+        console.info(`onupgradeneeded ${dataBaseTag}`);
         this.updateDb(event);
 
         const existTableNames: string[] = this.getExistTableNames();
@@ -189,7 +189,7 @@ export default class IndexDB extends Listener<any> implements Store {
       };
 
       request.onsuccess = async (event: any) => {
-        console.error(`onsuccess ${dataBaseTag}`);
+        console.info(`onsuccess ${dataBaseTag}`);
         this.updateDb(event);
         const { resetDataAfterConnect = {} } = option;
         const existTables: string[] = this.getExistTableNames();
