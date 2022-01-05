@@ -752,26 +752,28 @@ export default class IndexDB extends Listener<any> implements Store {
     const request = store.openCursor(query, direction);
     const result: any[] = [];
 
-    let index = 0;
+    let isSkipping = false;
     const { cb } = option;
     return new Promise(resolve => {
       request.onsuccess = (event: any) => {
         const cursor = event.target.result;
         if (cursor) {
-          const { value: record } = cursor;
-          console.info(index, record, result.length, count);
-          if (index >= realStart) {
-            if (result.length < count) {
-              const match = !cb || cb(record);
-              if (match) {
-                result.push(record);
-              }
-            } else {
-              resolve(result);
-              return;
-            }
+          if (realStart && !isSkipping) {
+            isSkipping = true;
+            cursor.advance(realStart);
+            return;
           }
-          index++;
+
+          const { value: record } = cursor;
+          if (result.length < count) {
+            const match = !cb || cb(record);
+            if (match) {
+              result.push(record);
+            }
+          } else {
+            resolve(result);
+            return;
+          }
           cursor.continue();
         } else {
           resolve(result);
