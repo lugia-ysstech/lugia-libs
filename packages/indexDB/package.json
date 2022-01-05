@@ -1,6 +1,6 @@
 {
   "name": "@lugia/indexdb",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "An example of lerna package.",
   "types": "./lib/index.d.ts",
   "main": "./lib/index.js",
