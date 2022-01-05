@@ -42,6 +42,9 @@ export interface Store extends QueryInstance {
 
   isSameDB(target: object): boolean;
 
+  close(): Promise<boolean>;
+  reOpen(): Promise<boolean>;
+
   update(tableName: string, id: string, target: object): Promise<string>;
 
   getIndex(tableName: string, field: string): Promise<QueryInstance>;

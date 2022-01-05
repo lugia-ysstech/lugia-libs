@@ -28,12 +28,14 @@ export default class IndexDB extends Listener<any> implements Store {
   tableExist: { [tableName: string]: boolean };
   tableNames: string[];
 
+  private isBlocked: boolean;
   private option: IndexDBOption;
   private readonly dynamicDb: boolean;
   private indexedDB: any;
 
   constructor(indexedDB: any, option: IndexDBOption) {
     super();
+    this.isBlocked = false;
     this.version = 1;
     this.indexOption = {};
     this.tableNames = [];
@@ -65,6 +67,20 @@ export default class IndexDB extends Listener<any> implements Store {
     this.openDataBase(indexedDB, option);
   }
 
+  async close(): Promise<boolean> {
+    const db = this.getDb();
+    if (!db) {
+      console.warn('数据库未就绪: close');
+      return false;
+    }
+    db.close();
+    return true;
+  }
+
+  reOpen(): Promise<boolean> {
+    return this.openDataBase(this.indexedDB, this.option);
+  }
+
   private createTableIdUnique(tableName: string) {
     const { generateId = now } = this.option;
     this.tableName2Unique[tableName] = new Unique(0, tableName, generateId);
@@ -92,9 +108,7 @@ export default class IndexDB extends Listener<any> implements Store {
       console.error(`该表已存在: ${message}`);
       return false;
     }
-    if (this.db) {
-      this.db.close();
-    }
+    this.close();
 
     const { tableNames = [] } = this.option;
     return this.openDataBase(this.indexedDB, {
@@ -122,9 +136,7 @@ export default class IndexDB extends Listener<any> implements Store {
       return false;
     }
 
-    if (this.db) {
-      this.db.close();
-    }
+    this.close();
 
     return this.openDataBase(this.indexedDB, {
       ...this.option,
@@ -148,6 +160,8 @@ export default class IndexDB extends Listener<any> implements Store {
         console.log(
           `存在未完成的数据库操作，无法进行更新处理: ${dataBaseName}`,
         );
+        this.isBlocked = true;
+        this.emit('onblocked', { dataBaseName });
       };
       request.onerror = async () => {
         console.error(`打开数据库报错 ${dataBaseTag}`);
@@ -188,6 +202,10 @@ export default class IndexDB extends Listener<any> implements Store {
         delTables(deleteTableNames);
         this.option.deleteTableNames = [];
         resolve(true);
+        if (this.isBlocked) {
+          this.emit('onupgradeneeded', { dataBaseName });
+        }
+        this.isBlocked = false;
       };
 
       request.onsuccess = async (event: any) => {
@@ -712,6 +730,7 @@ export default class IndexDB extends Listener<any> implements Store {
   isSameDB(target: object): boolean {
     return target === this.db;
   }
+
   async getRecords<T>(
     tableName: string,
     direction: Direction,
