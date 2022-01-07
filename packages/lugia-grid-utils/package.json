@@ -1,6 +1,6 @@
 {
   "name": "@lugia/lugia-grid-utils",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "ysstech-yjy",
   "scripts": {},
   "repository": {
@@ -25,6 +25,6 @@
     "@lugia/math": "^1.0.12"
   },
   "devDependencies": {
-    "@lugia/lugia-grid-types": "^1.0.1"
+    "@lugia/lugia-grid-types": "^1.0.2"
   }
 }
