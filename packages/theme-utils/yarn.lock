@@ -9,18 +9,33 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@lugia/css@^1.0.22":
-  version "1.0.22"
-  resolved "https://registry.npm.taobao.org/@lugia/css/download/@lugia/css-1.0.22.tgz#fd4fe69dc368d5a16c129849961ca3f012011091"
-  integrity sha1-/U/mncNo1aFsEphJlhyj8BIBEJE=
+"@lugia/css@^1.0.26":
+  version "1.0.26"
+  resolved "https://registry.npmjs.org/@lugia/css/-/css-1.0.26.tgz#f4d45d32bac4e5089688c54f6b5a167a377d1740"
+  integrity sha512-zdX5stxCRyLZs3zSuuxVH3VrAmUiQ8gUBj79RZuFoYdv/Pw1ABVR87syxDNkZ8GWtQwcxS4KPEiuguJOiG6Wkw==
   dependencies:
-    "@babel/runtime" "^7.4.5"
+    "@types/debug" "^4.1.5"
     debug "^4.1.1"
+    tslib "^1.11.1"
 
-"@lugia/dict@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.npm.taobao.org/@lugia/dict/download/@lugia/dict-1.0.3.tgz#5143dbf47d89ba7cc3260f3c0921aeb3997e7336"
-  integrity sha1-UUPb9H2JunzDJg88CSGus5l+czY=
+"@lugia/dict@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@lugia/dict/-/dict-1.0.5.tgz#5dda42992f3e66f0d55a6a55d74891e78373caa2"
+  integrity sha512-gw/orUdGnoDaWJ9WQExpgqEjgH7bhvZmkpzSANbdWcidTJyioPy1g+TExEG9KsY6facoSrroPbuGJsdoiy8R3g==
+  dependencies:
+    tslib "^1.11.1"
+
+"@types/debug@^4.1.5":
+  version "4.1.7"
+  resolved "https://registry.npmjs.org/@types/debug/-/debug-4.1.7.tgz#7cc0ea761509124709b8b2d1090d8f6c17aadb82"
+  integrity sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==
+  dependencies:
+    "@types/ms" "*"
+
+"@types/ms@*":
+  version "0.7.31"
+  resolved "https://registry.npmjs.org/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
+  integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
 debug@^4.1.1:
   version "4.1.1"
@@ -38,6 +53,11 @@ regenerator-runtime@^0.13.2:
   version "0.13.2"
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
   integrity sha1-MuWcmm+5saSv8JtJMMotRHc0NEc=
+
+tslib@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tslib@^1.11.1:
   version "1.11.1"

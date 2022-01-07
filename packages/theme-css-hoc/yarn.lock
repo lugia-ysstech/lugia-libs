@@ -137,57 +137,54 @@
   resolved "https://registry.npm.taobao.org/@emotion%2funitless/-/unitless-0.7.5.tgz#77211291c1900a700b8a78cfafda3160d76949ed"
   integrity sha1-dyESkcGQCnALinjPr9oxYNdpSe0=
 
-"@lugia/css@^1.0.23-alpha.1":
-  version "1.0.23-alpha.1"
-  resolved "https://registry.npm.taobao.org/@lugia/css/download/@lugia/css-1.0.23-alpha.1.tgz#deef024a2b78325e8e4424870bf579c74abfefc1"
-  integrity sha1-3u8CSit4Ml6ORCSHC/V5x0q/78E=
+"@lugia/css@^1.0.26":
+  version "1.0.26"
+  resolved "https://registry.npmjs.org/@lugia/css/-/css-1.0.26.tgz#f4d45d32bac4e5089688c54f6b5a167a377d1740"
+  integrity sha512-zdX5stxCRyLZs3zSuuxVH3VrAmUiQ8gUBj79RZuFoYdv/Pw1ABVR87syxDNkZ8GWtQwcxS4KPEiuguJOiG6Wkw==
   dependencies:
+    "@types/debug" "^4.1.5"
     debug "^4.1.1"
     tslib "^1.11.1"
 
-"@lugia/dict@^1.0.4-alpha.0":
-  version "1.0.4-alpha.0"
-  resolved "https://registry.npm.taobao.org/@lugia/dict/download/@lugia/dict-1.0.4-alpha.0.tgz#2a0a94169b371c11dee8f69771b6724e509249b6"
-  integrity sha1-KgqUFps3HBHe6PaXcbZyTlCSSbY=
+"@lugia/dict@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@lugia/dict/-/dict-1.0.5.tgz#5dda42992f3e66f0d55a6a55d74891e78373caa2"
+  integrity sha512-gw/orUdGnoDaWJ9WQExpgqEjgH7bhvZmkpzSANbdWcidTJyioPy1g+TExEG9KsY6facoSrroPbuGJsdoiy8R3g==
   dependencies:
     tslib "^1.11.1"
 
-"@lugia/object-utils@^1.0.16-alpha.1":
-  version "1.0.16-alpha.1"
-  resolved "https://registry.npm.taobao.org/@lugia/object-utils/download/@lugia/object-utils-1.0.16-alpha.1.tgz#6fe5bb2d7ca2aead36798d3d6b91abd65c0e08dc"
-  integrity sha1-b+W7LXyirq02eY09a5Gr1lwOCNw=
+"@lugia/object-utils@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@lugia/object-utils/-/object-utils-1.1.2.tgz#d173dbd0d89979965842b205cabcac93854c3053"
+  integrity sha512-e+9n6ArrRYLw0q6G2kYwvgu7ulfNILWR7nyDrfphe5Lo11vvskBXDQf65/hO8BBlJLf+5aNhxTqxMhpkdS5LBg==
   dependencies:
     "@babel/runtime" "^7.4.5"
     deepmerge "^3.2.0"
     is-plain-object "^3.0.0"
     tslib "^1.11.1"
 
-"@lugia/ramada@^1.0.4-alpha.1":
-  version "1.0.4-alpha.1"
-  resolved "https://registry.npm.taobao.org/@lugia/ramada/download/@lugia/ramada-1.0.4-alpha.1.tgz#f7d9f6a4ba82561bfc9d87a9e79a7f7001460990"
-  integrity sha1-99n2pLqCVhv8nYep55p/cAFGCZA=
+"@lugia/ramada@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@lugia/ramada/-/ramada-1.0.5.tgz#e760646adcd3a9b00e4b8200359e03483c344779"
+  integrity sha512-R7hysEUPSzayNCmAH6WsGBdJd6qkHOUY1WEhOXQT2hqShfEWQ6FagCBtmT6MCvzy0GuU0qrA3AY0xQsp1S5l/g==
   dependencies:
     "@babel/runtime" "^7.4.5"
 
-"@lugia/theme-core@^1.1.3-alpha.1":
-  version "1.1.3-alpha.1"
-  resolved "https://registry.npm.taobao.org/@lugia/theme-core/download/@lugia/theme-core-1.1.3-alpha.1.tgz#758bb20b146d948f2ef8fd351d687323968fd7e8"
-  integrity sha1-dYuyCxRtlI8u+P01HWhzI5aP1+g=
+"@lugia/theme-utils@^1.1.11":
+  version "1.1.11"
+  resolved "https://registry.npmjs.org/@lugia/theme-utils/-/theme-utils-1.1.11.tgz#5559694010b7b49c41daf8d1316dea404c7c5f21"
+  integrity sha512-u9faqHwJyLnWbQ3Q2MtKiE1y7fOuzkQEhe8Pyc3Xm6VB21J13X0VL1UCaLq/9dhR2yO4FLkjmlZa02MtqGYvXA==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/object-utils" "^1.0.16-alpha.1"
-    debug "^4.1.1"
+    "@lugia/css" "^1.0.26"
     tslib "^1.11.1"
 
-"@lugia/theme-utils@^1.1.6-alpha.1":
-  version "1.1.6-alpha.1"
-  resolved "https://registry.npm.taobao.org/@lugia/theme-utils/download/@lugia/theme-utils-1.1.6-alpha.1.tgz#adedaededa36af3bb9b5191e4fbda6d573ef3334"
-  integrity sha1-re2u3to2rzu5tRkeT72m1XPvMzQ=
+"@types/debug@^4.1.5":
+  version "4.1.7"
+  resolved "https://registry.npmjs.org/@types/debug/-/debug-4.1.7.tgz#7cc0ea761509124709b8b2d1090d8f6c17aadb82"
+  integrity sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==
   dependencies:
-    "@babel/runtime" "^7.4.5"
-    "@lugia/css" "^1.0.23-alpha.1"
-    "@lugia/dict" "^1.0.4-alpha.0"
-    tslib "^1.11.1"
+    "@types/ms" "*"
 
 "@types/hoist-non-react-statics@*":
   version "3.3.1"
@@ -196,6 +193,11 @@
   dependencies:
     "@types/react" "*"
     hoist-non-react-statics "^3.3.0"
+
+"@types/ms@*":
+  version "0.7.31"
+  resolved "https://registry.npmjs.org/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
+  integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
 "@types/prop-types@*":
   version "15.7.3"
@@ -442,6 +444,11 @@ to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
   integrity sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=
+
+tslib@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tslib@^1.11.1:
   version "1.11.1"

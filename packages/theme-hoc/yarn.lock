@@ -137,35 +137,25 @@
   resolved "https://registry.npm.taobao.org/@emotion/unitless/download/@emotion/unitless-0.7.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40emotion%2Funitless%2Fdownload%2F%40emotion%2Funitless-0.7.5.tgz#77211291c1900a700b8a78cfafda3160d76949ed"
   integrity sha1-dyESkcGQCnALinjPr9oxYNdpSe0=
 
-"@lugia/object-utils@^1.0.16-alpha.1":
-  version "1.0.16-alpha.1"
-  resolved "https://registry.npm.taobao.org/@lugia/object-utils/download/@lugia/object-utils-1.0.16-alpha.1.tgz#6fe5bb2d7ca2aead36798d3d6b91abd65c0e08dc"
-  integrity sha1-b+W7LXyirq02eY09a5Gr1lwOCNw=
+"@lugia/object-utils@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@lugia/object-utils/-/object-utils-1.1.2.tgz#d173dbd0d89979965842b205cabcac93854c3053"
+  integrity sha512-e+9n6ArrRYLw0q6G2kYwvgu7ulfNILWR7nyDrfphe5Lo11vvskBXDQf65/hO8BBlJLf+5aNhxTqxMhpkdS5LBg==
   dependencies:
     "@babel/runtime" "^7.4.5"
     deepmerge "^3.2.0"
     is-plain-object "^3.0.0"
     tslib "^1.11.1"
 
-"@lugia/theme-config@^1.1.3-alpha.1":
-  version "1.1.3-alpha.1"
-  resolved "https://registry.npm.taobao.org/@lugia/theme-config/download/@lugia/theme-config-1.1.3-alpha.1.tgz#4e5ce8794e2557bc8b8e5ae9caf5da4140f6a3d7"
-  integrity sha1-TlzoeU4lV7yLjlrpyvXaQUD2o9c=
+"@lugia/theme-config@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.npmjs.org/@lugia/theme-config/-/theme-config-1.1.7.tgz#d44d0ea64f161d106e6806692ea8758237506d65"
+  integrity sha512-dW+uwVDC2c50s6/IFbsJVFbAwop70gDrxPgb2bHCAQGaT37PCifkZ51dYpfdH6gEvMk6Mszp+9CHwmpxdn0IyQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/theme-core" "^1.1.3-alpha.1"
     "@types/react" "^16.9.27"
+    "@types/react-test-renderer" "^16.9.2"
     prop-types "^15.7.2"
-
-"@lugia/theme-core@^1.1.3-alpha.1":
-  version "1.1.3-alpha.1"
-  resolved "https://registry.npm.taobao.org/@lugia/theme-core/download/@lugia/theme-core-1.1.3-alpha.1.tgz#758bb20b146d948f2ef8fd351d687323968fd7e8"
-  integrity sha1-dYuyCxRtlI8u+P01HWhzI5aP1+g=
-  dependencies:
-    "@babel/runtime" "^7.4.5"
-    "@lugia/object-utils" "^1.0.16-alpha.1"
-    debug "^4.1.1"
-    tslib "^1.11.1"
 
 "@types/cheerio@*":
   version "0.22.17"
@@ -214,6 +204,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-test-renderer@^16.9.2":
+  version "16.9.5"
+  resolved "https://registry.npmjs.org/@types/react-test-renderer/-/react-test-renderer-16.9.5.tgz#edab67da470f7c3e997f58d55dcfe2643cc30a68"
+  integrity sha512-C4cN7C2uSSGOYelp2XfdtJb5TsCP+QiZ+0Bm4U3ZfUswN8oN9O/l86XO/OvBSFCmWY7w75fzsQvZ50eGkFN34A==
+  dependencies:
+    "@types/react" "^16"
+
 "@types/react@*", "@types/react@^16.9.27":
   version "16.9.27"
   resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.9.27.tgz#7fc5db99e3ec3f21735b44d3560cff684856814a"
@@ -222,6 +219,15 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/react@^16":
+  version "16.14.21"
+  resolved "https://registry.npmjs.org/@types/react/-/react-16.14.21.tgz#35199b21a278355ec7a3c40003bd6a334bd4ae4a"
+  integrity sha512-rY4DzPKK/4aohyWiDRHS2fotN5rhBSK6/rz1X37KzNna9HJyqtaGAbq9fVttrEPWF5ywpfIP1ITL8Xi2QZn6Eg==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
 "@types/react@^16.9.32":
   version "16.9.32"
   resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.9.32.tgz#f6368625b224604148d1ddf5920e4fefbd98d383"
@@ -229,6 +235,11 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
+
+"@types/scheduler@*":
+  version "0.16.2"
+  resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
+  integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
 "@types/styled-components@^5.0.1":
   version "5.0.1"
@@ -381,7 +392,12 @@ csstype@^2.2.0:
   resolved "https://registry.npm.taobao.org/csstype/download/csstype-2.6.9.tgz?cache=0&sync_timestamp=1581661546865&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcsstype%2Fdownload%2Fcsstype-2.6.9.tgz#05141d0cd557a56b8891394c1911c40c8a98d098"
   integrity sha1-BRQdDNVXpWuIkTlMGRHEDIqY0Jg=
 
-debug@^4.1.0, debug@^4.1.1:
+csstype@^3.0.2:
+  version "3.0.10"
+  resolved "https://registry.npmjs.org/csstype/-/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
+  integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
+
+debug@^4.1.0:
   version "4.1.1"
   resolved "https://registry.npm.taobao.org/debug/download/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha1-O3ImAlUQnGtYnO4FDx1RYTlmR5E=
@@ -1019,6 +1035,11 @@ to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/to-fast-properties/download/to-fast-properties-2.0.0.tgz?cache=0&sync_timestamp=1580550747747&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fto-fast-properties%2Fdownload%2Fto-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
   integrity sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=
+
+tslib@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tslib@^1.11.1:
   version "1.11.1"

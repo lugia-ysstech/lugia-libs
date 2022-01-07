@@ -9,14 +9,22 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@lugia/indexdb@^1.0.17":
-  version "1.0.17"
-  resolved "http://registry.npmjs.org:5001/@lugia%2findexdb/-/indexdb-1.0.17.tgz#3089c9779215d60f536bbca245aa76104e4665b3"
-  integrity sha1-MInJd5IV1g9Ta7yiRap2EE5GZbM=
+"@lugia/array-utils@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/@lugia/array-utils/-/array-utils-1.0.9.tgz#5857e447e43a67afa0a3c0f77c4744866b5eea89"
+  integrity sha512-cyG+qcJODSH7+lxAlVsEi5Ua9TPE9SpcT41E2AzYAvb1+Px7Hy8fLw6Oj6dPBPa3c5octFZJQHXERrnLNKkSTg==
+  dependencies:
+    tslib "^1.11.1"
+
+"@lugia/indexdb@^1.2.12":
+  version "1.2.12"
+  resolved "https://registry.npmjs.org/@lugia/indexdb/-/indexdb-1.2.12.tgz#33d5e4a9a9a5e549eb6cbf979e94d0b2c065e389"
+  integrity sha512-8+0tmYM5gS3GPvlOG64FHKZvJtqgSIKlkVosYDpmDjbLj0jzuNg3YuvKRc2YJvLN73PlU8xbDTJlemVN7HSCGA==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    "@lugia/listener" "^1.0.5"
-    "@lugia/unique" "^1.0.6"
+    "@lugia/array-utils" "^1.0.9"
+    "@lugia/listener" "^1.1.4"
+    "@lugia/unique" "^1.0.7"
     tslib "^1.11.1"
 
 "@lugia/jverify@^1.0.12":
@@ -28,20 +36,20 @@
     clone "^2.1.1"
     deep-equal "^1.0.1"
 
-"@lugia/listener@^1.0.5":
-  version "1.0.5"
-  resolved "http://registry.npmjs.org:5001/@lugia%2flistener/-/listener-1.0.5.tgz#7283a14ff90a69ae72e05ce826e2d602614a5357"
-  integrity sha1-coOhT/kKaa5y4FzoJuLWAmFKU1c=
+"@lugia/listener@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.npmjs.org/@lugia/listener/-/listener-1.1.4.tgz#f59a1873b304c1775cd014907bf6029520bf99a0"
+  integrity sha512-hyjssPY6ovlW6B4zZmSaP1aeFY++4RjM00RJ9NkgKogCC+os24adNdyNg8OhyU6bh0XKafICqK/+VaBf8EE3fg==
   dependencies:
     "@babel/runtime" "^7.4.5"
     events "^3.0.0"
     rxjs "^6.3.3"
     tslib "^1.11.1"
 
-"@lugia/math@^1.0.10":
-  version "1.0.10"
-  resolved "http://registry.npmjs.org:5001/@lugia%2fmath/-/math-1.0.10.tgz#5325c247507999c711e41fb9248a9d9a582ed44e"
-  integrity sha1-UyXCR1B5mccR5B+5JIqdmlgu1E4=
+"@lugia/math@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.npmjs.org/@lugia/math/-/math-1.0.11.tgz#eada296e649d1a1f87cd9c053792ec515d885ee5"
+  integrity sha512-qREZVh1EtL+g/ThOXUuhhW0dDhg9CF6ztYkgYtZukFILmCOSb7Jy7ceJwapa+AR5kfsJbjhxQ65aPmReY6oaPw==
   dependencies:
     tslib "^1.11.1"
 
@@ -50,10 +58,10 @@
   resolved "http://registry.npmjs.org:5001/@lugia%2ftype-utils/-/type-utils-1.0.6.tgz#8ebcab1fadde755291eeeac082ab3d46b186c0eb"
   integrity sha1-jryrH63edVKR7urAgqs9RrGGwOs=
 
-"@lugia/unique@^1.0.6":
-  version "1.0.6"
-  resolved "http://registry.npmjs.org:5001/@lugia%2funique/-/unique-1.0.6.tgz#56424224989204a543d09b1f26427d735de45084"
-  integrity sha1-VkJCJJiSBKVD0JsfJkJ9c13kUIQ=
+"@lugia/unique@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/@lugia/unique/-/unique-1.0.7.tgz#ed5c691065c8f8faf7706e2aa513f66ae4b82a97"
+  integrity sha512-tROAKxn0Xpu8r354490b2gY6p/xGAhf7KhGb3YPF9H7BfQi5zz1cwUJI0NNbAYUDHbAA88bLhLO72a5e1C/VAA==
   dependencies:
     "@babel/runtime" "^7.4.5"
     tslib "^1.11.1"
@@ -239,6 +247,11 @@ string.prototype.trimstart@^1.0.1:
   dependencies:
     define-properties "^1.1.3"
     es-abstract "^1.17.5"
+
+tslib@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tslib@^1.11.1:
   version "1.11.1"
