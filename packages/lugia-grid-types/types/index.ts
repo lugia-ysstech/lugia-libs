@@ -1,10 +1,12 @@
 export type GridType = 'row' | 'col';
 
+export type NumOrStr = number | string;
+
 export type Padding = {
-  left?: number | string;
-  top?: number | string;
-  right?: number | string;
-  bottom?: number | string;
+  left?: NumOrStr;
+  top?: NumOrStr;
+  right?: NumOrStr;
+  bottom?: NumOrStr;
 };
 
 export type GridFixedType =
@@ -27,7 +29,7 @@ export type GridInfo = {
   reactive?: boolean;
   autoHeight?: boolean;
   minWidth?: number;
-  minHeight?: number | string;
+  minHeight?: NumOrStr;
   padding?: Padding;
   fixedType?: GridFixedType;
   overflowX?: string;
@@ -40,5 +42,7 @@ export type GridInfo = {
   nextSiblingSize?: number;
   background?: string;
   opacity?: number;
+  contentWidth?: NumOrStr;
+  contentHeight?: NumOrStr;
   children?: GridInfo[];
 };
