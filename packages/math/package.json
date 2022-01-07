@@ -1,6 +1,6 @@
 {
   "name": "@lugia/math",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "types": "./lib/index.d.ts",
   "description": "math utils",
   "main": "./lib/index.js",
