@@ -31,6 +31,7 @@ export type GridInfo = {
   minWidth?: number;
   minHeight?: NumOrStr;
   padding?: Padding;
+  lock?: boolean;
   fixedType?: GridFixedType;
   overflowX?: string;
   overflowY?: string;
