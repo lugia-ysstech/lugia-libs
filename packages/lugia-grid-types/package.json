@@ -1,6 +1,6 @@
 {
   "name": "@lugia/lugia-grid-types",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "files": [
     "types"
