@@ -2,26 +2,26 @@
 # yarn lockfile v1
 
 
-"@lugia/array-utils@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.npmjs.org/@lugia/array-utils/-/array-utils-1.0.9.tgz#5857e447e43a67afa0a3c0f77c4744866b5eea89"
-  integrity sha512-cyG+qcJODSH7+lxAlVsEi5Ua9TPE9SpcT41E2AzYAvb1+Px7Hy8fLw6Oj6dPBPa3c5octFZJQHXERrnLNKkSTg==
+"@lugia/array-utils@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@lugia/array-utils/-/array-utils-1.0.10.tgz#5e9c7611d33c19873e4f8ae5de830d98d0a9a9aa"
+  integrity sha512-0NDYG9GDo6hwC4NEq+zgMzpnYUDJsNr3tDtoUllhHy8e0qujOD+T/hpqHs7OQ/MhB3z3sZBvAMYmgCSv3LkvQQ==
   dependencies:
-    tslib "^1.11.1"
+    tslib "2.3.1"
 
-"@lugia/lugia-grid-types@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@lugia/lugia-grid-types/-/lugia-grid-types-1.0.1.tgz#9246ffbd6dad15991a77a493e623383fbddaa43c"
-  integrity sha512-3a8vbKhmXuVsuBd4mj0LPtSfHloRYERUdR4CT+eJ0n1kaCdSuuelXL5mc2trr2t7wvn98do3yOu3CYfSXViTVw==
+"@lugia/lugia-grid-types@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@lugia/lugia-grid-types/-/lugia-grid-types-1.0.3.tgz#49ab85055599c3797427ff50a491691afed66364"
+  integrity sha512-ntyUizMtaJPEw42+b+1BR5cmwdw7l8FnsrkVhzqYq8aArLG9Owj4ch6tVr/jdR5n9aYl1qbMHQpFkO7puln+7Q==
 
-"@lugia/math@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.npmjs.org/@lugia/math/-/math-1.0.11.tgz#eada296e649d1a1f87cd9c053792ec515d885ee5"
-  integrity sha512-qREZVh1EtL+g/ThOXUuhhW0dDhg9CF6ztYkgYtZukFILmCOSb7Jy7ceJwapa+AR5kfsJbjhxQ65aPmReY6oaPw==
+"@lugia/math@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/@lugia/math/-/math-1.0.12.tgz#4c75a1cb06b0dc6ff9ad6063ea85d8d5b15873c2"
+  integrity sha512-aJ1YNOOxlZjV3nIqIRQoGaVG8DWonWc4htTjq7Cr4XiGOkuw5i3SfLTDNOGYc6OLNybqCNmAOJlf7jzZawUB0Q==
   dependencies:
-    tslib "^1.11.1"
+    tslib "2.3.1"
 
-tslib@^1.11.1:
-  version "1.14.1"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
-  integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
+tslib@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==

@@ -10,7 +10,6 @@
   "author": "#lugia#",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
     "events": "^3.0.0",
     "rxjs": "^6.3.3",
     "tslib": "2.3.1"

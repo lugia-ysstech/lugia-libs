@@ -14,7 +14,6 @@
   "author": "#lugia#",
   "license": "Apache License 2.0",
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
     "@lugia/array-utils": "^1.0.10",
     "@lugia/listener": "^1.1.5",
     "@lugia/unique": "^1.0.8",

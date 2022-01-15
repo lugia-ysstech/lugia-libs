@@ -103,7 +103,7 @@ export default class Listener<T extends string> {
   async awaitEvent(eventName: T): Promise<any> {
     return new Promise(res => {
       this.once(eventName, (...param: any) => {
-        res(...param);
+        res([...param]);
       });
     });
   }

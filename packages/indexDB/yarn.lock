@@ -9,30 +9,30 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@lugia/array-utils@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.npmjs.org/@lugia/array-utils/-/array-utils-1.0.9.tgz#5857e447e43a67afa0a3c0f77c4744866b5eea89"
-  integrity sha512-cyG+qcJODSH7+lxAlVsEi5Ua9TPE9SpcT41E2AzYAvb1+Px7Hy8fLw6Oj6dPBPa3c5octFZJQHXERrnLNKkSTg==
+"@lugia/array-utils@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@lugia/array-utils/-/array-utils-1.0.10.tgz#5e9c7611d33c19873e4f8ae5de830d98d0a9a9aa"
+  integrity sha512-0NDYG9GDo6hwC4NEq+zgMzpnYUDJsNr3tDtoUllhHy8e0qujOD+T/hpqHs7OQ/MhB3z3sZBvAMYmgCSv3LkvQQ==
   dependencies:
-    tslib "^1.11.1"
+    tslib "2.3.1"
 
-"@lugia/listener@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.npmjs.org/@lugia/listener/-/listener-1.1.4.tgz#f59a1873b304c1775cd014907bf6029520bf99a0"
-  integrity sha512-hyjssPY6ovlW6B4zZmSaP1aeFY++4RjM00RJ9NkgKogCC+os24adNdyNg8OhyU6bh0XKafICqK/+VaBf8EE3fg==
+"@lugia/listener@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.npmjs.org/@lugia/listener/-/listener-1.1.5.tgz#7eb42698da3e5e0b55a475acd216857b99bcbdaa"
+  integrity sha512-Qp8+KyJ+bivXq5CqvKd2ZvrKTW6coIkLVhBZRA9EdE/c+2F5yNSZZXZsE7cSJB7/ijXu+MjJIWOQDlzriRC4OQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
     events "^3.0.0"
     rxjs "^6.3.3"
-    tslib "^1.11.1"
+    tslib "2.3.1"
 
-"@lugia/unique@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/@lugia/unique/-/unique-1.0.7.tgz#ed5c691065c8f8faf7706e2aa513f66ae4b82a97"
-  integrity sha512-tROAKxn0Xpu8r354490b2gY6p/xGAhf7KhGb3YPF9H7BfQi5zz1cwUJI0NNbAYUDHbAA88bLhLO72a5e1C/VAA==
+"@lugia/unique@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/@lugia/unique/-/unique-1.0.8.tgz#74196655ac27252654ed227692e2e01d2497ddd8"
+  integrity sha512-ozxlnRZRHkb3OyArrRQ2/TcPoIB57wz8VUwBvc537j/eFVsO8lbRK2FMaPqzz6v+pohIEHLsxzRiO1MzWh7xFQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
-    tslib "^1.11.1"
+    tslib "2.3.1"
 
 events@^3.0.0:
   version "3.3.0"
@@ -55,11 +55,6 @@ tslib@2.3.1:
   version "2.3.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
   integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
-
-tslib@^1.11.1:
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
-  integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
 
 tslib@^1.9.0:
   version "1.14.1"
