@@ -1,6 +1,6 @@
 {
   "name": "@lugia/string-utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "types": "./lib/index.d.ts",
   "description": "string utils",
   "main": "./lib/index.js",

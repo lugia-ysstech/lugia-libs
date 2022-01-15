@@ -1,6 +1,6 @@
 {
   "name": "@lugia/unique",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "An example of lerna package.",
   "types": "./lib/index.d.ts",
   "main": "./lib/index.js",
